@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('files', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->morphs('filable');
+            $table->morphs('fileable');
             $table->timestamps();
             $table->softDeletes();
         });

@@ -18,7 +18,7 @@ abstract class Controller
     public function log($action, $module = null, $description = null, $user_id = null,$route = null, $second_id = 0 ){
         $l = Log::create([
             'action' => $action,
-            'module' => get_called_class(),
+            'module' => $module ?? get_called_class(),
             'description' => $description,
             'user_id' => $user_id ?? Auth::id(),
             'second_id' => $second_id,

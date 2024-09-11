@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\UserRequest;
 use App\Models\User;
-use Illuminate\Container\Attributes\Auth;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -84,7 +83,7 @@ class UserController extends Controller
         $user = User::findOrFail($id);
 
         $user->delete();
-        
+
         return $this->jsonResponse('Registro eliminado correctamente', compact('user'), Response::HTTP_OK);
     }
 }
