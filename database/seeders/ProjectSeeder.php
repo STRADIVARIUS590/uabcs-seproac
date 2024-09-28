@@ -14,7 +14,6 @@ class ProjectSeeder extends Seeder
      */
     public function run(): void
     {
-        $user_ids = User::all();
         foreach(User::all() as $user){
             $p = Project::create([
                 'name' => 'RESEARCH _' . uniqid(),
