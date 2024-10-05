@@ -11,11 +11,11 @@ Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
 
+Route::post('/users', [UserController::class, 'store']);
 Route::middleware('auth:sanctum')->group(function(){
     
     Route::prefix('/users')->group(function(){
         Route::get('/',  [UserController::class, 'index']);
-        Route::post('/', [UserController::class, 'store']);
         Route::put('/',  [UserController::class, 'update']);
         Route::get('/get/{id}', [UserController::class, 'get']);
         Route::delete('/{id}', [UserController::class, 'destroy']);

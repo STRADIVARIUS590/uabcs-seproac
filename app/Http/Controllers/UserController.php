@@ -4,8 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\UserRequest;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
+
+use function Laravel\Prompts\error;
 
 class UserController extends Controller
 {
@@ -32,10 +35,23 @@ class UserController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(UserRequest $request)
+    public function store(Request $request)
     {
+        $request->validate( 
+             [
+            'name' => 'required',
+            'email' => 'required|unique:users,email',
+            'date_ingreso' => 'sometimes|nullable|date',
+            'birth_date' => 'sometimes|nullable|date',
+            'sex' => 'required',
+            'password' => 'required|confirmed'
+        ], ['sex' => 'asdasd' ]);
+        // return $this->jsonResponse('asdaD', );
+        $request['date_ingreso'] = Carbon::parse($request->date_ingreso)->format('Y-m-d H:i:s');
+        $request['birth_date'] = Carbon::parse($request->birth_date)->format('Y-m-d H:i:s');
         $user = User::create($request->all());
 
+        error_log(json_encode($user));
         // $this->log(__FUNCTION__, 'users', 'crear users', Auth::id(), $user->id);
 
         return $this->jsonResponse('Registro registro correctamente', compact('user'), Response::HTTP_OK);

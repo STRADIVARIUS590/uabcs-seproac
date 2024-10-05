@@ -30,4 +30,6 @@ class UserRequest extends FormRequest
             'password' => 'required|confirmed'
         ];
     }
+
+    
 }

@@ -2,6 +2,9 @@
 
 namespace App\Providers;
 
+use Illuminate\Routing\Events\RouteMatched;
+use Illuminate\Routing\Route;
+use Illuminate\Support\Facades\Event;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -19,6 +22,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        Event::listen(RouteMatched::class, function($e){
+            // error_log(json_encode($e));
+        });
     }
 }

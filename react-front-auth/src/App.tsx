@@ -1,39 +1,31 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import { createElement } from 'react'
+// import reactLogo from './assets/react.svg'
+// import viteLogo from '/vite.svg'
 import './App.css'
 import {
   createBrowserRouter,
   RouterProvider,
-  Route,
-  Link
+  // Route,
+  // Link
 } from "react-router-dom"
-function App() {  
+import routes from './routers/routes'
 
-  const router = createBrowserRouter([
-  {
-    path: "/",
-    element: (
-      <div>
-        <h1>Hello world</h1>
-        <Link to="about"> About Us</Link>
-      </div>
-    )
-  },
-  {
-    path: "/about",
-    element: (
-      <div>  
-        <h1>About</h1>
-        <Link to="/"> Hello</Link>
-      </div>
-    )
-  }
-]);
+function App() {  
+// console.log(routes)
+  const router = createBrowserRouter(
+    routes.map((route) => ({
+      ...route,
+      element: createElement(route.element),
+      children: route.children?.map((child) => ({
+          ...child,
+          element: createElement(child.element)
+      }))
+    }))  
+
+  )
 
   return (
     <>
-      {/* <h1 className='bg-blue-500'> Uabcs Seproac </h1>  */}
         <RouterProvider router={router} />
     </>
   )
