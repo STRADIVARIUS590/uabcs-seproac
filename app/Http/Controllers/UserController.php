@@ -45,6 +45,7 @@ class UserController extends Controller
      */
     public function store(Request $request)
     { 
+    
         $validator = Validator::make($request->all(), [
             'email' => 'unique:users,email',
             'name' => 'unique:users,name',
@@ -62,7 +63,8 @@ class UserController extends Controller
         $user['token'] = $user->createToken('')->plainTextToken;
         // $this->log(__FUNCTION__, 'users', 'crear users', Auth::id(), $user->id);
 
-        error_log(json_encode($user));
+        $user->addMedia($request->avatar)->toMediaCollection('avatar');
+
         return $this->jsonResponse('Registro registro correctamente', $user);
     }
 
