@@ -8,6 +8,7 @@ import { loginUser } from "../store/authSlice"
 import { useSelector } from "react-redux"
 import { useNavigate } from "react-router-dom"
 import { useEffect } from "react"
+import Swal from "sweetalert2"
 const Login = () => {
     
     const dispatch = useAppDispatch();
@@ -15,12 +16,6 @@ const Login = () => {
     const navigate  = useNavigate();
 
     const  { isLogged } = useSelector((state: RootState ) => state.auth);
-
-    useEffect(() => {
-        if(isLogged){
-            navigate('/dashboard');
-        }
-    }, [isLogged])
 
     const initialValues = {
         'email': '',
@@ -33,6 +28,13 @@ const Login = () => {
 
             if(response.type == 'auth/loginUser'){
                 navigate('/dashboard');
+            }else{
+                Swal.fire({
+                    title: 'Error!',
+                    text: 'Do you want to continue',
+                    icon: 'error',
+                    confirmButtonText: 'Cool'
+})
             }
         })
 

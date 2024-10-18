@@ -2,6 +2,7 @@ import { createElement } from 'react'
 // import reactLogo from './assets/react.svg'
 // import viteLogo from '/vite.svg'
 import './App.css'
+import { Middleware } from './components/scripts/Middleware'
 import {
   createBrowserRouter,
   RouterProvider,
@@ -17,10 +18,10 @@ function App() {
   const router = createBrowserRouter(
     routes.map((route) => ({
       ...route,
-      element: createElement(route.element),
+      element: route.is_protected ? <Middleware children={createElement(route.element)}/> : createElement(route.element),
       children: route.children?.map((child) => ({
           ...child,
-          element: createElement(child.element)
+          element: child.is_protected ? <Middleware children={createElement(route.element)}/> : createElement(child.element)
       }))
     }))  
 

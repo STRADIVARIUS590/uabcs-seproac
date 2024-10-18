@@ -5,7 +5,13 @@ import Users from "../components/Users";
 import Welcome from "../components/Welcome";
 import BaseDashBoard from "../Layout/Dashboard";
 
- const routes = [
+type TypeRoute = {
+    path: string
+    element: any
+    is_protected?: boolean
+    children?: TypeRoute[]
+}
+ const routes: TypeRoute[] = [
     {
         path: '/',
         element: Welcome
@@ -29,6 +35,7 @@ import BaseDashBoard from "../Layout/Dashboard";
         ]
     },
     {
+        is_protected: true,
         path:'users',
         element: Users
     },

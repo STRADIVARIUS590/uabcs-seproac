@@ -12,15 +12,15 @@ interface DataItem {
   // Add more fields as necessary
 }
 const Users = () => {
-        const  { token, user } = useSelector((state: RootState ) => state.auth);
+        // const  { token, user } = useSelector((state: RootState ) => state.auth);
 
-        const navigate = useNavigate();
+        // const navigate = useNavigate();
 
-        const user_permissions = user?.all_permissions || [];
+        // const user_permissions = user?.all_permissions || [];
 
-        if(!user ||  user_permissions.indexOf("users.get") == -1){
-            navigate('/dashboard')
-        } 
+        // if(!user ||  user_permissions.indexOf("users.get") == -1){
+        //     navigate('/dashboard')
+        // } 
 
         const [data, setData] = useState<DataItem[]>([]); // Step 2: Typed state to store data
   

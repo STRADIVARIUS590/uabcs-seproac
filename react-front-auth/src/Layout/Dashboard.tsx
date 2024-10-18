@@ -7,9 +7,9 @@ const BaseDashBoard = () => {
     
     const navigate = useNavigate();
 
-    if(isLogged === false){
-        navigate("/login");    
-    }
+    // if(isLogged === false){
+    //     navigate("/login");    
+    // }
 
     return (
         <div>
