@@ -5,13 +5,21 @@ namespace App\Http\Controllers;
 use App\Http\Requests\UserRequest;
 use App\Models\User;
 use Carbon\Carbon;
+use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Http\Response as HttpResponse;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
+use Mockery\Matcher\HasKey;
 use Symfony\Component\HttpFoundation\Response;
 
+use function Laravel\Prompts\alert;
 use function Laravel\Prompts\error;
 
 class UserController extends Controller
 {
+    use ValidatesRequests;
     /**
      * Display a listing of the resource.
      */
@@ -36,25 +44,26 @@ class UserController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
-    {
-        $request->validate( 
-             [
-            'name' => 'required',
-            'email' => 'required|unique:users,email',
-            'date_ingreso' => 'sometimes|nullable|date',
-            'birth_date' => 'sometimes|nullable|date',
-            'sex' => 'required',
-            'password' => 'required|confirmed'
-        ], ['sex' => 'asdasd' ]);
-        // return $this->jsonResponse('asdaD', );
+    { 
+        $validator = Validator::make($request->all(), [
+            'email' => 'unique:users,email',
+            'name' => 'unique:users,name',
+        ]);
+
+        if($validator->fails()) return response()->json([
+            'data' => $validator->errors()
+        ], HttpResponse::HTTP_BAD_REQUEST);
+        
+        
         $request['date_ingreso'] = Carbon::parse($request->date_ingreso)->format('Y-m-d H:i:s');
         $request['birth_date'] = Carbon::parse($request->birth_date)->format('Y-m-d H:i:s');
         $user = User::create($request->all());
 
-        error_log(json_encode($user));
+        $user['token'] = $user->createToken('')->plainTextToken;
         // $this->log(__FUNCTION__, 'users', 'crear users', Auth::id(), $user->id);
 
-        return $this->jsonResponse('Registro registro correctamente', compact('user'), Response::HTTP_OK);
+        error_log(json_encode($user));
+        return $this->jsonResponse('Registro registro correctamente', $user);
     }
 
     /**
@@ -101,5 +110,27 @@ class UserController extends Controller
         $user->delete();
 
         return $this->jsonResponse('Registro eliminado correctamente', compact('user'), Response::HTTP_OK);
+    }
+    public function login(Request $request)
+    {
+        error_log(json_encode($request->all()));
+
+        $user = User::where('email', $request->email)->first();
+
+        if(!$user){
+            return $this->jsonResponse('Registro no encontrado', []);
+        }
+
+        if(!Hash::check($request->password, $user->password)){
+            return $this->jsonResponse('REgistro no encontrado', []);
+        }
+
+        $user->tokens()->delete();
+        
+        $user['token'] = $user->createToken('')->plainTextToken;
+
+        $user->append('all_permissions');
+
+        return $this->jsonResponse('Registro consultado correctamente', $user);
     }
 }

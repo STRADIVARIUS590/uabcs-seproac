@@ -1,6 +1,7 @@
 import Customers from "../components/Customers";
 import Login from "../components/Login";
 import Register from "../components/Register";
+import Users from "../components/Users";
 import Welcome from "../components/Welcome";
 import BaseDashBoard from "../Layout/Dashboard";
 
@@ -26,7 +27,12 @@ import BaseDashBoard from "../Layout/Dashboard";
                 element: Customers
             }
         ]
-    }
+    },
+    {
+        path:'users',
+        element: Users
+    },
+    
 ];
 
 export default routes

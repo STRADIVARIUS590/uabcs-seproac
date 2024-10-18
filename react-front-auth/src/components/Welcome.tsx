@@ -1,5 +1,15 @@
-import { Link } from 'react-router-dom'
+import { useSelector } from 'react-redux';
+import { Link, useNavigate } from 'react-router-dom'
+import { RootState } from '../store';
 const Welcome = () => {
+
+    const { isLogged, user } = useSelector((state: RootState) => state.auth);
+    
+    const navigate = useNavigate();
+
+    if(isLogged === true ){
+        navigate("/dashboard");    
+    }
     return (
             <div className="w-screen h-screen bg-gray-800 text-white text-center">
                 {/* <div>Welcome</div> */}

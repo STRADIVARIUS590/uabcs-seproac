@@ -1,36 +1,66 @@
-import { Formik } from "formik"
+import { Formik, FormikHelpers } from "formik"
 import * as Yup from "yup"
 import InputLabel from "./inputs/InputLabel"
 import Button from "./Buttons/Button"
-import { Api } from "../services/Api"
+import { registerUSer } from "../store/authSlice"
+import { RootState, useAppDispatch } from "../store"
+import { useNavigate } from "react-router-dom"
+import { useSelector } from "react-redux"
+import { useEffect } from "react"
 
 const Register = () => {
     const initialValues = {
-        name: "default",
-        email: "",
+        name: 'test',
+        email: "email@example.com",
         date_ingreso: (new Date).toISOString(),
         birth_date: new Date,
         sex: "M",
-        password: "",
-        password_confirmation: "",
+        password: "secret",
+        password_confirmation: "secret",
     }
 
-    const onSubmit = (values: typeof initialValues) => {
-        console.log(JSON.stringify(values)) 
-        Api.post('/users', values).then((response) => {
-            console.log(response)
+    const dispatch = useAppDispatch();
+
+    const navigate = useNavigate();
+
+    const  { isLogged } = useSelector((state: RootState ) => state.auth);
+
+    useEffect(() => {
+        if(isLogged){
+            navigate('/dashboard');
+        }
+    }, [isLogged])
+
+    const onSubmit = (values: typeof initialValues, { setFieldError } : FormikHelpers< typeof initialValues > ) => {
+
+
+        dispatch(registerUSer(values)).then((response) => {
+            console.log(response);
+            if(response.type == 'auth/registerUser/fulfilled'){
+                navigate('/dashboard');
+            }else{
+                
+                // console.log(response.payload);
+                Object.entries(response.payload).forEach((key) => {
+                    setFieldError(key[0], key[1][0])
+                })
+                // setFieldError('email', 'El correo esta en uso');
+            }
         });
+
     }
+
 
     const validationSchema = Yup.object({
         name: Yup.string().min(3, 'El nombre debe tener al menos 3 letras').required("EL nombre es requerido"),
-        email: Yup.string().email('El correo es invalid'),
+        email: Yup.string(),
+        // .email('El correo es invalid'),
         password: Yup.string()
             .min(5, 'la contraseña debe tener minio 5 caracteres')
-            .max(10, 'la contraseña debe maximo 10 caracteres')
+            // .max(10, 'la contraseña debe maximo 10 caracteres')
             .required('La contraseña es requerida'),
-        password_confirmation: Yup.string()
-            .oneOf([Yup.ref('password')], 'LAs contraseñas no coinciden'). required('la conformacion de contraseña es requirida')
+        // password_confirmation: Yup.string()
+            // .oneOf([Yup.ref('password')], 'LAs contraseñas no coinciden'). required('la conformacion de contraseña es requirida')
     })
 
     return (
@@ -60,7 +90,7 @@ const Register = () => {
                         label="Correo" 
                         name="email" 
                         placeholder="Escrible tu correo" 
-                        type="email"
+                        type="text"
                         error={errors.email}    
                         onChange={handleChange}
                         value={values.email}
