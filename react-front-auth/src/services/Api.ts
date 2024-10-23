@@ -33,6 +33,36 @@ export class Api {
             statusCode : response.status,
             data: dataResponse.data
         }
+    
+    }
+
+    static async delete(url: string, headers: {}): Promise<any> {
+        const response = await fetch(`${Api.baseUrl}${url}`,
+            {
+                method: 'DELETE',
+                headers : headers
+            })
+
+        const dataResponse = await response.json()
+        return {
+            statusCode : response.status,
+            data: dataResponse.data
+        }
+      }
+
+
+    static async put(url: string, data: any, headers : {}): Promise<any> {
+        const response = await fetch(`${Api.baseUrl}`, { 
+            method: 'PUT',
+            mode: 'no-cors', // <---
+            headers : headers
+        })
+        
+        const dataResponse = await response.json()
+        return {
+            statusCode : response.status,
+            data: dataResponse.data
+        }
 
     }
 }

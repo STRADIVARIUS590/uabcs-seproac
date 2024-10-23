@@ -38,6 +38,12 @@ class PermissionSeeder extends Seeder
                 'roles' => [
                     'Sistemas'
                 ]
+            ],
+            [
+                'name' => 'users.edit',
+                'roles' => [
+                    'Sistemas'
+                ]
             ]
         ];
         $role_sistemas = Role::create(['name' => 'Sistemas', 

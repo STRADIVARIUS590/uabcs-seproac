@@ -6,6 +6,7 @@ use Illuminate\Database\Events\QueryExecuted;
 use Illuminate\Routing\Events\RouteMatched;
 use Illuminate\Routing\Route;
 use Illuminate\Support\Facades\Event;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -30,5 +31,11 @@ class AppServiceProvider extends ServiceProvider
         Event::listen(QueryExecuted::class, function($e){
             // error_log(json_encode($e));
         });
+        
+        Gate::define('admin', function ($user, $id){
+            dd($user);
+            return true;
+        });
+  
     }
 }

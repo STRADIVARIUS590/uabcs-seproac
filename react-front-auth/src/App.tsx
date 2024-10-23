@@ -24,37 +24,17 @@ function App() {
           element: child.is_protected ? <Middleware children={createElement(route.element)}/> : createElement(child.element)
       }))
     }))  
-
   )
 
   return (
     <>
+      
       <Provider store={store}>
           <PersistGate persistor={persistor}>
-            <RouterProvider router={router} />
+            <RouterProvider router={router}/>
           </PersistGate>
       </Provider>
     </>
   )
 }
-export default App
-/* import * as React from "react";
-import * as ReactDOM from "react-dom/client";
-import {
-  createBrowserRouter,
-  RouterProvider,
-} from "react-router-dom";
-import "./index.css";
-
-const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <div>Hello world!</div>,
-  },
-]);
-
-ReactDOM.createRoot(document.getElementById("root")).render(
-  <React.StrictMode>
-    <RouterProvider router={router} />
-  </React.StrictMode>
-); */
+export default App 

@@ -13,8 +13,8 @@ class File extends Model
 
     protected $fillable = [
         'name',
-        'fileable_type',
-        'fileable_id',
+        'fileable_type', // App\Models\Document
+        'fileable_id', // id 
     ];
 
     protected $appends = [
@@ -29,7 +29,7 @@ class File extends Model
     public function FullUrl() : Attribute
     {
         return new Attribute(
-            get: fn() => env('APP_URL').'/storage/' . strtolower(class_basename(Project::class)) . '/'. $this->name
+            get: fn() => env('APP_URL').'/storage/' . strtolower(class_basename($this->fileable_type)) . '/'. $this->name
         );
     }
 }

@@ -9,13 +9,13 @@ type Props = {
 
 export const Middleware = ({children} : Props) => {
     
-    const isLogged = useSelector((state: RootState) => state.auth)   
+    const { isLogged } = useSelector((state: RootState) => state.auth)   
 
     const navigate = useNavigate();
 
 
     useEffect(() => {
-        if(isLogged){
+        if(!isLogged){
             navigate('/login');
         }
     }, [isLogged])

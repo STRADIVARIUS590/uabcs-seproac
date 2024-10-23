@@ -69,6 +69,12 @@ class User extends Authenticatable implements HasMedia
             'password' => 'hashed',
         ];
     }
+    
+    public function files()
+    {
+        return $this->morphMany(File::class, 'fileable');    
+    }
+
 
     public function getAllPermissionsAttribute(){
         return $this->getAllPermissions()->pluck('name');

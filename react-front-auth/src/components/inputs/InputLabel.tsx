@@ -4,7 +4,7 @@ type Props = {
     placeholder?: string,
     id?: string,
     error?: string,
-    type?: 'text' | 'email' | 'password' | 'date',
+    type?: 'text' | 'email' | 'password' | 'date' | 'select',
     onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
     value: string | number
 }
@@ -24,7 +24,6 @@ const InputLabel = ({label, name, placeholder, id , error, type, onChange, value
             {
                 error && <small className="text-red-500"> {error} </small>
             }
-            {/* <input type="submit" value="Enviar!!"/> */}
         </div>
     )
 }

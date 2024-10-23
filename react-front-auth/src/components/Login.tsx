@@ -18,23 +18,18 @@ const Login = () => {
     const  { isLogged } = useSelector((state: RootState ) => state.auth);
 
     const initialValues = {
-        'email': '',
-        'password': '',
+        'email': 'sistemas@gmail.com',
+        'password': 'secret',
     }
 
     const onSubmit = (values: typeof initialValues) => {
         dispatch(loginUser(values)).then((response) => {
-            console.log(response.type);
+            console.log(response);
 
-            if(response.type == 'auth/loginUser'){
+            if(response.type == 'auth/loginUser/fulfilled'){
                 navigate('/dashboard');
             }else{
-                Swal.fire({
-                    title: 'Error!',
-                    text: 'Do you want to continue',
-                    icon: 'error',
-                    confirmButtonText: 'Cool'
-})
+              
             }
         })
 
@@ -50,7 +45,6 @@ const Login = () => {
 
     return (
         <div>
-            <h1>Login</h1>
             <Formik initialValues={initialValues} onSubmit={onSubmit} validationSchema={validationSchema}>
                     {({
                         handleSubmit,

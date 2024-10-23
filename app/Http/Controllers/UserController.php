@@ -25,7 +25,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::get();
+        $users = User::with('role:id,name')->get();
 
         // $this->log(__FUNCTION__, 'users', 'consultar users', Auth::id(), route(), );
 
@@ -73,7 +73,7 @@ class UserController extends Controller
      */
     public function get($id)
     {
-        $user = User::findOrfail($id);
+        $user = User::with('role')->findOrfail($id);
 
         // $this->log(__FUNCTION__, 'users', 'get users', Auth::id(),$user->id);
 
@@ -93,6 +93,7 @@ class UserController extends Controller
      */
     public function update(Request $request)
     {
+        error_log(json_encode($request->all()));
         $user = User::findOrFail($request->id);
 
         // $this->log(__FUNCTION__, 'users', 'update userr', Auth::id(), )
@@ -109,13 +110,14 @@ class UserController extends Controller
     {
         $user = User::findOrFail($id);
 
-        $user->delete();
+        if($user->id != 1){
+            $user->delete();
+        }
 
         return $this->jsonResponse('Registro eliminado correctamente', compact('user'), Response::HTTP_OK);
     }
     public function login(Request $request)
     {
-        error_log(json_encode($request->all()));
 
         $user = User::where('email', $request->email)->first();
 
