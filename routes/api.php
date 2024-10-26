@@ -43,7 +43,7 @@ Route::middleware(['auth:sanctum'])->group(function(){
 
     Route::prefix('/users')->group(function(){
         Route::get('/',  [UserController::class, 'index'])->middleware([\Illuminate\Auth\Middleware\Authorize::using('users.get')]);
-        Route::put('/',  [UserController::class, 'update'])->middleware([\Illuminate\Auth\Middleware\Authorize::using('users.edit')]);
+        Route::put('/{id}',  [UserController::class, 'update'])->middleware([\Illuminate\Auth\Middleware\Authorize::using('users.edit')]);
         Route::get('/get/{id}', [UserController::class, 'get'])->middleware([\Illuminate\Auth\Middleware\Authorize::using('users.get')]);
         Route::delete('/{id}', [UserController::class, 'destroy'])->middleware([\Illuminate\Auth\Middleware\Authorize::using('users.destroy')]);
     });

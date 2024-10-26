@@ -77,7 +77,7 @@ class UserController extends Controller
 
         // $this->log(__FUNCTION__, 'users', 'get users', Auth::id(),$user->id);
 
-        return $this->jsonResponse('Registro consultado correctamente', compact('user'), Response::HTTP_OK);
+        return $this->jsonResponse('Registro consultado correctamente', $user, Response::HTTP_OK);
     }
 
     /**
@@ -91,12 +91,12 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request)
-    {
-        error_log(json_encode($request->all()));
+    public function update(Request $request, $id)
+    {   
+        
         $user = User::findOrFail($request->id);
-
-        // $this->log(__FUNCTION__, 'users', 'update userr', Auth::id(), )
+        
+        $request['password'] = isset($request['password']) ? bcrypt($request['password']) : $user->password;
     
         $user->update($request->all());
 
