@@ -34,7 +34,7 @@ export const EditUser = () => {
         })
 
         const result = await response.data
-
+            
         setUser(result.user);
     }
 
@@ -49,16 +49,9 @@ export const EditUser = () => {
         setRoles(response.data)
     }
 
+
     const onSubmit = async (values: typeof initialValues) => {
-            const response = await Api.put('/users/', values, {
-                    Authorization: 'Bearer ' + token,
-                    accept: 'application/json'
-            })
-
-            const result = await response.data
-
-            console.error('qeqwe'  + response);
-        
+    
     }
 
     useEffect(() => {
@@ -67,7 +60,7 @@ export const EditUser = () => {
     }, []);
 
     function formatDate(date: string) {
-    const d=  new Date(date);
+    const d =  new Date(date);
     const year = d.getFullYear();
     const month = String(d.getMonth() + 1).padStart(2, '0'); // Months are 0-based
     const day = String(d.getDate()).padStart(2, '0');
@@ -79,12 +72,11 @@ export const EditUser = () => {
 
     const { name, email, date_ingreso, birth_date, role_id } = user;
 
-    const onInputChange = (e : React.ChangeEvent<HTMLInputElement>) => {
-        
-        setUser({...user, [e.target.name] : e.target.value})
-        console.log(user);
-        
-    }
+    // const onInputChange = (e : React.ChangeEvent<HTMLInputElement>) => {
+    //     console.log(user);
+    //     setUser({...user, [e.target.name] : e.target.value})
+   
+    // }
 
 
     return <div>
@@ -92,41 +84,43 @@ export const EditUser = () => {
     <Formik initialValues={initialValues} onSubmit={onSubmit}>
         {({
             handleSubmit,
+            handleChange,
             errors,
-            // values
+            values
         }) => (
             <form onSubmit={handleSubmit}>
+                <input type="hidden" value={id} name="id"/>
                 <InputLabel
                     label="Nombre"
                     name="name"
                     error={errors.name}
-                    value={name}
-                    onChange={onInputChange}
+                    value={values.name}
+                    onChange={handleChange}
                     />
                  <InputLabel
                     label="Correo"
                     name="email"
                     error={errors.email}
-                    value={email}
-                    onChange={onInputChange}
+                    value={values.email}
+                    onChange={handleChange}
                     />
                  <InputLabel
                     label="Nombre"
                     name="date_ingreso"
                     type="date"
                     error={errors.date_ingreso}
-                    value={formatDate(date_ingreso)}
-                    onChange={onInputChange}
+                    value={formatDate(values.date_ingreso)}
+                    onChange={handleChange}
                    />
                  <InputLabel
                     label="Fecha de nacimiento"
                     name="birth_date"
                     type="date"
                     error={errors.birth_date}
-                    value={formatDate(birth_date)}
-                    onChange={onInputChange}
+                    value={formatDate(values.birth_date)}
+                    onChange={handleChange}
                     />
-                    <select name="role" onChange={(e) => onInputChange(e)}>
+                    <select name="role" onChange={(e) => handleChange(e)}>
                     {roles.map((role) => (
                         <option key={role.id} value={role.id} selected={role.id === role_id}>
                         {role.name}

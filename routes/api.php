@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\PublicationController;
 use App\Http\Controllers\UserController;
+use App\Http\Middleware\Cors;
 use App\Models\File;
 use Database\Seeders\PublicationSeeder;
 use Illuminate\Http\Request;
@@ -38,7 +39,7 @@ Route::post('/prueba', function(Request $request){
 
 Route::post('/users/login', [UserController::class, 'login']);
 Route::post('/users', [UserController::class, 'store']);
-Route::middleware('auth:sanctum')->group(function(){
+Route::middleware(['auth:sanctum'])->group(function(){
 
     Route::prefix('/users')->group(function(){
         Route::get('/',  [UserController::class, 'index'])->middleware([\Illuminate\Auth\Middleware\Authorize::using('users.get')]);

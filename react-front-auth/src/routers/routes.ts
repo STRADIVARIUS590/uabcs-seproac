@@ -2,7 +2,7 @@ import Customers from "../components/Customers";
 import EditUser from "../components/EditUser";
 import Login from "../components/Login";
 import Register from "../components/Register";
-import Users from "../components/Users";
+import Users from "../components/users/Index"
 import Welcome from "../components/Welcome";
 import BaseDashBoard from "../Layout/Dashboard";
 

@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Context;
@@ -20,11 +21,16 @@ class UserSeeder extends Seeder
             'email' =>  'sistemas@gmail.com',
             'password' => bcrypt('secret'),
             'role_id' => 1,
+            'birth_date' => Carbon::parse('28-11-1999'),
+            'date_ingreso' => Carbon::parse('28-11-1999'),
+            
         ],
         [
             'name' => 'Joel',
             'email' => 'joel@gmail.com',
             'password' => bcrypt('secret'),
+            'birth_date' => Carbon::parse('28-11-1999'),
+            'date_ingreso' => Carbon::parse('28-11-1999'),
             'role_id' => 2,
             ]
         ];
