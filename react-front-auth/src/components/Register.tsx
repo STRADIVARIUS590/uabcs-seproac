@@ -57,10 +57,10 @@ const Register = () => {
         // .email('El correo es invalid'),
         password: Yup.string()
             .min(5, 'la contraseña debe tener minio 5 caracteres')
-            // .max(10, 'la contraseña debe maximo 10 caracteres')
+            .max(10, 'la contraseña debe maximo 10 caracteres')
             .required('La contraseña es requerida'),
-        // password_confirmation: Yup.string()
-            // .oneOf([Yup.ref('password')], 'LAs contraseñas no coinciden'). required('la conformacion de contraseña es requirida')
+        password_confirmation: Yup.string()
+            .oneOf([Yup.ref('password')], 'LAs contraseñas no coinciden'). required('la conformacion de contraseña es requirida')
     })
 
     return (

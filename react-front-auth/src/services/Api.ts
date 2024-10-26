@@ -52,15 +52,14 @@ export class Api {
 
 
     static async put(url: string, data: any, headers : {}): Promise<any> {
-        const response = await fetch(`${Api.baseUrl}${url}`, { 
+        const response = await fetch(`${Api.baseUrl}${url}`, {
             method: 'PUT',
             headers : headers,
             body: JSON.stringify(data)
         })
         
-        console.log(data);
-        
         const dataResponse = await response.json()
+        
         return {
             statusCode : response.status,
             data: dataResponse.data

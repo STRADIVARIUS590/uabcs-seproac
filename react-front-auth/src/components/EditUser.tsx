@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import React, { useEffect, useState } from "react"
 import { Form, useParams } from "react-router-dom"
 import { Api } from "../services/Api"
 import { useSelector } from "react-redux"
@@ -10,6 +10,7 @@ import Button from "./Buttons/Button"
 export const EditUser = () => {
 
 
+ 
     const { token } = useSelector((state: RootState) => state.auth)
 
     const initialValues = {

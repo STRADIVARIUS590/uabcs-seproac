@@ -1,7 +1,8 @@
 import Customers from "../components/Customers";
-import EditUser from "../components/EditUser";
+// import EditUser from "../components/EditUser";
 import Login from "../components/Login";
 import Register from "../components/Register";
+import AddEditUserPage from "../components/users/addEdit";
 import Users from "../components/users/Index"
 import Welcome from "../components/Welcome";
 import BaseDashBoard from "../Layout/Dashboard";
@@ -41,11 +42,10 @@ type TypeRoute = {
         path:'users',
         element: Users
     },
-
     {
         is_protected: true,
-        path: 'users/edit/:id',
-        element: EditUser
+        path: 'users/edit/:id?',
+        element: AddEditUserPage
     }
     
     
