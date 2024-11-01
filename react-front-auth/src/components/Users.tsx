@@ -34,34 +34,24 @@ const Users = () => {
 
         const [loading, setLoading] = useState<boolean>(true); // Optional: Typed loading state
         
-            const fetchData = async () => {
+        const fetchData = async () => {
 
-                    const response = await Api.get('/users', {
-                        Authorization: 'Bearer ' + token,
-                        accept: 'application/json'
-                    })
-                    
-                    const result: DataItem[] = await response.data 
-                    
-                    setData(result.users)
+                const response = await Api.get('/users', {
+                    Authorization: 'Bearer ' + token,
+                    accept: 'application/json'
+                })
+                
+                const result: DataItem[] = await response.users
+                                    
+                setData(result)
 
-                    setLoading(false);
-            }
-
+                setLoading(false);
+        }
 
         useEffect(() => { fetchData();}, [])
 
         const deleteUser = async ( id : number ) => {
-            const response = await Api.delete('/users/' + id, {
-                 Authorization: 'Bearer ' + token,
-                 accept: 'application/json'
-            })
-
-            const result = await response.json();
-
-            console.log(result);
-            
-            fetchData();
+            console.error('wer   ' + id);
         }
 
         if(loading) {
@@ -69,8 +59,7 @@ const Users = () => {
         }
         return (
         <div>
-            {/* <p>{JSON.stringify(data)}</p> */}
-            <h1>Users</h1>
+            <h1>User</h1>
             <table>
                 <thead>
                     <tr>
@@ -80,7 +69,7 @@ const Users = () => {
                         <td> Fecha de ingreso</td>
                         <td> Fecha de nacimiento</td>
                         <td> Sexo </td>
-                        <td> Rol </td>
+                        <td> Roñ </td>
                     </tr>
                 </thead>
                 <tbody>
@@ -95,15 +84,14 @@ const Users = () => {
                 <td>{item.birth_date}</td> 
                 <td>{item.sex}</td> 
                 <td>{item.role?.name}</td> 
-                <button onClick={() => deleteUser(item.id )}>
-                    Eliminar
+                <button onClick={() => deleteUser(item.id)}>
+                    Elimpamsdinar 
                 </button>
                 <button onClick={() => navigate('/users/edit/' + item.id)}>
                     Editar
                 </button>
                 </tr>
             ))}
-            
                 </tbody>
             </table>     
         </div>

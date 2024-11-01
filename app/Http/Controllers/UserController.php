@@ -62,8 +62,7 @@ class UserController extends Controller
 
         $user['token'] = $user->createToken('')->plainTextToken;
         // $this->log(__FUNCTION__, 'users', 'crear users', Auth::id(), $user->id);
-
-        $user->addMedia($request->avatar)->toMediaCollection('avatar');
+        if($request->hasFile('avatar')) $user->addMedia($request->avatar)->toMediaCollection('avatar');
 
         return $this->jsonResponse('Registro registro correctamente', $user);
     }
@@ -92,13 +91,27 @@ class UserController extends Controller
      * Update the specified resource in storage.
      */
     public function update(Request $request, $id)
-    {   
+    {  
+        $validator = Validator::make($request->all(), [
+            'email' => 'unique:users,email,'.$request->id,
+            'name' => 'unique:users,name,'.$request->id,
+        ]);
+
+        if($validator->fails()) 
+        {     
+            return response()->json([
+            'data' => $validator->errors()
+        ], HttpResponse::HTTP_BAD_REQUEST);
+        
+        } 
         
         $user = User::findOrFail($request->id);
         
         $request['password'] = isset($request['password']) ? bcrypt($request['password']) : $user->password;
     
         $user->update($request->all());
+
+        if($request->hasFile('avatar')) $user->addMedia($request->avatar)->toMediaCollection('avatar');
 
         return $this->jsonResponse('Registro actualizado correctamente', compact('user'), Response::HTTP_OK);
     }
@@ -107,14 +120,15 @@ class UserController extends Controller
      * Remove the specified resource from storage.
      */
     public function destroy(string $id)
-    {
-        $user = User::findOrFail($id);
+    {        
+        $user = User::find($id);
 
-        if($user->id != 1){
+
+        if($user && $user->id != 1){
             $user->delete();
         }
 
-        return $this->jsonResponse('Registro eliminado correctamente', compact('user'), Response::HTTP_OK);
+        return $this->jsonResponse('Registro eliminado correctamente', 200, Response::HTTP_OK);
     }
     public function login(Request $request)
     {
