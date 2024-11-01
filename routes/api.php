@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\BaseController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\PublicationController;
 use App\Http\Controllers\UserController;
@@ -9,6 +10,7 @@ use Database\Seeders\PublicationSeeder;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Route;
+use Monolog\Handler\RotatingFileHandler;
 use NunoMaduro\Collision\Writer;
 use Spatie\Permission\Models\Role;
 
@@ -42,9 +44,9 @@ Route::post('/users', [UserController::class, 'store']);
 Route::middleware(['auth:sanctum'])->group(function(){
 
     Route::prefix('/users')->group(function(){
-        Route::get('/',  [UserController::class, 'index'])->middleware([\Illuminate\Auth\Middleware\Authorize::using('users.get')]);
+        // Route::get('/',  [UserController::class, 'index'])->middleware([\Illuminate\Auth\Middleware\Authorize::using('users.get')]);
         Route::put('/{id}',  [UserController::class, 'update'])->middleware([\Illuminate\Auth\Middleware\Authorize::using('users.edit')]);
-        Route::get('/get/{id}', [UserController::class, 'get'])->middleware([\Illuminate\Auth\Middleware\Authorize::using('users.get')]);
+        // Route::get('/get/{id}', [UserController::class, 'get'])->middleware([\Illuminate\Auth\Middleware\Authorize::using('users.get')]);
         Route::delete('/{id}', [UserController::class, 'destroy'])->middleware([\Illuminate\Auth\Middleware\Authorize::using('users.destroy')]);
     });
 
@@ -63,6 +65,16 @@ Route::middleware(['auth:sanctum'])->group(function(){
         Route::get('/get/{id}', [PublicationController::class, 'get']);
         Route::delete('/{id}', [PublicationController::class, 'destroy']);
     });
+
+
+    Route::controller(BaseController::class)->prefix('tags')->group(function(){
+        Route::get('/', 'index');
+        Route::post('/', 'store');
+        Route::put('/', 'update');;
+        Route::get('/get/{id}', 'get');
+        Route::delete('/{id}', 'destroy');
+    });
+
 });
 
 Route::get('/roles', function(){

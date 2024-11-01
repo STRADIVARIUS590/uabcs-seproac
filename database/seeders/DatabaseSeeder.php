@@ -25,7 +25,10 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             ProjectSeeder::class,
             PublicationSeeder::class,
-            PermissionSeeder::class
+            PermissionSeeder::class,
+
+            TagSeeder::class
+            
         ]);
 
         Context::flush();

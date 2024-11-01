@@ -44,7 +44,39 @@ class PermissionSeeder extends Seeder
                 'roles' => [
                     'Sistemas'
                 ]
-            ]
+            ],
+
+            
+
+
+            [
+                'name' => 'tags.add',
+                'roles' => [
+                    'Sistemas',
+                    'Admin'
+                ],
+                'name' => 'tags.get',
+                'roles' => [
+                    'Sistemas',
+                    'Admin'
+                ]
+            ],
+            [
+                'name' => 'tags.destroy',
+                'roles' => [
+                    'Sistemas'
+                ]
+            ],
+            [
+                'name' => 'tags.edit',
+                'roles' => [
+                    'Sistemas'
+                ]
+            ],
+
+
+
+
         ];
         $role_sistemas = Role::create(['name' => 'Sistemas', 
         // 'guard_name'=> 'api'

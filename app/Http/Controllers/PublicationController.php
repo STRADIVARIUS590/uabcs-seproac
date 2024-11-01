@@ -32,7 +32,6 @@ class PublicationController extends Controller
      */
     public function store(Request $request)
     {
-
         $publication = Publication::create($request->all());
 
         $request['fileable_type'] = Publication::class;

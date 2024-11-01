@@ -54,12 +54,10 @@
 									}
 								],
 								"url": {
-									"raw": "http://localhost:8000/api/users",
-									"protocol": "http",
+									"raw": "{{host}}/api/users",
 									"host": [
-										"localhost"
+										"{{host}}"
 									],
-									"port": "8000",
 									"path": [
 										"api",
 										"users"
@@ -167,12 +165,10 @@
 									}
 								},
 								"url": {
-									"raw": "http://localhost:8000/api/users",
-									"protocol": "http",
+									"raw": "{{host}}/api/users",
 									"host": [
-										"localhost"
+										"{{host}}"
 									],
-									"port": "8000",
 									"path": [
 										"api",
 										"users"
@@ -352,12 +348,10 @@
 									]
 								},
 								"url": {
-									"raw": "http://localhost:8000/api/users",
-									"protocol": "http",
+									"raw": "{{host}}/api/users",
 									"host": [
-										"localhost"
+										"{{host}}"
 									],
-									"port": "8000",
 									"path": [
 										"api",
 										"users"
@@ -452,12 +446,10 @@
 									}
 								],
 								"url": {
-									"raw": "http://localhost:8000/api/users/get/1",
-									"protocol": "http",
+									"raw": "{{host}}/api/users/get/1",
 									"host": [
-										"localhost"
+										"{{host}}"
 									],
-									"port": "8000",
 									"path": [
 										"api",
 										"users",
@@ -550,12 +542,10 @@
 									}
 								],
 								"url": {
-									"raw": "http://localhost:8000/api/users/3",
-									"protocol": "http",
+									"raw": "{{host}}/api/users/3",
 									"host": [
-										"localhost"
+										"{{host}}"
 									],
-									"port": "8000",
 									"path": [
 										"api",
 										"users",
@@ -651,12 +641,10 @@
 									}
 								],
 								"url": {
-									"raw": "http://localhost:8000/api/projects",
-									"protocol": "http",
+									"raw": "{{host}}/api/projects",
 									"host": [
-										"localhost"
+										"{{host}}"
 									],
-									"port": "8000",
 									"path": [
 										"api",
 										"projects"
@@ -836,12 +824,10 @@
 									]
 								},
 								"url": {
-									"raw": "http://localhost:8000/api/projects",
-									"protocol": "http",
+									"raw": "{{host}}/api/projects",
 									"host": [
-										"localhost"
+										"{{host}}"
 									],
-									"port": "8000",
 									"path": [
 										"api",
 										"projects"
@@ -998,6 +984,103 @@
 					]
 				},
 				{
+					"name": "get",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{auth_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{host}}/api/projects/get/1",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"projects",
+								"get",
+								"1"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "get",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{host}}/api/projects/get/1",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"projects",
+										"get",
+										"1"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Host",
+									"value": "localhost:8000"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.2.12"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 28 Sep 2024 04:52:56 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Registro consultado correctamente\",\n    \"data\": {\n        \"project\": {\n            \"id\": 1,\n            \"user_id\": 1,\n            \"name\": \"RESEARCH _66f789519237e\",\n            \"description\": \"Incidunt.\",\n            \"objetives\": \"Qui.\",\n            \"colaborators\": \"Facere.\",\n            \"start_date\": \"2014-09-28\",\n            \"end_date\": \"2024-09-28\",\n            \"type\": null,\n            \"period\": null,\n            \"created_at\": \"2024-09-28T04:42:57.000000Z\",\n            \"updated_at\": \"2024-09-28T04:42:57.000000Z\",\n            \"deleted_at\": null\n        }\n    }\n}"
+						}
+					]
+				},
+				{
 					"name": "delete",
 					"request": {
 						"auth": {
@@ -1089,6 +1172,1234 @@
 							],
 							"cookie": [],
 							"body": "{\n    \"message\": \"Registro eliminado correctamente\",\n    \"data\": []\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Publiations",
+			"item": [
+				{
+					"name": "index",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{auth_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{host}}/api/publications",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"publications"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "index",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{host}}/api/publications",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"publications"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Host",
+									"value": "localhost:8000"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.2.12"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 28 Sep 2024 04:31:32 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Registro consultado correctamente\",\n    \"data\": {\n        \"publications\": [\n            {\n                \"id\": 1,\n                \"title\": \"PUBLICATION 66f7848236618\",\n                \"user_id\": 1,\n                \"type\": \"A\",\n                \"issn-isbn\": \"qrpyW2eeL6\",\n                \"doi\": \"Bdyas7XAcq\",\n                \"magazine_name\": \"Science\",\n                \"authors\": \"Ricardo Rodriguez IV\",\n                \"publication_date\": \"1994-09-30 10:30:08\",\n                \"period\": \"Period\",\n                \"deleted_at\": null,\n                \"created_at\": \"2024-09-28T04:22:26.000000Z\",\n                \"updated_at\": \"2024-09-28T04:22:26.000000Z\"\n            }\n        ]\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "store",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{auth_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "title",
+									"value": "{{$randomCatchPhraseAdjective}}",
+									"type": "text"
+								},
+								{
+									"key": "user_id",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "issn-isbn",
+									"value": "{{$guid}}",
+									"type": "text"
+								},
+								{
+									"key": "doi",
+									"value": "{{$guid}}",
+									"type": "text"
+								},
+								{
+									"key": "magazine_name",
+									"value": "The {{$randomCity}} Journal",
+									"type": "text"
+								},
+								{
+									"key": "authors",
+									"value": "{{$randomFullName}} , {{$randomFullName}}",
+									"type": "text"
+								},
+								{
+									"key": "publication_date",
+									"value": "2023-09-09",
+									"type": "text"
+								},
+								{
+									"key": "period",
+									"value": "{{$guid}}",
+									"type": "text"
+								},
+								{
+									"key": "files[]",
+									"type": "file",
+									"src": "/C:/Users/office depot/Desktop/Captura de pantalla 2023-10-06 204312.png"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{host}}/api/publications",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"publications"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "store",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "title",
+											"value": "{{$randomCatchPhraseAdjective}}",
+											"type": "text"
+										},
+										{
+											"key": "user_id",
+											"value": "1",
+											"type": "text"
+										},
+										{
+											"key": "issn-isbn",
+											"value": "{{$guid}}",
+											"type": "text"
+										},
+										{
+											"key": "doi",
+											"value": "{{$guid}}",
+											"type": "text"
+										},
+										{
+											"key": "magazine_name",
+											"value": "The {{$randomCity}} Journal",
+											"type": "text"
+										},
+										{
+											"key": "authors",
+											"value": "{{$randomFullName}} , {{$randomFullName}}",
+											"type": "text"
+										},
+										{
+											"key": "publication_date",
+											"value": "2023-09-09",
+											"type": "text"
+										},
+										{
+											"key": "period",
+											"value": "{{$guid}}",
+											"type": "text"
+										},
+										{
+											"key": "files[]",
+											"type": "file",
+											"src": "/C:/Users/office depot/Desktop/Captura de pantalla 2023-10-06 204312.png"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{host}}/api/publications",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"publications"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Host",
+									"value": "localhost:8000"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.2.12"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 28 Sep 2024 04:51:22 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Registro creado correctamente\",\n    \"data\": {\n        \"publication\": {\n            \"title\": \"Synergistic\",\n            \"user_id\": \"1\",\n            \"issn-isbn\": \"6a9f1318-21d2-4178-b1cd-1640050771c1\",\n            \"doi\": \"1f936b23-4d0e-40d1-9cf1-3151b64a9882\",\n            \"magazine_name\": \"The Port Lucileport Journal\",\n            \"authors\": \"Edith Treutel MD , Pat Waters\",\n            \"publication_date\": \"2023-09-09\",\n            \"period\": \"da0c690e-de93-4156-a73d-d94617b2bc1c\",\n            \"updated_at\": \"2024-09-28T04:51:22.000000Z\",\n            \"created_at\": \"2024-09-28T04:51:22.000000Z\",\n            \"id\": 18\n        }\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "update",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{auth_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\":18,\r\n    \"title\":\"Synergistic\",\r\n    \"user_id\":1,\r\n    \"type\":null,\r\n    \"issn-isbn\":\"6a9f1318-21d2-4178-b1cd-1640050771c1\",\r\n    \"doi\":\"1f936b23-4d0e-40d1-9cf1-3151b64a9882\",\r\n    \"magazine_name\":\"The Port Lucileport Journal\",\r\n    \"authors\":\"Edith Treutel MD , Pat Waters\",\r\n    \"publication_date\":\"2023-09-09 00:00:00\",\r\n    \"period\":\"da0c690e-de93-4156-a73d-d94617b2bc1c\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/api/publications",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"publications"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "New Request",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\":18,\r\n    \"title\":\"Synergistic\",\r\n    \"user_id\":1,\r\n    \"type\":null,\r\n    \"issn-isbn\":\"6a9f1318-21d2-4178-b1cd-1640050771c1\",\r\n    \"doi\":\"1f936b23-4d0e-40d1-9cf1-3151b64a9882\",\r\n    \"magazine_name\":\"The Port Lucileport Journal\",\r\n    \"authors\":\"Edith Treutel MD , Pat Waters\",\r\n    \"publication_date\":\"2023-09-09 00:00:00\",\r\n    \"period\":\"da0c690e-de93-4156-a73d-d94617b2bc1c\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/api/publications",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"publications"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Host",
+									"value": "localhost:8000"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.2.12"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 28 Sep 2024 05:04:10 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Registro actualizado correctamente\",\n    \"data\": {\n        \"publication\": {\n            \"id\": 18,\n            \"title\": \"Synergistic\",\n            \"user_id\": 1,\n            \"type\": null,\n            \"issn-isbn\": \"6a9f1318-21d2-4178-b1cd-1640050771c1\",\n            \"doi\": \"1f936b23-4d0e-40d1-9cf1-3151b64a9882\",\n            \"magazine_name\": \"The Port Lucileport Journal\",\n            \"authors\": \"Edith Treutel MD , Pat Waters\",\n            \"publication_date\": \"2023-09-09 00:00:00\",\n            \"period\": \"da0c690e-de93-4156-a73d-d94617b2bc1c\",\n            \"created_at\": \"2024-09-28T04:51:22.000000Z\",\n            \"updated_at\": \"2024-09-28T04:51:22.000000Z\",\n            \"deleted_at\": null\n        }\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "delete",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{auth_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{host}}/api/publications/1",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"publications",
+								"1"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "delete",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{host}}/api/publications/1",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"publications",
+										"1"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Host",
+									"value": "localhost:8000"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.2.12"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 28 Sep 2024 05:08:08 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Registro eliminado correctamente\",\n    \"data\": []\n}"
+						}
+					]
+				},
+				{
+					"name": "get",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{auth_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/api/publications/get/2",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"publications",
+								"get",
+								"2"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "get",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{host}}/api/publications/get/2",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"publications",
+										"get",
+										"2"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Host",
+									"value": "localhost:8000"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.2.12"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 28 Sep 2024 05:09:11 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Registro consultado correctamente\",\n    \"data\": {\n        \"publication\": {\n            \"id\": 2,\n            \"title\": \"Estudio sobre la moticacion docente\",\n            \"user_id\": 1,\n            \"type\": null,\n            \"issn-isbn\": \"713dbe1e-a5ad-41e6-a76b-0153d4cee89c\",\n            \"doi\": \"59aed4f6-9321-4461-87a6-d8863c72bb71\",\n            \"magazine_name\": \"The Kelsietown Journal\",\n            \"authors\": \"Katherine Turcotte , Marvin Johnston\",\n            \"publication_date\": \"2023-09-09 00:00:00\",\n            \"period\": null,\n            \"created_at\": \"2024-09-28T04:46:16.000000Z\",\n            \"updated_at\": \"2024-09-28T04:46:16.000000Z\",\n            \"deleted_at\": null\n        }\n    }\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Tags",
+			"item": [
+				{
+					"name": "index",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{host}}/api/tags",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"tags"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "index",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{host}}/api/tags",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"tags"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Host",
+									"value": "localhost:8000"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.2.12"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 01 Nov 2024 03:06:55 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Registron consultado correctamente\",\n    \"data\": [\n        {\n            \"name\": \"Publicacion\",\n            \"slug\": \"publicacion\"\n        },\n        {\n            \"name\": \"Congreso\",\n            \"slug\": \"congreso\"\n        },\n        {\n            \"name\": \"Disertacion\",\n            \"slug\": \"disertacion\"\n        },\n        {\n            \"name\": \"Tesis\",\n            \"slug\": \"tesis\"\n        },\n        {\n            \"name\": \"Proyectos Academicos\",\n            \"slug\": \"proyectos-academicos\"\n        }\n    ]\n}"
+						}
+					]
+				},
+				{
+					"name": "create",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "Sistemas de Informacionqwe",
+									"type": "text"
+								},
+								{
+									"key": "slug",
+									"value": "qlwekqwe",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{host}}/api/tags",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"tags"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "creat",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "name",
+											"value": "Sistemas de Informacionqwe",
+											"type": "text"
+										},
+										{
+											"key": "slug",
+											"value": "qlwekqwe",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{host}}/api/tags",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"tags"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Host",
+									"value": "localhost:8000"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.2.12"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 01 Nov 2024 02:33:04 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Registro creado correctamente\",\n    \"data\": {\n        \"name\": \"Sistemas de Informacionqwe\",\n        \"slug\": \"qlwekqwe\",\n        \"updated_at\": \"2024-11-01T02:33:04.000000Z\",\n        \"created_at\": \"2024-11-01T02:33:04.000000Z\",\n        \"id\": 7\n    }\n}"
+						},
+						{
+							"name": "create",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "name",
+											"value": "Sistemas de Informacionqwe",
+											"type": "text"
+										},
+										{
+											"key": "slug",
+											"value": "qlwekqwe",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{host}}/api/tags",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"tags"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Host",
+									"value": "localhost:8000"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.2.12"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 01 Nov 2024 03:07:16 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Registro creado correctamente\",\n    \"data\": {\n        \"name\": \"Sistemas de Informacionqwe\",\n        \"slug\": \"qlwekqwe\",\n        \"updated_at\": \"2024-11-01T03:07:15.000000Z\",\n        \"created_at\": \"2024-11-01T03:07:15.000000Z\",\n        \"id\": 7\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "update",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\" : 2,\r\n    \"name\": \"Sistemas de Informacion\",\r\n    \"slug\": \"STS\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/api/tags",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"tags"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "update",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\" : 1,\r\n    \"name\": \"Sistemas de Informacion\",\r\n    \"slug\": \"STS\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/api/tags",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"tags"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Host",
+									"value": "localhost:8000"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.2.12"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 01 Nov 2024 02:42:45 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Registro actualizado correctamente\",\n    \"data\": {\n        \"id\": 1,\n        \"name\": \"Sistemas de Informacion\",\n        \"slug\": \"STS\",\n        \"created_at\": \"2024-11-01T01:50:51.000000Z\",\n        \"updated_at\": \"2024-11-01T02:42:45.000000Z\",\n        \"deleted_at\": null\n    }\n}"
+						},
+						{
+							"name": "update",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\" : 2,\r\n    \"name\": \"Sistemas de Informacion\",\r\n    \"slug\": \"STS\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/api/tags",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"tags"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Host",
+									"value": "localhost:8000"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.2.12"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 01 Nov 2024 03:07:41 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Registro actualizado correctamente\",\n    \"data\": {\n        \"id\": 2,\n        \"name\": \"Sistemas de Informacion\",\n        \"slug\": \"STS\",\n        \"created_at\": \"2024-11-01T03:06:19.000000Z\",\n        \"updated_at\": \"2024-11-01T03:07:41.000000Z\",\n        \"deleted_at\": null\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "get",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{host}}/api/tags/get/3",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"tags",
+								"get",
+								"3"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "get",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{host}}/api/tags/get/1",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"tags",
+										"get",
+										"1"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Host",
+									"value": "localhost:8000"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.2.12"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 01 Nov 2024 02:46:52 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Registro consultado correctamente\",\n    \"data\": {\n        \"id\": 1,\n        \"name\": \"Sistemas de Informacion\",\n        \"slug\": \"STS\",\n        \"created_at\": \"2024-11-01T01:50:51.000000Z\",\n        \"updated_at\": \"2024-11-01T02:42:45.000000Z\",\n        \"deleted_at\": null\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "delete",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{host}}/api/tags/1",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"tags",
+								"1"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "delete",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{host}}/api/tags/1",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"tags",
+										"1"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Host",
+									"value": "localhost:8000"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.2.12"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 01 Nov 2024 03:06:38 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Registro elimonado correctamente\",\n    \"data\": {\n        \"id\": 1,\n        \"name\": \"Sistemas de Informacion\",\n        \"slug\": \"sistemas-de-informacion\",\n        \"created_at\": \"2024-11-01T03:06:19.000000Z\",\n        \"updated_at\": \"2024-11-01T03:06:19.000000Z\",\n        \"deleted_at\": null\n    }\n}"
 						}
 					]
 				}
