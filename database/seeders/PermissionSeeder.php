@@ -76,6 +76,34 @@ class PermissionSeeder extends Seeder
 
 
 
+                     [
+                'name' => 'congresses.add',
+                'roles' => [
+                    'Sistemas',
+                    'Admin'
+                ],
+                'name' => 'congresses.get',
+                'roles' => [
+                    'Sistemas',
+                    'Admin'
+                ]
+            ],
+            [
+                'name' => 'congresses.destroy',
+                'roles' => [
+                    'Sistemas'
+                ]
+            ],
+            [
+                'name' => 'congresses.edit',
+                'roles' => [
+                    'Sistemas'
+                ]
+            ],
+
+
+
+
 
         ];
         $role_sistemas = Role::create(['name' => 'Sistemas', 

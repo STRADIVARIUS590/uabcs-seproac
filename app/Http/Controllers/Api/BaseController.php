@@ -20,6 +20,7 @@ class BaseController extends Controller implements HasMiddleware
         $base_name = basename(
                 preg_replace('/\/get\/(\d+)|\/(\d+)$/', '',request()->url()));
         // $model = "App\Models\\".Str::singular(ucwords($base_name));
+        error_log($base_name);
         return [
             'index' => 'permission:'.$base_name.'.get',
             'get' => 'permission:'.$base_name.'.get',

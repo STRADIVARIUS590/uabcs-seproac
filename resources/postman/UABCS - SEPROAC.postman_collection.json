@@ -2404,6 +2404,356 @@
 					]
 				}
 			]
+		},
+		{
+			"name": "Congresses",
+			"item": [
+				{
+					"name": "index",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{host}}/api/congresses",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"congresses"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "post",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\":1,\r\n    \"title_trabajo\":\"Estudio sobre  el rendimiento de Laa91638\",\r\n    \"user_id\":1,\r\n    \"event_name\":\"Congreso sobre Narices\",\r\n    \"date\":\"2022-12-14\",\r\n    \"colaborators\":3\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/api/congresses",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"congresses"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "update",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\":1,\r\n    \"title_trabajo\":\"Estudio sobre  el rendimiento de Laa91638\",\r\n    \"user_id\":1,\r\n    \"event_name\":\"Congreso sobre Narices\",\r\n    \"date\":\"2022-12-14\",\r\n    \"colaborators\":3\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/api/congresses",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"congresses"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Host",
+									"value": "localhost:8000"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.2.12"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 01 Nov 2024 03:45:25 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Registro actualizado correctamente\",\n    \"data\": {\n        \"id\": 1,\n        \"title_trabajo\": \"Estudio sobre  el rendimiento de Laa91638\",\n        \"user_id\": 1,\n        \"event_name\": \"Congreso sobre Narices\",\n        \"date\": \"2022-12-14\",\n        \"colaborators\": 3,\n        \"created_at\": \"2024-11-01T03:38:02.000000Z\",\n        \"updated_at\": \"2024-11-01T03:45:25.000000Z\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "get",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{host}}/api/congresses/get/1",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"congresses",
+								"get",
+								"1"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "get",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{host}}/api/congresses/get/1",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"congresses",
+										"get",
+										"1"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Host",
+									"value": "localhost:8000"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.2.12"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 01 Nov 2024 03:46:31 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Registro consultado correctamente\",\n    \"data\": {\n        \"id\": 1,\n        \"title_trabajo\": \"Estudio sobre  el rendimiento de Laa91638\",\n        \"user_id\": 1,\n        \"event_name\": \"Congreso sobre Narices\",\n        \"date\": \"2022-12-14\",\n        \"colaborators\": 3,\n        \"created_at\": \"2024-11-01T03:38:02.000000Z\",\n        \"updated_at\": \"2024-11-01T03:45:25.000000Z\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "delete",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{host}}/api/congresses/3",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"congresses",
+								"3"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "delete",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{host}}/api/congresses/3",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"api",
+										"congresses",
+										"3"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Host",
+									"value": "localhost:8000"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.2.12"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 01 Nov 2024 03:48:17 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Registro elimonado correctamente\",\n    \"data\": {\n        \"id\": 3,\n        \"title_trabajo\": \"Estudio sobre  el rendimiento de Las clases virtuales _ 67244d1a91728\",\n        \"user_id\": 1,\n        \"event_name\": \"Congreso sobre Narices\",\n        \"date\": \"2017-01-20\",\n        \"colaborators\": 3,\n        \"created_at\": \"2024-11-01T03:38:02.000000Z\",\n        \"updated_at\": \"2024-11-01T03:38:02.000000Z\"\n    }\n}"
+						}
+					]
+				}
+			]
 		}
 	],
 	"variable": [

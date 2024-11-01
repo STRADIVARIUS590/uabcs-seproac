@@ -2,6 +2,7 @@
 
 namespace App\Traits;
 
+use App\Models\Congress;
 use App\Models\Tag;
 use Illuminate\Support\Facades\Validator;
 
@@ -22,6 +23,14 @@ class Validates
                 'name' => 'required|unique:tags,name',
                 'slug' => 'required|unique:tags,name',
 
+        ],
+        Congress::class => [
+                // 'name' => 'required',
+                'user_id' => 'required|exists:users,id',
+                'date' => 'required|date',
+                'colaborators' => 'required|integer',
+                'title_trabajo' => 'required',
+                'event_name' => 'required'
             ]
         };
 
@@ -30,11 +39,12 @@ class Validates
     public function update_rules()
     {
         return match($this->model){
-        Tag::class => [
+        Tag::class => array_merge($this->create_rules(), [
                 'name' => 'required|unique:tags,name,'.$this->request->id,      
                 'slug' => 'required|unique:tags,slug,'.$this->request->id,      
-            ]
-        };
+        ]),
+
+        Congress::class => array_merge($this->create_rules(), [  ])};
 
     }
 

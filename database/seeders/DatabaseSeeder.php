@@ -27,7 +27,8 @@ class DatabaseSeeder extends Seeder
             PublicationSeeder::class,
             PermissionSeeder::class,
 
-            TagSeeder::class
+            TagSeeder::class,
+            CongressSeeder::class
             
         ]);
 

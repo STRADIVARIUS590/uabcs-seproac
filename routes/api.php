@@ -75,6 +75,14 @@ Route::middleware(['auth:sanctum'])->group(function(){
         Route::delete('/{id}', 'destroy');
     });
 
+
+    Route::controller(BaseController::class)->prefix('congresses')->group(function(){
+        Route::get('/', 'index');
+        Route::post('/', 'store');
+        Route::put('/', 'update');
+        Route::get('/get/{id}', 'get');
+        Route::delete('/{id}', 'destroy');
+    });
 });
 
 Route::get('/roles', function(){
