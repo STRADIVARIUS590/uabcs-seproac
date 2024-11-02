@@ -44,33 +44,51 @@ Route::post('/users', [UserController::class, 'store']);
 Route::middleware(['auth:sanctum'])->group(function(){
 
     Route::prefix('/users')->group(function(){
-        // Route::get('/',  [UserController::class, 'index'])->middleware([\Illuminate\Auth\Middleware\Authorize::using('users.get')]);
+        Route::get('/',  [UserController::class, 'index'])->middleware([\Illuminate\Auth\Middleware\Authorize::using('users.get')]);
         Route::put('/{id}',  [UserController::class, 'update'])->middleware([\Illuminate\Auth\Middleware\Authorize::using('users.edit')]);
-        // Route::get('/get/{id}', [UserController::class, 'get'])->middleware([\Illuminate\Auth\Middleware\Authorize::using('users.get')]);
+        Route::get('/get/{id}', [UserController::class, 'get'])->middleware([\Illuminate\Auth\Middleware\Authorize::using('users.get')]);
         Route::delete('/{id}', [UserController::class, 'destroy'])->middleware([\Illuminate\Auth\Middleware\Authorize::using('users.destroy')]);
     });
 
-    Route::prefix('/projects')->group(function(){
-        Route::get('/', [ProjectController::class, 'index']);
-        Route::post('/', [ProjectController::class, 'store']);
-        Route::put('/', [ProjectController::class, 'update']);
-        Route::get('/get/{id}', [ProjectController::class, 'get']);
-        Route::delete('/{id}', [ProjectController::class, 'destroy']);
+    // Route::prefix('/projects')->group(function(){
+    //     Route::get('/', [ProjectController::class, 'index']);
+    //     Route::post('/', [ProjectController::class, 'store']);
+    //     Route::put('/', [ProjectController::class, 'update']);
+    //     Route::get('/get/{id}', [ProjectController::class, 'get']);
+    //     Route::delete('/{id}', [ProjectController::class, 'destroy']);
+    // });
+
+    // Route::prefix('/publications')->group(function(){
+    //     Route::get('/', [PublicationController::class, 'index']);
+    //     Route::post('/', [PublicationController::class, 'store']);
+    //     Route::put('/', [PublicationController::class, 'update']);
+    //     Route::get('/get/{id}', [PublicationController::class, 'get']);
+    //     Route::delete('/{id}', [PublicationController::class, 'destroy']);
+    // });
+
+    Route::controller(BaseController::class)->prefix('projects')->group(function(){
+        Route::get('/', 'index');
+        Route::post('/', 'store');
+        Route::put('/', 'update');
+        Route::get('/get/{id}', 'get');
+        Route::delete('/{id}', 'destroy');
     });
 
-    Route::prefix('/publications')->group(function(){
-        Route::get('/', [PublicationController::class, 'index']);
-        Route::post('/', [PublicationController::class, 'store']);
-        Route::put('/', [PublicationController::class, 'update']);
-        Route::get('/get/{id}', [PublicationController::class, 'get']);
-        Route::delete('/{id}', [PublicationController::class, 'destroy']);
+
+    Route::controller(BaseController::class)->prefix('publications')->group(function(){
+        Route::get('/', 'index');
+        Route::post('/', 'store');
+        Route::put('/', 'update');
+        Route::get('/get/{id}', 'get');
+        Route::delete('/{id}', 'destroy');
     });
+
 
 
     Route::controller(BaseController::class)->prefix('tags')->group(function(){
         Route::get('/', 'index');
         Route::post('/', 'store');
-        Route::put('/', 'update');;
+        Route::put('/', 'update');
         Route::get('/get/{id}', 'get');
         Route::delete('/{id}', 'destroy');
     });
@@ -83,6 +101,34 @@ Route::middleware(['auth:sanctum'])->group(function(){
         Route::get('/get/{id}', 'get');
         Route::delete('/{id}', 'destroy');
     });
+
+    Route::controller(BaseController::class)->prefix('academic-grades')->group(function(){
+        Route::get('/', 'index');
+        Route::post('/', 'store');
+        Route::put('/', 'update');
+        Route::get('/get/{id}', 'get');
+        Route::delete('/{id}', 'destroy');
+    });
+
+      Route::controller(BaseController::class)->prefix('institutions')->group(function(){
+        Route::get('/', 'index');
+        Route::post('/', 'store');
+        Route::put('/', 'update');
+        Route::get('/get/{id}', 'get');
+        Route::delete('/{id}', 'destroy');
+    });
+
+
+    Route::controller(BaseController::class)->prefix('courses')->group(function(){
+        Route::get('/', 'index');
+        Route::post('/', 'store');
+        Route::put('/', 'update');
+        Route::get('/get/{id}', 'get');
+        Route::delete('/{id}', 'destroy');
+    });
+
+
+    // Route::controller(BaseController::class)->prefix('')
 });
 
 Route::get('/roles', function(){

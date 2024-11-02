@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('doi')->nullable();
             $table->string('magazine_name')->nullable();
             $table->string('authors')->nullable();
-            $table->dateTime('publication_date')->nullable();
+            $table->date('publication_date')->nullable();
             $table->string('period')->nullable();
             $table->timestamps();
             $table->softDeletes();

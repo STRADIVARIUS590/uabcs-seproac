@@ -88,4 +88,9 @@ class User extends Authenticatable implements HasMedia
     {
         return $this->belongsTo(Role::class);
     }
+
+    public function academic_grades()
+    {
+        return $this->hasMany(AcademicGrade::class);
+    }
 }

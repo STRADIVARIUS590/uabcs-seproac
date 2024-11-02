@@ -21,85 +21,115 @@ class PermissionSeeder extends Seeder
     {
 
         $permissions = [
-            [
-                'name' => 'users.add',
-                'roles' => [
-                    'Sistemas',
-                    'Admin'
-                ],
-                'name' => 'users.get',
-                'roles' => [
-                    'Sistemas',
-                    'Admin'
-                ]
+            [   'name' => 'users.add',
+                'roles' => [ 'Sistemas', 'Admin' ],
             ],
-            [
-                'name' => 'users.destroy',
-                'roles' => [
-                    'Sistemas'
-                ]
+            [   'name' => 'users.get',
+                'roles' => [ 'Sistemas', 'Admin' ]
             ],
-            [
-                'name' => 'users.edit',
-                'roles' => [
-                    'Sistemas'
-                ]
-            ],
-
+            [   'name' => 'users.destroy',
+                'roles' => [ 'Sistemas' ] ],
+            [   'name' => 'users.edit',
+                'roles' => [ 'Sistemas' ] ],
             
 
 
-            [
-                'name' => 'tags.add',
-                'roles' => [
-                    'Sistemas',
-                    'Admin'
-                ],
-                'name' => 'tags.get',
-                'roles' => [
-                    'Sistemas',
-                    'Admin'
-                ]
+            [   'name' => 'tags.add',
+                'roles' => [ 'Sistemas', 'Admin' ] 
             ],
-            [
-                'name' => 'tags.destroy',
-                'roles' => [
-                    'Sistemas'
-                ]
+            [   'name' => 'tags.get',
+                'roles' => [ 'Sistemas', 'Admin' ]
             ],
-            [
-                'name' => 'tags.edit',
-                'roles' => [
-                    'Sistemas'
-                ]
+            [   'name' => 'tags.destroy',
+                'roles' => [ 'Sistemas' ]
+            ],
+            [   'name' => 'tags.edit',
+                'roles' => [ 'Sistemas' ]
             ],
 
 
 
-                     [
-                'name' => 'congresses.add',
-                'roles' => [
-                    'Sistemas',
-                    'Admin'
-                ],
+            [   'name' => 'congresses.add',
+                'roles' => [ 'Sistemas', 'Admin' ],
                 'name' => 'congresses.get',
-                'roles' => [
-                    'Sistemas',
-                    'Admin'
-                ]
             ],
-            [
-                'name' => 'congresses.destroy',
-                'roles' => [
-                    'Sistemas'
-                ]
+            [   'name' => 'congresses.destroy',
+                'roles' => [ 'Sistemas' ]
             ],
-            [
-                'name' => 'congresses.edit',
-                'roles' => [
-                    'Sistemas'
-                ]
+            [   'name' => 'congresses.edit',
+                'roles' => [ 'Sistemas' ]
             ],
+
+
+            [   'name' => 'academic-grades.add',
+                'roles' => [ 'Sistemas', 'Admin' ],
+            ],
+             [   'name' => 'academic-grades.get',
+                'roles' => [ 'Sistemas' ]
+            ],
+            [   'name' => 'academic-grades.destroy',
+                'roles' => [ 'Sistemas' ]
+            ],
+            [   'name' => 'academic-grades.edit',
+                'roles' => [ 'Sistemas' ]
+            ],
+
+            
+            [   'name' => 'institutions.add',
+                'roles' => [ 'Sistemas', 'Admin' ],
+            ],
+             [   'name' => 'institutions.get',
+                'roles' => [ 'Sistemas' ]
+            ],
+            [   'name' => 'institutions.destroy',
+                'roles' => [ 'Sistemas' ]
+            ],
+            [   'name' => 'institutions.edit',
+                'roles' => [ 'Sistemas' ]
+            ],
+
+
+            [   'name' => 'publications.add',
+                'roles' => [ 'Sistemas', 'Admin' ],
+            ],
+             [   'name' => 'publications.get',
+                'roles' => [ 'Sistemas' ]
+            ],
+            [   'name' => 'publications.destroy',
+                'roles' => [ 'Sistemas' ]
+            ],
+            [   'name' => 'publications.edit',
+                'roles' => [ 'Sistemas' ]
+            ],
+
+            [   'name' => 'projects.add',
+                'roles' => [ 'Sistemas', 'Admin' ],
+            ],
+             [   'name' => 'projects.get',
+                'roles' => [ 'Sistemas' ]
+            ],
+            [   'name' => 'projects.destroy',
+                'roles' => [ 'Sistemas' ]
+            ],
+            [   'name' => 'projects.edit',
+                'roles' => [ 'Sistemas' ]
+            ],
+
+
+
+            [   'name' => 'courses.add',
+                'roles' => [ 'Sistemas', 'Admin' ],
+            ],
+             [   'name' => 'courses.get',
+                'roles' => [ 'Sistemas' ]
+            ],
+            [   'name' => 'courses.destroy',
+                'roles' => [ 'Sistemas' ]
+            ],
+            [   'name' => 'courses.edit',
+                'roles' => [ 'Sistemas' ]
+            ],
+
 
 
 

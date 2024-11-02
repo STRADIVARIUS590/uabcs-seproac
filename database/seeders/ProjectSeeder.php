@@ -24,7 +24,6 @@ class ProjectSeeder extends Seeder
                 'start_date' => now()->subYears(10),
                 'end_date' => now(),
             ]);
-            error_log(json_encode($p));
         }
     }
 }

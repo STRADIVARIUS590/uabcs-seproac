@@ -10,6 +10,9 @@ use Illuminate\Http\Response;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
+use ReflectionClass;
+use Spatie\QueryBuilder\QueryBuilder;
+
 class BaseController extends Controller implements HasMiddleware
 {
     protected $model;
@@ -19,8 +22,6 @@ class BaseController extends Controller implements HasMiddleware
      
         $base_name = basename(
                 preg_replace('/\/get\/(\d+)|\/(\d+)$/', '',request()->url()));
-        // $model = "App\Models\\".Str::singular(ucwords($base_name));
-        error_log($base_name);
         return [
             'index' => 'permission:'.$base_name.'.get',
             'get' => 'permission:'.$base_name.'.get',
@@ -28,14 +29,27 @@ class BaseController extends Controller implements HasMiddleware
             'destroy' => 'permission:'.$base_name.'.destroy'
         ];
     }
+
+    public function model_normalized_name(){
+        $name = basename( preg_replace('/\/get\/(\d+)|\/(\d+)$/', '',request()->url()));
+    
+        return $name;
+    }
     public function __construct(){
 
-        $this->model =  "App\Models\\".Str::singular(ucwords(basename(
-                preg_replace('/\/get\/(\d+)|\/(\d+)$/', '',request()->url()))));
+        $this->model = "App\Models\\".Str::singular(ucwords(basename(
+                preg_replace('/\/get\/(\d+)|\/(\d+)$|-/', '',request()->url()))));
     }
     public function index()
     {
-        $data = $this->model::select((new $this->model)->getFillable())->get();
+        $fields = (new $this->model)->getFillable();
+        $data = QueryBuilder::for($this->model)
+            ->allowedFilters(['id',...$fields])
+            // ->allowedFields(['id', ...$fields])
+            ->allowedSorts(['id',...$fields, 'created_at', 'updated_at', '-created_at'])   
+            ->select('id',...$fields)
+            ->get();
+
 
         return $this->jsonResponse('Registron consultado correctamente', $data, Response::HTTP_OK);
 
@@ -48,6 +62,7 @@ class BaseController extends Controller implements HasMiddleware
 
     public function store(Request $request)
     {
+        // return $this->model;
         try{
             $validator = (new Validates($this->model, $request))->creating()->validator();
 
@@ -56,9 +71,7 @@ class BaseController extends Controller implements HasMiddleware
             }
 
             $model = $this->model::create(
-                $request->only(
-                    (new $this->model)->getFillable()
-                    )
+                $request->only((new $this->model)->getFillable())
                 );
         }catch(Exception $e) {
             return $this->jsonResponse('Ha ocurrido un error', $e->getMessage(), Response::HTTP_OK);
@@ -95,9 +108,7 @@ class BaseController extends Controller implements HasMiddleware
 
 
             $model->update(
-                $request->only(
-                    (new $model)->getFillable()
-                    )
+                $request->only((new $model)->getFillable())
                 );
         }catch(Exception $e) {
             return $this->jsonResponse('Ha ocurrido un error', $e->getMessage(), Response::HTTP_OK);
