@@ -64,9 +64,8 @@ const AddEditForm = () => {
 
     useEffect(() => {
         loadUser();
-    }, []);
+      }, []);
 
-console.log(user);
 
 const initialValues = {
     'name': user?.name??'' ,
@@ -108,7 +107,7 @@ const initialValues = {
     }
   };
 
-  if(isLoading) return <p>Loading</p>;  
+  if(isLoading) return <p>Loading</p>
 
   return (
     <Formik
@@ -116,10 +115,7 @@ const initialValues = {
       validationSchema={validationSchema}
       onSubmit={handleSubmit} 
     >
-      {({
-          isSubmitting,
-        
-        }) => (
+      {({ isSubmitting }) => (
         <Form>
           <input type="hidden"  name='id'/>
           <div>
@@ -134,7 +130,6 @@ const initialValues = {
             <ErrorMessage name="email" component="div" style={{ color: 'red' }} />
           </div>
 
-          {
             <div>
               
               <div>
@@ -149,7 +144,7 @@ const initialValues = {
                 <ErrorMessage name="password_confirmation" component="div" style={{ color: 'red' }} />
               </div>
             </div>
-          }
+          
 
           <div>
             <button type="submit" disabled={isSubmitting}>

@@ -62,9 +62,8 @@ $this->model = 'App\\Models\\' . Str::singular(str_replace(' ', '', ucwords(base
 
     public static function middleware() : array 
     {
-        // obtenemos el nombre del modelo de la url y validamos si tiene permiso
-
         $base_name = basename(preg_replace('/\/get\/(\d+)|\/(\d+)$/', '',request()->url()));
+       
         return [
             'index' => 'permission:'.$base_name.'.get',
             'get' => 'permission:'.$base_name.'.get',
@@ -80,6 +79,7 @@ $this->model = 'App\\Models\\' . Str::singular(str_replace(' ', '', ucwords(base
         $fields = (new $this->model)->getFillable();   
         $data = QueryBuilder::for($this->model)
         ->allowedFilters(['id',...$fields])
+        ->allowedIncludes(['user'])
         // ->allowedFields(['id', ...$fields])
         ->allowedSorts(['id',...$fields, 'created_at', 'updated_at', 'created_at'])   
         ->select('id',...$fields)
@@ -109,14 +109,21 @@ $this->model = 'App\\Models\\' . Str::singular(str_replace(' ', '', ucwords(base
 
     public function get($id)
     {
+        $fields = (new $this->model)->getFillable();   
+      
+        $data = QueryBuilder::for($this->model)
+        ->allowedFilters(['id',...$fields])
+        ->allowedIncludes(['user'])
+        ->select('id',...$fields)
+        ->where('id', $id)
+        ->firstOrFail();
 
-        $model = $this->model::findOrFail($id);     
-   
-        return $this->jsonResponse('Registro consultado correctamente', $model, Response::HTTP_OK);
+        return $this->jsonResponse('Registro consultado correctamente', $data, Response::HTTP_OK);
     }
 
     public function update(Request $request)
     {   
+        error_log(json_encode($request->all()));
         try {
         
             $validator = (new Validates($this->model, $request))->validator();
@@ -126,8 +133,9 @@ $this->model = 'App\\Models\\' . Str::singular(str_replace(' ', '', ucwords(base
             $model = $this->model::findOrFail($request->id);
 
             $model->update( $request->only( (new $model)->getFillable() ) );
-
+                        
             $model_specific_metod = $this->method(__METHOD__);
+
 
             if(is_callable($model_specific_metod)) $model = $model_specific_metod($model, $request);
 

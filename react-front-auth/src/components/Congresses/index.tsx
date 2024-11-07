@@ -1,0 +1,105 @@
+import { useEffect, useLayoutEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store";
+import { useNavigate } from "react-router-dom";
+import { Api } from "../../services/Api";
+import { renderToStaticMarkup } from "react-dom/server";
+// interface UserCon
+ interface CongressItem {
+    id: string | number;
+    title_trabajo: string;
+    user_id: string | number;
+    event_name: string | null;
+    date: string | null;
+    colaborators: number | null
+    user: {
+        name: string
+    }
+}
+
+export const Congresses = () => {
+
+    const  { token, user } = useSelector((state: RootState ) => state.auth);
+
+    const navigate = useNavigate();
+
+    if(!user || user.all_permissions.indexOf("congresses.get") == -1) {
+        navigate('/dashboard');
+    }
+
+    const [data, setData] = useState<CongressItem[]>([]);
+
+    const [loading, setLoading] = useState<boolean>(true);    
+
+    const [error, setError] = useState<boolean>();
+
+    const fetchData = async () => {
+        
+        const response =  await Api.get('/congresses?include=user', {
+            Authorization: 'Bearer ' + token,
+            accept: 'application/json'    
+        })
+
+        const result: CongressItem[] = await response.data
+
+        setData(result)
+
+        console.log(response);
+        
+        setLoading(false);
+    }
+
+    const deleteCongress = async ( id: number | string) => {
+        const response = Api.delete('/congresses/' + id, {
+            Authorization: 'Bearer ' + token,
+            accept: 'application/json'
+        })
+
+        const result = await response;
+
+        if(result.statusCode == 200) {
+            setError(false);
+        }else {
+            setError(true)
+        }
+        fetchData();
+    }
+
+    useEffect(() => { fetchData(); }, [])
+
+    if(loading){
+         return <div>
+            <p>Loading...</p>
+         </div>
+    }
+
+    return <div>
+        <table>
+        <thead>
+            <tr>
+                <td>#</td>
+                <td>Titulo del trabajo</td>
+                <td>Usuario</td>
+                <td>Evento</td>
+                <td>Fecha</td>
+                <td>Nro de Colaboradores</td>
+                <td>Acciones</td>
+            </tr>
+        </thead>
+        <tbody>
+            {data.map((item) => (
+                <tr key={item.id}>
+                <td>{item.id}</td>
+                <td>{item.title_trabajo}</td>
+                <td>{item.user.name}</td>
+                <td>{item.event_name}</td>
+                <td>{item.date}</td>
+                <td>{item.colaborators}</td>
+                <button onClick={() => deleteCongress(item.id)}>Eliminar</button>
+                <button onClick={() => navigate('/congresses/edit/' + item.id)}>Editar</button>
+                </tr>   
+            ))}
+        </tbody>
+    </table>
+    </div>
+}

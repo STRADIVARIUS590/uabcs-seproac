@@ -128,7 +128,10 @@ Route::middleware(['auth:sanctum'])->group(function(){
     });
 
 
-    // Route::controller(BaseController::class)->prefix('')
+
+    Route::controller(UserController::class)->prefix('dashboard')->group(function(){
+        Route::get('/', 'dashboard');
+    });
 });
 
 Route::get('/roles', function(){

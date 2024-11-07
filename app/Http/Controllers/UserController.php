@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\UserRequest;
+use App\Models\Congress;
+use App\Models\Course;
+use App\Models\Project;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Foundation\Validation\ValidatesRequests;
@@ -13,6 +16,8 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Mockery\Matcher\HasKey;
 use Symfony\Component\HttpFoundation\Response;
+use App\Models\Group;
+use App\Models\Publication;
 
 use function Laravel\Prompts\alert;
 use function Laravel\Prompts\error;
@@ -150,5 +155,20 @@ class UserController extends Controller
         $user->append('all_permissions');
 
         return $this->jsonResponse('Registro consultado correctamente', $user);
+    }
+    
+
+    public function dashboard(Request $request){
+
+        $data = collect([
+            'projects_count' => Project::where('user_id', auth()->id())->count(),
+            'congresses_count' => Congress::where('user_id', auth()->id())->count(),
+            'courses_count' => Course::where('user_id', auth()->id())->count(),
+            'publications_count' => Publication::where('user_id', auth()->id())->count()
+        ]); 
+        
+        return $this->jsonResponse('Registro consultado correctamente', [
+            'widgets' => $data
+        ]);
     }
 }

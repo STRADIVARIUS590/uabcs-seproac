@@ -76,7 +76,7 @@ const Users = () => {
                     <tr>
                         <td> #</td>
                         <td> Nombre</td>
-                        <td> Correo</td>
+                        <td> Correo </td>
                         <td> Fecha de ingreso</td>
                         <td> Fecha de nacimiento</td>
                         <td> Sexo </td>
@@ -84,7 +84,7 @@ const Users = () => {
                     </tr>
                 </thead>
                 <tbody>
-
+                    
                     
             {data.map((item) => (
                 <tr key={item.id}>

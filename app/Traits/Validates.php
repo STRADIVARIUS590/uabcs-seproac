@@ -113,7 +113,9 @@ class Validates
 
     public function validator()
     {
-        return $this->creating ? Validator::make($this->request->all(), $this->create_rules()) : Validator::make($this->request->all(), $this->update_rules());
+        $validator =  $this->creating ? Validator::make($this->request->all(), $this->create_rules()) : Validator::make($this->request->all(), $this->update_rules());
+        error_log(json_encode($validator->errors()));
+        return $validator;
     }
 
     public function creating(){

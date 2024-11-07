@@ -18,5 +18,9 @@ class Congress extends Model
         'colaborators'
     ];
 
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
     
 }

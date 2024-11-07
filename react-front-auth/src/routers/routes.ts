@@ -7,6 +7,8 @@ import AddEditForm from "../components/users/AddEditForm";
 import Users from "../components/users/Index"
 import Welcome from "../components/Welcome";
 import BaseDashBoard from "../Layout/Dashboard";
+import { Congresses } from "../components/Congresses";
+import { CongressesAddEdit } from "../components/Congresses/addEdit";
 
 type TypeRoute = {
     path: string
@@ -17,7 +19,7 @@ type TypeRoute = {
  const routes: TypeRoute[] = [
     {
         path: '/',
-        element: Welcome
+        element: Login
     },
     {
         path: '/login',
@@ -48,10 +50,18 @@ type TypeRoute = {
         path: 'users/edit/:id?',
         element: AddEditForm
     },
-
-
     
+    {
+        is_protected: true,
+        path:'congresses',
+        element: Congresses
+    },
     
+    {
+        is_protected: true,
+        path: 'congresses/edit/:id?',
+        element: CongressesAddEdit,
+    }
 ];
 
 export default routes

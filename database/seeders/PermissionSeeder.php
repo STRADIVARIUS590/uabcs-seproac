@@ -51,7 +51,9 @@ class PermissionSeeder extends Seeder
 
             [   'name' => 'congresses.add',
                 'roles' => [ 'Sistemas', 'Admin' ],
-                'name' => 'congresses.get',
+            ],
+            [   'name' => 'congresses.get',
+                'roles' => [ 'Sistemas', 'Admin' ],
             ],
             [   'name' => 'congresses.destroy',
                 'roles' => [ 'Sistemas' ]

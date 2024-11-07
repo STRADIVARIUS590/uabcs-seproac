@@ -68,7 +68,6 @@ const initialValues = {
               accept: 'application/json'
             }
         );
-      console.log(response);
 
     } else {
       const response = await Api.post('/users', values);

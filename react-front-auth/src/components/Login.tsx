@@ -15,12 +15,18 @@ const Login = () => {
 
     const navigate  = useNavigate();
 
-    const  { isLogged } = useSelector((state: RootState ) => state.auth);
+    // const  { isLogged } = useSelector((state: RootState ) => state.auth);
+
+    // if(isLogged) {
+    //     navigate('/dashboard');
+    // }
 
     const initialValues = {
         'email': 'sistemas@gmail.com',
         'password': 'secret',
     }
+
+
 
     const onSubmit = (values: typeof initialValues) => {
         dispatch(loginUser(values)).then((response) => {
