@@ -1,16 +1,19 @@
-import React from 'react';
-import { Formik, Field, Form, ErrorMessage } from 'formik';
+import {useEffect, useState } from 'react';
+import { Formik, Field, Form, ErrorMessage, FormikHelpers } from 'formik';
 import * as Yup from 'yup';
-
+import { useParams, useNavigate } from 'react-router-dom';
+import { Api } from '../../services/Api';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../store';
+ 
 // Define TypeScript interface for form values
-interface FormValues {
-  name: string;
-  email: string;
-  password: string;
-  id: string| number;
-  // role_id: number;
-}
-
+// interface FormValues {
+//   name: string;
+//   email: string;
+//   password: string;
+//   id: string| number;
+//   role_id: number;
+// }
 
 // Validation schema using Yup
 const validationSchema = Yup.object({
@@ -25,22 +28,93 @@ const validationSchema = Yup.object({
 
 });
 
-interface AddEditFormProps {
-  initialValues: FormValues;
-  onSubmit: (values: FormValues) => void;
-  isEditMode: boolean;
+const AddEditForm = () => {
 
-}
+ const { id } = useParams<{ id?: string }>(); // Grab the id from the URL, optional
 
-const AddEditForm: React.FC<AddEditFormProps> = ({ initialValues, onSubmit, isEditMode }) => {
+  const navigate = useNavigate();
+
+  const [user, setUser] = useState({
+    'name': '',
+    'email': '',
+    'password': '',
+    'id' : id || 0,
+    // 'role_id' : 0
+  })
+
+  const [isLoading, setIsLoading] = useState(true);
+
+  const { token } = useSelector((state: RootState) => state.auth)
+
+  const loadUser = async () => {
+
+        if(id){
+
+            const response = await Api.get('/users/get/' + id, {
+                Authorization: 'Bearer ' + token,
+                accept: 'application/json'
+            })
+            
+            const result = await response.data
+            
+            setUser(result);
+        }
+        setIsLoading(false);
+    }
+
+    useEffect(() => {
+        loadUser();
+    }, []);
+
+console.log(user);
+
+const initialValues = {
+    'name': user?.name??'' ,
+    'email': user?.email?? '',
+    'password' : '',
+    'id' : user?.id ?? '0'  ,
+    // 'role_id' : user?.role_id ?? 0,
+};
+
+  const isEditMode = !!id; // True if we are editing
+
+  // Submit handler
+  const handleSubmit = async (values: typeof initialValues,  { setFieldError } : FormikHelpers< typeof initialValues > ) => {
+    
+    if (isEditMode) {    
+      const response = await Api.put('/users/' + id, values,  {
+              Authorization: 'Bearer ' + token,
+              "Content-Type": 'application/json',
+              accept: 'application/json'
+            }
+        );
+
+        if(response.statusCode == 200){
+          navigate('/users'); // Redirect after submission;
+        }else{
+        Object.entries(response.data).forEach((key) => {        
+        setFieldError(key[0], key[1][0])
+      })
+    }
+
+    }else {
+      const response = await Api.post('/users', values);
+
+      if(response.statusCode == 200){
+        navigate('/users'); // Redirect after submission;
+      }else{
+        Object.entries(response.data).forEach((key) => { })
+      }
+    }
+  };
+
+  if(isLoading) return <p>Loading</p>;  
+
   return (
     <Formik
       initialValues={initialValues}
       validationSchema={validationSchema}
-      onSubmit={(values, { setSubmitting }) => {
-        setSubmitting(false);
-        onSubmit(values);
-      }}
+      onSubmit={handleSubmit} 
     >
       {({
           isSubmitting,
@@ -61,7 +135,6 @@ const AddEditForm: React.FC<AddEditFormProps> = ({ initialValues, onSubmit, isEd
           </div>
 
           {
-              
             <div>
               
               <div>
@@ -77,9 +150,6 @@ const AddEditForm: React.FC<AddEditFormProps> = ({ initialValues, onSubmit, isEd
               </div>
             </div>
           }
-
-          
-  
 
           <div>
             <button type="submit" disabled={isSubmitting}>

@@ -101,6 +101,7 @@ class PermissionSeeder extends Seeder
             [   'name' => 'publications.edit',
                 'roles' => [ 'Sistemas' ]
             ],
+            
 
             [   'name' => 'projects.add',
                 'roles' => [ 'Sistemas', 'Admin' ],

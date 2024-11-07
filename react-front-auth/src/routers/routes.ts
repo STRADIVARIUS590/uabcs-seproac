@@ -3,6 +3,7 @@ import Customers from "../components/Customers";
 import Login from "../components/Login";
 import Register from "../components/Register";
 import AddEditUserPage from "../components/users/addEdit";
+import AddEditForm from "../components/users/AddEditForm";
 import Users from "../components/users/Index"
 import Welcome from "../components/Welcome";
 import BaseDashBoard from "../Layout/Dashboard";
@@ -45,8 +46,10 @@ type TypeRoute = {
     {
         is_protected: true,
         path: 'users/edit/:id?',
-        element: AddEditUserPage
-    }
+        element: AddEditForm
+    },
+
+
     
     
 ];
