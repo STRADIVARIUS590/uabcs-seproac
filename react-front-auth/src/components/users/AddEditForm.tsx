@@ -97,7 +97,12 @@ const initialValues = {
     }
 
     }else {
-      const response = await Api.post('/users', values);
+      const response = await Api.post('/users', values, {
+          Authorization: 'Bearer ' + token,
+          "Content-Type": 'application/json',
+          accept: 'application/json'
+         
+      });
 
       if(response.statusCode == 200){
         navigate('/users'); // Redirect after submission;
@@ -110,7 +115,9 @@ const initialValues = {
   if(isLoading) return <p>Loading</p>
 
   return (
-    <Formik
+      <div> 
+        <h1>{isEditMode ? 'Edit User' : 'Add User'}</h1> 
+    <Formik 
       initialValues={initialValues}
       validationSchema={validationSchema}
       onSubmit={handleSubmit} 
@@ -154,7 +161,8 @@ const initialValues = {
         </Form>
       )}
     </Formik>
-  );
+      </div>
+);
 };
 
 export default AddEditForm;

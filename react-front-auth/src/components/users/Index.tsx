@@ -52,15 +52,18 @@ const Users = () => {
         useEffect(() => { fetchData();}, [])
 
         const deleteUser = async ( id : number ) => {
-            const response = await Api.delete('/users/' + id, {
-                 Authorization: 'Bearer ' + token,
-                 accept: 'application/json'
+            const response = Api.delete('/users/' + id, {
+                Authorization: 'Bearer ' + token,
+                accept: 'application/json'
             })
-
-            const result = await response.json();
-
-            console.log(result);
-            
+    
+            const result = await response;
+    
+            if(result.statusCode == 200) {
+                // setError(false);
+            }else {
+                // setError(true)
+            }
             fetchData();
         }
 

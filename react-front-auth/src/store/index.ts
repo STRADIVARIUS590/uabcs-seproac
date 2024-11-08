@@ -7,7 +7,7 @@ import { useDispatch } from "react-redux";
 
 
 const persistConfig = {
-    key: 'root',
+    key: 'seproac-root',
     storage
 }
 

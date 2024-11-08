@@ -18,10 +18,10 @@ function App() {
   const router = createBrowserRouter(
     routes.map((route) => ({
       ...route,
-      element: route.is_protected ? <Middleware children={createElement(route.element)}/> : createElement(route.element),
+      element: route.is_protected ? <Middleware children={createElement(route.element)} type={route.middleware}/> : createElement(route.element),
       children: route.children?.map((child) => ({
           ...child,
-          element: child.is_protected ? <Middleware children={createElement(route.element)}/> : createElement(child.element)
+          element: child.is_protected ? <Middleware children={createElement(route.element) }type={route.middleware}/> : createElement(child.element)
       }))
     }))  
   )

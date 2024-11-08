@@ -1,14 +1,13 @@
 import { useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom'
 import { RootState } from '../store';
-import { AppLayout } from './Layout/AppLayout';
 const Welcome = () => {
 
     const { isLogged, user } = useSelector((state: RootState) => state.auth);
     
     const navigate = useNavigate();
 
-    if(isLogged === true ){
+    if(isLogged){
         navigate("/dashboard");    
     }
     return (

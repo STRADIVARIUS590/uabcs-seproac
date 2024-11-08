@@ -1,9 +1,9 @@
-import { useEffect, useLayoutEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store";
 import { useNavigate } from "react-router-dom";
 import { Api } from "../../services/Api";
-import { renderToStaticMarkup } from "react-dom/server";
+import { MessageToast } from "../MessageToast";
 // interface UserCon
  interface CongressItem {
     id: string | number;
@@ -65,13 +65,11 @@ export const Congresses = () => {
         fetchData();
     }
 
+    
     useEffect(() => { fetchData(); }, [])
-
-    if(loading){
-         return <div>
-            <p>Loading...</p>
-         </div>
-    }
+    
+    if(error){       return <MessageToast message='Ha ocurrido un error' type="error"/>}
+    if(loading){     return <MessageToast message='Cargando...' type="loading"/> }
 
     return <div>
         <table>
@@ -91,7 +89,7 @@ export const Congresses = () => {
                 <tr key={item.id}>
                 <td>{item.id}</td>
                 <td>{item.title_trabajo}</td>
-                <td>{item.user.name}</td>
+                <td>{item.user?.name}</td>
                 <td>{item.event_name}</td>
                 <td>{item.date}</td>
                 <td>{item.colaborators}</td>
