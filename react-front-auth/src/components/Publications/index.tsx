@@ -93,6 +93,7 @@ export const Publications = () => {
                     <td>DOI</td>
                     <td>Revista</td>
                     <td>Autores</td>
+                    <td>Usuario</td>
                     <td>Fecha de Publicacion</td>
                     <td>Periodo</td>
                 </tr>
@@ -107,6 +108,7 @@ export const Publications = () => {
                     <td>{item.doi}</td>
                     <td>{item.magazine_name}</td>
                     <td>{item.authors}</td>
+                    <td>{item.user?.name}</td>
                     <td>{item.publication_date}</td>
                     <td>{item.period}</td>
                     <button onClick={() => deletePublication(item.id)}>Eliminar </button>

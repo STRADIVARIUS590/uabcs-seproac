@@ -18,8 +18,11 @@ class CongressSeeder extends Seeder
         {
             $congress_number = mt_rand(5, 20);
             Congress::factory($congress_number)->create([
-                'user_id' => $user->id
-            ]);
+                'user_id' => $user->id,
+            ])->each(function($item)
+        {
+            error_log(json_encode($item));
+        });
         }
     }
 }

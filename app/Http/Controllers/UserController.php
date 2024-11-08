@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\UserRequest;
+use App\Models\AcademicGrade;
 use App\Models\Congress;
 use App\Models\Course;
 use App\Models\Project;
@@ -164,7 +165,8 @@ class UserController extends Controller
             'projects_count' => Project::where('user_id', auth()->id())->count(),
             'congresses_count' => Congress::where('user_id', auth()->id())->count(),
             'courses_count' => Course::where('user_id', auth()->id())->count(),
-            'publications_count' => Publication::where('user_id', auth()->id())->count()
+            'publications_count' => Publication::where('user_id', auth()->id())->count(),
+            'academic_grades' => AcademicGrade::with('institution')->where('user_id', auth()->id())->get()
         ]); 
         
         return $this->jsonResponse('Registro consultado correctamente', [

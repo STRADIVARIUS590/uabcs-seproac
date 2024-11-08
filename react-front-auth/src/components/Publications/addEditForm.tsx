@@ -173,6 +173,21 @@ export const AddEditForm = () => {
                     <Field name="period" type="text" />
                     <ErrorMessage name="period" component="div" style={{ color: "red" }} />
                 </div>
+
+
+
+                <div>
+                    <label htmlFor="user_id">Usuario</label>
+                    <Field as="select" name="user_id">
+                        <option value="">Select a user</option> {/* Default empty option */}
+                        {users.map((user) => (
+                        <option key={user.id} value={user.id}>
+                            {user.name}
+                        </option>
+                        ))}
+                    </Field>
+                    <ErrorMessage name="user_id" component="div" style={{ color: 'red' }} />
+                    </div>
                 <div>
                         <button type="submit" disabled={isSubmitting}>
                             {isEditMode ? "Update" : "Add"}
