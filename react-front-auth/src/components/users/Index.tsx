@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
-import { RootState, useAppDispatch } from "../../store";
+import { RootState } from "../../store";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Api } from "../../services/Api";
+import { AppLayout } from "../Layout/AppLayout";
+import { MessageToast } from "../MessageToast";
 
 interface DataItem {
   id: number;   
@@ -16,18 +18,21 @@ interface DataItem {
     }
   // Add more fields as necessary
 }
-const Users = () => {
+export const Users = () => {
 
-        
         const  { token, user } = useSelector((state: RootState ) => state.auth);
 
         const navigate = useNavigate();
 
         const user_permissions = user?.all_permissions || [];
 
-        if(!user ||  user_permissions.indexOf("users.get") == -1){
-            navigate('/dashboard')
-        } 
+        useEffect(() => {
+            if (!user || user_permissions.indexOf("users.get") === -1) {
+                navigate(-1);
+            }
+        }, [user, user_permissions, navigate]);
+
+        const [error, setError] = useState<boolean>();
 
         const [data, setData] = useState<DataItem[]>([]); // Step 2: Typed state to store data
   
@@ -43,9 +48,15 @@ const Users = () => {
                     
                     const result: DataItem[] = await response.data 
                     
-                    setData(result.users)
+                    if(response.statusCode === 200) {
+                        setError(false);
+                        setData(result)
+                        setLoading(false);
+                    }else{
+                        setError(true);
+                        navigate(-1);
+                    }
 
-                    setLoading(false);
             }
 
 
@@ -60,18 +71,19 @@ const Users = () => {
             const result = await response;
     
             if(result.statusCode == 200) {
-                // setError(false);
+                setError(false);
             }else {
-                // setError(true)
+                setError(true)
             }
             fetchData();
         }
 
-        if(loading) {
-            return <p>Loading</p>
-        }
+        if(error){       return <MessageToast message='Ha ocurrido un error' type="error"/>}
+        if(loading){     return <MessageToast message='Cargando...' type="loading"/> }
+    
         return (
-        <div>
+        <AppLayout>
+        <div >
             {/* <p>{JSON.stringify(data)}</p> */}
             <h1>Users</h1>
             <table>
@@ -98,19 +110,14 @@ const Users = () => {
                 <td>{item.birth_date}</td> 
                 <td>{item.sex}</td> 
                 <td>{item.role?.name}</td> 
-                <button onClick={() => deleteUser(item.id )}>
-                    Eliminar
+                <button onClick={() => deleteUser(item.id )}> Eliminar
                 </button>
-                <button onClick={() => navigate('/users/edit/' + item.id)}>
-                    Editar
-                </button>
+                <button onClick={() => navigate('/users/edit/' + item.id)}>Editar</button>
                 </tr>
             ))}
             
                 </tbody>
             </table>     
         </div>
-    )
+    </AppLayout>)
 }
-
-export default Users;

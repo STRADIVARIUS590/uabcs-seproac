@@ -34,7 +34,7 @@ class UserController extends Controller
 
         // $this->log(__FUNCTION__, 'users', 'consultar users', Auth::id(), route(), );
 
-        return $this->jsonResponse('Registro consultado correctamente', compact('users'));
+        return $this->jsonResponse('Registro consultado correctamente', $users);
     }
 
     /**

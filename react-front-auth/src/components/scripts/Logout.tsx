@@ -1,10 +1,16 @@
-import { useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom";
+// import { useEffect } from "react";
 
-export const Logout = () => {
+export const useLogout = () => {
     const navigate = useNavigate();
 
-    localStorage.removeItem('persist:seproac-root')
+    const logout = () => {
+        // Clear local storage or tokens
+        localStorage.removeItem('persist:seproac-root');
 
-    navigate('/login');
-    
-}
+        // Navigate to login
+        navigate('/login', { replace: true });
+    };
+
+    return logout;
+};

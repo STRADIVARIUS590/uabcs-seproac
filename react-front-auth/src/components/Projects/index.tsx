@@ -20,13 +20,19 @@ interface ProjectItem {
     }
 }
 export const Projects = () => {
+    
     const  { token, user } = useSelector((state: RootState ) => state.auth);
 
     const navigate = useNavigate();
+  
+    const user_permissions = user?.all_permissions || [];
 
-    if(!user || user.all_permissions.indexOf("projects.get") == -1) {
-        navigate('/dashboard');
-    }
+    useEffect(() => {
+        
+        if (!user || user_permissions.indexOf("projects.get") === -1) {
+            navigate(-1);
+        }
+    }, [user, user_permissions, navigate]);
 
     const [data, setData] = useState<ProjectItem[]>([]);
 
@@ -37,17 +43,20 @@ export const Projects = () => {
     const fetchData = async () => {
         
         const response =  await Api.get('/projects?include=user', {
-            Authorization: 'Bearer ' + token,
+            Authorization: 'Bearer '+ token ,
             accept: 'application/json'    
         })
 
         const result: ProjectItem[] = await response.data
 
-        setData(result)
-
-        console.log(response);
-        
-        setLoading(false);
+        if(response.statusCode === 200) {
+            setError(false);
+            setData(result)
+            setLoading(false);
+        }else{
+            setError(true);
+            navigate(-1)
+        }
     }
 
       const deleteProject = async ( id: number | string) => {
@@ -94,6 +103,7 @@ export const Projects = () => {
                     <td>{item.id}</td>
                     <td>{item.name}</td>
                     <td>{item.description}</td>
+                    <td>{item.user?.name}</td>
                     <td>{item.objetives}</td>
                     <td>{item.colaborators}</td>
                     <td>{item.start_date}</td>

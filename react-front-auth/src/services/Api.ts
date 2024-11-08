@@ -1,7 +1,23 @@
+// import { useLogout } from "../components/scripts/Logout"
+
 export class Api {
+
     static baseUrl = 'http://localhost:8000/api'
+  
+    //  useLogout();
+    // Auth Interceptor to handle 401 Unauthorized status
+    
+//   static authInterceptor(response: { statusCode: number }) {
+//     if (response.statusCode === 401) {
+//         alert ('wer');
+//         useLogout();
+//         // Handle token expiration by logging the user out
+    
+//     }
+// }
 
     static async post<T>(url: string, data: any, headers: {}): Promise<any> {
+    
         const response = await fetch(`${Api.baseUrl}${url}`, 
             {
             method: 'POST',
@@ -12,8 +28,9 @@ export class Api {
             body: JSON.stringify(data)
         })
     
-        const dataResponse = await response.json()
         
+        const dataResponse = await response.json()
+                
         return {
             statusCode : response.status,
             data: dataResponse.data
@@ -29,6 +46,12 @@ export class Api {
 
         const dataResponse = await response.json()
         
+
+        console.log(dataResponse);
+        
+         // Trigger authInterceptor with response status
+        // Api.authInterceptor({ statusCode: response.status });
+
         return {
             statusCode : response.status,
             data: dataResponse.data
@@ -37,43 +60,21 @@ export class Api {
     }
 
   static async delete<T>(url: string, headers: {}): Promise<any> {
-  try {
+  
         const response = await fetch(`${Api.baseUrl}${url}`, {
         method: 'DELETE',
         headers: {
             ...headers, // Spread to avoid mutation
             'Content-Type': 'application/json', // Ensure the correct content type is sent
         },
-        });
+        })
 
-        let dataResponse;
-
-        // If the status is 204 (No Content), return null for dataResponse
-        if (response.status === 204) {
-        dataResponse = null;
-        } else {
-        // Check if the response is JSON before parsing
-        const contentType = response.headers.get('content-type');
-        if (contentType && contentType.includes('application/json')) {
-            dataResponse = await response.json(); // Parse JSON response
-        } else {
-            dataResponse = await response.text(); // If not JSON, treat as text
-        }
-        }
-
+        const dataResponse = await response.json()
+        
         return {
-        statusCode: response.status,
-        data: dataResponse?.data || dataResponse, // Fallback for non-JSON responses
-        };
-    } catch (error) {
-        console.error('Error in DELETE request:', error);
-
-        // Return an error status and message in a structured way
-        return {
-        statusCode: 500,
-        data: 'Error in DELETE request',
-        };
-    }
+            statusCode : response.status,
+            data: dataResponse.data
+        }    
 }
 
 

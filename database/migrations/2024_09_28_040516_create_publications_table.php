@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('title')->nullable();
             $table->foreignIdFor(User::class)->nullable()->constrained();
             $table->string('type', 10)->nullable();
-            $table->string('issn-isbn')->nullable();
+            $table->string('issn_isbn')->nullable();
             $table->string('doi')->nullable();
             $table->string('magazine_name')->nullable();
             $table->string('authors')->nullable();

@@ -6,6 +6,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { Api } from '../../services/Api';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../store';
+import { MessageToast } from '../MessageToast';
 
 interface DataItem{ 
     id: string | number | null | undefined;
@@ -30,12 +31,16 @@ export const AddEditForm = () => {
     const navigate = useNavigate();
     const user_permissions = user?.all_permissions || [];
 
-    if (!user || user_permissions.indexOf("congresses.edit") === -1) {
-        navigate("/dashboard");
-    }
+    useEffect(() => {
+        if (!user || user_permissions.indexOf("congresses.edit") === -1) {
+            navigate("/dashboard");
+        }
+    }, [user, user_permissions, navigate]);
+    
 
     // INITIALIZE
     const [loading, setLoading] = useState<boolean>(true);
+    const [error, setError] = useState<boolean>(false);
     const [data, setData] = useState<DataItem>();
     const [users, setUsers] = useState<UserItem[]>([]);
 
@@ -54,7 +59,7 @@ export const AddEditForm = () => {
                 Authorization: "Bearer " + token,
                 accept: "application/json",
             })
-        const result: UserItem[] = await response.data.users;
+        const result: UserItem[] = await response.data;
 
         setUsers(result);
 
@@ -102,18 +107,18 @@ export const AddEditForm = () => {
 
 
     // HTML
-    if (loading) {
-        return <p>Cargando ... </p>;
-    }
+    if(error){       return <MessageToast message='Ha ocurrido un error' type="error"/>}
+    if(loading){     return <MessageToast message='Cargando...' type="loading"/> }
 
     return (
         <Formik
             initialValues={initialValues}
             onSubmit={handleSubmit}
-            validationSchema={validationSchema}
-            // enableReinitialize // This allows Formik to reinitialize with new data
+            validationSchema={validationSchema}        
         >
-            {({ isSubmitting }) => (
+            {({ 
+                isSubmitting
+             }) => (
                 <Form>
 
                     <input type="hidden" name="id" />
@@ -149,7 +154,6 @@ export const AddEditForm = () => {
                         <Field name="colaborators" type="text" />
                         <ErrorMessage name="colaborators" component="div" style={{ color: "red" }} />
                     </div>
-
 
                     <div>
                         <button type="submit" disabled={isSubmitting}>

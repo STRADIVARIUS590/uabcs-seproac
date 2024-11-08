@@ -2,13 +2,15 @@ import Customers from "../components/Customers";
 // import EditUser from "../components/EditUser";
 import Login from "../components/Login";
 import Register from "../components/Register";
-import Users from "../components/Users/Index"
+import { Users } from "../components/Users/Index"
 import BaseDashBoard from "../Layout/Dashboard";
 import { Congresses } from "../components/Congresses";
 import { AddEditCongressPage } from "../components/Congresses/addEdit";
 import { Projects } from "../components/Projects";
 import { AddEditUserPage } from "../components/Users/addEdit";
 import { AddEditProjectPage } from "../components/Projects/addEdit";
+import { Publications } from "../components/Publications";
+import { AddEditPublicationPage } from "../components/Publications/addEdit";
 // import { AddEditForm } from "../components/Users/AddEditForm";
 
 type TypeRoute = {
@@ -24,8 +26,8 @@ type TypeRoute = {
          is_protected: true,
          middleware: 'guest',
          element: Login
-        },
-        {
+    },
+    {
         path: '/login',
         is_protected: true,
         middleware: 'guest',
@@ -86,6 +88,18 @@ type TypeRoute = {
         middleware: 'auth',
         path: 'projects/edit/:id?', 
         element: AddEditProjectPage,     
+    },
+    {
+        is_protected: true,
+        middleware: 'auth',
+        path: 'publications',
+        element: Publications
+    },
+    {
+        is_protected: true,
+        middleware: 'auth',
+        path: 'publications/edit/:id?',
+        element: AddEditPublicationPage
     }
 ];
 

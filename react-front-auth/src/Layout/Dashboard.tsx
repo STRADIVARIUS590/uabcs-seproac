@@ -1,7 +1,7 @@
 import { useSelector } from "react-redux";
 import { Outlet, useNavigate } from "react-router-dom";
 import { RootState } from "../store";
-import { Navbar } from "../components/Layout/Navbar";
+// import { Navbar } from "../components/Layout/Navbar";
 import { AppLayout } from "../components/Layout/AppLayout";
 import { useEffect, useState } from "react";
 import { Api } from "../services/Api";

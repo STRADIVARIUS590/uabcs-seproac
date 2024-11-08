@@ -22,10 +22,16 @@ export const Congresses = () => {
     const  { token, user } = useSelector((state: RootState ) => state.auth);
 
     const navigate = useNavigate();
+ 
+    const user_permissions = user?.all_permissions || [];
 
-    if(!user || user.all_permissions.indexOf("congresses.get") == -1) {
-        navigate('/dashboard');
-    }
+    useEffect(() => {
+        if (!user || user_permissions.indexOf("congresses.get") === -1) {
+            navigate(-1);
+        }
+    }, [user, user_permissions, navigate]);
+
+
 
     const [data, setData] = useState<CongressItem[]>([]);
 
@@ -42,11 +48,14 @@ export const Congresses = () => {
 
         const result: CongressItem[] = await response.data
 
-        setData(result)
-
-        console.log(response);
-        
-        setLoading(false);
+        if(response.statusCode === 200) {
+            setError(false);
+            setData(result)
+            setLoading(false);
+        }else{
+            setError(true);
+            navigate(-1)
+        }
     }
 
     const deleteCongress = async ( id: number | string) => {

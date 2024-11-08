@@ -14,7 +14,8 @@ class Publication extends Model
     protected $fillable = [
         'title',
         'user_id',
-        'issn-isbn',
+        'type',
+        'issn_isbn',
         'doi',
         'magazine_name',
         'authors',

@@ -1,7 +1,7 @@
 import { useSelector } from "react-redux"
 import { RootState } from "../../store"
 import { useNavigate } from "react-router-dom"
-import React, { ReactNode, useEffect } from "react"
+import { ReactNode, useEffect } from "react"
 
 type Props = {
     children: ReactNode | ReactNode[]

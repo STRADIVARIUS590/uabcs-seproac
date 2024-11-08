@@ -22,7 +22,7 @@ class PublicationSeeder extends Seeder
                 'user_id' => $user->id,
                 'title' => 'PUBLICATION '.uniqid(),
                 'type' => fake()->randomElement(['A', 'B', 'C', 'D', 'E', 'F']),
-                'issn-isbn' => Str::random(10),
+                'issn_isbn' => Str::random(10),
                 'doi' => Str::random(10),
                 'magazine_name' => fake()->randomElement(['Nature Today', 'Science']) ,
                 'authors' => fake()->name(),
