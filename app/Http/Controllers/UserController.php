@@ -139,7 +139,7 @@ class UserController extends Controller
     public function login(Request $request)
     {
 
-        $user = User::where('email', $request->email)->first();
+        $user = User::where('email', $request->email)->with('role')->first();
 
         if(!$user){
             return $this->jsonResponse('Registro no encontrado', []);

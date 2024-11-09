@@ -79,7 +79,7 @@ $this->model = 'App\\Models\\' . Str::singular(str_replace(' ', '', ucwords(base
         $fields = (new $this->model)->getFillable();   
         $data = QueryBuilder::for($this->model)
         ->allowedFilters(['id',...$fields])
-        ->allowedIncludes(['user'])
+        ->allowedIncludes(['user', 'tags'])
         // ->allowedFields(['id', ...$fields])
         ->allowedSorts(['id',...$fields, 'created_at', 'updated_at', 'created_at'])   
         ->select('id',...$fields)
@@ -113,7 +113,7 @@ $this->model = 'App\\Models\\' . Str::singular(str_replace(' ', '', ucwords(base
       
         $data = QueryBuilder::for($this->model)
         ->allowedFilters(['id',...$fields])
-        ->allowedIncludes(['user'])
+        ->allowedIncludes(['user', 'tags'])
         ->select('id',...$fields)
         ->where('id', $id)
         ->firstOrFail();
@@ -132,10 +132,14 @@ $this->model = 'App\\Models\\' . Str::singular(str_replace(' ', '', ucwords(base
         
             $model = $this->model::findOrFail($request->id);
 
+            if(isset($request->tags)){
+                $model->tags()->sync($request->tags);
+            }
             $model->update( $request->only( (new $model)->getFillable() ) );
                         
             $model_specific_metod = $this->method(__METHOD__);
 
+            // error_log(json_encode($model->tags, JSON_PRETTY_PRINT));
 
             if(is_callable($model_specific_metod)) $model = $model_specific_metod($model, $request);
 

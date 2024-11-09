@@ -132,6 +132,10 @@ Route::middleware(['auth:sanctum'])->group(function(){
     Route::controller(UserController::class)->prefix('dashboard')->group(function(){
         Route::get('/', 'dashboard');
     });
+
+    Route::controller(BaseController::class)->prefix('tags')->group(function(){
+        Route::get('/', 'index');
+    });
 });
 
 Route::get('/roles', function(){

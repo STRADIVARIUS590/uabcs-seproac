@@ -21,6 +21,7 @@ class CongressSeeder extends Seeder
                 'user_id' => $user->id,
             ])->each(function($item)
         {
+            $item->tags()->attach(1);
             error_log(json_encode($item));
         });
         }

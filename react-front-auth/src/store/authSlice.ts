@@ -7,7 +7,7 @@ interface IUser {
     name: string
     email: string
     all_permissions: []
-
+    roles : []
     // isLogged: boolean
     // isLoading: boolean
 }

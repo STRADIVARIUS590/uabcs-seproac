@@ -4,6 +4,7 @@ import { RootState } from "../../store";
 import { useNavigate } from "react-router-dom";
 import { Api } from "../../services/Api";
 import { MessageToast } from "../MessageToast";
+import { AppLayout } from "../Layout/AppLayout";
 // interface UserCon
  interface CongressItem {
     id: string | number;
@@ -80,7 +81,7 @@ export const Congresses = () => {
     if(error){       return <MessageToast message='Ha ocurrido un error' type="error"/>}
     if(loading){     return <MessageToast message='Cargando...' type="loading"/> }
 
-    return <div>
+    return <AppLayout> <div>
         <table>
         <thead>
             <tr>
@@ -109,4 +110,5 @@ export const Congresses = () => {
         </tbody>
     </table>
     </div>
+    </AppLayout>
 }

@@ -21,6 +21,7 @@ class TagSeeder extends Seeder
             ['name' => 'Disertacion'],
             ['name' => 'Tesis'],
             ['name' => 'Proyectos Academicos'],
+    
         ];
 
         foreach ($tags as $tag_info) {

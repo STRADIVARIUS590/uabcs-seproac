@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('name');
             $table->date('titulation_date');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
