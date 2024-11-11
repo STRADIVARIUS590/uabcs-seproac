@@ -79,7 +79,7 @@ $this->model = 'App\\Models\\' . Str::singular(str_replace(' ', '', ucwords(base
         $fields = (new $this->model)->getFillable();   
         $data = QueryBuilder::for($this->model)
         ->allowedFilters(['id',...$fields])
-        ->allowedIncludes(['user', 'tags'])
+        ->allowedIncludes(['user', 'tags', 'institution'])
         // ->allowedFields(['id', ...$fields])
         ->allowedSorts(['id',...$fields, 'created_at', 'updated_at', 'created_at'])   
         ->select('id',...$fields)

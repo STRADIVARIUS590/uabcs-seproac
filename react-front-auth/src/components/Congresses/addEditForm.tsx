@@ -133,7 +133,6 @@ export const AddEditForm = () => {
         >
             {({ isSubmitting }) => (
                 <Form>
-                    <div>{JSON.stringify(tags)}</div>
 
                     <input type="hidden" name="id" />
                     <div>

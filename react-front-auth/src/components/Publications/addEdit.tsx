@@ -4,6 +4,8 @@
 // import { useEffect, useState } from "react";
 // import { Api } from "../../services/Api";
 // import { ErrorMessage, Field, Form, Formik, FormikHelpers } from "formik";
+import App from "../../App";
+import { AppLayout } from "../Layout/AppLayout";
 import { AddEditForm, } from "./addEditForm";
 // import { AddEditForm } from "../Congresses/addEditForm";
 
@@ -26,8 +28,10 @@ import { AddEditForm, } from "./addEditForm";
 
 export const AddEditPublicationPage = () => {
 
-    return <div>
-        <AddEditForm/>
-    </div>
+    return (
+        <AppLayout>
+            <AddEditForm/>
+        </AppLayout>
+    )
     
 }

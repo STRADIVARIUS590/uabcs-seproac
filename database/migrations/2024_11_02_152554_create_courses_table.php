@@ -22,6 +22,8 @@ return new class extends Migration
             $table->integer('total_students');
             $table->string('educative_level');
             $table->string('period');
+            $table->date('start_date');
+            $table->date('end_date');
             $table->timestamps();
             $table->softDeletes();
         });

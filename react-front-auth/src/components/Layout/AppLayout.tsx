@@ -9,7 +9,8 @@ interface Props {
 export const AppLayout = ({ children } : Props) => {
     return <div>
         <Navbar/>
-        <main>
+        {/* <div className="p12"></div> */}
+        <main className="p-12">
             { children }
         </main>
         <Footer/>

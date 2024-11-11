@@ -1,8 +1,11 @@
+import { AppLayout } from "../Layout/AppLayout"
 import { AddEditForm } from "./AddEditForm"
 
 export const AddEditProjectPage = () => {
 
-    return <div>
-        <AddEditForm/>
-    </div>
+    return (
+        <AppLayout>
+            <AddEditForm/>
+        </AppLayout>
+    )
 }

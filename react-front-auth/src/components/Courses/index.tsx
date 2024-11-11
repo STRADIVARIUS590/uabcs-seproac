@@ -1,10 +1,10 @@
 import { AppLayout } from "../Layout/AppLayout"
-import { Projects } from "./table"
+import { Courses } from "./table"
 
-export const ProjectsIndex = () => {
+export const CoursesIndex = () => {
     return (
         <AppLayout>
-            <Projects></Projects>
+            <Courses></Courses>
         </AppLayout>
     )
 }

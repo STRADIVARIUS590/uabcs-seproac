@@ -5,16 +5,22 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { Api } from '../../services/Api';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../store';
- 
-// Define TypeScript interface for form values
-// interface FormValues {
-//   name: string;
-//   email: string;
-//   password: string;
-//   id: string| number;
-//   role_id: number;
-// }
-
+interface RoleItem {
+  id: string; 
+  name: string;
+}
+interface UserItem {
+  id: number;   
+  name: string;
+  email: string;
+  password: string;
+  date_ingreso: string;
+  birth_date: string;
+  role_id : string;
+  sex: string;
+    role: RoleItem
+  // Add more fields as necessary
+}
 // Validation schema using Yup
 const validationSchema = Yup.object({
   name: Yup.string().required('El nombre es requerido'),
@@ -34,20 +40,20 @@ const AddEditForm = () => {
 
   const navigate = useNavigate();
 
-  const [user, setUser] = useState({
-    'name': '',
-    'email': '',
-    'password': '',
-    'id' : id || 0,
-    // 'role_id' : 0
-  })
+  const [user, setData] = useState<UserItem>()
 
-  const [isLoading, setIsLoading] = useState(true);
+  const [roles, setRoles] = useState<RoleItem[]>([]);
+
+  const [loading, setLoading] = useState(true);
+  
+  const [error, setError] = useState(true);
 
   const { token } = useSelector((state: RootState) => state.auth)
 
-  const loadUser = async () => {
+  const loadData = async () => {
+        try { 
 
+        
         if(id){
 
             const response = await Api.get('/users/get/' + id, {
@@ -55,25 +61,46 @@ const AddEditForm = () => {
                 accept: 'application/json'
             })
             
-            const result = await response.data
+            const result: UserItem = await response.data
+        
             
-            setUser(result);
+            setData(result);
         }
-        setIsLoading(false);
+
+          const response_roles = await Api.get('/roles', {
+                Authorization: "Bearer " + token,
+                accept: "application/json",
+            });
+            const result_roles: RoleItem[] = await response_roles.data;
+            setRoles(result_roles);
+
+        setLoading(false);
+
+        } catch(error) {
+          setError(true);
+          setLoading(false)
+        }
     }
 
     useEffect(() => {
-        loadUser();
+        loadData();
       }, []);
 
 
 const initialValues = {
-    'name': user?.name??'' ,
-    'email': user?.email?? '',
-    'password' : '',
-    'id' : user?.id ?? '0'  ,
-    // 'role_id' : user?.role_id ?? 0,
-};
+    name: user?.name ?? '' ,
+    email: user?.email?? '',
+    password : '',
+    id : user?.id ?? '0',
+    role_id : user?.role_id ?? 0,
+    date_ingreso: user?.date_ingreso ?? '',
+    birth_date: user?.birth_date ?? '',
+    sex : user?.sex ?? '',
+    role: {
+        id: user?.role_id ?? '',
+        name: user?.role?.name ?? ''
+    }
+  };
 
   const isEditMode = !!id; // True if we are editing
 
@@ -112,7 +139,7 @@ const initialValues = {
     }
   };
 
-  if(isLoading) return <p>Loading</p>
+  if(loading) return <p>Loading</p>
 
   return (
       <div> 
@@ -137,21 +164,45 @@ const initialValues = {
             <ErrorMessage name="email" component="div" style={{ color: 'red' }} />
           </div>
 
-            <div>
               
-              <div>
-                <label htmlFor="password">Contraseña</label>
-                <Field name="password" type="password"/>
-                <ErrorMessage name="password" component="div" style={{ color: 'red' }} />
-              </div>
+          <div>
+            <label htmlFor="password">Contraseña</label>
+            <Field name="password" type="password"/>
+            <ErrorMessage name="password" component="div" style={{ color: 'red' }} />
+          </div>
 
-              <div>
-                <label htmlFor="password_confirmation">Confirma Contraseña</label>
-                <Field name="password_confirmation" type="confirmation"/>
-                <ErrorMessage name="password_confirmation" component="div" style={{ color: 'red' }} />
-              </div>
-            </div>
-          
+          <div>
+            <label htmlFor="password_confirmation">Confirma Contraseña</label>
+            <Field name="password_confirmation" type="password"/>
+            <ErrorMessage name="password_confirmation" component="div" style={{ color: 'red' }} />
+          </div>
+
+          <div>
+            <label htmlFor="date_ingreso">Facha de ingreso</label>
+            <Field name="date_ingreso" type="date" />
+            <ErrorMessage name="date_ingreso" component="div" style={{ color: 'red' }} />
+          </div>
+
+          <div>
+            <label htmlFor="birth_date">Fecha de nacimiento</label>
+            <Field name="birth_date" type="date" />
+            <ErrorMessage name="birth_date" component="div" style={{ color: 'red' }} />
+          </div>
+
+
+          <div>
+              <label htmlFor="role_id">Rol</label>
+              <Field as="select" name="role_id">
+                  <option value="role_id"> {initialValues.role_id} </option> Default empty option
+                  {roles.map((role) => (
+                      <option key={role.id} value={role.id}>
+                          {role.name}
+                      </option>
+                  ))}
+              </Field>
+              <ErrorMessage name="user_id" component="div" style={{ color: 'red' }} />
+          </div>
+  
 
           <div>
             <button type="submit" disabled={isSubmitting}>

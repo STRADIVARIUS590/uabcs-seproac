@@ -22,8 +22,9 @@ class CourseFactory extends Factory
             'total_hours' => mt_rand(50, 100),
             'total_students' => mt_rand(10, 30),
             'educative_level' => fake()->randomElement(['Licenciatura', 'Doctorado', 'Maestria']),
-            'period' => fake()->date() . ' - ' . fake()->date()
-
+            'period' => fake()->date() . ' - ' . fake()->date(),
+            'start_date' => fake()->date(),
+            'end_date' => fake()->date(),
         ];
     }
 }

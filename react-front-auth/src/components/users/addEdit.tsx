@@ -1,10 +1,12 @@
+import { AppLayout } from '../Layout/AppLayout';
 import AddEditForm from './AddEditForm';
 
 export const AddEditUserPage = () => { 
+  
   return (
-    <div>
+    <AppLayout>
       <AddEditForm/>
-    </div>
-  );
+    </AppLayout>    
+  )
 };
 
