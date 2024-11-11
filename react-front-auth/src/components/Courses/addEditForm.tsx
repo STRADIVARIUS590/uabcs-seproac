@@ -38,7 +38,13 @@ interface UserItem {
 }
 
 const validationSchema = Yup.object({
-    name: Yup.string().required('El nombre es requerido')
+    name: Yup.string().required('El nombre es requerido'),
+    total_hours: Yup.number().required('El total de horas es requerido').min(50),
+    total_students: Yup.number().required('El total de estudiantes es requerido').min(5),
+    period: Yup.string().required('El periodo es requerido'),
+    nivel_educativo: Yup.string().required('El nivel educativo es requerido'),
+    start_date: Yup.date().required('La fecha de inicio es requerida'),
+    end_date: Yup.date().required('La fecha de fin es requerida'),
 });
 
 export const AddEditForm = () => {
@@ -64,7 +70,8 @@ export const AddEditForm = () => {
        const loadData = async () => {
         try {
             if (id) {
-                const response = await Api.get("/congresses/get/" + id + "?include=user,tags", {
+                const response = await Api.get("/courses/get/" + id + "?include=user,tags", {
+
                     Authorization: "Bearer " + token,
                     accept: "application/json",
                 });
@@ -123,18 +130,18 @@ export const AddEditForm = () => {
     // HANDLE
     const handleSubmit = async (values: typeof initialValues, { setFieldError }: FormikHelpers<typeof initialValues>) => {
         const response = isEditMode
-            ? await Api.put(`/congresses`, values, {
+            ? await Api.put(`/courses`, values, {
                 Authorization: `Bearer ${token}`,
                 'Content-Type': 'application/json',
             })
-            : await Api.post(`/congresses`, values, {
+            : await Api.post(`/courses`, values, {
                 Authorization: `Bearer ${token}`,
                 'Content-Type': 'application/json',
             });
 
             
         if (response.statusCode === 200) {
-            navigate('/congresses');
+            navigate('/courses');
         } else {
             const errors = response.data as { [key: string]: string[] };
             Object.entries(errors).forEach(([field, messages]) => {

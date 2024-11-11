@@ -27,7 +27,11 @@ interface UserItem {
 }
 
 const validationSchema = Yup.object({
-    // title_trabajo: Yup.string().required('Error')
+    title_trabajo: Yup.string().required('El titulo del trabajo es requerido'),
+    user_id : Yup.string().required('El usuario es requerido'),
+    event_name : Yup.string().required('El nombre del evento es requerido'),
+    date: Yup.date().required('LA fecha es reqerida'),
+    colaborators: Yup.string().required('REQUIRED')
 });
 
 export const AddEditForm = () => {
@@ -197,6 +201,13 @@ export const AddEditForm = () => {
                         <label htmlFor="colaborators">Nro de Colaboradores</label>
                         <Field name="colaborators" type="text" />
                         <ErrorMessage name="colaborators" component="div" style={{ color: "red" }} />
+                    </div>
+
+
+                     <div>
+                        <label htmlFor="date">fecha</label>
+                        <Field name="date" type="date" />
+                        <ErrorMessage name="date" component="div" style={{ color: "red" }} />
                     </div>
 
                     <div>

@@ -24,13 +24,25 @@ interface UserItem {
 // Validation schema using Yup
 const validationSchema = Yup.object({
   name: Yup.string().required('El nombre es requerido'),
-  email: Yup.string().email('Invalid email address').required('Email is required'),
+  email: Yup.string().email('Direccion de correo inválida').required('El correo es requerido'),
   password: Yup.string()
-            .min(5, 'la contraseña debe tener minio 5 caracteres')
-            .max(10, 'la contraseña debe maximo 10 caracteres')
+            .min(5, 'la contraseña debe tener minimo 5 caracteres')
+            // .max(10, 'la contraseña debe maximo 10 caracteres')
             .required('La contraseña es requerida'),
   password_confirmation: Yup.string()
-            .oneOf([Yup.ref('password')], 'Las contraseñas no coinciden'). required('la confirmacion de contraseña es requirida')
+            .oneOf([Yup.ref('password')], 'Las contraseñas no coinciden'). required('la confirmación de contraseña es requerida'),
+
+  // date_ingreso: Yup.date().max(
+  //     (new Date()).setHours(0,0,0,0),
+  //      'Selecciona una fecha valida'),
+  //     //  .required('La fecha de ingreso es requerida'),
+ 
+  // birth_date: Yup.date().max(
+  //     ((new Date()).setHours(0,0,0,0)),
+  //      'Selecciona una fecha valida'),
+      //  .required('La fecha de nacimiento es requerida'),
+    
+  // role_id: 
 
 });
 
@@ -84,7 +96,7 @@ const AddEditForm = () => {
 
     useEffect(() => {
         loadData();
-      }, []);
+      }, [id]);
 
 
 const initialValues = {
@@ -193,9 +205,8 @@ const initialValues = {
           <div>
               <label htmlFor="role_id">Rol</label>
               <Field as="select" name="role_id">
-                  <option value="role_id"> {initialValues.role_id} </option> Default empty option
                   {roles.map((role) => (
-                      <option key={role.id} value={role.id}>
+                      <option key={role.id} value={role.id} selected={initialValues.role_id == role.id}>
                           {role.name}
                       </option>
                   ))}

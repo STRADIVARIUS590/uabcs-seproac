@@ -7,7 +7,14 @@ import * as Yup from 'yup';
 import { MessageToast } from "../MessageToast";
 import { ErrorMessage, Field, Formik, FormikHelpers, Form } from "formik";
 const validationSchema = Yup.object({
-
+    name: Yup.string().required('El nombre es requerido'),
+    description: Yup.string().required('La descripcion es requerida'),
+    objetives: Yup.string().required('Los objetivos son requeridos'),
+    colaborators: Yup.string().required('Los colaboradores son requeridos'),
+    start_date: Yup.date().required('La fecha de inicio es requerida'),
+    end_date: Yup.string().required('La fecha de fin es requerida'),
+    type: Yup.string().required('El tipo es reqerido'),
+    period: Yup.string().required('El periodo es requerido'),
 })
 
 interface ProjectItem {

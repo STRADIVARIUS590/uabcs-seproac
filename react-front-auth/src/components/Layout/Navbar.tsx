@@ -1,3 +1,4 @@
+import { Link, useLocation } from "react-router-dom";
 import { useLogout } from "../scripts/Logout";
 
 // Inside your component or API handler
@@ -5,6 +6,8 @@ import { useLogout } from "../scripts/Logout";
 // logout(); // Call logout when needed
 export const Navbar = () => {
   
+  const location = useLocation();
+
   const logout = useLogout(); // Get the logout function from the hook
 
   return <div> <nav className="bg-white dark:bg-gray-900 fixed w-full z-20 top-0 start-0 border-b border-gray-200 dark:border-gray-600">
@@ -25,26 +28,69 @@ export const Navbar = () => {
   <div className="items-center justify-between hidden w-full md:flex md:w-auto md:order-1" id="navbar-sticky">
     <ul className="flex flex-col p-4 md:p-0 mt-4 font-medium border border-gray-100 rounded-lg bg-gray-50 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
       <li>
-        <a href="/dashboard" className="block py-2 px-3 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 md:dark:text-blue-500" aria-current="page">Dashboard</a>
-      </li>
-      <li>
-        <a href="/users" className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Usuarios</a>
-      </li>
-      {/* <li>
-        <a href="/login" className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Login</a>
-      </li> */}
-      <li>
-        <a href="/congresses" className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Congresos</a>
-      </li>
-        <li>
-        <a href="/publications" className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Publicaciones</a>
-      </li>
-        <li>
-        <a href="/courses" className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Cursos</a>
-      </li>
-        <li>
-        <a href="/projects" className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Proyectos</a>
-      </li>
+      <Link to="/dashboard"
+      className={`block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 
+        md:hover:bg-transparent md:hover:text-blue-700 md:p-0 
+        md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 
+        dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700 
+        ${location.pathname === '/dashboard' ? 'text-blue-500' : ''}`}
+    >
+      Dashboard
+    </Link>
+    </li>
+    
+    <li>
+    <Link to="/users"
+      className={`block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 
+        md:hover:bg-transparent md:hover:text-blue-700 md:p-0 
+        md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 
+        dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700 
+        ${location.pathname === '/users' ? 'text-blue-500' : ''}`}
+      >
+        Usuarios
+    </Link>
+    </li>
+       
+    <li>
+      <Link to="/congresses"
+      className={`block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 
+        md:hover:bg-transparent md:hover:text-blue-700 md:p-0 
+        md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 
+        dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700 
+        ${location.pathname === '/congresses' ? 'text-blue-500' : ''}`}
+    >
+      Congresos 
+    </Link></li>
+    <li>
+      <Link to="/publications"
+      className={`block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 
+        md:hover:bg-transparent md:hover:text-blue-700 md:p-0 
+        md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 
+        dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700 
+        ${location.pathname === '/dashboard' ? 'text-blue-500' : ''}`}
+    >
+      Publicaciones
+    </Link></li>
+    <li>
+      <Link to="/courses"
+      className={`block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 
+        md:hover:bg-transparent md:hover:text-blue-700 md:p-0 
+        md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 
+        dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700 
+        ${location.pathname === '/courses' ? 'text-blue-500' : ''}`}
+    >
+      Cursos
+    </Link></li>
+    <li>
+      <Link to="/projects"
+      className={`block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 
+        md:hover:bg-transparent md:hover:text-blue-700 md:p-0 
+        md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 
+        dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700 
+        ${location.pathname === '/projects' ? 'text-blue-500' : ''}`}
+    >
+      Proyectos
+    </Link></li>
     </ul>
   </div>
   </div>
