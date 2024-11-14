@@ -1,10 +1,12 @@
 import {useEffect, useState } from 'react';
-import { Formik, Field, Form, ErrorMessage, FormikHelpers } from 'formik';
+import { Formik, Field, Form, ErrorMessage, FormikHelpers, FieldArray } from 'formik';
 import * as Yup from 'yup';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Api } from '../../services/Api';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../store';
+import { DefaultColumn, DefaultInput, EmailInput } from '../inputs/Forms';
+import { MessageToast } from '../MessageToast';
 interface RoleItem {
   id: string; 
   name: string;
@@ -18,8 +20,13 @@ interface UserItem {
   birth_date: string;
   role_id : string;
   sex: string;
-    role: RoleItem
-  // Add more fields as necessary
+  role: RoleItem;
+  tags: { id: number, name: string}[];
+}
+
+interface TagItem {
+    id: string;
+    name: string;
 }
 // Validation schema using Yup
 const validationSchema = Yup.object({
@@ -39,8 +46,8 @@ const validationSchema = Yup.object({
  
   // birth_date: Yup.date().max(
   //     ((new Date()).setHours(0,0,0,0)),
-  //      'Selecciona una fecha valida'),
-      //  .required('La fecha de nacimiento es requerida'),
+  //      'Selecciona una fecha valida')
+  //      .required('La fecha de nacimiento es requerida'),
     
   // role_id: 
 
@@ -58,7 +65,9 @@ const AddEditForm = () => {
 
   const [loading, setLoading] = useState(true);
   
-  const [error, setError] = useState(true);
+  const [tags, setTags ] = useState<TagItem[]>([]);
+
+  const [error, setError] = useState(false);
 
   const { token } = useSelector((state: RootState) => state.auth)
 
@@ -68,7 +77,7 @@ const AddEditForm = () => {
         
         if(id){
 
-            const response = await Api.get('/users/get/' + id, {
+            const response = await Api.get('/users/get/' + id + '?include=tags', {
                 Authorization: 'Bearer ' + token,
                 accept: 'application/json'
             })
@@ -86,6 +95,15 @@ const AddEditForm = () => {
             const result_roles: RoleItem[] = await response_roles.data;
             setRoles(result_roles);
 
+
+          const response_tags = await Api.get('/tags', {
+              Authorization: "Bearer " + token,
+              accept: "application/json",
+          });
+
+          const result_tags = await response_tags.data;
+          setTags(result_tags);
+
         setLoading(false);
 
         } catch(error) {
@@ -102,12 +120,14 @@ const AddEditForm = () => {
 const initialValues = {
     name: user?.name ?? '' ,
     email: user?.email?? '',
-    password : '',
+    password : user?.password ?? '',
     id : user?.id ?? '0',
     role_id : user?.role_id ?? 0,
+    // date_ingreso: user?.date_ingreso ? new Date(user?.date_ingreso).toISOString().split('T')[0] : "", 
     date_ingreso: user?.date_ingreso ?? '',
     birth_date: user?.birth_date ?? '',
     sex : user?.sex ?? '',
+    tags: user?.tags?.map(tag => tag.id) || [],
     role: {
         id: user?.role_id ?? '',
         name: user?.role?.name ?? ''
@@ -128,12 +148,13 @@ const initialValues = {
         );
 
         if(response.statusCode == 200){
-          navigate('/users'); // Redirect after submission;
+          navigate(0); // Redirect after submission;
         }else{
-        Object.entries(response.data).forEach((key) => {        
-        setFieldError(key[0], key[1][0])
-      })
-    }
+          const errors = response.data as { [key: string]: string[] };
+            Object.entries(errors).forEach(([field, messages]) => {
+                setFieldError(field, messages[0]);
+          });    
+      }
 
     }else {
       const response = await Api.post('/users', values, {
@@ -150,12 +171,15 @@ const initialValues = {
       }
     }
   };
+  
+  if(error){       return <MessageToast message='Ha ocurrido un error' type="error"/>}
+  if(loading){     return <MessageToast message='Cargando...' type="loading"/> }
 
-  if(loading) return <p>Loading</p>
+
 
   return (
       <div> 
-        <h1>{isEditMode ? 'Edit User' : 'Add User'}</h1> 
+        <h1>{isEditMode ? 'Editar usuario' : 'Agregar usuario'}</h1> 
     <Formik 
       initialValues={initialValues}
       validationSchema={validationSchema}
@@ -164,60 +188,77 @@ const initialValues = {
       {({ isSubmitting }) => (
         <Form>
           <input type="hidden"  name='id'/>
-          <div>
-            <label htmlFor="name">Name</label>
-            <Field name="name" type="text" />
-            <ErrorMessage name="name" component="div" style={{ color: 'red' }} />
-          </div>
-
-          <div>
-            <label htmlFor="email">Email</label>
-            <Field name="email" type="email" />
-            <ErrorMessage name="email" component="div" style={{ color: 'red' }} />
-          </div>
-
-              
-          <div>
-            <label htmlFor="password">Contraseña</label>
-            <Field name="password" type="password"/>
-            <ErrorMessage name="password" component="div" style={{ color: 'red' }} />
-          </div>
-
-          <div>
-            <label htmlFor="password_confirmation">Confirma Contraseña</label>
-            <Field name="password_confirmation" type="password"/>
-            <ErrorMessage name="password_confirmation" component="div" style={{ color: 'red' }} />
-          </div>
-
-          <div>
-            <label htmlFor="date_ingreso">Facha de ingreso</label>
-            <Field name="date_ingreso" type="date" />
-            <ErrorMessage name="date_ingreso" component="div" style={{ color: 'red' }} />
-          </div>
-
-          <div>
-            <label htmlFor="birth_date">Fecha de nacimiento</label>
-            <Field name="birth_date" type="date" />
-            <ErrorMessage name="birth_date" component="div" style={{ color: 'red' }} />
-          </div>
+            <section className="py-12 dark:bg-dark">
+              <div className="container">
+                <div className="-mx-4 flex flex-wrap">
+                      <DefaultColumn>
+                        <DefaultInput name='name' label='Nombre'/>
+                        <EmailInput name='email' label='Correo Electronico' placeholder='test@uabcs.mx'/>
+                      </DefaultColumn>
+                      
+                      <DefaultColumn>
+                        <DefaultInput type='date' name='date_ingreso' label='Fecha de ingreso'/>
+                        <DefaultInput type='date' name='birth_date' label='Fecha de nacimiento'/>
+                      </DefaultColumn>
 
 
-          <div>
-              <label htmlFor="role_id">Rol</label>
-              <Field as="select" name="role_id">
-                  {roles.map((role) => (
-                      <option key={role.id} value={role.id} selected={initialValues.role_id == role.id}>
-                          {role.name}
-                      </option>
-                  ))}
-              </Field>
-              <ErrorMessage name="user_id" component="div" style={{ color: 'red' }} />
-          </div>
-  
+                      <DefaultColumn>
+                        <DefaultInput type='password' name='password' label='Contraseña'/>
+                        <DefaultInput type='password' name='password_confirmation' label='Conforma tu contraseña'/>
+                      </DefaultColumn>
 
+                      {/* <DefaultColumn> */}
+                        <label htmlFor="role_id" className='mb-[10px] block text-base font-medium text-dark dark:text-white'>Rol</label>
+                        <Field as="select" name="role_id" className="w-full bg-transparent rounded-md border border-stroke dark:border-dark-3 py-[10px] px-5 text-dark-6 outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-gray-2 disabled:border-gray-2">
+                          {roles.map((role) => (
+                            <option key={role.id} value={role.id}>
+                              {role.name}
+                            </option>
+                          ))}
+                        </Field>
+                        <ErrorMessage name="role_id" component="div" style={{ color: 'red' }} />
+                      {/* </Default Column>   */}
+
+                </div>
+              </div>
+
+               <FieldArray
+                        name="tags"
+                        render={arrayHelpers => (
+                            <div>
+                                {tags.map((item, index) => (
+                                    <div key={index}>
+                                        <label>
+                                            <Field
+                                                type="checkbox"
+                                                name="tags"
+                                                value={item.id}
+                                                checked={
+                                                    arrayHelpers.form.values.tags.some(
+                                                        (tag: string) => tag === item.id
+                                                    )
+                                                }
+                                                onChange={e => {
+                                                    if (e.target.checked) {
+                                                        arrayHelpers.push(item.id);
+                                                    } else {
+                                                        const idx = arrayHelpers.form.values.tags.indexOf(item.id);
+                                                        if (idx !== -1) arrayHelpers.remove(idx);
+                                                    }
+                                                }}
+                                            />
+                                            {item.name}
+                                        </label>
+                                    </div>
+                                ))}
+                            </div>
+                        )}
+                    />
+
+      </section>
           <div>
             <button type="submit" disabled={isSubmitting}>
-              {isEditMode ? 'Update' : 'Add'}
+              {isEditMode ? 'Editar' : 'Guardar '}
             </button>
           </div>
         </Form>

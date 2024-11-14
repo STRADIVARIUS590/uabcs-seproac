@@ -15,5 +15,9 @@ class Tag extends Model
         'slug'
     ];
 
+    public function projects()
+    {
+        // return $this->morphedByMany(Project::class, )
+    }
 
 }

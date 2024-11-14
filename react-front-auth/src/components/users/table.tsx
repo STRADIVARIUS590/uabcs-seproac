@@ -85,39 +85,38 @@ export const Users = () => {
     
         return (
     
-        <div >
-            {/* <p>{JSON.stringify(data)}</p> */}
-            <h1>Users</h1>
-            <table>
+        <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
+
+            <h1 >Usuarios</h1>
+            <table className="text-center w-full text-sm text-left rtl:text-right font-small text-gray-900 dark:text-gray-400">
                 <thead>
                     <tr>
-                        <td> #</td>
-                        <td> Nombre</td>
-                        <td> Correo </td>
-                        <td> Fecha de ingreso</td>
-                        <td> Fecha de nacimiento</td>
-                        <td> Sexo </td>
-                        <td> Rol </td>
+                        <th scope="col" className="px-6 py-3"> #</th>
+                        <th scope="col" className="px-6 py-3"> Nombre</th>
+                        <th scope="col" className="px-6 py-3"> Correo </th>
+                        <th scope="col" className="px-6 py-3"> Fecha de ingreso</th>
+                        <th scope="col" className="px-6 py-3"> Fecha de nacimiento</th>
+                        <th scope="col" className="px-6 py-3"> Sexo </th>
+                        <th scope="col" className="px-6 py-3"> Rol </th>
+                        <th scope="col" className="px-6 py-3"> Acciones </th>
                     </tr>
                 </thead>
-                <tbody>
-                    
-                    
-            {data.map((item) => (
-                <tr key={item.id}>
-                <td>{item.id}</td>
-                <td>{item.name}</td>
-                <td>{item.email}</td> 
-                <td>{item.date_ingreso}</td> 
-                <td>{item.birth_date}</td> 
-                <td>{item.sex}</td> 
-                <td>{item.role?.name}</td> 
-                <button onClick={() => deleteUser(item.id )}> Eliminar
-                </button>
-                <button onClick={() => navigate('/users/edit/' + item.id)}>Editar</button>
-                </tr>
-            ))}
-            
+                    <tbody>
+
+                    {data.map((item) => (
+                    <tr className="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700" key={item.id}>
+                        <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{item.id}</th>
+                        <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{item.name}</th>
+                        <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{item.email}</th>
+                        <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{item.date_ingreso}</th>
+                        <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{item.birth_date}</th>
+                        <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{item.sex}</th>
+                        <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{item.role?.name}</th>
+                        <button onClick={() => deleteUser(item.id)}> Eliminar
+                        </button>
+                        <button onClick={() => navigate('/users/edit/' + item.id)}>Editar</button>
+                    </tr>
+                    ))} 
                 </tbody>
             </table>     
         </div>

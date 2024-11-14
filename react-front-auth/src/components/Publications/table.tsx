@@ -82,35 +82,37 @@ export const Publications = () => {
     if(loading){     return <MessageToast message='Cargando...' type="loading"/> }
 
 
-    return (<div>
-        <table>
-            <thead>
+    return (<div className="relative overflow-x-auto shadow-md sm:rounded-lg">
+        <h1>Piblicaciones</h1>
+        <table className="text-align:center w-full text-sm text-left rtl:text-right font-small text-gray-900 dark:text-gray-400">
+            <thead >
                 <tr>
-                    <td>#</td>
-                    <td>Titulo</td>
-                    <td>Tipo</td>
-                    <td>ISSN/ISSBN</td>
-                    <td>DOI</td>
-                    <td>Revista</td>
-                    <td>Autores</td>
-                    <td>Usuario</td>
-                    <td>Fecha de Publicacion</td>
-                    <td>Periodo</td>
+                    <th scope="col" className="px-6 py-3">#</th>
+                    <th scope="col" className="px-6 py-3">Titulo</th>
+                    <th scope="col" className="px-6 py-3">Tipo</th>
+                    <th scope="col" className="px-6 py-3">ISSN/ISSBN</th>
+                    <th scope="col" className="px-6 py-3">DOI</th>
+                    <th scope="col" className="px-6 py-3">Revista</th>
+                    <th scope="col" className="px-6 py-3">Autores</th>
+                    <th scope="col" className="px-6 py-3">Usuario</th>
+                    <th scope="col" className="px-6 py-3">Fecha de Publicacion</th>
+                    <th scope="col" className="px-6 py-3">Periodo</th>
+                    <th scope="col" className="px-6 py-3">Acciones</th>
                 </tr>
             </thead>
 
             {data.map((item) => (
-                    <tr key={item.id}>
-                    <td>{item.id}</td>
-                    <td>{item.title}</td>
-                    <td>{item.type}</td>
-                    <td>{item.issn_isbn}</td>
-                    <td>{item.doi}</td>
-                    <td>{item.magazine_name}</td>
-                    <td>{item.authors}</td>
-                    <td>{item.user?.name}</td>
-                    <td>{item.publication_date}</td>
-                    <td>{item.period}</td>
+                    <tr key={item.id} className="text-align:center odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">
+                    <td scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{item.id}</td>
+                    <td scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{item.title}</td>
+                    <td scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{item.type}</td>
+                    <td scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{item.issn_isbn}</td>
+                    <td scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{item.doi}</td>
+                    <td scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{item.magazine_name}</td>
+                    <td scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{item.authors}</td>
+                    <td scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{item.user?.name}</td>
+                    <td scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{item.publication_date}</td>
+                    <td scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{item.period}</td>
                     <button onClick={() => deletePublication(item.id)}>Eliminar </button>
                     <button onClick={() => navigate('/publications/edit/' + item.id)}> Editar </button>
                     </tr>       

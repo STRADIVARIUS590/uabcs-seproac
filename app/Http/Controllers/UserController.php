@@ -53,8 +53,13 @@ class UserController extends Controller
     { 
     
         $validator = Validator::make($request->all(), [
-            'email' => 'unique:users,email',
-            'name' => 'unique:users,name',
+            'name' => 'required|string|max:255', // The name field is required, must be a string, and a max length of 255
+            'email' => 'required|string|email|max:255|unique:users,email', // Email is required, must be unique, and a valid email
+            'date_ingreso' => 'nullable|date', // date_ingreso can be null, but if present, must be a valid date
+            'birth_date' => 'nullable|date', // birth_date can be null, but if present, must be a valid date
+            'sex' => 'nullable|in:M,F', // sex can be null, but if present, must be either 'M' or 'F'
+            'password' => 'required|string|min:6', // Password is required, must be a string, and have at least 6 characters
+            'role_id' => 'nullable|integer|exists:roles,id', // role_id can be null, but if present, must be a valid integer and exist in the roles table            
         ]);
 
         if($validator->fails()) return response()->json([
@@ -78,7 +83,7 @@ class UserController extends Controller
      */
     public function get($id)
     {
-        $user = User::with('role')->findOrfail($id);
+        $user = User::with('role', 'tags')->findOrfail($id);
 
         // $this->log(__FUNCTION__, 'users', 'get users', Auth::id(),$user->id);
 
@@ -99,8 +104,13 @@ class UserController extends Controller
     public function update(Request $request, $id)
     {  
         $validator = Validator::make($request->all(), [
-            'email' => 'unique:users,email,'.$request->id,
-            'name' => 'unique:users,name,'.$request->id,
+            'date_ingreso' => 'nullable|date',
+            'birth_date' => 'nullable|date',
+            'sex' => 'nullable|in:M,F',
+            // 'password' => 'required|string|min:6',
+            'role_id' => 'nullable|exists:roles,id',
+            'email' => 'required|string|email|max:255|unique:users,email,'.$request->id,
+            'name' => 'required|string|max:255|unique:users,name,'.$request->id,
         ]);
 
         if($validator->fails()) 
@@ -114,7 +124,12 @@ class UserController extends Controller
         $user = User::findOrFail($request->id);
         
         $request['password'] = isset($request['password']) ? bcrypt($request['password']) : $user->password;
-    
+   
+        error_log(json_encode($request->tags));
+       if(isset($request->tags)){
+            $user->tags()->sync($request->tags);
+         }
+
         $user->update($request->all());
 
         if($request->hasFile('avatar')) $user->addMedia($request->avatar)->toMediaCollection('avatar');

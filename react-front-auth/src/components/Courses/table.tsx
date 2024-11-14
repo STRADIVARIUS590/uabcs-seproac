@@ -44,9 +44,14 @@ export const Courses = () => {
 
     const [error, setError] = useState<boolean>();
 
+    const [url, SetUrl] = useState<string>('/courses?include=user,institution');
+    
+    const [filters, setFilters] = useState({
+        user_id : '1'
+    });
     const fetchData = async () => {
         
-        const response =  await Api.get('/courses?include=user,institution', {
+        const response =  await Api.get(url, {
             Authorization: 'Bearer ' + token,
             accept: 'application/json'    
         })
@@ -80,41 +85,51 @@ export const Courses = () => {
         fetchData();
     }
 
-    useEffect(() => { fetchData(); }, [])
+    useEffect(() => { fetchData(); }, [url])
 
     if(error){       return <MessageToast message='Ha ocurrido un error' type="error"/>}
     if(loading){     return <MessageToast message='Cargando...' type="loading"/> }
 
-    return <div>
-        <table>
+    return <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
+
+            <input type="text" value={filters.user_id
+            } onChange={function(e){
+                setFilters({user_id: e.target.value})
+                SetUrl(url + '&filter[user_id]=' + e.target.value)
+            }}/>
+        <h1>Cursos</h1>
+       <table className="w-full text-sm text-left rtl:text-right font-small text-gray-900 dark:text-gray-400">
             <thead>
                 <tr>
-                    <td>#</td>
-                    <td>Nombre</td>
-                    <td>Horas</td>
-                    <td>Estudiantes</td>
-                    <td>Nivel educativo</td>
-                    <td>Fecha de Inicio</td>
-                    <td>Fecha de Fin</td>
-                    <td>Inistitution</td>
-                    <td>Usuario</td>
+                    <th scope="col" className="px-6 py-3">#</th>
+                    <th scope="col" className="px-6 py-3">Nombre</th>
+                    <th scope="col" className="px-6 py-3">Horas</th>
+                    <th scope="col" className="px-6 py-3">Estudiantes</th>
+                    <th scope="col" className="px-6 py-3">Nivel educativo</th>
+                    <th scope="col" className="px-6 py-3">Fecha de Inicio</th>
+                    <th scope="col" className="px-6 py-3">Fecha de Fin</th>
+                    <th scope="col" className="px-6 py-3">Inistitution</th>
+                    <th scope="col" className="px-6 py-3">Usuario</th>
+                    <th scope="col" className="px-6 py-3">Acciones</th>
                 </tr>
             </thead>
             <tbody>
                 {data.map((item) => (
-                    <tr key={item.id}>
-                    <td>{item.id}</td>
-                    <td>{item.name}</td>
-                    <td>{item.total_hours}</td>
-                    <td>{item.total_students}</td>
-                    <td>{item.educative_level}</td>
-                    <td>{item.start_date}</td>
-                    <td>{item.end_date}</td>
-                    {/* <td>{item.period}</td> */}
-                    <td>{item.institution?.name}</td>
-                    <td>{item.user?.name}</td>
-                    <button onClick={() => deleteCourse(item.id)}>Eliminar </button>
-                    <button onClick={() => navigate('/courses/edit/' + item.id)}> Editar </button>
+                    <tr key={item.id} className="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">
+                    <td scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{item.id}</td>
+                    <td scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{item.name}</td>
+                    <td scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{item.total_hours}</td>
+                    <td scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{item.total_students}</td>
+                    <td scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{item.educative_level}</td>
+                    <td scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{item.start_date}</td>
+                    <td scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{item.end_date}</td>
+                    <td scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{item.institution?.name}</td>
+                    <td scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{item.user?.name}</td>
+                    
+                    <td>
+                        <button onClick={() => deleteCourse(item.id)}>Eliminar </button>
+                        <button onClick={() => navigate('/courses/edit/' + item.id)}> Editar </button>
+                    </td>
                     </tr>       
                 ))}
             </tbody>

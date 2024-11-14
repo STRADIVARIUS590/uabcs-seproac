@@ -17,11 +17,10 @@ class TagSeeder extends Seeder
         $tags = [
             ['name' => 'Sistemas de Informacion'],
             ['name' => 'Publicacion'],
-            ['name' => 'Congreso'],
+            ['name' => 'Capitulo'],
             ['name' => 'Disertacion'],
             ['name' => 'Tesis'],
             ['name' => 'Proyectos Academicos'],
-    
         ];
 
         foreach ($tags as $tag_info) {

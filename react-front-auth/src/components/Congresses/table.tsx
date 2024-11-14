@@ -4,7 +4,6 @@ import { RootState } from "../../store";
 import { useNavigate } from "react-router-dom";
 import { Api } from "../../services/Api";
 import { MessageToast } from "../MessageToast";
-import { AppLayout } from "../Layout/AppLayout";
 // interface UserCon
  interface CongressItem {
     id: string | number;
@@ -81,30 +80,34 @@ export const Congresses = () => {
     if(error){       return <MessageToast message='Ha ocurrido un error' type="error"/>}
     if(loading){     return <MessageToast message='Cargando...' type="loading"/> }
 
-    return <div>
-        <table>
+    return <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
+
+        <h1>Congresos</h1>
+        <table className="w-full text-sm text-left rtl:text-right font-small text-gray-900 dark:text-gray-400">
         <thead>
-            <tr>
-                <td>#</td>
-                <td>Titulo del trabajo</td>
-                <td>Usuario</td>
-                <td>Evento</td>
-                <td>Fecha</td>
-                <td>Nro de Colaboradores</td>
-                <td>Acciones</td>
+            <tr className="text-center">
+                <th scope="col" className="px-6 py-3">#</th>
+                <th scope="col" className="px-6 py-3" >Titulo del trabajo</th>
+                <th scope="col" className="px-6 py-3">Usuario</th>
+                <th scope="col" className="px-6 py-3">Evento</th>
+                <th scope="col" className="px-6 py-3">Fecha</th>
+                <th scope="col" className="px-6 py-3">Nro de Colaboradores</th>
+                <th scope="col" className="px-6 py-3">Acciones</th>
             </tr>
         </thead>
         <tbody>
             {data.map((item) => (
-                <tr key={item.id}>
-                <td>{item.id}</td>
-                <td>{item.title_trabajo}</td>
-                <td>{item.user?.name}</td>
-                <td>{item.event_name}</td>
-                <td>{item.date}</td>
-                <td>{item.colaborators}</td>
-                <button onClick={() => deleteCongress(item.id)}>Eliminar</button>
-                <button onClick={() => navigate('/congresses/edit/' + item.id)}>Editar</button>
+                <tr key={item.id} className="text-center odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">
+                <td scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{item.id}</td>
+                <td scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{item.title_trabajo}</td>
+                <td scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{item.user?.name}</td>
+                <td scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{item.event_name}</td>
+                <td scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{item.date}</td>
+                <td scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{item.colaborators}</td>
+                <td>
+                    <button  onClick={() => deleteCongress(item.id)}>Eliminar</button>
+                    <button onClick={() => navigate('/congresses/edit/' + item.id)}>Editar</button>
+                </td>
                 </tr>   
             ))}
         </tbody>

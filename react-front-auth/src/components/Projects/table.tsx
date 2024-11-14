@@ -80,38 +80,40 @@ export const Projects = () => {
     if(error){       return <MessageToast message='Ha ocurrido un error' type="error"/>}
     if(loading){     return <MessageToast message='Cargando...' type="loading"/> }
 
-    return <div>
-        <table>
+    return <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
+        <table className="w-full text-sm text-left rtl:text-right font-small text-gray-900 dark:text-gray-400">
             <thead>
                 <tr>
-                    <td>#</td>
-                    <td>Nombre</td>
-                    <td>Descripcion</td>
-                    <td>Usuario</td>
-                    <td>Objetivos</td>
-                    <td>Colaboradores</td>
-                    <td>Fecha de inicio</td>
-                    <td>Fecha de Fin</td>
-                    <td>Tipo</td>
-                    <td>Periodo</td>
-                    <td>Acciones</td>
+                    <th scope="col" className="px-6 py-3">#</th>
+                    <th scope="col" className="px-6 py-3">Nombre</th>
+                    <th scope="col" className="px-6 py-3">Descripcion</th>
+                    <th scope="col" className="px-6 py-3">Usuario</th>
+                    <th scope="col" className="px-6 py-3">Objetivos</th>
+                    <th scope="col" className="px-6 py-3">Colaboradores</th>
+                    <th scope="col" className="px-6 py-3">Fecha de inicio</th>
+                    <th scope="col" className="px-6 py-3">Fecha de Fin</th>
+                    <th scope="col" className="px-6 py-3">Tipo</th>
+                    <th scope="col" className="px-6 py-3">Periodo</th>
+                    <th scope="col" className="px-6 py-3">Acciones</th>
                 </tr>
             </thead>
             <tbody>
                 {data.map((item) => (
-                    <tr key={item.id}>
-                    <td>{item.id}</td>
-                    <td>{item.name}</td>
-                    <td>{item.description}</td>
-                    <td>{item.user?.name}</td>
-                    <td>{item.objetives}</td>
-                    <td>{item.colaborators}</td>
-                    <td>{item.start_date}</td>
-                    <td>{item.end_date}</td>
-                    <td>{item.type}</td>
-                    <td>{item.period}</td>
-                    <button onClick={() => deleteProject(item.id)}>Eliminar </button>
-                    <button onClick={() => navigate('/projects/edit/' + item.id)}> Editar </button>
+                    <tr key={item.id} className="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">
+                    <td scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{item.id}</td>
+                    <td scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{item.name}</td>
+                    <td scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{item.description}</td>
+                    <td scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{item.user?.name}</td>
+                    <td scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{item.objetives}</td>
+                    <td scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{item.colaborators}</td>
+                    <td scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{item.start_date}</td>
+                    <td scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{item.end_date}</td>
+                    <td scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{item.type}</td>
+                    <td scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{item.period}</td>
+                    <td scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                        <button onClick={() => deleteProject(item.id)}>Eliminar </button>
+                        <button onClick={() => navigate('/projects/edit/' + item.id)}> Editar </button>
+                    </td>
                     </tr>       
                 ))}
             </tbody>
