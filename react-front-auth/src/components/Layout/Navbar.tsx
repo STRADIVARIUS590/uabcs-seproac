@@ -36,6 +36,7 @@ export const Navbar = () => {
         ${location.pathname === '/dashboard' ? 'text-blue-500' : ''}`}
     >
       Dashboard
+     {/* { location.pathname } */}
     </Link>
     </li>
     
@@ -67,7 +68,7 @@ export const Navbar = () => {
         md:hover:bg-transparent md:hover:text-blue-700 md:p-0 
         md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 
         dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700 
-        ${location.pathname === '/dashboard' ? 'text-blue-500' : ''}`}
+        ${location.pathname === '/publications' ? 'text-blue-500' : ''}`}
     >
       Publicaciones
     </Link></li>
@@ -90,6 +91,17 @@ export const Navbar = () => {
         ${location.pathname === '/projects' ? 'text-blue-500' : ''}`}
     >
       Proyectos
+    </Link></li>
+
+      <li>
+      <Link to="/tags"
+      className={`block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 
+        md:hover:bg-transparent md:hover:text-blue-700 md:p-0 
+        md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 
+        dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700 
+        ${location.pathname === '/tags' ? 'text-blue-500' : ''}`}
+    >
+      Categorias
     </Link></li>
     </ul>
   </div>

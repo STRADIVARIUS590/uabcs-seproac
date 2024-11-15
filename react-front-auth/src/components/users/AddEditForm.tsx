@@ -24,7 +24,7 @@ interface UserItem {
   tags: { id: number, name: string}[];
 }
 
-interface TagItem {
+export interface TagItem {
     id: string;
     name: string;
 }
@@ -118,19 +118,19 @@ const AddEditForm = () => {
 
 
 const initialValues = {
-    name: user?.name ?? '' ,
-    email: user?.email?? '',
-    password : user?.password ?? '',
-    id : user?.id ?? '0',
-    role_id : user?.role_id ?? 0,
+    name: user?.name ||  '' ,
+    email: user?.email || '',
+    password : user?.password || '',
+    id : user?.id ||  '0',
+    role_id : user?.role_id || 0,
     // date_ingreso: user?.date_ingreso ? new Date(user?.date_ingreso).toISOString().split('T')[0] : "", 
-    date_ingreso: user?.date_ingreso ?? '',
-    birth_date: user?.birth_date ?? '',
-    sex : user?.sex ?? '',
+    date_ingreso: user?.date_ingreso || '',
+    birth_date: user?.birth_date || '',
+    sex : user?.sex || '',
     tags: user?.tags?.map(tag => tag.id) || [],
     role: {
-        id: user?.role_id ?? '',
-        name: user?.role?.name ?? ''
+        id: user?.role_id || '',
+        name: user?.role?.name || ''
     }
   };
 
@@ -177,9 +177,7 @@ const initialValues = {
 
 
 
-  return (
-      <div> 
-        <h1>{isEditMode ? 'Editar usuario' : 'Agregar usuario'}</h1> 
+  return ( <div> <h1>{isEditMode ? 'Editar usuario' : 'Agregar usuario'}</h1> 
     <Formik 
       initialValues={initialValues}
       validationSchema={validationSchema}

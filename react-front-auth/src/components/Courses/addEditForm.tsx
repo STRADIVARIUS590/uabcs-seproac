@@ -6,6 +6,8 @@ import { Api } from '../../services/Api';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../store';
 import { MessageToast } from '../MessageToast';
+import { DefaultColumn, DefaultInput } from '../inputs/Forms';
+import { DEFAULT_VERSION } from 'redux-persist';
 interface CourseItem {
 
     id: string;
@@ -153,73 +155,114 @@ export const AddEditForm = () => {
     if (error) { return <MessageToast message='Ha ocurrido un error' type="error" /> }
     if (loading) { return <MessageToast message='Cargando...' type="loading" /> }
 
-    return ( <Formik 
-        initialValues={initialValues}
-        onSubmit={handleSubmit} 
-        validationSchema={validationSchema}
+    return ( <div> <h1>{isEditMode ? 'Editar Curso' : 'Agregar Curso'}</h1> 
+    <Formik 
+      initialValues={initialValues}
+      validationSchema={validationSchema}
+      onSubmit={handleSubmit} 
     >
-        {({ isSubmitting }) => (
-            <Form>
-              <input type="hidden" name="id" />
-                <div>
-                    <label htmlFor="name">Nombre</label>
-                    <Field name="name" type="text" />
-                    <ErrorMessage name="name" component="div" style={{ color: "red" }} />
+      {({ isSubmitting }) => (
+        <Form>
+          <input type="hidden"  name='id'/>
+            <section className="py-12 dark:bg-dark">
+              <div className="container">
+                <div className="-mx-4 flex flex-wrap">
+                    
+                    <DefaultColumn>
+                        <DefaultInput name='name' label='Nombre'/>
+                        <DefaultInput name='total_hours' label='Horas'/>
+                    </DefaultColumn>
+
+                    <DefaultColumn>
+                        <DefaultInput name='total_students' label='Nro de estudiantes'/>
+                        <DefaultInput name='educative_level' label='Nivel educativo'/>
+                    </DefaultColumn>
+
+                     <DefaultColumn>
+                        <DefaultInput name='start_date' label='Fecha de inicio'/>
+                        <DefaultInput name='end_date' label='Fecha de fin'/>
+                    </DefaultColumn>
+
+
+                    <DefaultColumn>
+                        <DefaultInput name='period' label='Periodo'/>
+                    </DefaultColumn>
+                    </div>
                 </div>
-
-                <div>
-                    <label htmlFor="total_hours">Horas totales</label>
-                    <Field name="total_hours" type="number" />
-                    <ErrorMessage name="total_hours" component="div" style={{ color: "red" }} />
-                </div>
-
-                <div>
-                    <label htmlFor="total_students">Nro de Estudiantes</label>
-                    <Field name="total_students" type="number" />
-                    <ErrorMessage name="total_students" component="div" style={{ color: "red" }} />
-                </div>
-
-                <div>
-                    <label htmlFor="educative_level">Nivel edicativo</label>
-                    <Field name="educative_level" type="text" />
-                    <ErrorMessage name="educative_level" component="div" style={{ color: "red" }} />
-                </div>
-
-                <div>
-                    <label htmlFor="period">Periodo</label>
-                    <Field name="period" type="text" />
-                    <ErrorMessage name="period" component="div" style={{ color: "red" }} />
-                </div>
-                
-                <div>
-                    <label htmlFor="start_date">Fecha de inicio</label>
-                    <Field name="start_date" type="date" />
-                    <ErrorMessage name="start_date" component="div" style={{ color: "red" }} />
-                </div>
-
-                <div>
-                    <label htmlFor="end_date">Fecha de fin </label>
-                    <Field name="end_date" type="date" />
-                    <ErrorMessage name="end_date" component="div" style={{ color: "red" }} />
-                </div>
-
-
-
-
-
-
-
-
-
+            </section>
                  <div>
                     <button type="submit" disabled={isSubmitting}>
                         {isEditMode ? "Update" : "Add"}
                     </button>
                 </div>
 
-
-            </Form>
+        </Form>
         )}
+</Formik>
+</div>) 
 
-    </Formik> )
+    
+    // ( <Formik 
+    //     initialValues={initialValues}
+    //     onSubmit={handleSubmit} 
+    //     validationSchema={validationSchema}
+    // >
+    //     {({ isSubmitting }) => (
+    //         <Form>
+    //           <input type="hidden" name="id" />
+    //             <div>
+    //                 <label htmlFor="name">Nombre</label>
+    //                 <Field name="name" type="text" />
+    //                 <ErrorMessage name="name" component="div" style={{ color: "red" }} />
+    //             </div>
+
+    //             <div>
+    //                 <label htmlFor="total_hours">Horas totales</label>
+    //                 <Field name="total_hours" type="number" />
+    //                 <ErrorMessage name="total_hours" component="div" style={{ color: "red" }} />
+    //             </div>
+
+    //             <div>
+    //                 <label htmlFor="total_students">Nro de Estudiantes</label>
+    //                 <Field name="total_students" type="number" />
+    //                 <ErrorMessage name="total_students" component="div" style={{ color: "red" }} />
+    //             </div>
+
+    //             <div>
+    //                 <label htmlFor="educative_level">Nivel edicativo</label>
+    //                 <Field name="educative_level" type="text" />
+    //                 <ErrorMessage name="educative_level" component="div" style={{ color: "red" }} />
+    //             </div>
+
+    //             <div>
+    //                 <label htmlFor="period">Periodo</label>
+    //                 <Field name="period" type="text" />
+    //                 <ErrorMessage name="period" component="div" style={{ color: "red" }} />
+    //             </div>
+                
+    //             <div>
+    //                 <label htmlFor="start_date">Fecha de inicio</label>
+    //                 <Field name="start_date" type="date" />
+    //                 <ErrorMessage name="start_date" component="div" style={{ color: "red" }} />
+    //             </div>
+
+    //             <div>
+    //                 <label htmlFor="end_date">Fecha de fin </label>
+    //                 <Field name="end_date" type="date" />
+    //                 <ErrorMessage name="end_date" component="div" style={{ color: "red" }} />
+    //             </div>
+
+
+
+
+
+
+
+
+
+
+    //         </Form>
+    //     )}
+
+    // </Formik> )
 }

@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { Api } from "../../services/Api";
 import { ErrorMessage, Field, Form, Formik, FormikHelpers } from "formik";
 import { MessageToast } from "../MessageToast";
+import { DefaultColumn, DefaultInput, EmailInput } from "../inputs/Forms";
 
 interface PublicationItem {
     id: string;
@@ -22,8 +23,8 @@ interface PublicationItem {
     }
 }
 interface UserItem {
-    name: string | null | undefined;
-    id: string | null | undefined;
+    name: string;
+    id: string;
 }
 export const AddEditForm = () => {
 
@@ -125,74 +126,46 @@ export const AddEditForm = () => {
             isSubmitting
         }) => (
             <Form>
-                <input type="hidden" name="id" />               
-               <div>
-                    <label htmlFor="title">Titulo</label>
-                    <Field name="title" type="text" />
-                    <ErrorMessage name="title" component="div" style={{ color: "red" }} />
-                </div>
+            <input type="hidden"  name='id'/>
+            
+            <section className="py-12 dark:bg-dark">
+            
+              <div className="container">
+                <div className="-mx-4 flex flex-wrap">
+                      <DefaultColumn>
+                        <DefaultInput name='title' label='Titulo'/>
+                        <DefaultInput name='doi' label='DOI'/>
+                        <DefaultInput name='type' label='tipo'/>
+                        <DefaultInput name='issn_isbn' label='ISSN / ISBN'/>
+                        <DefaultInput name='magazine_name' label='Revista'/>
+                      </DefaultColumn>
 
-                <div>
-                    <label htmlFor="type">Tipo</label>
-                    <Field name="type" type="text" />
-                    <ErrorMessage name="type" component="div" style={{ color: "red" }} />
-                </div>
+                      <DefaultColumn>
+                        <DefaultInput name="authors" label="Autores"/>
+                        <DefaultInput name='publication_date' type="date" label='Fecha de publicacion'/>
+                        <DefaultInput name='period' label='Periodo'/>
 
-                <div>
-                    <label htmlFor="doi">DOI</label>
-                    <Field name="doi" type="text" />
-                    <ErrorMessage name="doi" component="div" style={{ color: "red" }} />
-                </div>
-
-                <div>
-                    <label htmlFor="issn_isbn">ISSN / ISBN</label>
-                    <Field name="issn_isbn" type="text" />
-                    <ErrorMessage name="issn_isbn" component="div" style={{ color: "red" }} />
-                </div>
-
-                <div>
-                    <label htmlFor="magazine_name">Revista</label>
-                    <Field name="magazine_name" type="text" />
-                    <ErrorMessage name="magazine_name" component="div" style={{ color: "red" }} />
-                </div>
-
-                <div>
-                    <label htmlFor="authors">Autores</label>
-                    <Field name="autors" type="text" />
-                    <ErrorMessage name="authors" component="div" style={{ color: "red" }} />
-                </div>
-
-                <div>
-                    <label htmlFor="publication_date">Fecha de Publicacion</label>
-                    <Field name="publication_date" type="date" />
-                    <ErrorMessage name="publication_date" component="div" style={{ color: "red" }} />
-                </div>
-                
-                 <div>
-                    <label htmlFor="period">Periodo</label>
-                    <Field name="period" type="text" />
-                    <ErrorMessage name="period" component="div" style={{ color: "red" }} />
-                </div>
-
-
-
-                <div>
-                    <label htmlFor="user_id">Usuario</label>
-                    <Field as="select" name="user_id">
-                        <option value="">Select a user</option> {/* Default empty option */}
-                        {users.map((user) => (
-                        <option key={user.id} value={user.id}>
-                            {user.name}
-                        </option>
-                        ))}
-                    </Field>
-                    <ErrorMessage name="user_id" component="div" style={{ color: 'red' }} />
+                    <div>
+                        <label htmlFor="user_id" className="mb-[10px] block text-base font-medium text-dark dark:text-white">Usuario</label>
+                            <Field as="select" name="user_id" className="w-full bg-transparent rounded-md border border-stroke dark:border-dark-3 py-[10px] px-5 text-dark-6 outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-gray-2 disabled:border-gray-2">
+                                {users.map((user) => (
+                                    <option key={user.id} value={user.id}>
+                                        {user.name}
+                                    </option>
+                                ))}
+                            </Field>
+                        <ErrorMessage name="user_id" component="div" className="text-red-500"  />
                     </div>
+                      </DefaultColumn>    
+                </div>
+            </div>
+            </section>
+                   
                 <div>
                         <button type="submit" disabled={isSubmitting}>
                             {isEditMode ? "Update" : "Add"}
                         </button>
-                </div>
+                </div> 
             </Form>
         )}
     </Formik>)

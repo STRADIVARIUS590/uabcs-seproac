@@ -19,6 +19,8 @@ import { ProjectsIndex } from "../components/Projects";
 import { PulicationsIndex } from "../components/Publications";
 import { UsersIndex } from "../components/Users/Index";
 import { Dashboard } from "../Layout/Dashboard";
+import { IndexTags } from "../components/Tags";
+import Tab, { TabContent } from "../components/Layout/TabPanes";
 // import { AddEditForm } from "../components/Users/AddEditForm";
 
 type TypeRoute = {
@@ -121,6 +123,12 @@ type TypeRoute = {
         middleware: 'auth',
         path: 'courses/edit/:id?',
         element: AddEditCoursesPage
+    },
+    {
+        is_protected: true, 
+        middleware: 'auth',
+        path: '/tags',
+        element: IndexTags
     }
 ];
 

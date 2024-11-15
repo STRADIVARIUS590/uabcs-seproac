@@ -36,8 +36,7 @@ export const Users = () => {
 
         const [error, setError] = useState<boolean>();
 
-        const [data, setData] = useState<UserItem[]>([]); // Step 2: Typed state to store data
-  
+        const [data, setData] = useState<UserItem[]>([]); // Step 2: Typed state to store data 
 
         const [loading, setLoading] = useState<boolean>(true); // Optional: Typed loading state
         
@@ -93,11 +92,7 @@ export const Users = () => {
                     <tr>
                         <th scope="col" className="px-6 py-3"> #</th>
                         <th scope="col" className="px-6 py-3"> Nombre</th>
-                        <th scope="col" className="px-6 py-3"> Correo </th>
-                        <th scope="col" className="px-6 py-3"> Fecha de ingreso</th>
-                        <th scope="col" className="px-6 py-3"> Fecha de nacimiento</th>
-                        <th scope="col" className="px-6 py-3"> Sexo </th>
-                        <th scope="col" className="px-6 py-3"> Rol </th>
+                        <th scope="col" className="px-6 py-3"> Slug </th>
                         <th scope="col" className="px-6 py-3"> Acciones </th>
                     </tr>
                 </thead>
@@ -112,9 +107,10 @@ export const Users = () => {
                         <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{item.birth_date}</th>
                         <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{item.sex}</th>
                         <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{item.role?.name}</th>
-                        <button onClick={() => deleteUser(item.id)}> Eliminar
-                        </button>
-                        <button onClick={() => navigate('/users/edit/' + item.id)}>Editar</button>
+                        <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                            <button onClick={() => deleteUser(item.id)}> Eliminar</button>
+                            <button onClick={() => navigate('/users/edit/' + item.id)}>Editar</button>
+                        </th>
                     </tr>
                     ))} 
                 </tbody>

@@ -104,7 +104,7 @@ export const Congresses = () => {
                 <td scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{item.event_name}</td>
                 <td scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{item.date}</td>
                 <td scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{item.colaborators}</td>
-                <td>
+                <td scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                     <button  onClick={() => deleteCongress(item.id)}>Eliminar</button>
                     <button onClick={() => navigate('/congresses/edit/' + item.id)}>Editar</button>
                 </td>

@@ -113,8 +113,10 @@ export const Publications = () => {
                     <td scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{item.user?.name}</td>
                     <td scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{item.publication_date}</td>
                     <td scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{item.period}</td>
-                    <button onClick={() => deletePublication(item.id)}>Eliminar </button>
-                    <button onClick={() => navigate('/publications/edit/' + item.id)}> Editar </button>
+                    <td scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                        <button className="hover:text-red-900" onClick={() => deletePublication(item.id)}>Eliminar </button>
+                        <button onClick={() => navigate('/publications/edit/' + item.id)}> Editar </button>
+                    </td>
                     </tr>       
                 ))}
         </table>

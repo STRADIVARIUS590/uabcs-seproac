@@ -31,4 +31,9 @@ class Course extends Model
     {
         return $this->belongsTo(Institution::class);
     }
+
+    public function tags()
+    {
+        return $this->morphToMany(Tag::class, 'taggable');
+    }
 }

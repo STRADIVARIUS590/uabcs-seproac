@@ -70,15 +70,17 @@ type Props = {
   type?: "text" | "email" | "password" | "date" | "select";
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   value?: string | number | null;
+  as?: string
 };
 
-export const DefaultInput = ({ label, name, placeholder, id, type = "text", value }: Props) => {
+export const DefaultInput = ({ label, name, placeholder, id, type = "text", value, as }: Props) => {
   return (
     <div>
       <label className="mb-[10px] block text-base font-medium text-dark dark:text-white" htmlFor={id}>
         {label}
       </label>
       <Field
+        as={as}
         id={id}
         name={name}
         placeholder={placeholder}

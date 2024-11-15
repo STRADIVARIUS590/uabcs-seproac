@@ -1,9 +1,11 @@
 import { AppLayout } from "../components/Layout/AppLayout"
+import Tab from "../components/Layout/TabPanes"
 import BaseDashBoard from "./BaseDashboard"
 
 export const Dashboard = () => {
     return <AppLayout>
-        <BaseDashBoard>
-        </BaseDashBoard>
+        <Tab></Tab>
+        {/* <BaseDashBoard> */}
+        {/* </BaseDashBoard> */}
     </AppLayout>
 }

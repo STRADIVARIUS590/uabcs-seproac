@@ -6,6 +6,7 @@ import { Api } from '../../services/Api';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../store';
 import { MessageToast } from '../MessageToast';
+import { DefaultColumn, DefaultInput } from '../inputs/Forms';
 
 interface DataItem {
     id: string | number | null | undefined;
@@ -14,28 +15,28 @@ interface DataItem {
     event_name: string | null | undefined;
     date: string | null | undefined;
     colaborators: number | null | undefined;
-    tags: string[]; // Store only tag ids for easier handling
+    tags: { id: number, name: string }[];
 }
 
 interface TagItem {
     id: string | null | undefined;
     name: string | null | undefined;
 }
+
 interface UserItem {
     name: string | null | undefined;
     id: string | null | undefined;
 }
 
 const validationSchema = Yup.object({
-    title_trabajo: Yup.string().required('El titulo del trabajo es requerido'),
-    user_id : Yup.string().required('El usuario es requerido'),
-    event_name : Yup.string().required('El nombre del evento es requerido'),
-    date: Yup.date().required('LA fecha es reqerida'),
-    colaborators: Yup.string().required('REQUIRED')
+    title_trabajo: Yup.string().required('El título del trabajo es requerido'),
+    user_id: Yup.string().required('El usuario es requerido'),
+    event_name: Yup.string().required('El nombre del evento es requerido'),
+    date: Yup.date().required('La fecha es requerida'),
+    colaborators: Yup.string().required('Número de colaboradores es requerido')
 });
 
 export const AddEditForm = () => {
-    // MIDDLEWARE
     const { token, user } = useSelector((state: RootState) => state.auth);
     const { id } = useParams<{ id?: string }>();
     const navigate = useNavigate();
@@ -47,7 +48,6 @@ export const AddEditForm = () => {
         }
     }, [user, user_permissions, navigate]);
 
-    // INITIALIZE
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<boolean>(false);
     const [data, setData] = useState<DataItem>();
@@ -90,19 +90,18 @@ export const AddEditForm = () => {
         loadData();
     }, [id]);
 
-    const initialValues: DataItem = {
+    const initialValues = {
         id: data?.id || "",
         title_trabajo: data?.title_trabajo || "",
         user_id: data?.user_id || "",
         event_name: data?.event_name || "",
         date: data?.date || "",
         colaborators: data?.colaborators || 0,
-        tags: data?.tags.map(tag => tag.id) || [] // Only keep tag ids
+        tags: data?.tags?.map(tag => tag.id) || [],
     };
 
     const isEditMode = !!id;
 
-    // HANDLE
     const handleSubmit = async (values: typeof initialValues, { setFieldError }: FormikHelpers<typeof initialValues>) => {
         const response = isEditMode
             ? await Api.put(`/congresses`, values, {
@@ -114,7 +113,6 @@ export const AddEditForm = () => {
                 'Content-Type': 'application/json',
             });
 
-            
         if (response.statusCode === 200) {
             navigate('/congresses');
         } else {
@@ -125,7 +123,6 @@ export const AddEditForm = () => {
         }
     };
 
-    // HTML
     if (error) { return <MessageToast message='Ha ocurrido un error' type="error" /> }
     if (loading) { return <MessageToast message='Cargando...' type="loading" /> }
 
@@ -137,82 +134,74 @@ export const AddEditForm = () => {
         >
             {({ isSubmitting }) => (
                 <Form>
-
                     <input type="hidden" name="id" />
-                    <div>
-                        <label htmlFor="title_trabajo">Titulo del trabajo</label>
-                        <Field name="title_trabajo" type="text" />
-                        <ErrorMessage name="title_trabajo" component="div" style={{ color: "red" }} />
-                    </div>
 
-                    <div>
-                        <label htmlFor="user_id">Usuario</label>
-                        <Field as="select" name="user_id">
-                            <option value="">Select a user</option> {/* Default empty option */}
-                            {users.map((user) => (
-                                <option key={user.id} value={user.id}>
-                                    {user.name}
-                                </option>
-                            ))}
-                        </Field>
-                        <ErrorMessage name="user_id" component="div" style={{ color: 'red' }} />
-                    </div>
+                    <section className="py-12 dark:bg-dark">
+                        <div className="container">
+                            <div className="-mx-4 flex flex-wrap">
+                                <DefaultColumn>
+                                    <DefaultInput name='title_trabajo' label='Título del trabajo' />
+                                    <DefaultInput name='event_name' label='Evento' />
+                                </DefaultColumn>
 
-                    <FieldArray
-                        name="tags"
-                        render={arrayHelpers => (
-                            <div>
-                                {tags.map((item, index) => (
-                                    <div key={index}>
-                                        <label>
-                                            <Field
-                                                type="checkbox"
-                                                name="tags"
-                                                value={item.id}
-                                                checked={
-                                                    arrayHelpers.form.values.tags.some(
-                                                        (tag: string) => tag === item.id
-                                                    )
-                                                }
-                                                onChange={e => {
-                                                    if (e.target.checked) {
-                                                        arrayHelpers.push(item.id);
-                                                    } else {
-                                                        const idx = arrayHelpers.form.values.tags.indexOf(item.id);
-                                                        if (idx !== -1) arrayHelpers.remove(idx);
-                                                    }
-                                                }}
-                                            />
-                                            {item.name}
-                                        </label>
-                                    </div>
-                                ))}
+                                <DefaultColumn>
+                                    <DefaultInput name="date" label='Fecha' type='date' />
+                                </DefaultColumn>
+
+                                <DefaultColumn>
+                                    <label htmlFor="user_id" className='mb-[10px] block text-base font-medium text-dark dark:text-white'>Usuario</label>
+                                    <Field as="select" name="user_id" className="w-full bg-transparent rounded-md border border-stroke dark:border-dark-3 py-[10px] px-5 text-dark-6 outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-gray-2 disabled:border-gray-2">
+                                        <option value="">Selecciona un usuario</option>
+                                        {users.map((user) => (
+                                            <option key={user.id}>
+                                                {user.name}
+                                            </option>
+                                        ))}
+                                    </Field>
+                                    <ErrorMessage name="user_id" component="div" style={{ color: 'red' }} />
+                                {/* </DefaultColumn> */}
+
+                                {/* <DefaultColumn> */}
+                                    <FieldArray
+                                        name="tags"
+                                        render={arrayHelpers => (
+                                            <div className="flex flex-wrap">
+                                                {tags.map((item, index) => (
+                                                    <div key={index} className="flex items-center mb-2 mr-4">
+                                                        <Field
+                                                            type="checkbox"
+                                                            name="tags"
+                                                            value={item.id}
+                                                            checked={
+                                                                arrayHelpers.form.values.tags.some(
+                                                                    (tag: string) => tag === item.id
+                                                                )
+                                                            }
+                                                            onChange={e => {
+                                                                if (e.target.checked) {
+                                                                    arrayHelpers.push(item.id);
+                                                                } else {
+                                                                    const idx = arrayHelpers.form.values.tags.indexOf(item.id);
+                                                                    if (idx !== -1) arrayHelpers.remove(idx);
+                                                                }
+                                                            }}
+                                                        />
+                                                        <label className="ml-2 text-sm font-medium text-gray-700 dark:text-gray-200">
+                                                            {item.name}
+                                                        </label>
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        )}
+                                    />
+                                </DefaultColumn>
                             </div>
-                        )}
-                    />
+                        </div>
+                    </section>
 
-                    <div>
-                        <label htmlFor="event_name">Evento</label>
-                        <Field name="event_name" type="text" />
-                        <ErrorMessage name="event_name" component="div" style={{ color: "red" }} />
-                    </div>
-
-                    <div>
-                        <label htmlFor="colaborators">Nro de Colaboradores</label>
-                        <Field name="colaborators" type="text" />
-                        <ErrorMessage name="colaborators" component="div" style={{ color: "red" }} />
-                    </div>
-
-
-                     <div>
-                        <label htmlFor="date">fecha</label>
-                        <Field name="date" type="date" />
-                        <ErrorMessage name="date" component="div" style={{ color: "red" }} />
-                    </div>
-
-                    <div>
-                        <button type="submit" disabled={isSubmitting}>
-                            {isEditMode ? "Update" : "Add"}
+                    <div className="mt-4">
+                        <button type="submit" className="px-4 py-2 bg-blue-600 text-white rounded-md" disabled={isSubmitting}>
+                            {isEditMode ? "Actualizar" : "Agregar"}
                         </button>
                     </div>
                 </Form>

@@ -126,7 +126,7 @@ export const Courses = () => {
                     <td scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{item.institution?.name}</td>
                     <td scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{item.user?.name}</td>
                     
-                    <td>
+                    <td scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                         <button onClick={() => deleteCourse(item.id)}>Eliminar </button>
                         <button onClick={() => navigate('/courses/edit/' + item.id)}> Editar </button>
                     </td>

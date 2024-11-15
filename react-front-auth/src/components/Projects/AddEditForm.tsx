@@ -6,6 +6,7 @@ import { Api } from "../../services/Api";
 import * as Yup from 'yup';
 import { MessageToast } from "../MessageToast";
 import { ErrorMessage, Field, Formik, FormikHelpers, Form } from "formik";
+import { DefaultColumn, DefaultInput } from "../inputs/Forms";
 const validationSchema = Yup.object({
     name: Yup.string().required('El nombre es requerido'),
     description: Yup.string().required('La descripcion es requerida'),
@@ -47,10 +48,6 @@ export const AddEditForm = () => {
     const navigate = useNavigate();
     
     const user_permissions = user?.all_permissions || [];
-
-    // if (!user || user_permissions.indexOf("projects.edit") === -1) {
-    //     navigate("/dashboard");
-    // }
 
     useEffect(() => {
         if (!user || user_permissions.indexOf("projects.edit") === -1) {
@@ -139,15 +136,63 @@ export const AddEditForm = () => {
     if(error){         return <MessageToast message='Ha ocurrido un error' type="error"/>}
     if(isLoading){     return <MessageToast message='Cargando...' type="loading"/> }
 
-    return (
+    return ( <div> 
+        <h1>{isEditMode ? 'Editar Proyecto' : 'Agregar Proyecto'}</h1> 
     <Formik 
-        initialValues={initialValues} 
-        validationSchema={validationSchema}
-        onSubmit={handleSubmit}>
-        {({ isSubmitting }) => (
-            <Form>
-        
-                <input type="hidden" name="id" />
+      initialValues={initialValues}
+      validationSchema={validationSchema}
+      onSubmit={handleSubmit} 
+    >
+      {({ isSubmitting }) => (
+        <Form>
+          <input type="hidden"  name='id'/>
+            <section className="py-12 dark:bg-dark">
+              <div className="container">
+                <div className="-mx-4 flex flex-wrap">
+                        <DefaultColumn>
+                            <DefaultInput name="name" label="Nombre"/>
+                            <DefaultInput name="description" label="Descripcion"/>
+                        </DefaultColumn>     
+
+                        <DefaultColumn>
+                            <DefaultInput name="objetives" label="Objetivos"/>    
+                            <DefaultInput name="colaborators" label="Colaboradores"/>    
+                        </DefaultColumn>      
+
+                         <DefaultColumn>
+                            <DefaultInput name="start_date" label="Fecha de inicio" type="date"/>    
+                            <DefaultInput name="end_date" label="Fecha de fin" type="date" />    
+                        </DefaultColumn>
+                        
+                        <DefaultColumn>    
+                            <DefaultInput name="type" label="Tipo"/>    
+                            <DefaultInput name="period" label="Periodo"/>    
+                        </DefaultColumn>
+
+                        <DefaultColumn>
+                        <label htmlFor="user_id" className='mb-[10px] block text-base font-medium text-dark dark:text-white'>Usuario</label>
+                        <Field as="select" name="user_id" className="w-full bg-transparent rounded-md border border-stroke dark:border-dark-3 py-[10px] px-5 text-dark-6 outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-gray-2 disabled:border-gray-2">
+                          {users.map((user) => (
+                            <option key={user.id} value={user.id}>
+                              {user.name}
+                            </option>
+                          ))}
+                        </Field>
+                        <ErrorMessage name="user_id" component="div" style={{ color: 'red' }} />
+                        </DefaultColumn>
+                </div>
+                </div>
+            </section>   
+            <div>
+                <button type="submit" disabled={isSubmitting}>
+                    {isEditMode ? "Update" : "Add"}
+                </button>
+            </div>
+        </Form>
+        )}
+</Formik>
+</div>)
+                /* <input type="hidden" name="id" />
                     <div>
                         <label htmlFor="name">Nombre</label>
                         <Field name="name" type="text" />
@@ -200,7 +245,7 @@ export const AddEditForm = () => {
                     <label htmlFor="user_id">Usuario</label>
                     <Field as="select" name="user_id">
                         <option value="">Select a user</option> {/* Default empty option */}
-                        {users.map((user) => (
+                        {/* {users.map((user) => (
                         <option key={user.id} value={user.id}>
                             {user.name}
                         </option>
@@ -215,8 +260,7 @@ export const AddEditForm = () => {
                             {isEditMode ? "Update" : "Add"}
                         </button>
                     </div>
-            </Form>  
-        )}
-
-    </Formik>);
-}
+                    )} */}
+            {/* </Form>   */}
+    
+    {/* </Formik> <div/> */}
