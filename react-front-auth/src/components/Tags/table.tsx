@@ -47,7 +47,7 @@ export const Tags = ({tags} : Props) => {
    const [editId, setEditId] = useState<string | number | null | undefined>();
 
    const deleteTag = async ( id : string | number ) => {
-        setLoading(true);
+        // setLoading(true);
          const response = Api.delete('/tags/' + id, {
                 Authorization: 'Bearer ' + token,
                 accept: 'application/json'
@@ -61,7 +61,7 @@ export const Tags = ({tags} : Props) => {
             }else {
                 setError(true)
             }
-            setLoading(false);
+            // setLoading(false);
         }
 
 

@@ -19,8 +19,11 @@ import { ProjectsIndex } from "../components/Projects";
 import { PulicationsIndex } from "../components/Publications";
 import { UsersIndex } from "../components/Users/Index";
 import { Dashboard } from "../Layout/Dashboard";
-import { IndexTags } from "../components/Tags";
+import { IndexTags, TagsPage } from "../components/Tags";
 import Tab, { TabContent } from "../components/Layout/TabPanes";
+import { Middleware } from "../components/scripts/Middleware";
+import { AcademicGradesPage } from "../components/AcademicGrades";
+import { AddEditAcademicGradesPage } from "../components/AcademicGrades/AddEditAcademicGrades";
 // import { AddEditForm } from "../components/Users/AddEditForm";
 
 type TypeRoute = {
@@ -128,7 +131,18 @@ type TypeRoute = {
         is_protected: true, 
         middleware: 'auth',
         path: '/tags',
-        element: IndexTags
+        element: TagsPage
+    },
+    {
+        is_protected: true,
+        path: '/academic-grades',
+        middleware: 'auth',
+        element: AcademicGradesPage
+    },
+    {
+        is_protected: true,
+        path: '/academic-grades/edit/:id?',
+        element: AddEditAcademicGradesPage
     }
 ];
 

@@ -92,7 +92,11 @@ export const Users = () => {
                     <tr>
                         <th scope="col" className="px-6 py-3"> #</th>
                         <th scope="col" className="px-6 py-3"> Nombre</th>
-                        <th scope="col" className="px-6 py-3"> Slug </th>
+                        <th scope="col" className="px-6 py-3"> Correo</th>
+                        <th scope="col" className="px-6 py-3"> Fecha de ingreso</th>
+                        <th scope="col" className="px-6 py-3"> Fecha de nacimiento</th>
+                        <th scope="col" className="px-6 py-3"> Sexo </th>
+                        <th scope="col" className="px-6 py-3"> Rol   </th>
                         <th scope="col" className="px-6 py-3"> Acciones </th>
                     </tr>
                 </thead>

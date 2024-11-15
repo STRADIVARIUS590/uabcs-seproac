@@ -1,5 +1,6 @@
 import React, { Children, useState } from "react";
 import BaseDashBoard from "../../Layout/BaseDashboard";
+import { AcademicGradesTab } from "../AcademicGrades/AcademicGradesTab";
 
 // Tab Component
 const Tab = () => {
@@ -108,12 +109,14 @@ const Tab = () => {
                 {/* Tab Content */}
                 <TabContent
                   children={<BaseDashBoard/>}
+                  // details={'asd'}
                   tabCategory="home"
                   open={open}
                 />
                 <TabContent
-                  details="Lorem ipsum dolor sit amet, consectetur adipisicing elit. Officia nisi, doloribus nulla cumque molestias corporis eaque harum vero! "
+                  // details="Lorem ipsum dolor sit amet, consectetur adipisicing elit. Officia nisi, doloribus nulla cumque molestias corporis eaque harum vero! "
                   tabCategory="about"
+                  children={<AcademicGradesTab/>}
                   open={open}
                 />
                 <TabContent
@@ -157,7 +160,9 @@ export const TabContent = ({ open, tabCategory, details, children }: Props) => {
         >
         {details}
         <div>
-            {children}
+           {
+            open === tabCategory && children
+           } 
             </div>
       </div>
     </div>

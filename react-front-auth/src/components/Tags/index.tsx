@@ -12,7 +12,8 @@ interface TagItem {
     name: string;
     slug: string;
 }
-export const IndexTags = () => {
+export const TagsPage = () => {
+
    const  { token, user } = useSelector((state: RootState ) => state.auth);
 
     const navigate = useNavigate();
