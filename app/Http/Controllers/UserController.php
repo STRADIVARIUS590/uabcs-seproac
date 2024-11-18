@@ -19,6 +19,10 @@ use Mockery\Matcher\HasKey;
 use Symfony\Component\HttpFoundation\Response;
 use App\Models\Group;
 use App\Models\Publication;
+use App\Models\Tag;
+use Illuminate\Cache\TagSet;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 use function Laravel\Prompts\alert;
 use function Laravel\Prompts\error;
@@ -175,17 +179,42 @@ class UserController extends Controller
     
 
     public function dashboard(Request $request){
+    $user_id = Auth::id();
+    
+    $tags = Tag::select('id', 'name')
+        ->withCount([
+            'congresses' => function ($query) use ($user_id) {
+                $query->where('user_id', $user_id);
+            },
+            'projects' => function ($query) use ($user_id) {
+                $query->where('user_id', $user_id);
+            },
+            'courses' => function ($query) use ($user_id) {
+                $query->where('user_id', $user_id);
+            },
+            'publications' => function ($query) use ($user_id) {
+                $query->where('user_id', $user_id);
+            },
+        ])
+        ->get();
 
-        $data = collect([
-            'projects_count' => Project::where('user_id', auth()->id())->count(),
-            'congresses_count' => Congress::where('user_id', auth()->id())->count(),
-            'courses_count' => Course::where('user_id', auth()->id())->count(),
-            'publications_count' => Publication::where('user_id', auth()->id())->count(),
-            'academic_grades' => AcademicGrade::with('institution')->where('user_id', auth()->id())->get()
-        ]); 
+    $relationships = ['congresses', 'projects', 'courses', 'publications'];
+    $auth_user = User::find($user_id)->loadCount($relationships);
+
+    $data = [];
+
+    foreach ($relationships as $relationship) {
+
+        $data[$relationship] = [
+            'count' => $auth_user->{$relationship.'_count'},
+            'tags' => $tags->filter(function ($tag) use ($relationship) {
+                return $tag->{$relationship.'_count'} > 0; // Only include tags with at least one item in the relationship
+            })->values()
+        ];
+    }
+
+        $data = collect($data); 
         
-        return $this->jsonResponse('Registro consultado correctamente', [
-            'widgets' => $data
-        ]);
+        return $this->jsonResponse('Registro consultado correctamente',  $data);
     }
 }

@@ -13,14 +13,23 @@ import { MessageToast } from "../components/MessageToast";
 // }
 
 interface Data {
-    // name: string | null;
-    widgets: {
-        projects_count :  number,
-        congresses_count: number,
-        courses_count: number,
-        publications_count: number
+    publications: {
+        count: number;
+        tags: {id: string, name: string, publications_count : number}[]
+    },
+    courses: {
+        count: number;
+        tags: {id: string, name: string, courses_count : number}[]
+    },
+    projects: {
+        count: number;
+        tags: {id: string, name: string, projects_count : number}[]
+    },
+    congresses: {
+        count: number;
+        tags: {id: string, name: string, congresses_count : number}[]
     }
-}
+ }
 
 const BaseDashBoard = () => {
 
@@ -34,7 +43,7 @@ const BaseDashBoard = () => {
         }
     }, [token, navigate]);
 
-    const [data, setData] = useState<Data | null>(null);
+    const [data, setData] = useState<Data | null >();
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<boolean>(false);
     const fetchData = async () => {
@@ -102,34 +111,59 @@ const BaseDashBoard = () => {
         <div>
         <h1>Dashboard</h1>
 
-        {/* Widget Container */}
-        <div style={widgetContainerStyle}>
-          {/* Project Widget */}
-          <div style={widgetCardStyle}>
-            <div style={widgetTitleStyle}>Proyectos</div>
-            <div style={widgetValueStyle}>{data?.widgets.projects_count}</div>
-          </div>
 
-          {/* Congress Widget */}
+        <div style={widgetContainerStyle}>
+            {/* projects widget */}
+           <div style={widgetCardStyle}>
+            <div style={widgetTitleStyle}>Proyectos</div>
+            <div style={widgetValueStyle}>{data?.projects?.count}</div>
+                {data?.projects?.tags.map((item) => (
+                    <div key={item.id}>
+                        <p>{item.name}</p>
+                        <p>{item.projects_count ?? 0}</p> 
+                    </div>
+                ))}
+          </div> 
+
+                {/* congress widgets */}
           <div style={widgetCardStyle}>
             <div style={widgetTitleStyle}>Congresos</div>
-            <div style={widgetValueStyle}>{data?.widgets.congresses_count}</div>
-          </div>
-
-          {/* course Widget */}
-          <div style={widgetCardStyle}>
+            <div style={widgetValueStyle}>{data?.congresses?.count ?? 0}</div>
+             {data?.congresses?.tags.map((item) => (
+                    <div key={item.id}>
+                        <p>{item.name}</p>
+                        <p>{item.congresses_count ?? 0}</p> 
+                    </div>
+                ))}
+            
+          </div> 
+                {/* courses widget */}
+           <div style={widgetCardStyle}>
             <div style={widgetTitleStyle}>Cursos</div>
-            <div style={widgetValueStyle}>{data?.widgets.courses_count}</div>
-          </div>
-             {/* Congress Widget */}
+            <div style={widgetValueStyle}>{data?.courses.count ?? 0}</div>
+             {data?.courses?.tags.map((item) => (
+                    <div key={item.id}>
+                        <p>{item.name}</p>
+                        <p>{item.courses_count ?? 0}</p> 
+                    </div>
+                ))}
+          </div> 
+{           /* publications widget */}
           <div style={widgetCardStyle}>
             <div style={widgetTitleStyle}>Publicaciones</div>
-            <div style={widgetValueStyle}>{data?.widgets.publications_count}</div>
+            <div style={widgetValueStyle}>{data?.publications?.count ?? 0}
+                 {data?.publications?.tags.map((item) => (
+                    <div key={item.id}>
+                        <p>{item.name}</p>
+                        <p>{item.publications_count ?? 0}</p> 
+                    </div>
+                ))}
+            </div>
           </div>
           
         </div>
  
-            <Outlet />
+            {/* <Outlet /> */}
          </div>
 
     );

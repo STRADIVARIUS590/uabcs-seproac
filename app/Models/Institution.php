@@ -13,4 +13,9 @@ class Institution extends Model
     protected $fillable = [
         'name',
     ];
+
+    public function tags()
+    {
+        return $this->morphToMany(Tag::class, 'taggable');
+    }
 }

@@ -92,6 +92,5 @@ export class Api {
             statusCode : response.status,
             data: dataResponse.data
         }
-
     }
 }

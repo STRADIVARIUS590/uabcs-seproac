@@ -22,18 +22,18 @@ class DatabaseSeeder extends Seeder
         // ]);
 
         $this->call([
+            TagSeeder::class,
             UserSeeder::class,
+
             ProjectSeeder::class,
             PublicationSeeder::class,
             PermissionSeeder::class,
-
-            TagSeeder::class,
+            
             CongressSeeder::class,
             InstitutionSeeder::class,
             AcademicGradeSeeder::class,
             CourseSeeder::class
         ]);
 
-        Context::flush();
     }
 }

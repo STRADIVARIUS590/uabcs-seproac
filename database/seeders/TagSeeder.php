@@ -15,12 +15,26 @@ class TagSeeder extends Seeder
     public function run(): void
     {
         $tags = [
-            ['name' => 'Sistemas de Informacion'],
-            ['name' => 'Publicacion'],
+
+            // publicaciones
+            ['name' => 'Articulo'],
+            ['name' => 'Libro'],
             ['name' => 'Capitulo'],
-            ['name' => 'Disertacion'],
-            ['name' => 'Tesis'],
-            ['name' => 'Proyectos Academicos'],
+
+            // proyectos
+            ['name' => 'Interno'],
+            ['name' => 'Externo'],
+            // cursos // trabajos de titulacion
+            ['name' => 'Licenciatura'],
+            ['name' => 'Maestria'],
+            ['name' => 'Doctorado'],
+            // congresos
+            ['name' => 'Nacional'],
+            ['name' => 'Internacional'],
+
+            // tipos de contratacion / categorias de  maestros            
+            ['name' => 'Tiempo completo'],
+            ['name' => 'Tirular C']
         ];
 
         foreach ($tags as $tag_info) {

@@ -15,10 +15,10 @@ class InstitutionSeeder extends Seeder
     {
         $institutions = [
             [
-                'name' => 'INstituto Tecnologido de La Paz'
+                'name' => 'Instituto Tecnologido de La Paz'
             ],
             [
-                'name' => 'Universidad Automoma de Baja California Sur;;'
+                'name' => 'Universidad Automoma de Baja California Sur'
             ]
         ];
 

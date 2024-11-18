@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Congress;
+use App\Models\Tag;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -21,8 +22,7 @@ class CongressSeeder extends Seeder
                 'user_id' => $user->id,
             ])->each(function($item)
         {
-            $item->tags()->attach(1);
-            error_log(json_encode($item));
+            $item->tags()->attach(Tag::take(2)->get());
         });
         }
     }

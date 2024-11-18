@@ -4,7 +4,7 @@ import { AcademicGradesTab } from "../AcademicGrades/AcademicGradesTab";
 
 // Tab Component
 const Tab = () => {
-  const [open, setOpen] = useState("home");
+  const [open, setOpen] = useState("dashboard");
 
   // Function to handle tab switching
   const handleTabOpen = (tabCategory: string) => {
@@ -21,9 +21,10 @@ const Tab = () => {
                 <div className="flex flex-col flex-wrap rounded-lg border border-[#E4E4E4] px-4 py-3 dark:border-dark-3 sm:flex-row">
                   {/* Home Tab */}
                   <a
-                    onClick={() => handleTabOpen("home")}
+                    onClick={() => handleTabOpen("dashboard")}
                     className={`cursor-pointer rounded-lg py-3 text-sm font-medium md:text-base lg:px-6 ${  
-                      open === "home"
+                      open === "dashboard"
+
                         ? " bg-blue-800" // Active tab: white text, primary background
                         : " text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                     }`}
@@ -32,11 +33,12 @@ const Tab = () => {
                   </a>
                 
                   <a
-                    onClick={() => handleTabOpen("about")}
-                    className={`cursor-pointer rounded-md px-4 py-3 text-sm font-medium md:text-base lg:px-6 ${
-                      open === "about"
-                        ? "bg-primary text-white"
-                        : "text-body-color hover:bg-red-900 hover:text-white dark:text-dark-6 dark:hover:text-white"
+                    onClick={() => handleTabOpen("academic-grades")}
+                    className={`cursor-pointer rounded-lg py-3 text-sm font-medium md:text-base lg:px-6 ${  
+                      open === "academic-grades"
+                      
+                        ? " bg-blue-800" // Active tab: white text, primary background
+                        : " text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                     }`}
                   >
                     Trayectoria Academica
@@ -110,12 +112,12 @@ const Tab = () => {
                 <TabContent
                   children={<BaseDashBoard/>}
                   // details={'asd'}
-                  tabCategory="home"
+                  tabCategory="dashboard"
                   open={open}
                 />
                 <TabContent
                   // details="Lorem ipsum dolor sit amet, consectetur adipisicing elit. Officia nisi, doloribus nulla cumque molestias corporis eaque harum vero! "
-                  tabCategory="about"
+                  tabCategory="academic-grades"
                   children={<AcademicGradesTab/>}
                   open={open}
                 />

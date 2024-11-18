@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Project;
+use App\Models\Tag;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -24,6 +25,8 @@ class ProjectSeeder extends Seeder
                 'start_date' => now()->subYears(10),
                 'end_date' => now(),
             ]);
+
+            $p->tags()->attach(Tag::inRandomOrder()->take(3)->pluck('id'));
         }
     }
 }

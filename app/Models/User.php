@@ -97,4 +97,19 @@ class User extends Authenticatable implements HasMedia
     {
         return $this->morphToMany(Tag::class, 'taggable');
     }
+
+    public function publications()
+    {
+        return $this->hasMany(Publication::class);
+    }
+
+    public function courses()
+    {
+        return $this->hasMany(Course::class);
+    }
+
+    public function congresses()
+    {
+        return $this->hasMany(Congress::class);
+    }
 }
