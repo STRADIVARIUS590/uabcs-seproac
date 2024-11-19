@@ -4,79 +4,60 @@ import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { Api } from "../../services/Api";
 import { MessageToast } from "../MessageToast";
-interface PublicationItem {
-    id: string;
-    title: string | undefined;
-    user_id: string | undefined;
-    type: string | undefined;
-    issn_isbn: string | undefined;
-    doi: string | undefined;
-    magazine_name : string | undefined;
-    authors: string | undefined;
-    publication_date: string | undefined;
-    period: string | undefined;
-    user: {
-        name: string | undefined
-    }
-}
-export const Publications = () => {
+import { PublicationItem } from ".";
 
-    const { token, user } = useSelector((state: RootState) => state.auth);
+interface Props {
+    publications : PublicationItem[]
+}
+export const Publications = ( {publications} : Props) => {
+
+    const  { token, user } = useSelector((state: RootState ) => state.auth);
 
     const navigate = useNavigate();
 
+    const [canDelete, setCanDelete ] = useState<boolean>(false);
+   
+    const [canEdit, setCanEdit ] = useState<boolean>(false);
+
+    const [ data , setData] = useState(publications);
+    
     const user_permissions = user?.all_permissions || [];
 
-    useEffect(() => {
-        
-        if(!user || user_permissions.indexOf("publications.get") === -1){
+    
+    const [error, setError] = useState<boolean>(false);
+
+    const [loading, setLoading ] = useState<boolean>(false);
+
+     useEffect(() => {
+        if (!user || user_permissions.indexOf("publications.get") === -1) {
             navigate(-1);
+        }
+        if(user && user_permissions.indexOf("publications.destroy") > -1) {
+            setCanDelete(true);
+        }
+
+        if(user && user_permissions.indexOf("publications.edit") > -1) {
+            setCanEdit(true)
         }
     }, [user, user_permissions, navigate]);
 
-    const [data, setData] = useState<PublicationItem[]>([]);
-
-    const [loading, setLoading] = useState<boolean>(true);    
-
-    const [error, setError] = useState<boolean>();
-
-    const fetchData = async () => {
-        
-        const response =  await Api.get('/publications?include=user', {
-            Authorization: 'Bearer '+ token ,
-            accept: 'application/json'    
-        })
-
-        const result: PublicationItem[] = await response.data
-
-        if(response.statusCode === 200) {
-            setError(false);
-            setData(result)
-            setLoading(false);
-        }else{
-            setError(true);
-            navigate(-1)
-        }
-    }
-
-
     const deletePublication = async ( id: number | string) => {
-        const response = Api.delete('/publications/' + id, {
-            Authorization: 'Bearer ' + token,
-            accept: 'application/json'
-        })
-
-        const result = await response;
-
-        if(result.statusCode == 200) {
-            setError(false);
-        }else {
-            setError(true)
-        }
-        fetchData();
+           const response = Api.delete('/publications/' + id, {
+                Authorization: 'Bearer ' + token,
+                accept: 'application/json'
+            })
+    
+            const result = await response;
+    
+            if(result.statusCode == 200) {
+                const updatedPublications = publications.filter(item => item.id !== id);
+                setData(updatedPublications);
+            }else {
+                setError(true)
+            }
     }
 
-    useEffect(() => { fetchData() }, []);
+    useEffect(() => {},  []);
 
     if(error){       return <MessageToast message='Ha ocurrido un error' type="error"/>}
     if(loading){     return <MessageToast message='Cargando...' type="loading"/> }

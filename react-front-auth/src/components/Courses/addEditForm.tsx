@@ -7,7 +7,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../../store';
 import { MessageToast } from '../MessageToast';
 import { DefaultColumn, DefaultInput } from '../inputs/Forms';
-import { DEFAULT_VERSION } from 'redux-persist';
+import { TagItem } from '../Users/AddEditForm';
 interface CourseItem {
 
     id: string;
@@ -20,6 +20,7 @@ interface CourseItem {
     period: number | string | undefined;   
     start_date: number | string | undefined;
     end_date: number | string | undefined; 
+    tags: TagItem[]
     user: {
         id: string,
         name: string,
@@ -30,13 +31,10 @@ interface CourseItem {
     }
 }
 
-interface TagItem {
-    id: string | null | undefined;
-    name: string | null | undefined;
-}
+
 interface UserItem {
-    name: string | null | undefined;
-    id: string | null | undefined;
+    name: string;
+    id: string;
 }
 
 const validationSchema = Yup.object({
@@ -44,7 +42,7 @@ const validationSchema = Yup.object({
     total_hours: Yup.number().required('El total de horas es requerido').min(50),
     total_students: Yup.number().required('El total de estudiantes es requerido').min(5),
     period: Yup.string().required('El periodo es requerido'),
-    nivel_educativo: Yup.string().required('El nivel educativo es requerido'),
+    educative_level : Yup.string().required('El nivel educativo es requerido'),
     start_date: Yup.date().required('La fecha de inicio es requerida'),
     end_date: Yup.date().required('La fecha de fin es requerida'),
 });
@@ -56,6 +54,7 @@ export const AddEditForm = () => {
     const navigate = useNavigate();
     const user_permissions = user?.all_permissions || [];
 
+    // alert(token)
     useEffect(() => {
         if (!user || user_permissions.indexOf("courses.edit") === -1) {
             navigate("/dashboard");
@@ -106,7 +105,7 @@ export const AddEditForm = () => {
         loadData();
     }, [id]);
 
-    const initialValues: CourseItem = {
+    const initialValues = {
         id: data?.id || "",
         user_id: data?.user_id || "",
         institution_id: data?.institution_id || '',
@@ -117,6 +116,7 @@ export const AddEditForm = () => {
         period: data?.period || '',
         start_date: data?.start_date || '',
         end_date: data?.end_date || '',
+        tags: data?.tags?.map(tag => tag.id) || [],
         user: {
             id: data?.user_id || "",
             name: data?.user.name ?? ''
@@ -142,6 +142,7 @@ export const AddEditForm = () => {
             });
 
             
+            
         if (response.statusCode === 200) {
             navigate('/courses');
         } else {
@@ -155,114 +156,96 @@ export const AddEditForm = () => {
     if (error) { return <MessageToast message='Ha ocurrido un error' type="error" /> }
     if (loading) { return <MessageToast message='Cargando...' type="loading" /> }
 
-    return ( <div> <h1>{isEditMode ? 'Editar Curso' : 'Agregar Curso'}</h1> 
-    <Formik 
-      initialValues={initialValues}
-      validationSchema={validationSchema}
-      onSubmit={handleSubmit} 
-    >
-      {({ isSubmitting }) => (
-        <Form>
-          <input type="hidden"  name='id'/>
-            <section className="py-12 dark:bg-dark">
-              <div className="container">
-                <div className="-mx-4 flex flex-wrap">
-                    
-                    <DefaultColumn>
-                        <DefaultInput name='name' label='Nombre'/>
-                        <DefaultInput name='total_hours' label='Horas'/>
-                    </DefaultColumn>
-
-                    <DefaultColumn>
-                        <DefaultInput name='total_students' label='Nro de estudiantes'/>
-                        <DefaultInput name='educative_level' label='Nivel educativo'/>
-                    </DefaultColumn>
-
-                     <DefaultColumn>
-                        <DefaultInput name='start_date' label='Fecha de inicio'/>
-                        <DefaultInput name='end_date' label='Fecha de fin'/>
-                    </DefaultColumn>
-
-
-                    <DefaultColumn>
-                        <DefaultInput name='period' label='Periodo'/>
-                    </DefaultColumn>
-                    </div>
-                </div>
-            </section>
-                 <div>
-                    <button type="submit" disabled={isSubmitting}>
-                        {isEditMode ? "Update" : "Add"}
-                    </button>
-                </div>
-
-        </Form>
-        )}
-</Formik>
-</div>) 
-
+    return ( <div className='pt-11'> <h1>{isEditMode ? 'Editar Curso' : 'Agregar curso'}</h1> 
+        <Formik 
+          initialValues={initialValues}
+          validationSchema={validationSchema}
+          onSubmit={handleSubmit} 
+        >
+          {({ isSubmitting }) => (
+            <Form>
+              <input type="hidden"  name='id'/>
+                <section className="py-12 dark:bg-dark">
+                  <div className="container">
+                    <div className="-mx-4 flex flex-wrap">
+                          <DefaultColumn>
+                            <DefaultInput name='name' label='Nombre'/>
+                            <DefaultInput name='total_hours' label='Horas'/>
+                          </DefaultColumn>
+                          
+                          <DefaultColumn>
+                            <DefaultInput  name='total_students' label='Nro de estudiantes'/>
+                            <DefaultInput  name='educative_level' label='Nivel educativo'/>
+                          </DefaultColumn>
     
-    // ( <Formik 
-    //     initialValues={initialValues}
-    //     onSubmit={handleSubmit} 
-    //     validationSchema={validationSchema}
-    // >
-    //     {({ isSubmitting }) => (
-    //         <Form>
-    //           <input type="hidden" name="id" />
-    //             <div>
-    //                 <label htmlFor="name">Nombre</label>
-    //                 <Field name="name" type="text" />
-    //                 <ErrorMessage name="name" component="div" style={{ color: "red" }} />
-    //             </div>
+    
+                        <DefaultColumn>
+                            <DefaultInput name='start_date' label='Fecha de inicio'/>
+                            <DefaultInput name='end_date' label='Fecha de fin'/>
+                        </DefaultColumn>
 
-    //             <div>
-    //                 <label htmlFor="total_hours">Horas totales</label>
-    //                 <Field name="total_hours" type="number" />
-    //                 <ErrorMessage name="total_hours" component="div" style={{ color: "red" }} />
-    //             </div>
+                        <DefaultColumn>
+                            <div>
+                                <label htmlFor="user_id" className="mb-[10px] block text-base font-medium text-dark dark:text-white">Usuario</label>
+                                    <Field as="select" name="user_id" className="w-full bg-transparent rounded-md border border-stroke dark:border-dark-3 py-[10px] px-5 text-dark-6 outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-gray-2 disabled:border-gray-2">
+                                        {users.map((user) => (
+                                            <option key={user.id} value={user.id}>
+                                                {user.name}
+                                            </option>
+                                        ))}
+                                    </Field>
+                                <ErrorMessage name="user_id" component="div" className="text-red-500"  />
+                            </div>
 
-    //             <div>
-    //                 <label htmlFor="total_students">Nro de Estudiantes</label>
-    //                 <Field name="total_students" type="number" />
-    //                 <ErrorMessage name="total_students" component="div" style={{ color: "red" }} />
-    //             </div>
-
-    //             <div>
-    //                 <label htmlFor="educative_level">Nivel edicativo</label>
-    //                 <Field name="educative_level" type="text" />
-    //                 <ErrorMessage name="educative_level" component="div" style={{ color: "red" }} />
-    //             </div>
-
-    //             <div>
-    //                 <label htmlFor="period">Periodo</label>
-    //                 <Field name="period" type="text" />
-    //                 <ErrorMessage name="period" component="div" style={{ color: "red" }} />
-    //             </div>
-                
-    //             <div>
-    //                 <label htmlFor="start_date">Fecha de inicio</label>
-    //                 <Field name="start_date" type="date" />
-    //                 <ErrorMessage name="start_date" component="div" style={{ color: "red" }} />
-    //             </div>
-
-    //             <div>
-    //                 <label htmlFor="end_date">Fecha de fin </label>
-    //                 <Field name="end_date" type="date" />
-    //                 <ErrorMessage name="end_date" component="div" style={{ color: "red" }} />
-    //             </div>
-
-
-
-
-
-
-
-
-
-
-    //         </Form>
-    //     )}
-
-    // </Formik> )
-}
+                            <FieldArray
+                            name="tags"
+                            render={arrayHelpers => (
+                                <div>
+                                    {tags.map((item, index) => (
+                                        <div key={index}>
+                                            <label>
+                                                <Field
+                                                    type="checkbox"
+                                                    name="tags"
+                                                    value={item.id}
+                                                    checked={
+                                                        arrayHelpers.form.values.tags.some(
+                                                            (tag: string) => tag === item.id
+                                                        )
+                                                    }
+                                                    onChange={e => {
+                                                        if (e.target.checked) {
+                                                            arrayHelpers.push(item.id);
+                                                        } else {
+                                                            const idx = arrayHelpers.form.values.tags.indexOf(item.id);
+                                                            if (idx !== -1) arrayHelpers.remove(idx);
+                                                        }
+                                                    }}
+                                                />
+                                                {item.name}
+                                            </label>
+                                        </div>
+                                    ))}
+                                </div>
+                            )}
+                        />
+                        </DefaultColumn>
+    
+        
+                    </div>
+                  </div>
+    
+                 
+    
+          </section>
+              <div>
+                <button type="submit" disabled={isSubmitting}>
+                  {isEditMode ? 'Editar' : 'Guardar '}
+                </button>
+              </div>
+            </Form>
+          )}
+        </Formik>
+          </div>
+    );
+    };

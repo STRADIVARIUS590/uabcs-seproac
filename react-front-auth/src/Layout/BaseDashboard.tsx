@@ -106,13 +106,8 @@ const BaseDashBoard = () => {
       color: "#4CAF50", // Green color for positive metrics
   };
     
-    return (
-               
-        <div>
-        <h1>Dashboard</h1>
-
-
-        <div style={widgetContainerStyle}>
+    return (            
+        <div> <div style={widgetContainerStyle}>
             {/* projects widget */}
            <div style={widgetCardStyle}>
             <div style={widgetTitleStyle}>Proyectos</div>

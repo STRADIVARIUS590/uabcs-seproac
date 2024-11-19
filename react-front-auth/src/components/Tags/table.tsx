@@ -16,6 +16,8 @@ export const Tags = ({tags} : Props) => {
     
     const  { token, user } = useSelector((state: RootState ) => state.auth);
 
+    const [ data , setData] = useState(tags);
+
     const navigate = useNavigate();
 
     const user_permissions = user?.all_permissions || [];
@@ -35,7 +37,8 @@ export const Tags = ({tags} : Props) => {
         if(user && user_permissions.indexOf("tags.edit") > -1) {
             setCanEdit(true)
         }
-    }, [user, user_permissions, navigate]);
+        
+    }, [user, user_permissions, navigate, data]);
  
 
    const [error, setError] = useState<boolean>(false);
@@ -56,8 +59,9 @@ export const Tags = ({tags} : Props) => {
             const result = await response;
     
             if(result.statusCode == 200) {
-                const indexToRemove = tags.findIndex(tag => tag.id == id);                                
-                indexToRemove > -1 && tags.splice(indexToRemove, 1);
+                const updatedTags = tags.filter(tag => tag.id !== id); // Create a new array without the deleted tag
+                setData(updatedTags); // Update state to trigger re-render
+
             }else {
                 setError(true)
             }
@@ -85,7 +89,7 @@ export const Tags = ({tags} : Props) => {
 
                       <tbody>
 
-                    {tags.map((item) => (
+                    {data.map((item) => (
                     <tr className="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700" key={item.id}>
                         <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{item.id}</th>
                         <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{item.name}</th>

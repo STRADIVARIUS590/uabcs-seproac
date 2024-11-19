@@ -5,8 +5,9 @@ import { useEffect, useState } from "react";
 import { Api } from "../../services/Api";
 import * as Yup from 'yup';
 import { MessageToast } from "../MessageToast";
-import { ErrorMessage, Field, Formik, FormikHelpers, Form } from "formik";
+import { ErrorMessage, Field, Formik, FormikHelpers, Form, FieldArray } from "formik";
 import { DefaultColumn, DefaultInput } from "../inputs/Forms";
+import { TagItem } from "../Users/AddEditForm";
 const validationSchema = Yup.object({
     name: Yup.string().required('El nombre es requerido'),
     description: Yup.string().required('La descripcion es requerida'),
@@ -29,6 +30,7 @@ interface ProjectItem {
     end_date: string | undefined;
     type: string | undefined;
     period: string | undefined;
+    tags: TagItem[]
     user: {
         name: string | undefined
     }
@@ -49,6 +51,7 @@ export const AddEditForm = () => {
     
     const user_permissions = user?.all_permissions || [];
 
+    const [tags, setTags] = useState<TagItem[]>();
     useEffect(() => {
         if (!user || user_permissions.indexOf("projects.edit") === -1) {
             navigate("/dashboard");
@@ -66,7 +69,7 @@ export const AddEditForm = () => {
     const [users, setUsers] = useState<UserItem[]>([]);
     const loadData = async () => {
         if (id) {
-            const response = await Api.get("/projects/get/" + id + "?include=user", {
+            const response = await Api.get("/projects/get/" + id + "?include=user,tags", {
                 Authorization: "Bearer " + token,
                 accept: "application/json",
             });
@@ -78,8 +81,16 @@ export const AddEditForm = () => {
                 Authorization: "Bearer " + token,
                 accept: "application/json",
             })
+
+            
         const result: UserItem[] = await response.data;
 
+          const response_tags = await Api.get('/tags', {
+                Authorization: "Bearer " + token,
+                accept: "application/json",
+            });
+            const result_tags: TagItem[] = await response_tags.data;
+            setTags(result_tags);
         setUsers(result);
 
         setLoading(false);
@@ -90,7 +101,7 @@ export const AddEditForm = () => {
         // loadUsers();
     }, [id]);
 
-    const initialValues: ProjectItem = {
+    const initialValues = {
         id: data?.id || "",
         name: data?.name || "",
         description: data?.description || "",
@@ -101,6 +112,7 @@ export const AddEditForm = () => {
         end_date: data?.end_date || "",
         type: data?.type || "",
         period: data?.period || "",
+        tags: data?.tags?.map(tag => tag.id) || [],
         user: {
             name: data?.user?.name || "",
             }
@@ -164,10 +176,7 @@ export const AddEditForm = () => {
                             <DefaultInput name="end_date" label="Fecha de fin" type="date" />    
                         </DefaultColumn>
                         
-                        <DefaultColumn>    
-                            <DefaultInput name="type" label="Tipo"/>    
-                            <DefaultInput name="period" label="Periodo"/>    
-                        </DefaultColumn>
+                       
 
                         <DefaultColumn>
                         <label htmlFor="user_id" className='mb-[10px] block text-base font-medium text-dark dark:text-white'>Usuario</label>
@@ -179,6 +188,48 @@ export const AddEditForm = () => {
                           ))}
                         </Field>
                         <ErrorMessage name="user_id" component="div" style={{ color: 'red' }} />
+                        </DefaultColumn>
+                         <DefaultColumn>    
+                            <DefaultInput name="type" label="Tipo"/>    
+                        </DefaultColumn>
+                        <DefaultColumn>
+                            <DefaultInput name="period" label="Periodo"/>    
+                        </DefaultColumn>
+
+                        <DefaultColumn>
+
+                            <FieldArray
+                            name="tags"
+                            render={arrayHelpers => (
+                                <div>
+                                    {tags.map((item, index) => (
+                                        <div key={index}>
+                                            <label>
+                                                <Field
+                                                    type="checkbox"
+                                                    name="tags"
+                                                    value={item.id}
+                                                    checked={
+                                                        arrayHelpers.form.values.tags.some(
+                                                            (tag: string) => tag === item.id
+                                                        )
+                                                    }
+                                                    onChange={e => {
+                                                        if (e.target.checked) {
+                                                            arrayHelpers.push(item.id);
+                                                        } else {
+                                                            const idx = arrayHelpers.form.values.tags.indexOf(item.id);
+                                                            if (idx !== -1) arrayHelpers.remove(idx);
+                                                        }
+                                                    }}
+                                                />
+                                                {item.name}
+                                            </label>
+                                        </div>
+                                    ))}
+                                </div>
+                            )}
+                        />
                         </DefaultColumn>
                 </div>
                 </div>

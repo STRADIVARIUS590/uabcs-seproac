@@ -81,6 +81,7 @@ export const Projects = () => {
     if(loading){     return <MessageToast message='Cargando...' type="loading"/> }
 
     return <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
+            <h1>Proyectos </h1>
         <table className="w-full text-sm text-left rtl:text-right font-small text-gray-900 dark:text-gray-400">
             <thead>
                 <tr>

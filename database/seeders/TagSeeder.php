@@ -34,7 +34,7 @@ class TagSeeder extends Seeder
 
             // tipos de contratacion / categorias de  maestros            
             ['name' => 'Tiempo completo'],
-            ['name' => 'Tirular C']
+            ['name' => 'Titular C']
         ];
 
         foreach ($tags as $tag_info) {
