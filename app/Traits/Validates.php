@@ -11,6 +11,8 @@ use App\Models\Institution;
 use App\Models\Project;
 use App\Models\Publication;
 use Database\Seeders\AcademicGradeSeeder;
+use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
 
 class Validates
 {
@@ -47,7 +49,7 @@ class Validates
             'end_date' => 'nullable|date|after_or_equal:start_date',
             'type' => 'nullable|integer',                           
             'period' => 'nullable|string|max:10',                   
-    ],
+        ],
 
         Tag::class => [
                 'name' => 'required|unique:tags,name',
@@ -62,7 +64,7 @@ class Validates
                 'title_trabajo' => 'required',
                 'event_name' => 'required'
         ],
-        AcademicGradeSeeder::class ,'App\Models\Academicgrade' => [
+        AcademicGrade::class => [
             'user_id' => 'required|exists:users,id', 
             'institution_id' => 'required|exists:institutions,id',  
             'name' => 'required|string|max:255',                    
@@ -81,8 +83,18 @@ class Validates
                 'period' => 'required|string|max:255',          
                 'institution_id' => 'sometimes|nullable|exists:institutions,id',          
 
-            ]
+        ],
+        Role::class => [
+                'name' => 'required|string|unique:roles,name|max:255',
+                'permissions' => 'nullable|array',
+                'permissions.*' => 'exists:permissions,id', 
+                'users' => 'nullable|array',
+                'users.*' => 'exists:users,id',
+                // 'guard_name' => 'nullable|string|in:web,api',
+        ]
         };
+
+    
 
     }
 
@@ -100,11 +112,15 @@ class Validates
 
         ,Congress::class => array_merge($this->create_rules(), [  ])
         
-        ,AcademicGrade::class, 'App\Models\Academicgrade' => array_merge($this->create_rules(), [  ])
+        ,AcademicGrade::class => array_merge($this->create_rules(), [  ])
         
         ,Institution::class => array_merge($this->create_rules(), [  ])
         
         ,Course::class => array_merge($this->create_rules(), [  ])
+        
+        ,Role::class => array_merge($this->create_rules(), [ 
+            'name' => 'required|string|unique:roles,name,'.$this->request->id,
+         ])
         
     };
         

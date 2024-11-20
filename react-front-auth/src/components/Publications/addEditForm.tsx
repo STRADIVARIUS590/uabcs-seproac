@@ -87,9 +87,9 @@
 
 
         const initialValues  = {
-            id: data?.id ||  "",
+            id: data?.id ||  0,
             title: data?.title || "",
-            user_id: data?.user_id || "",
+            user_id: data?.user_id || 1,
             type: data?.type || "",
             issn_isbn: data?.issn_isbn || "",
             doi: data?.doi || "",

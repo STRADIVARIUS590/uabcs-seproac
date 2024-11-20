@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\BaseController;
+use App\Http\Controllers\Api\RoleController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\PublicationController;
 use App\Http\Controllers\UserController;
@@ -48,23 +49,7 @@ Route::middleware(['auth:sanctum'])->group(function(){
         Route::put('/{id}',  [UserController::class, 'update'])->middleware([\Illuminate\Auth\Middleware\Authorize::using('users.edit')]);
         Route::get('/get/{id}', [UserController::class, 'get'])->middleware([\Illuminate\Auth\Middleware\Authorize::using('users.get')]);
         Route::delete('/{id}', [UserController::class, 'destroy'])->middleware([\Illuminate\Auth\Middleware\Authorize::using('users.destroy')]);
-    });
-
-    // Route::prefix('/projects')->group(function(){
-    //     Route::get('/', [ProjectController::class, 'index']);
-    //     Route::post('/', [ProjectController::class, 'store']);
-    //     Route::put('/', [ProjectController::class, 'update']);
-    //     Route::get('/get/{id}', [ProjectController::class, 'get']);
-    //     Route::delete('/{id}', [ProjectController::class, 'destroy']);
-    // });
-
-    // Route::prefix('/publications')->group(function(){
-    //     Route::get('/', [PublicationController::class, 'index']);
-    //     Route::post('/', [PublicationController::class, 'store']);
-    //     Route::put('/', [PublicationController::class, 'update']);
-    //     Route::get('/get/{id}', [PublicationController::class, 'get']);
-    //     Route::delete('/{id}', [PublicationController::class, 'destroy']);
-    // });
+    }); 
 
     Route::controller(BaseController::class)->prefix('projects')->group(function(){
         Route::get('/', 'index');
@@ -82,7 +67,6 @@ Route::middleware(['auth:sanctum'])->group(function(){
         Route::get('/get/{id}', 'get');
         Route::delete('/{id}', 'destroy');
     });
-
 
 
     Route::controller(BaseController::class)->prefix('tags')->group(function(){
@@ -127,20 +111,23 @@ Route::middleware(['auth:sanctum'])->group(function(){
         Route::delete('/{id}', 'destroy');
     });
 
-
+    Route::controller(RoleController::class)->prefix('roles')->group(function(){
+        Route::get('/', 'index');
+        Route::post('/', 'store');
+        Route::put('/', 'update');
+        Route::get('/get/{id}', 'get');
+        Route::delete('/{id}', 'destroy');
+    });
 
     Route::controller(UserController::class)->prefix('dashboard')->group(function(){
         Route::get('/', 'dashboard');
     });
 
-    Route::controller(BaseController::class)->prefix('tags')->group(function(){
-        Route::get('/', 'index');
-    });
 });
 
-Route::get('/roles', function(){
-    return response()->json([
-        'data' => Role::get()
-    ]);
-});
+// Route::get('/roles', function(){
+//     return response()->json([
+//         'data' => Role::get()
+//     ]);
+// });
 

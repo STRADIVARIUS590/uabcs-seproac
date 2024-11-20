@@ -60,7 +60,7 @@ export const AddEdit = ({ show, id, onClose }: Props) => {
   }, [show, id]);
 
   const initialValues: TagItem = {
-    id: data?.id || "",
+    id: data?.id || 0,
     name: data?.name || "",
     slug: data?.slug || "",
   };

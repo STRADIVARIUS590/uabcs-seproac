@@ -1,17 +1,10 @@
 import Customers from "../components/Customers";
-// import EditUser from "../components/EditUser";
 import Login from "../components/Login";
 import Register from "../components/Register";
-// import { Users } from "../components/Users/Index"
-import BaseDashBoard from "../Layout/BaseDashboard";
-// import {  } from "../components/Congresses";
 import { AddEditCongressPage } from "../components/Congresses/addEdit";
-// import { Projects } from "../components/Projects";
 import { AddEditUserPage } from "../components/Users/addEdit";
 import { AddEditProjectPage } from "../components/Projects/addEdit";
-// import { Publications } from "../components/Publications";
 import { AddEditPublicationPage } from "../components/Publications/addEdit";
-// import { Courses } from "../components/Courses";
 import { AddEditCoursesPage } from "../components/Courses/addEdit";
 import { CongressIndex } from "../components/Congresses";
 import { CoursesIndex } from "../components/Courses";
@@ -19,12 +12,10 @@ import { ProjectsIndex } from "../components/Projects";
 import { PulicationsIndex } from "../components/Publications";
 import { UsersIndex } from "../components/Users/Index";
 import { Dashboard } from "../Layout/Dashboard";
-import { IndexTags, TagsPage } from "../components/Tags";
-import Tab, { TabContent } from "../components/Layout/TabPanes";
-import { Middleware } from "../components/scripts/Middleware";
+import { TagsPage } from "../components/Tags";
 import { AcademicGradesPage } from "../components/AcademicGrades";
 import { AddEditAcademicGradesPage } from "../components/AcademicGrades/AddEditAcademicGrades";
-// import { AddEditForm } from "../components/Users/AddEditForm";
+// import { SettingsPage } from "../components/Settings";
 
 type TypeRoute = {
     path: string
@@ -143,7 +134,12 @@ type TypeRoute = {
         is_protected: true,
         path: '/academic-grades/edit/:id?',
         element: AddEditAcademicGradesPage
-    }
+    },
+    // {
+    //     is_protected: true,
+    //     path: '/settings',
+    //     element: SettingsPage
+    // }
 ];
 
 export default routes

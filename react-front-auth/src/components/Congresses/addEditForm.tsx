@@ -11,7 +11,7 @@ import { DefaultColumn, DefaultInput } from '../inputs/Forms';
 interface DataItem {
     id: string | number | null | undefined;
     title_trabajo: string | null | undefined;
-    user_id: string | null | undefined;
+    user_id: string;
     event_name: string | null | undefined;
     date: string | null | undefined;
     colaborators: number | null | undefined;
@@ -25,7 +25,7 @@ interface TagItem {
 
 interface UserItem {
     name: string | null | undefined;
-    id: string | null | undefined;
+    id: string;
 }
 
 const validationSchema = Yup.object({
@@ -91,9 +91,9 @@ export const AddEditForm = () => {
     }, [id]);
 
     const initialValues = {
-        id: data?.id || "",
+        id: data?.id || 0,
         title_trabajo: data?.title_trabajo || "",
-        user_id: data?.user_id || "",
+        user_id: data?.user_id || 1,
         event_name: data?.event_name || "",
         date: data?.date || "",
         colaborators: data?.colaborators || 0,
@@ -151,9 +151,8 @@ export const AddEditForm = () => {
                                 <DefaultColumn>
                                     <label htmlFor="user_id" className='mb-[10px] block text-base font-medium text-dark dark:text-white'>Usuario</label>
                                     <Field as="select" name="user_id" className="w-full bg-transparent rounded-md border border-stroke dark:border-dark-3 py-[10px] px-5 text-dark-6 outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-gray-2 disabled:border-gray-2">
-                                        <option value="">Selecciona un usuario</option>
                                         {users.map((user) => (
-                                            <option key={user.id}>
+                                            <option key={user.id} value={user.id}>
                                                 {user.name}
                                             </option>
                                         ))}

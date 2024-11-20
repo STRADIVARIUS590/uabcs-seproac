@@ -133,6 +133,20 @@ class PermissionSeeder extends Seeder
                 'roles' => [ 'Sistemas' ]
             ],
 
+            [   'name' => 'roles.add',
+                'roles' => [ 'Sistemas', 'Admin' ],
+            ],
+             [   'name' => 'roles.get',
+                'roles' => [ 'Sistemas' ]
+            ],
+            [   'name' => 'roles.destroy',
+                'roles' => [ 'Sistemas' ]
+            ],
+            [   'name' => 'roles.edit',
+                'roles' => [ 'Sistemas' ]
+            ],
+
+
 
         
 

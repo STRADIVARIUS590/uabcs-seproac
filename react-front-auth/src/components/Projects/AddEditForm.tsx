@@ -102,10 +102,10 @@ export const AddEditForm = () => {
     }, [id]);
 
     const initialValues = {
-        id: data?.id || "",
+        id: data?.id || 0,
         name: data?.name || "",
         description: data?.description || "",
-        user_id: data?.user_id || "", 
+        user_id: data?.user_id || 1, 
         objetives: data?.objetives || "",
         colaborators: data?.colaborators || "",
         start_date: data?.start_date || "",

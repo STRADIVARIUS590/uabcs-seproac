@@ -20,27 +20,14 @@ use Illuminate\Support\Str;
 use ReflectionClass;
 use Spatie\QueryBuilder\QueryBuilder;
 
-// User;
 class BaseController extends Controller implements HasMiddleware
 {
+    protected $model;
 
-    /* preg_match('/\/(?P<action>[a-zA-Z\-]+)\/?(\d+)?|\/(\d+)$/', request()->url(), $matches);
-
-$this->action = $matches['action'] ?? null; // Capture the action (get, update, update-password, etc.)
-
-$this->model = 'App\\Models\\' . Str::singular(str_replace(' ', '', ucwords(basename(
-    preg_replace('/\/[a-zA-Z\-]+\/?(\d+)?|\/(\d+)$/', ' ', request()->url())
-))));
- */
-
-  
-     protected $model;
-    
     public function __construct(){
-    
         $this->model = 'App\\Models\\'.Str::singular(str_replace(' ', '', ucwords(basename(preg_replace('/\/get\/(\d+)|\/(\d+)$|-/', ' ', request()->url())))));
-        // $this->model = "App\Models\\".Str::singular(ucwords(basename(preg_replace('/\/get\/(\d+)|\/(\d+)$|-/', '',request()->url()))));
     }
+
 
     public function method($action)
     {
@@ -80,11 +67,9 @@ $this->model = 'App\\Models\\' . Str::singular(str_replace(' ', '', ucwords(base
         $data = QueryBuilder::for($this->model)
         ->allowedFilters(['id',...$fields])
         ->allowedIncludes(['user', 'tags', 'institution'])
-        // ->allowedFields(['id', ...$fields])
         ->allowedSorts(['id',...$fields, 'created_at', 'updated_at', 'created_at'])   
         ->select('id',...$fields)
         ->get();
-
 
         $this->log(__FUNCTION__, $this->model, '', auth()->id(), request()->url(), 0);
 
@@ -94,6 +79,7 @@ $this->model = 'App\\Models\\' . Str::singular(str_replace(' ', '', ucwords(base
 
     public function store(Request $request)
     {
+
         $validator = (new Validates($this->model, $request))->creating()->validator();
 
         if($validator->fails()){ return $this->jsonResponse('Ha ocurrido un error', $validator->errors(), Response::HTTP_BAD_REQUEST); }            
@@ -101,6 +87,8 @@ $this->model = 'App\\Models\\' . Str::singular(str_replace(' ', '', ucwords(base
         $model = $this->model::create($request->only((new $this->model)->getFillable()));
 
         $model_specific_metod = $this->method(__FUNCTION__);
+
+        $this->log(__FUNCTION__, $this->model, '', auth()->id(), request()->url(), $model->id);
 
         if(is_callable($model_specific_metod)) $model = $model_specific_metod($model, $request);
 
@@ -113,17 +101,18 @@ $this->model = 'App\\Models\\' . Str::singular(str_replace(' ', '', ucwords(base
       
         $data = QueryBuilder::for($this->model)
         ->allowedFilters(['id',...$fields])
-        ->allowedIncludes(['user', 'tags'])
+        ->allowedIncludes(['user', 'tags', 'institution'])
         ->select('id',...$fields)
         ->where('id', $id)
         ->firstOrFail();
+        
+        $this->log(__FUNCTION__, $this->model, '', auth()->id(), request()->url(), $data->id);
 
         return $this->jsonResponse('Registro consultado correctamente', $data, Response::HTTP_OK);
     }
 
     public function update(Request $request)
     {   
-        error_log(json_encode($request->all()));
         try {
         
             $validator = (new Validates($this->model, $request))->validator();
@@ -139,7 +128,7 @@ $this->model = 'App\\Models\\' . Str::singular(str_replace(' ', '', ucwords(base
                         
             $model_specific_metod = $this->method(__METHOD__);
 
-            // error_log(json_encode($model->tags, JSON_PRETTY_PRINT));
+            $this->log(__FUNCTION__, $this->model, '', auth()->id(), request()->url(), $model->id);
 
             if(is_callable($model_specific_metod)) $model = $model_specific_metod($model, $request);
 
@@ -154,6 +143,8 @@ $this->model = 'App\\Models\\' . Str::singular(str_replace(' ', '', ucwords(base
     {
         try{
             $model = $this->model::findOrFail($id);
+
+            $this->log(__FUNCTION__, $this->model, '', auth()->id(), request()->url(), $model->id);
 
             $model->delete();
         

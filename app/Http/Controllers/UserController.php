@@ -55,7 +55,8 @@ class UserController extends Controller
      */
     public function store(Request $request)
     { 
-    
+   
+        error_log(json_encode($request->all()));
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255', // The name field is required, must be a string, and a max length of 255
             'email' => 'required|string|email|max:255|unique:users,email', // Email is required, must be unique, and a valid email

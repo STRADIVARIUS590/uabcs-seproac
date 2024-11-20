@@ -11,7 +11,7 @@ interface RoleItem {
   id: string; 
   name: string;
 }
-interface UserItem {
+export interface UserItem {
   id: number;   
   name: string;
   email: string;
@@ -117,20 +117,21 @@ const AddEditForm = () => {
       }, [id]);
 
 
-const initialValues = {
+const initialValues  = {
+    id: user?.id || 0,
     name: user?.name ||  '' ,
     email: user?.email || '',
     password : user?.password || '',
     id : user?.id ||  '0',
-    role_id : user?.role_id || 0,
+    role_id : user?.role_id,
     // date_ingreso: user?.date_ingreso ? new Date(user?.date_ingreso).toISOString().split('T')[0] : "", 
     date_ingreso: user?.date_ingreso || '',
     birth_date: user?.birth_date || '',
     sex : user?.sex || '',
     tags: user?.tags?.map(tag => tag.id) || [],
     role: {
-        id: user?.role_id || '',
-        name: user?.role?.name || ''
+        id: user?.role_id,
+        name: user?.role?.name
     }
   };
 

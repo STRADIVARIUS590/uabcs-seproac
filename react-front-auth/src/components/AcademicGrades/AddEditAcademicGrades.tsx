@@ -1,3 +1,8 @@
+import { AppLayout } from "../Layout/AppLayout"
+import { AcademicGradesForm } from "./AcademicGradesForm"
+
 export const AddEditAcademicGradesPage = () => {
-    return 'asd';
+    return (<AppLayout>
+        <AcademicGradesForm />
+    </AppLayout> )
 }

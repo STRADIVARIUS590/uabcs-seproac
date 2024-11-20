@@ -95,6 +95,7 @@ export const AddEditForm = () => {
             setTags(result_tags);
 
             setLoading(false);
+            
         } catch (error) {
             setError(true);
             setLoading(false);
@@ -106,8 +107,8 @@ export const AddEditForm = () => {
     }, [id]);
 
     const initialValues = {
-        id: data?.id || "",
-        user_id: data?.user_id || "",
+        id: data?.id || 0,
+        user_id: data?.user_id || 1,
         institution_id: data?.institution_id || '',
         name: data?.name || "",
         total_hours: data?.total_hours || 0,
@@ -129,8 +130,10 @@ export const AddEditForm = () => {
 
     const isEditMode = !!id;
 
+    // alert(isEditMode);
     // HANDLE
     const handleSubmit = async (values: typeof initialValues, { setFieldError }: FormikHelpers<typeof initialValues>) => {
+
         const response = isEditMode
             ? await Api.put(`/courses`, values, {
                 Authorization: `Bearer ${token}`,
@@ -141,8 +144,6 @@ export const AddEditForm = () => {
                 'Content-Type': 'application/json',
             });
 
-            
-            
         if (response.statusCode === 200) {
             navigate('/courses');
         } else {
@@ -156,11 +157,11 @@ export const AddEditForm = () => {
     if (error) { return <MessageToast message='Ha ocurrido un error' type="error" /> }
     if (loading) { return <MessageToast message='Cargando...' type="loading" /> }
 
-    return ( <div className='pt-11'> <h1>{isEditMode ? 'Editar Curso' : 'Agregar curso'}</h1> 
+    return ( <div> <h1>{isEditMode ? 'Editar Curso' : 'Agregar curso'}</h1> 
         <Formik 
           initialValues={initialValues}
           validationSchema={validationSchema}
-          onSubmit={handleSubmit} 
+          onSubmit={() => {handleSubmit }} 
         >
           {({ isSubmitting }) => (
             <Form>
@@ -180,8 +181,8 @@ export const AddEditForm = () => {
     
     
                         <DefaultColumn>
-                            <DefaultInput name='start_date' label='Fecha de inicio'/>
-                            <DefaultInput name='end_date' label='Fecha de fin'/>
+                            <DefaultInput type='date' name='start_date' label='Fecha de inicio'/>
+                            <DefaultInput type='date' name='end_date' label='Fecha de fin'/>
                         </DefaultColumn>
 
                         <DefaultColumn>

@@ -1,8 +1,6 @@
 import { useSelector } from "react-redux";
-import { AppLayout } from "../Layout/AppLayout"
 import { AcademicGrades } from "./table"
 import { RootState } from "../../store";
-import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { Api } from "../../services/Api";
 import { MessageToast } from "../MessageToast";
