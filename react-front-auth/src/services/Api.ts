@@ -16,7 +16,7 @@ export class Api {
 //     }
 // }
 
-    static async post<T>(url: string, data: any, headers: {}): Promise<any> {
+    static async post(url: string, data: any, headers: {}): Promise<any> {
     
         const response = await fetch(`${Api.baseUrl}${url}`, 
             {
@@ -37,7 +37,7 @@ export class Api {
         } 
     }
 
-    static async get<T>(url: string, headers: {}): Promise<any> {
+    static async get(url: string, headers: {}): Promise<any> {
         const response = await fetch(`${Api.baseUrl}${url}`,
             {
             method: 'GET',
@@ -59,7 +59,7 @@ export class Api {
     
     }
 
-  static async delete<T>(url: string, headers: {}): Promise<any> {
+  static async delete(url: string, headers: {}): Promise<any> {
   
         const response = await fetch(`${Api.baseUrl}${url}`, {
         method: 'DELETE',

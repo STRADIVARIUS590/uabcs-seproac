@@ -15,6 +15,7 @@ import { Dashboard } from "../Layout/Dashboard";
 import { TagsPage } from "../components/Tags";
 import { AcademicGradesPage } from "../components/AcademicGrades";
 import { AddEditAcademicGradesPage } from "../components/AcademicGrades/AddEditAcademicGrades";
+import { SettingsPage } from "../components/Settings/SettingsPage";
 // import { SettingsPage } from "../components/Settings";
 
 type TypeRoute = {
@@ -135,11 +136,11 @@ type TypeRoute = {
         path: '/academic-grades/edit/:id?',
         element: AddEditAcademicGradesPage
     },
-    // {
-    //     is_protected: true,
-    //     path: '/settings',
-    //     element: SettingsPage
-    // }
+    {
+        is_protected: true,
+        path: '/settings',
+        element: SettingsPage
+    }
 ];
 
 export default routes

@@ -32,7 +32,7 @@ export const AcademicGrades = ({academic_grades} : Props) => {
     
     const [ data, setData ] = useState(academic_grades);
   
-    const [loading, setLoading ] = useState<boolean>(false);
+    const [loading ]= useState<boolean>(false);
 
     const deleteAcademicGrade = async ( id : number | string ) => {
         // setLoading(true);
@@ -48,8 +48,8 @@ export const AcademicGrades = ({academic_grades} : Props) => {
             }else {
                 setError(true)
             }
+        }
         // setLoading(false);
-    }
 
     if(error){  return <MessageToast message='Ha ocurrido un error' type="error"/>}
     if(loading){  return <MessageToast message='Cargando...' type="info"/>}

@@ -18,13 +18,13 @@ const FormElementInput = () => {
             <DisabledInput />
           </DefaultColumn>
 
-          <DefaultColumn>
+          {/* <DefaultColumn>
             <NameInput />
-          </DefaultColumn>
+          </DefaultColumn> */}
 
-          <DefaultColumn>
+          {/* <DefaultColumn>
             <EmailInput />
-          </DefaultColumn>
+          </DefaultColumn> */}
 
           <DefaultColumn>
             <CompanyNameInput />
@@ -67,13 +67,13 @@ type Props = {
   placeholder?: string;
   id?: string;
   error?: string;
-  type?: "text" | "email" | "password" | "date" | "select";
+  type?: "text" | "email" | "password" | "date" | "select" | 'number';
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   value?: string | number | null;
   as?: string
 };
 
-export const DefaultInput = ({ label, name, placeholder, id, type = "text", value, as }: Props) => {
+export const DefaultInput = ({ label, name, placeholder, id, type = "text", as }: Props) => {
   return (
     <div>
       <label className="mb-[10px] block text-base font-medium text-dark dark:text-white" htmlFor={id}>

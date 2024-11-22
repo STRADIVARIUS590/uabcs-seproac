@@ -1,6 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { Api } from "../services/Api";
-// import { useNavigate } from "react-router-dom";
 
 interface IUser {
     id: number
@@ -20,7 +19,7 @@ type AuthState = {
 }
 
 export const loginUser = createAsyncThunk('auth/loginUser', async (data: any) => {
-    const response = await Api.post('/users/login', data);
+    const response = await Api.post('/users/login', data, {});
     if(response.statusCode === 200) {
         return response.data;
     }
@@ -30,7 +29,7 @@ export const loginUser = createAsyncThunk('auth/loginUser', async (data: any) =>
 
 
 export const registerUSer = createAsyncThunk('auth/registerUser', async (data: any, thunkApi) => {
-    const response = await Api.post('/users', data);
+    const response = await Api.post('/users', data, {});
 
     if(response.statusCode === 200) {
         return response.data;
@@ -51,7 +50,7 @@ export const authSlice = createSlice({
     initialState: initialState,
     reducers: {},
     extraReducers: (builder: any) => { 
-        builder.addCase(loginUser.pending, (state: AuthState, action: any) => {
+        builder.addCase(loginUser.pending, (state: AuthState) => {
             state.isLoading = true;
         })
         .addCase(loginUser.fulfilled, (state: AuthState, action: any) => {
@@ -62,7 +61,7 @@ export const authSlice = createSlice({
             state.token = action.payload.token;
             state.user = action.payload;
         })
-        .addCase(loginUser.rejected, (state: AuthState, action: any) => {
+        .addCase(loginUser.rejected, (state: AuthState) => {
             state.isLoading = false;
             state.isLogged = false; 
             state.token = null;
@@ -75,13 +74,13 @@ export const authSlice = createSlice({
             state.token = action.payload.token;
             state.user = action.payload
         })
-        .addCase(registerUSer.pending, (state: AuthState, action: any) => {
+        .addCase(registerUSer.pending, (state: AuthState) => {
             state.isLoading = false; 
             state.isLogged = false; 
             state.token = null;
             state.user = null;
         })
-        .addCase(registerUSer.rejected, (state: AuthState, action: any) => {
+        .addCase(registerUSer.rejected, (state: AuthState) => {
             state.isLoading = false;
             state.isLogged = false; 
             state.token = null;

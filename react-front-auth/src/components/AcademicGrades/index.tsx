@@ -1,17 +1,12 @@
 import { useEffect, useState } from "react"
 import { AppLayout } from "../Layout/AppLayout"
 import { MessageToast } from "../MessageToast";
-import { AcademicGradesTab } from "./AcademicGradesTab";
 import { AcademicGrades } from "./table";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store";
 import { useNavigate } from "react-router-dom";
 import { Api } from "../../services/Api";
-interface Props {
-    filters?  : {
-        user_id?: string; 
-    }
-};
+
 
 interface AcademicGradeItem  {
     id: string | number;
@@ -27,13 +22,13 @@ interface AcademicGradeItem  {
         name: string | number;
     }
 }
-export const AcademicGradesPage = ({ filters } : Props ) => {
+export const AcademicGradesPage = () => {
     
     const { token, user } = useSelector((state : RootState) => state.auth);
     
     const navigate = useNavigate();
 
-    const user_permissions = user?.all_permissions || [];
+    const user_permissions: string[]  = user?.all_permissions || [];
 
 
     useEffect(() => {

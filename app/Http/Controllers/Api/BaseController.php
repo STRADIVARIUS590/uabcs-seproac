@@ -112,7 +112,8 @@ class BaseController extends Controller implements HasMiddleware
     }
 
     public function update(Request $request)
-    {   
+    {  
+        error_log(json_encode($request->all()));
         try {
         
             $validator = (new Validates($this->model, $request))->validator();

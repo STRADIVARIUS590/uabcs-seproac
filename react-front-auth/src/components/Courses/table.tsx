@@ -30,7 +30,7 @@ export const Courses = () => {
 
     const navigate = useNavigate();
  
-    const user_permissions = user?.all_permissions || [];
+    const user_permissions: string[] = user?.all_permissions || [];
 
     useEffect(() => {
         if (!user || user_permissions.indexOf("courses.get") === -1) {

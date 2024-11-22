@@ -34,7 +34,7 @@
         const { token, user } = useSelector((state: RootState) => state.auth);
         const { id } = useParams<{ id?: string }>();
         const navigate = useNavigate();
-        const user_permissions = user?.all_permissions || [];
+        const user_permissions: string[] = user?.all_permissions || [];
 
         useEffect(() => {
             if (!user || user_permissions.indexOf("publications.edit") === -1) {
@@ -78,6 +78,8 @@
             setTags(result_tags);
 
             setLoading(false);
+
+            setError(false);
         };
 
         useEffect(() => {
@@ -186,7 +188,7 @@
                                                                 (tag: string) => tag === item.id
                                                             )
                                                         }
-                                                        onChange={e => {
+                                                        onChange={(e : React.ChangeEvent<HTMLInputElement>) => {
                                                             if (e.target.checked) {
                                                                 arrayHelpers.push(item.id);
                                                             } else {

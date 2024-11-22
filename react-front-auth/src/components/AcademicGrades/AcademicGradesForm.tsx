@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../store";
 import { MessageToast } from "../MessageToast";
 import * as Yup from 'yup';
-import { Formik, Field, Form, ErrorMessage, FormikHelpers, FieldArray } from "formik";
+import { Formik, Field, Form, ErrorMessage, FormikHelpers } from "formik";
 import { DefaultColumn, DefaultInput } from "../inputs/Forms";
 import { UserItem } from "../Users/AddEditForm";
 interface AcademicGradeItem {
@@ -48,7 +48,7 @@ export const AcademicGradesForm = () => {
    
     const [ loading, setLoading ] = useState<boolean>(true);
 
-    const user_permissions = user?.all_permissions || [];
+    const user_permissions: string[] = user?.all_permissions || [];
     
     useEffect(() => {
         if (!user || user_permissions.indexOf("academic-grades.edit") === -1) {
@@ -134,7 +134,9 @@ export const AcademicGradesForm = () => {
       if(response.statusCode == 200){
         navigate(-1 ); // Redirect after submission;
       }else{
-        Object.entries(response.data).forEach((key) => { })
+        Object.entries(response.data).forEach((key) => { 
+          console.log(key);
+        })
       }
     }
   };
@@ -188,7 +190,7 @@ export const AcademicGradesForm = () => {
                                 </option>
                               ))}
                             </Field>
-                            <ErrorMessage name="institution_id" component="div" style={{ color: 'red' }} />
+                            <ErrorMessage name="institution_id" component="div" className="text-red-500" />
                        
 
                             <label htmlFor="user_id" className='mb-[10px] block text-base font-medium text-dark dark:text-white'>Usuario</label>
@@ -199,7 +201,7 @@ export const AcademicGradesForm = () => {
                                 </option>
                               ))}
                             </Field>
-                            <ErrorMessage name="user_id" component="div" style={{ color: 'red' }} />
+                            <ErrorMessage name="user_id" component="div" className="text-red-500"/>
             
                        
                           </DefaultColumn>  

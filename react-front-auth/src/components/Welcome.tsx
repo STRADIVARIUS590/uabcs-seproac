@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { RootState } from '../store';
 const Welcome = () => {
 
-    const { isLogged, user } = useSelector((state: RootState) => state.auth);
+    const { isLogged } = useSelector((state: RootState) => state.auth);
     
     const navigate = useNavigate();
 

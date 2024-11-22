@@ -23,17 +23,6 @@ interface AcademicGradeItem {
 export const AcademicGradesTab = () => {
 
     const { token, user } = useSelector((state : RootState) => state.auth);
-    
-    // const navigate = useNavigate();
-
-    // const user_permissions = user?.all_permissions || [];
-
-
-    // useEffect(() => {
-    //     if(!user || user_permissions.indexOf('academic-grades.get') === -1) {
-    //         navigate(-1);
-    //     }
-    // }, [user, user_permissions, navigate]);
 
     const [data, setData] = useState<AcademicGradeItem[]>();
 

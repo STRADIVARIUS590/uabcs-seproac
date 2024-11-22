@@ -1,8 +1,8 @@
 import { useSelector } from "react-redux";
 import { AppLayout } from "../Layout/AppLayout"
-import { Publications, Tags } from "./table"
+import { Publications } from "./table"
 import { useNavigate } from "react-router-dom";
-import { createContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { RootState } from "../../store";
 import { Api } from "../../services/Api";
 import { MessageToast } from "../MessageToast";
@@ -27,7 +27,7 @@ export const PulicationsIndex = () => {
 
     const navigate = useNavigate();
 
-    const user_permissions = user?.all_permissions || [];
+    const user_permissions: string[] = user?.all_permissions || [];
 
     useEffect(() => {
         if (!user || user_permissions.indexOf("publications.get") === -1) {

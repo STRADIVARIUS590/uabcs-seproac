@@ -31,7 +31,10 @@ interface CourseItem {
     }
 }
 
-
+interface InstitutionItem {
+    name: string,
+    id: string
+}
 interface UserItem {
     name: string;
     id: string;
@@ -45,6 +48,7 @@ const validationSchema = Yup.object({
     educative_level : Yup.string().required('El nivel educativo es requerido'),
     start_date: Yup.date().required('La fecha de inicio es requerida'),
     end_date: Yup.date().required('La fecha de fin es requerida'),
+    institution_id: Yup.date().required('La institucion es requerida'),
 });
 
 export const AddEditForm = () => {
@@ -52,7 +56,7 @@ export const AddEditForm = () => {
     const { token, user } = useSelector((state: RootState) => state.auth);
     const { id } = useParams<{ id?: string }>();
     const navigate = useNavigate();
-    const user_permissions = user?.all_permissions || [];
+    const user_permissions: string[] = user?.all_permissions || [];
 
     // alert(token)
     useEffect(() => {
@@ -67,7 +71,7 @@ export const AddEditForm = () => {
     const [data, setData] = useState<CourseItem>();
     const [users, setUsers] = useState<UserItem[]>([]);
     const [tags, setTags] = useState<TagItem[]>([]);
-    
+    const [institutions, setInstantutions] = useState<InstitutionItem[]>([]);
        const loadData = async () => {
         try {
             if (id) {
@@ -94,6 +98,14 @@ export const AddEditForm = () => {
             const result_tags: TagItem[] = await response_tags.data;
             setTags(result_tags);
 
+            const response_institutions = await Api.get('/institutions', {
+                Authorization: "Bearer " + token,
+                accept: "application/json",   
+            })
+
+            const result_institutions: InstitutionItem[] = await response_institutions.data;
+            setInstantutions(result_institutions);
+          
             setLoading(false);
             
         } catch (error) {
@@ -134,6 +146,7 @@ export const AddEditForm = () => {
     // HANDLE
     const handleSubmit = async (values: typeof initialValues, { setFieldError }: FormikHelpers<typeof initialValues>) => {
 
+        console.log('wre');
         const response = isEditMode
             ? await Api.put(`/courses`, values, {
                 Authorization: `Bearer ${token}`,
@@ -143,7 +156,8 @@ export const AddEditForm = () => {
                 Authorization: `Bearer ${token}`,
                 'Content-Type': 'application/json',
             });
-
+        console.error(response);
+        
         if (response.statusCode === 200) {
             navigate('/courses');
         } else {
@@ -159,9 +173,9 @@ export const AddEditForm = () => {
 
     return ( <div> <h1>{isEditMode ? 'Editar Curso' : 'Agregar curso'}</h1> 
         <Formik 
-          initialValues={initialValues}
-          validationSchema={validationSchema}
-          onSubmit={() => {handleSubmit }} 
+            initialValues={initialValues}
+            validationSchema={validationSchema}
+            onSubmit={handleSubmit} 
         >
           {({ isSubmitting }) => (
             <Form>
@@ -171,11 +185,11 @@ export const AddEditForm = () => {
                     <div className="-mx-4 flex flex-wrap">
                           <DefaultColumn>
                             <DefaultInput name='name' label='Nombre'/>
-                            <DefaultInput name='total_hours' label='Horas'/>
+                            <DefaultInput name='total_hours' type='number' label='Horas'/>
                           </DefaultColumn>
                           
                           <DefaultColumn>
-                            <DefaultInput  name='total_students' label='Nro de estudiantes'/>
+                            <DefaultInput  name='total_students' type='number' label='Nro de estudiantes'/>
                             <DefaultInput  name='educative_level' label='Nivel educativo'/>
                           </DefaultColumn>
     
@@ -184,6 +198,21 @@ export const AddEditForm = () => {
                             <DefaultInput type='date' name='start_date' label='Fecha de inicio'/>
                             <DefaultInput type='date' name='end_date' label='Fecha de fin'/>
                         </DefaultColumn>
+                    <DefaultColumn>
+                            <DefaultInput name='period' label='Periodo'/>
+                            <div>
+                                <label htmlFor="institution_id" className="mb-[10px] block text-base font-medium text-dark dark:text-white">Institucion</label>
+                                    <Field as="select" name="institution_id" className="w-full bg-transparent rounded-md border border-stroke dark:border-dark-3 py-[10px] px-5 text-dark-6 outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-gray-2 disabled:border-gray-2">
+                                        {institutions.map((item) => (
+                                            <option key={item.id} value={item.id}>
+                                                {item.name}
+                                            </option>
+                                        ))}
+                                    </Field>
+                                <ErrorMessage name="institution_id" component="div" className="text-red-500"  />
+                            </div>
+
+                    </DefaultColumn>
 
                         <DefaultColumn>
                             <div>
@@ -214,7 +243,7 @@ export const AddEditForm = () => {
                                                             (tag: string) => tag === item.id
                                                         )
                                                     }
-                                                    onChange={e => {
+                                                    onChange={(e : React.ChangeEvent<HTMLInputElement>) => {
                                                         if (e.target.checked) {
                                                             arrayHelpers.push(item.id);
                                                         } else {

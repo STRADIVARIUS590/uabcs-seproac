@@ -1,16 +1,10 @@
 import { useSelector } from "react-redux";
-import { Outlet, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { RootState } from "../store";
-// import { Navbar } from "../components/Layout/Navbar";
-import { AppLayout } from "../components/Layout/AppLayout";
 import { useEffect, useState } from "react";
 import { Api } from "../services/Api";
 import { MessageToast } from "../components/MessageToast";
 
-// interface WidgetItem {
-//     name: string;
-//     value: string;
-// }
 
 interface Data {
     publications: {
@@ -33,7 +27,7 @@ interface Data {
 
 const BaseDashBoard = () => {
 
-    const { token, user } = useSelector((state: RootState) => state.auth);
+    const { token } = useSelector((state: RootState) => state.auth);
     const navigate = useNavigate();
 
     // Redirect if not logged in

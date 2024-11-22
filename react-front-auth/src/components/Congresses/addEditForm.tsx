@@ -40,7 +40,8 @@ export const AddEditForm = () => {
     const { token, user } = useSelector((state: RootState) => state.auth);
     const { id } = useParams<{ id?: string }>();
     const navigate = useNavigate();
-    const user_permissions = user?.all_permissions || [];
+
+    const user_permissions: string[] = user?.all_permissions || [];
 
     useEffect(() => {
         if (!user || user_permissions.indexOf("congresses.edit") === -1) {
@@ -157,7 +158,7 @@ export const AddEditForm = () => {
                                             </option>
                                         ))}
                                     </Field>
-                                    <ErrorMessage name="user_id" component="div" style={{ color: 'red' }} />
+                                    <ErrorMessage name="user_id" component="div" className="text-red-500" />
                                 {/* </DefaultColumn> */}
 
                                 {/* <DefaultColumn> */}
@@ -176,7 +177,7 @@ export const AddEditForm = () => {
                                                                     (tag: string) => tag === item.id
                                                                 )
                                                             }
-                                                            onChange={e => {
+                                                            onChange={(e: React.ChangeEvent<HTMLInputElement>)=> {
                                                                 if (e.target.checked) {
                                                                     arrayHelpers.push(item.id);
                                                                 } else {

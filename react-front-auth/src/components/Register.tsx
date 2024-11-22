@@ -39,12 +39,12 @@ const Register = () => {
             if(response.type == 'auth/registerUser/fulfilled'){
                 navigate('/dashboard');
             }else{
+                const errors = response.payload as { [key: string]: string[] };
                 
-                // console.log(response.payload);
-                Object.entries(response.payload).forEach((key) => {
-                    setFieldError(key[0], key[1][0])
-                })
-                // setFieldError('email', 'El correo esta en uso');
+                Object.entries(errors).forEach(([field, messages]) => {
+                    setFieldError(field, messages[0]);
+                });    
+                
             }
         });
 

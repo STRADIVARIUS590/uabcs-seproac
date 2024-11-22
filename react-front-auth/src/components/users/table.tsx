@@ -3,7 +3,6 @@ import { RootState } from "../../store";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Api } from "../../services/Api";
-import { AppLayout } from "../Layout/AppLayout";
 import { MessageToast } from "../MessageToast";
 
 interface UserItem {
@@ -26,7 +25,7 @@ export const Users = () => {
 
         const navigate = useNavigate();
 
-        const user_permissions = user?.all_permissions || [];
+        const user_permissions: string[] = user?.all_permissions || [];
 
         useEffect(() => {
             if (!user || user_permissions.indexOf("users.get") === -1) {

@@ -122,9 +122,7 @@ const initialValues  = {
     name: user?.name ||  '' ,
     email: user?.email || '',
     password : user?.password || '',
-    id : user?.id ||  '0',
     role_id : user?.role_id,
-    // date_ingreso: user?.date_ingreso ? new Date(user?.date_ingreso).toISOString().split('T')[0] : "", 
     date_ingreso: user?.date_ingreso || '',
     birth_date: user?.birth_date || '',
     sex : user?.sex || '',
@@ -168,7 +166,8 @@ const initialValues  = {
       if(response.statusCode == 200){
         navigate('/users'); // Redirect after submission;
       }else{
-        Object.entries(response.data).forEach((key) => { })
+        Object.entries(response.data).forEach((key) => { console.log(key);
+         });
       }
     }
   };
@@ -215,7 +214,7 @@ const initialValues  = {
                             </option>
                           ))}
                         </Field>
-                        <ErrorMessage name="role_id" component="div" style={{ color: 'red' }} />
+                        <ErrorMessage name="role_id" component="div" className="text-red-500"/>
                       {/* </Default Column>   */}
 
                 </div>
@@ -237,7 +236,7 @@ const initialValues  = {
                                                         (tag: string) => tag === item.id
                                                     )
                                                 }
-                                                onChange={e => {
+                                                onChange={(e : React.ChangeEvent<HTMLInputElement>) => {
                                                     if (e.target.checked) {
                                                         arrayHelpers.push(item.id);
                                                     } else {

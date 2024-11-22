@@ -23,10 +23,11 @@ export const Congresses = () => {
 
     const navigate = useNavigate();
  
-    const user_permissions = user?.all_permissions || [];
+    const user_permissions: string[] = user?.all_permissions || [];
 
     useEffect(() => {
-        if (!user || user_permissions.indexOf("congresses.get") === -1) {
+
+        if (!user || user_permissions.indexOf( 'congresses.get' ) === -1) {
             navigate(-1);
         }
     }, [user, user_permissions, navigate]);

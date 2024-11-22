@@ -21,12 +21,12 @@ export const Publications = ( {publications} : Props) => {
 
     const [ data , setData] = useState(publications);
     
-    const user_permissions = user?.all_permissions || [];
+    const user_permissions: string[] = user?.all_permissions || [];
 
     
     const [error, setError] = useState<boolean>(false);
 
-    const [loading, setLoading ] = useState<boolean>(false);
+    // const [loading, setLoading ] = useState<boolean>(false);
 
      useEffect(() => {
         if (!user || user_permissions.indexOf("publications.get") === -1) {
@@ -40,6 +40,8 @@ export const Publications = ( {publications} : Props) => {
             setCanEdit(true)
         }
     }, [user, user_permissions, navigate]);
+
+    // setLoading(false);
 
     const deletePublication = async ( id: number | string) => {
            const response = Api.delete('/publications/' + id, {
@@ -57,10 +59,10 @@ export const Publications = ( {publications} : Props) => {
             }
     }
 
-    useEffect(() => {},  []);
+    // useEffect(() => {},  []);
 
     if(error){       return <MessageToast message='Ha ocurrido un error' type="error"/>}
-    if(loading){     return <MessageToast message='Cargando...' type="loading"/> }
+    // if(loading){     return <MessageToast message='Cargando...' type="loading"/> }
 
 
     return (<div className="relative overflow-x-auto shadow-md sm:rounded-lg">
@@ -95,8 +97,8 @@ export const Publications = ( {publications} : Props) => {
                     <td scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{item.publication_date}</td>
                     <td scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{item.period}</td>
                     <td scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                        <button className="hover:text-red-900" onClick={() => deletePublication(item.id)}>Eliminar </button>
-                        <button onClick={() => navigate('/publications/edit/' + item.id)}> Editar </button>
+                        <button disabled={!canDelete} className="hover:text-red-900" onClick={() => deletePublication(item.id)}>Eliminar </button>
+                        <button disabled={!canEdit} onClick={() => navigate('/publications/edit/' + item.id)}> Editar </button>
                     </td>
                     </tr>       
                 ))}

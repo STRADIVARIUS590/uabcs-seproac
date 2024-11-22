@@ -1,10 +1,9 @@
 import { useNavigate } from "react-router-dom";
 import { Api } from "../../services/Api";
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { MessageToast } from "../MessageToast";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store";
-import { boolean } from "yup";
 import { AddEdit } from "./addEdit";
 
 interface Props {
@@ -20,7 +19,7 @@ export const Tags = ({tags} : Props) => {
 
     const navigate = useNavigate();
 
-    const user_permissions = user?.all_permissions || [];
+    const user_permissions: string[] = user?.all_permissions || [];
 
     const [canDelete, setCanDelete ] = useState<boolean>(false);
    
@@ -43,7 +42,7 @@ export const Tags = ({tags} : Props) => {
 
    const [error, setError] = useState<boolean>(false);
 
-   const [loading, setLoading ] = useState<boolean>(false);
+   const [loading ] = useState<boolean>(false);
 
    const [showModal, setShowModal ] = useState<boolean>(false);
 

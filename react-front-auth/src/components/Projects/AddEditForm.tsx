@@ -49,7 +49,7 @@ export const AddEditForm = () => {
     
     const navigate = useNavigate();
     
-    const user_permissions = user?.all_permissions || [];
+    const user_permissions: string[] = user?.all_permissions || [];
 
     const [tags, setTags] = useState<TagItem[]>();
     useEffect(() => {
@@ -85,15 +85,20 @@ export const AddEditForm = () => {
             
         const result: UserItem[] = await response.data;
 
-          const response_tags = await Api.get('/tags', {
-                Authorization: "Bearer " + token,
-                accept: "application/json",
-            });
-            const result_tags: TagItem[] = await response_tags.data;
-            setTags(result_tags);
+        const response_tags = await Api.get('/tags', {
+            Authorization: "Bearer " + token,
+            accept: "application/json",
+        });
+        
+        const result_tags: TagItem[] = await response_tags.data;
+        
+        setTags(result_tags);
+        
         setUsers(result);
 
         setLoading(false);
+
+        setError(false);
     };
 
     useEffect(() => {
@@ -187,10 +192,11 @@ export const AddEditForm = () => {
                             </option>
                           ))}
                         </Field>
-                        <ErrorMessage name="user_id" component="div" style={{ color: 'red' }} />
+                        
+                        <ErrorMessage name="user_id" component="div" className="text-red-500" />
                         </DefaultColumn>
                          <DefaultColumn>    
-                            <DefaultInput name="type" label="Tipo"/>    
+                            <DefaultInput type="number" name="type" label="Tipo"/>    
                         </DefaultColumn>
                         <DefaultColumn>
                             <DefaultInput name="period" label="Periodo"/>    
@@ -202,7 +208,7 @@ export const AddEditForm = () => {
                             name="tags"
                             render={arrayHelpers => (
                                 <div>
-                                    {tags.map((item, index) => (
+                                    {tags?.map((item, index) => (
                                         <div key={index}>
                                             <label>
                                                 <Field
@@ -214,7 +220,7 @@ export const AddEditForm = () => {
                                                             (tag: string) => tag === item.id
                                                         )
                                                     }
-                                                    onChange={e => {
+                                                    onChange={(e : React.ChangeEvent<HTMLInputElement>) => {
                                                         if (e.target.checked) {
                                                             arrayHelpers.push(item.id);
                                                         } else {
