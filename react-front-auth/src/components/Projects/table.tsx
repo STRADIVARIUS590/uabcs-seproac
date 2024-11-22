@@ -4,7 +4,11 @@ import { RootState } from "../../store";
 import { useNavigate } from "react-router-dom";
 import { Api } from "../../services/Api";
 import { MessageToast } from "../MessageToast";
-interface ProjectItem {
+interface Props {
+    projects : ProjectItem[]
+}
+
+export interface ProjectItem {
     id: string | number;
     name: string | undefined;
     description: string | undefined;
@@ -19,7 +23,7 @@ interface ProjectItem {
         name: string | undefined
     }
 }
-export const Projects = () => {
+export const Projects = ({ projects } : Props ) => {
     
     const  { token, user } = useSelector((state: RootState ) => state.auth);
 
@@ -34,30 +38,9 @@ export const Projects = () => {
         }
     }, [user, user_permissions, navigate]);
 
-    const [data, setData] = useState<ProjectItem[]>([]);
+    const [data, setData] = useState<ProjectItem[]>(projects);
 
-    const [loading, setLoading] = useState<boolean>(true);    
-
-    const [error, setError] = useState<boolean>();
-
-    const fetchData = async () => {
-        
-        const response =  await Api.get('/projects?include=user', {
-            Authorization: 'Bearer '+ token ,
-            accept: 'application/json'    
-        })
-
-        const result: ProjectItem[] = await response.data
-
-        if(response.statusCode === 200) {
-            setError(false);
-            setData(result)
-            setLoading(false);
-        }else{
-            setError(true);
-            navigate(-1)
-        }
-    }
+    const [error, setError] = useState<boolean>(false)
 
       const deleteProject = async ( id: number | string) => {
         const response = Api.delete('/projects/' + id, {
@@ -72,13 +55,11 @@ export const Projects = () => {
         }else {
             setError(true)
         }
-        fetchData();
     }
 
-    useEffect(() => { fetchData(); }, [])
+    // useEffect(() => { }, [])
     
-    if(error){       return <MessageToast message='Ha ocurrido un error' type="error"/>}
-    if(loading){     return <MessageToast message='Cargando...' type="loading"/> }
+    if(error){  return <MessageToast message='Ha ocurrido un error' type="error"/>}
 
     return <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
             <h1>Proyectos </h1>

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import BaseDashBoard from "../../Layout/BaseDashboard";
 import { AcademicGradesTab } from "../AcademicGrades/AcademicGradesTab";
 import { PublicationsTab } from "../Publications/PublicationsTab";
+import { ProjectsTab } from "../Projects/ProjectsTab";
 
 // Tab Component
 const Tab = () => {
@@ -53,7 +54,19 @@ const Tab = () => {
                     }`}
                   >
                     Produccion Academica
-                  </a> 
+                  </a>
+
+                    {/* Our Team Tab */}
+                  <a
+                    onClick={() => handleTabOpen("user-projects")}
+                    className={`cursor-pointer rounded-b-[20px] hover:ring-4 ring-2 pt-10 pb-4 mx-1 font-medium md:text-base lg:px-6 text-black ${  
+                      open === "user-projects"
+                        ? " bg-[#180c5c] text-white"
+                        : " hover:bg-[#180c5c] hover:text-white"
+                    }`}
+                  >
+                    Proyectos de Investigacion
+                  </a>  
                   
                   {/* Company Details Tab */}
                   {/* <a
@@ -127,11 +140,15 @@ const Tab = () => {
                   tabCategory="academic-production"
                   open={open}
                 />
-                <TabContent
-                  details="Lorem ipsum dolor sit amet, consectetur adipisicing elit. Officia nisi, doloribus nulla cumque molestias corporis eaque harum vero! Quas sit odit optio debitis nulla quisquam, dolorum quaerat animi iusto quod."
-                  tabCategory="company"
+
+                 <TabContent
+                  children={<ProjectsTab/>}
+                  // details="Lorem ipsum dolor sit amet, consectetur adipisicing elit. Officia nisi, doloribus nulla cumque molestias corporis eaque harum vero! Quas sit odit optio debitis nulla quisquam, dolorum quaerat animi iusto quod.
+                  // Lorem ipsum dolor, sit amet consectetur adipisicing elit. Suscipit mollitia nam eligendi reprehenderit reiciendis saepe laboriosam maiores voluptas. Quo, culpa amet fugiat ipsam sed quod hic, veritatis ducimus recusandae repellat quasi eaque, suscipit praesentium totam?"
+                  tabCategory="user-projects"
                   open={open}
                 />
+                
               </div>
             </div>
           </div>
