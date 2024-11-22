@@ -1,7 +1,7 @@
 import { useSelector } from "react-redux";
 import { RootState } from "../../store";
 import { useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Api } from "../../services/Api";
 import { MessageToast } from "../MessageToast";
 interface Props { 
@@ -29,8 +29,8 @@ export interface CourseItem {
 }
 export const Courses = ({courses} : Props) => {
 
-    const  { token, user } = useSelector((state: RootState ) => state.auth);
-
+    const  { token } = useSelector((state: RootState ) => state.auth);
+  
     const navigate = useNavigate();
  
     // const user_permissions: string[] = user?.all_permissions || [];

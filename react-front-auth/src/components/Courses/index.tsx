@@ -5,7 +5,6 @@ import { RootState } from "../../store";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { Api } from "../../services/Api";
-import { ProjectItem } from "../Projects/table";
 import { MessageToast } from "../MessageToast";
 
 export const CoursesIndex = () => {
