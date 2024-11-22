@@ -17,10 +17,10 @@ class CongressFactory extends Factory
     public function definition(): array
     {
         return [
-            'title_trabajo' => 'Estudio sobre '. fake()->randomElement(['el inpacto', 'la importancia', ' el rendimiento']) .' de '. fake()->randomElement(['Las universidades', 'La Tecnologia', 'Las clases virtuales']). ' _ '.uniqid(),
-            'event_name' => 'Congreso sobre '. fake()->randomElement(['Bioquimica en las plantas', 'La trucha dorada', 'Narices']),
+            'title_trabajo' => 'Estudio sobre '. fake()->randomElement(['el impacto', 'la importancia', 'el rendimiento']) .' de '. fake()->randomElement(['Las universidades', 'La Tecnologia', 'Las clases virtuales']). ' _ '.uniqid(),
+            'event_name' => 'Congreso sobre '. fake()->randomElement(['', 'Bioquimica en las plantas', 'Desarrollo organizacional', 'Sistemas concurrentes']),
             'date' => fake()->date(),
-            'colaborators' => mt_rand(2, 4),
+            'colaborators' => fake()->name().', '.fake()->name(),
         ];
     }
 }

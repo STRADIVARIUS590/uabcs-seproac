@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Publication;
+use App\Models\Tag;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -18,7 +19,7 @@ class PublicationSeeder extends Seeder
 
         foreach(User::all() as $user)
         {
-            Publication::create([
+            $p = Publication::create([
                 'user_id' => $user->id,
                 'title' => 'PUBLICATION '.uniqid(),
                 'type' => fake()->randomElement(['A', 'B', 'C', 'D', 'E', 'F']),
@@ -29,6 +30,9 @@ class PublicationSeeder extends Seeder
                 'publication_date' => fake()->dateTimeInInterval(),
                 'period' => 'Period'
             ]);
+            
+            $p->tags()->attach(Tag::inRandomOrder()->take(2)->pluck('id'));
+                        
         }
     }
 }

@@ -185,7 +185,7 @@ const initialValues  = {
     >
       {({ isSubmitting }) => (
         <Form>
-          <input type="hidden"  name='id'/>
+          <input type="hidden" name='id'/>
             <section className="py-12 dark:bg-dark">
               <div className="container">
                 <div className="-mx-4 flex flex-wrap">

@@ -137,18 +137,19 @@ const BaseDashBoard = () => {
                     </div>
                 ))}
           </div> 
-{           /* publications widget */}
+
+        { /* publications widget */}
           <div style={widgetCardStyle}>
             <div style={widgetTitleStyle}>Publicaciones</div>
-            <div style={widgetValueStyle}>{data?.publications?.count ?? 0}
-                 {data?.publications?.tags.map((item) => (
+            <div style={widgetValueStyle}>{data?.publications.count ?? 0}</div>
+             {data?.publications?.tags.map((item) => (
                     <div key={item.id}>
                         <p>{item.name}</p>
                         <p>{item.publications_count ?? 0}</p> 
                     </div>
                 ))}
-            </div>
-          </div>
+          </div> 
+
           
         </div>
  

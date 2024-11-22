@@ -46,7 +46,7 @@ export const CoursesIndex = () => {
         }
     }
 
-    useEffect(() => {fetchData()})
+    useEffect(() => {fetchData()}, [])
 
     return (  <AppLayout>
         {

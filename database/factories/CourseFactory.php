@@ -18,7 +18,7 @@ class CourseFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => fake()->randomElement(['MAtematicas Discretas', 'Calculo Integral', 'Redes 2', 'Redes 1', 'Base de datos ']) . '' . random_int(1,6) . ' Semestre ' . fake()->randomElement(['IDS', 'ITC', 'LATI']),
+            'name' => fake()->randomElement(['Matematicas Discretas', 'Calculo Integral', 'Redes 2', 'Redes 1', 'Base de datos ']) . '' . random_int(1,6) . ' Semestre ' . fake()->randomElement(['IDS', 'ITC', 'LATI']),
             'total_hours' => mt_rand(50, 100),
             'total_students' => mt_rand(10, 30),
             'educative_level' => fake()->randomElement(['Licenciatura', 'Doctorado', 'Maestria']),
