@@ -44,14 +44,9 @@ export const Courses = () => {
 
     const [error, setError] = useState<boolean>();
 
-    const [url, SetUrl] = useState<string>('/courses?include=user,institution');
-    
-    const [filters, setFilters] = useState({
-        user_id : '1'
-    });
     const fetchData = async () => {
         
-        const response =  await Api.get(url, {
+        const response =  await Api.get('/courses?include=user,institution', {
             Authorization: 'Bearer ' + token,
             accept: 'application/json'    
         })
@@ -85,18 +80,13 @@ export const Courses = () => {
         fetchData();
     }
 
-    useEffect(() => { fetchData(); }, [url])
+    useEffect(() => { fetchData(); }, [])
 
     if(error){       return <MessageToast message='Ha ocurrido un error' type="error"/>}
     if(loading){     return <MessageToast message='Cargando...' type="loading"/> }
 
     return <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
 
-            <input type="text" value={filters.user_id
-            } onChange={function(e){
-                setFilters({user_id: e.target.value})
-                SetUrl(url + '&filter[user_id]=' + e.target.value)
-            }}/>
         <h1>Cursos</h1>
        <table className="w-full text-sm text-left rtl:text-right font-small text-gray-900 dark:text-gray-400">
             <thead>
