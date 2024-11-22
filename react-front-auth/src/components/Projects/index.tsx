@@ -6,8 +6,11 @@ import { useEffect, useState } from "react";
 import { Api } from "../../services/Api";
 import { RootState } from "../../store";
 import { MessageToast } from "../MessageToast";
+import { Context } from "../scripts/Context";
 
 export const ProjectsIndex = () => {
+
+    // const ProjectIndexCntext = createContext({});
 
     const  { token, user } = useSelector((state: RootState ) => state.auth);
 
@@ -56,8 +59,13 @@ export const ProjectsIndex = () => {
             loading && <MessageToast message='Cargando...' type="loading"/> 
         }
         {
-            // <div>{JSON.stringify(data)}</div>
-            !error && !loading && data && <Projects projects={data}/> 
+        !error && !loading && data && 
+
+            <div>
+                <Context> 
+                    <Projects projects={data}/>
+                </Context> 
+            </div>
         }
         </AppLayout>
 }

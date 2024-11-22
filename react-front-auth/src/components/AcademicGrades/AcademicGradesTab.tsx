@@ -59,7 +59,7 @@ export const AcademicGradesTab = () => {
             loading && <MessageToast message='Cargando...' type="loading"/> 
         }
         {
-            data &&  <AcademicGrades academic_grades={data}/>
+            !error && !loading && data &&  <AcademicGrades academic_grades={data}/>
         }  
     </>
 }

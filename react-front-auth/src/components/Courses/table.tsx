@@ -4,7 +4,10 @@ import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { Api } from "../../services/Api";
 import { MessageToast } from "../MessageToast";
-interface CourseItem {
+interface Props { 
+    courses : CourseItem[]
+}
+export interface CourseItem {
     id: string;
     user_id: string;
     institution_id: string | undefined | null; 
@@ -24,44 +27,27 @@ interface CourseItem {
         name: string,
     }
 }
-export const Courses = () => {
+export const Courses = ({courses} : Props) => {
 
     const  { token, user } = useSelector((state: RootState ) => state.auth);
 
     const navigate = useNavigate();
  
-    const user_permissions: string[] = user?.all_permissions || [];
+    // const user_permissions: string[] = user?.all_permissions || [];
 
-    useEffect(() => {
-        if (!user || user_permissions.indexOf("courses.get") === -1) {
-            navigate(-1);
-        }
-    }, [user, user_permissions, navigate]);
+    // useEffect(() => {
+    //     if (!user || user_permissions.indexOf("courses.get") === -1) {
+    //         navigate(-1);
+    //     }
+    // }, [user, user_permissions, navigate]);
 
-    const [data, setData] = useState<CourseItem[]>([]);
+    const [data, setData] = useState<CourseItem[]>(courses);
 
-    const [loading, setLoading] = useState<boolean>(true);    
+    // const [loading, setLoading] = useState<boolean>(true);    
 
-    const [error, setError] = useState<boolean>();
+    const [error, setError] = useState<boolean>(false);
 
-    const fetchData = async () => {
-        
-        const response =  await Api.get('/courses?include=user,institution', {
-            Authorization: 'Bearer ' + token,
-            accept: 'application/json'    
-        })
-
-        const result: CourseItem[] = await response.data
-
-        if(response.statusCode === 200) {
-            setError(false);
-            setData(result)
-            setLoading(false);
-        }else{
-            setError(true);
-            navigate(-1)
-        }
-    }
+   
 
 
       const deleteCourse = async ( id: number | string) => {
@@ -73,17 +59,20 @@ export const Courses = () => {
         const result = await response;
 
         if(result.statusCode == 200) {
+            const updatedTags = data.filter(tag => tag.id !== id); // Create a new array without the deleted tag
+            setData(updatedTags); // Update state to trigger re-render
+
             setError(false);
         }else {
             setError(true)
         }
-        fetchData();
+        // fetchData();
     }
 
-    useEffect(() => { fetchData(); }, [])
+    // useEffect(() => { fetchData(); }, [])
 
     if(error){       return <MessageToast message='Ha ocurrido un error' type="error"/>}
-    if(loading){     return <MessageToast message='Cargando...' type="loading"/> }
+    // if(loading){     return <MessageToast message='Cargando...' type="loading"/> }
 
     return <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
 

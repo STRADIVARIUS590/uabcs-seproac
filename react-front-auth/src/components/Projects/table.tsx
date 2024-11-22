@@ -1,9 +1,10 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store";
 import { useNavigate } from "react-router-dom";
 import { Api } from "../../services/Api";
 import { MessageToast } from "../MessageToast";
+// import { AppContext, Context } from "../scripts/Context";
 interface Props {
     projects : ProjectItem[]
 }
@@ -51,6 +52,9 @@ export const Projects = ({ projects } : Props ) => {
         const result = await response;
 
         if(result.statusCode == 200) {
+            const updatedTags = data.filter(tag => tag.id !== id); // Create a new array without the deleted tag
+            setData(updatedTags); // Update state to trigger re-render
+
             setError(false);
         }else {
             setError(true)

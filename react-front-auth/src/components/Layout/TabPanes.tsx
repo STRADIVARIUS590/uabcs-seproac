@@ -3,6 +3,7 @@ import BaseDashBoard from "../../Layout/BaseDashboard";
 import { AcademicGradesTab } from "../AcademicGrades/AcademicGradesTab";
 import { PublicationsTab } from "../Publications/PublicationsTab";
 import { ProjectsTab } from "../Projects/ProjectsTab";
+import { CoursesTab } from "../Courses/CoursesTab";
 
 // Tab Component
 const Tab = () => {
@@ -69,16 +70,16 @@ const Tab = () => {
                   </a>  
                   
                   {/* Company Details Tab */}
-                  {/* <a
-                    onClick={() => handleTabOpen("company")}
-                    className={`cursor-pointer rounded-md px-4 py-3 text-sm font-medium md:text-base lg:px-6 ${
-                      open === "company"
-                        ? "bg-primary text-white"
-                        : "text-body-color hover:bg-red-900 hover:text-white dark:text-dark-6 dark:hover:text-white"
+                  <a
+                    onClick={() => handleTabOpen("courses")}
+                    className={`cursor-pointer rounded-b-[20px] hover:ring-4 ring-2 pt-10 pb-4 mx-1 font-medium md:text-base lg:px-6 text-black ${  
+                      open === "academic-production"
+                        ? " bg-[#180c5c] text-white"
+                        : " hover:bg-[#180c5c] hover:text-white"
                     }`}
                   >
-                    Proyectos de Investigacion
-                  </a> */}
+                    Cursos Impartidos
+                  </a>
               
 
                   {/* Company Details Tab */}
@@ -146,6 +147,14 @@ const Tab = () => {
                   // details="Lorem ipsum dolor sit amet, consectetur adipisicing elit. Officia nisi, doloribus nulla cumque molestias corporis eaque harum vero! Quas sit odit optio debitis nulla quisquam, dolorum quaerat animi iusto quod.
                   // Lorem ipsum dolor, sit amet consectetur adipisicing elit. Suscipit mollitia nam eligendi reprehenderit reiciendis saepe laboriosam maiores voluptas. Quo, culpa amet fugiat ipsam sed quod hic, veritatis ducimus recusandae repellat quasi eaque, suscipit praesentium totam?"
                   tabCategory="user-projects"
+                  open={open}
+                />
+
+                 <TabContent
+                  children={<CoursesTab/>}
+                  // details="Lorem ipsum dolor sit amet, consectetur adipisicing elit. Officia nisi, doloribus nulla cumque molestias corporis eaque harum vero! Quas sit odit optio debitis nulla quisquam, dolorum quaerat animi iusto quod.
+                  // Lorem ipsum dolor, sit amet consectetur adipisicing elit. Suscipit mollitia nam eligendi reprehenderit reiciendis saepe laboriosam maiores voluptas. Quo, culpa amet fugiat ipsam sed quod hic, veritatis ducimus recusandae repellat quasi eaque, suscipit praesentium totam?"
+                  tabCategory="courses"
                   open={open}
                 />
                 

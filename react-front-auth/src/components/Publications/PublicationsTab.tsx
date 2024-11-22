@@ -43,7 +43,7 @@ export const PublicationsTab = () => {
             loading && <MessageToast message='Cargando...' type="loading"/> 
         }
         {
-            data &&  <Publications publications={data}/>
+            !error && !loading && data &&  <Publications publications={data}/>
         }  
     </>
 }
