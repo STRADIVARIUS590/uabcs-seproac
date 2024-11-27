@@ -20,7 +20,7 @@ class CongressFactory extends Factory
             'title_trabajo' => 'Estudio sobre '. fake()->randomElement(['el impacto', 'la importancia', 'el rendimiento']) .' de '. fake()->randomElement(['Las universidades', 'La Tecnologia', 'Las clases virtuales']). ' _ '.uniqid(),
             'event_name' => 'Congreso sobre '. fake()->randomElement(['', 'Bioquimica en las plantas', 'Desarrollo organizacional', 'Sistemas concurrentes']),
             'date' => fake()->date(),
-            'colaborators' => fake()->name().', '.fake()->name(),
+            'colaborators' => rand(10, 23),
         ];
     }
 }

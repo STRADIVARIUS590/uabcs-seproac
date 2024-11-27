@@ -73,7 +73,7 @@ const Tab = () => {
                   <a
                     onClick={() => handleTabOpen("courses")}
                     className={`cursor-pointer rounded-b-[20px] hover:ring-4 ring-2 pt-10 pb-4 mx-1 font-medium md:text-base lg:px-6 text-black ${  
-                      open === "academic-production"
+                      open === "courses"
                         ? " bg-[#180c5c] text-white"
                         : " hover:bg-[#180c5c] hover:text-white"
                     }`}
