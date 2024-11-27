@@ -2,7 +2,6 @@ import Customers from "../components/Customers";
 import Login from "../components/Login";
 import Register from "../components/Register";
 import { AddEditCongressPage } from "../components/Congresses/addEdit";
-import { AddEditUserPage } from "../components/Users/addEdit";
 import { AddEditProjectPage } from "../components/Projects/addEdit";
 import { AddEditPublicationPage } from "../components/Publications/addEdit";
 import { AddEditCoursesPage } from "../components/Courses/addEdit";
@@ -10,12 +9,13 @@ import { CongressIndex } from "../components/Congresses";
 import { CoursesIndex } from "../components/Courses";
 import { ProjectsIndex } from "../components/Projects";
 import { PulicationsIndex } from "../components/Publications";
-import { UsersIndex } from "../components/Users/Index";
 import { Dashboard } from "../Layout/Dashboard";
 import { TagsPage } from "../components/Tags";
 import { AcademicGradesPage } from "../components/AcademicGrades";
 import { AddEditAcademicGradesPage } from "../components/AcademicGrades/AddEditAcademicGrades";
 import { SettingsPage } from "../components/Settings/SettingsPage";
+import { AddEditUserPage } from "../components/users/addEdit";
+import { UsersIndex } from "../components/users/Index";
 // import { SettingsPage } from "../components/Settings";
 
 type TypeRoute = {
@@ -25,12 +25,12 @@ type TypeRoute = {
     children?: TypeRoute[],
     middleware?: string
 }
- const routes: TypeRoute[] = [
+const routes: TypeRoute[] = [
     {
         path: '/',
-         is_protected: true,
-         middleware: 'guest',
-         element: Login
+        is_protected: true,
+        middleware: 'guest',
+        element: Login
     },
     {
         path: '/login',
@@ -58,8 +58,8 @@ type TypeRoute = {
     },
     {
         is_protected: true,
-        middleware : 'auth',
-        path:'users',
+        middleware: 'auth',
+        path: 'users',
         element: UsersIndex
     },
     {
@@ -68,10 +68,10 @@ type TypeRoute = {
         path: 'users/edit/:id?',
         element: AddEditUserPage
     },
-    
+
     {
         is_protected: true,
-        path:'congresses',
+        path: 'congresses',
         middleware: 'auth',
         element: CongressIndex
     },
@@ -91,8 +91,8 @@ type TypeRoute = {
     {
         is_protected: true,
         middleware: 'auth',
-        path: 'projects/edit/:id?', 
-        element: AddEditProjectPage,     
+        path: 'projects/edit/:id?',
+        element: AddEditProjectPage,
     },
     {
         is_protected: true,
@@ -120,7 +120,7 @@ type TypeRoute = {
         element: AddEditCoursesPage
     },
     {
-        is_protected: true, 
+        is_protected: true,
         middleware: 'auth',
         path: '/tags',
         element: TagsPage

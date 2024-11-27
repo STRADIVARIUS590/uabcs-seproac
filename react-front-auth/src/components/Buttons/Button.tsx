@@ -1,11 +1,13 @@
 type Props = {
     value: string,
-    type?: "submit" | "button"
+    type?: "submit" | "button",
+    className?: string
 }
-const Button = ({value, type} : Props) => {
+const Button = ({ value, type, className }: Props) => {
     return (
         <button
             type={type ?? 'button'}
+            className={className}
         >
             {value}
         </button>
