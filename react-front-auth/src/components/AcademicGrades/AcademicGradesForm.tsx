@@ -141,9 +141,9 @@ export const AcademicGradesForm = () => {
     }
   };
 
-    if(error){  return <MessageToast message='Ha ocurrido un error' type="error"/>}
-    if(loading){  return <MessageToast message='Cargando...' type="loading"/>}
-    
+    if(error){       return<div className="mt-12"> <MessageToast message='Ha ocurrido un error' type="error"/></div>}
+    if(loading){     return <div className="mt-12"> <MessageToast message='Cargando...' type="loading"/></div>  }
+
     const isEditMode = !!id;
 
     const initialValues = {

@@ -168,9 +168,9 @@ export const AddEditForm = () => {
         }
     };
      // HTML
-    if (error) { return <MessageToast message='Ha ocurrido un error' type="error" /> }
-    if (loading) { return <MessageToast message='Cargando...' type="loading" /> }
-
+     if(error){       return<div className="mt-12"> <MessageToast message='Ha ocurrido un error' type="error"/></div>}
+     if(loading){     return <div className="mt-12"> <MessageToast message='Cargando...' type="loading"/></div>  }
+ 
     return ( <div> <h1>{isEditMode ? 'Editar Curso' : 'Agregar curso'}</h1> 
         <Formik 
             initialValues={initialValues}

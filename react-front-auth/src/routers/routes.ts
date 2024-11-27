@@ -14,8 +14,8 @@ import { TagsPage } from "../components/Tags";
 import { AcademicGradesPage } from "../components/AcademicGrades";
 import { AddEditAcademicGradesPage } from "../components/AcademicGrades/AddEditAcademicGrades";
 import { SettingsPage } from "../components/Settings/SettingsPage";
-import { AddEditUserPage } from "../components/users/addEdit";
-import { UsersIndex } from "../components/users/Index";
+import { AddEditUserPage } from "../components/Users/addEdit";
+import { UsersIndex } from "../components/Users/Index";
 // import { SettingsPage } from "../components/Settings";
 
 type TypeRoute = {

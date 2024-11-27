@@ -28,11 +28,11 @@ export const AcademicGrades = ({academic_grades} : Props) => {
 
     const { token } = useSelector((state: RootState) => state.auth);
 
-    const [error, setError ] = useState<boolean>(false);
+    const [ error, setError ] = useState<boolean>(false);
     
     const [ data, setData ] = useState(academic_grades);
   
-    const [loading ]= useState<boolean>(false);
+    // const [loading ]= useState<boolean>(false);
 
     const deleteAcademicGrade = async ( id : number | string ) => {
         // setLoading(true);
@@ -44,14 +44,14 @@ export const AcademicGrades = ({academic_grades} : Props) => {
         const result = await response;
 
           if(result.statusCode == 200) {
-                    setData((prevTags) => prevTags.filter((tag) => tag.id !== id));
+                setData((prevTags) => prevTags.filter((tag) => tag.id !== id));
             }else {
                 setError(true)
             }
         }
         // setLoading(false);
 
-    // if(true){ return <div className="mt-12">  <MessageToast message='Ha ocurrido un error' type="error"/> </div>}   
+    if(error){ return <div className="mt-12">  <MessageToast message='Ha ocurrido un error' type="error"/> </div>}   
     
     return (
         <div className="relative overflow-x-auto shadow-md sm:rounded-lg">

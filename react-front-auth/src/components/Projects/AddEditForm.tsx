@@ -60,7 +60,7 @@ export const AddEditForm = () => {
 
     // INITIALIZE
    
-    const [isLoading, setLoading] = useState<boolean>(true);
+    const [loading, setLoading] = useState<boolean>(true);
     
     const [error, setError] = useState<boolean>(false);
 
@@ -149,9 +149,9 @@ export const AddEditForm = () => {
         });
     }
     };
-
-    if(error){         return <MessageToast message='Ha ocurrido un error' type="error"/>}
-    if(isLoading){     return <MessageToast message='Cargando...' type="loading"/> }
+   
+    if(error){       return<div className="mt-12"> <MessageToast message='Ha ocurrido un error' type="error"/></div>}
+    if(loading){     return <div className="mt-12"> <MessageToast message='Cargando...' type="loading"/></div>  }
 
     return ( <div> 
         <h1>{isEditMode ? 'Editar Proyecto' : 'Agregar Proyecto'}</h1> 

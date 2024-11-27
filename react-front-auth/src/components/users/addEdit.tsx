@@ -1,5 +1,5 @@
 import { AppLayout } from '../Layout/AppLayout';
-import AddEditForm from './AddEditForm';
+import { AddEditForm } from './AddEditForm';
 
 export const AddEditUserPage = () => { 
   

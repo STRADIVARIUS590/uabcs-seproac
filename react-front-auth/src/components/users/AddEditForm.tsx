@@ -53,7 +53,7 @@ const validationSchema = Yup.object({
 
 });
 
-const AddEditForm = () => {
+export const AddEditForm = () => {
 
  const { id } = useParams<{ id?: string }>(); // Grab the id from the URL, optional
 
@@ -172,9 +172,8 @@ const initialValues  = {
     }
   };
   
-  if(error){       return <MessageToast message='Ha ocurrido un error' type="error"/>}
-  if(loading){     return <MessageToast message='Cargando...' type="loading"/> }
-
+  if(error){       return<div className="mt-12"> <MessageToast message='Ha ocurrido un error' type="error"/></div>}
+  if(loading){     return <div className="mt-12"> <MessageToast message='Cargando...' type="loading"/></div>  }
 
 
   return ( <div> <h1>{isEditMode ? 'Editar usuario' : 'Agregar usuario'}</h1> 
@@ -265,5 +264,3 @@ const initialValues  = {
       </div>
 );
 };
-
-export default AddEditForm;
