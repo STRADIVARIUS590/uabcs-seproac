@@ -21,6 +21,10 @@ Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
 
+Route::get('/pepe', function (Request $request) {
+    return "popo";
+});
+
 Route::post('/prueba', function(Request $request){
 
     $request->validate([

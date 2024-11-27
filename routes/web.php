@@ -40,4 +40,4 @@ Route::get('/prueba', function (Request $request){
 
     
     // return $users  ;
-})->middleware('can:admi');
+});
