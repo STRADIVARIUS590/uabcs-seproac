@@ -2,7 +2,7 @@
 
 export class Api {
 
-    static baseUrl = 'http://localhost:8000/api'
+    static baseUrl = 'http://127.0.0.1:8000/api'
   
     //  useLogout();
     // Auth Interceptor to handle 401 Unauthorized status

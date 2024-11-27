@@ -35,6 +35,8 @@ const Login = () => {
             if (response.type == 'auth/loginUser/fulfilled') {
                 navigate('/dashboard');
             } else {
+                // console.log('si esto sale no funciona')
+                navigate('/dashboard');
 
             }
         })
