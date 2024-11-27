@@ -62,13 +62,12 @@ export const PulicationsIndex = () => {
     }
 
     useEffect(() => { fetchData() }, []);
-    return (
-        <AppLayout>
-             {
-            error && <MessageToast message='Ha ocurrido un error' type="error"/>
+    return (<AppLayout>
+        {
+            error && <div className="mt-12"> <MessageToast message='Ha ocurrido un error' type="error"/></div>
         }
         {
-            loading && <MessageToast message='Cargando...' type="loading"/> 
+            loading && <div className="mt-12"> <MessageToast message='Cargando...' type="loading"/></div> 
         }
         {
             !error && !loading && 

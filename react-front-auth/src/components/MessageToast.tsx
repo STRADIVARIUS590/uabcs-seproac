@@ -42,10 +42,8 @@ export const MessageToast = ({ message, type }: Props) => {
     );
   } else if (type === "loading") {
     return (
-
       <div
-      
-      className="flex items-center p-4 mb-4  mt-4 text-sm text-blue-800 border border-blue-300 rounded-lg bg-blue-50 dark:bg-gray-800 dark:text-blue-400 dark:border-blue-800"
+      className="flex items-center p-4 mb-4 mt-4 text-sm text-blue-800 rounded-lg bg-blue-50 dark:bg-gray-800 dark:text-red-400"
         role="alert"
       >
     

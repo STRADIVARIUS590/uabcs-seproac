@@ -1,20 +1,8 @@
-// import { useLogout } from "../components/scripts/Logout"
 
+// import { useLogout } from "../components/scripts/Logout"
 export class Api {
 
-    static baseUrl = 'http://127.0.0.1:8000/api'
-  
-    //  useLogout();
-    // Auth Interceptor to handle 401 Unauthorized status
-    
-//   static authInterceptor(response: { statusCode: number }) {
-//     if (response.statusCode === 401) {
-//         alert ('wer');
-//         useLogout();
-//         // Handle token expiration by logging the user out
-    
-//     }
-// }
+    static baseUrl  = import.meta.env.VITE_API_URL
 
     static async post(url: string, data: any, headers: {}): Promise<any> {
     

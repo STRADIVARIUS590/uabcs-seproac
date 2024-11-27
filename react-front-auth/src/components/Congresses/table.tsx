@@ -78,8 +78,8 @@ export const Congresses = () => {
     
     useEffect(() => { fetchData(); }, [])
     
-    if(error){       return <MessageToast message='Ha ocurrido un error' type="error"/>}
-    if(loading){     return <MessageToast message='Cargando...' type="loading"/> }
+    if(error){   return  <div className="mt-12"> <MessageToast message='Ha ocurrido un error' type="error"/></div>}
+    if(loading){ return <div className="mt-12"> <MessageToast message='Cargando...' type="loading"/></div>}
 
     return <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
 

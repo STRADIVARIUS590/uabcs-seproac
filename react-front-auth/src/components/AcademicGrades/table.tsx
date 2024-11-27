@@ -51,10 +51,8 @@ export const AcademicGrades = ({academic_grades} : Props) => {
         }
         // setLoading(false);
 
-    if(error){  return <MessageToast message='Ha ocurrido un error' type="error"/>}
-    if(loading){  return <MessageToast message='Cargando...' type="info"/>}
+    // if(true){ return <div className="mt-12">  <MessageToast message='Ha ocurrido un error' type="error"/> </div>}   
     
-
     return (
         <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
 

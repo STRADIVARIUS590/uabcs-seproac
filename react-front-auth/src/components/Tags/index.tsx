@@ -58,10 +58,10 @@ export const TagsPage = () => {
 
     return <AppLayout>
         {
-            error && <MessageToast message='Ha ocurrido un error' type="error"/>
+            error && <div className="mt-12"> <MessageToast message='Ha ocurrido un error' type="error"/></div>
         }
         {
-            loading && <MessageToast message='Cargando...' type="loading"/> 
+            loading && <div className="mt-12"> <MessageToast message='Cargando...' type="loading"/></div> 
         }
         {
             !error && !loading && 
