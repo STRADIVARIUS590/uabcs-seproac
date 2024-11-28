@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { Api } from "../../services/Api";
 import { MessageToast } from "../MessageToast";
 import { PublicationItem } from ".";
+import Button from "../Buttons/Button";
 
 interface Props {
     publications : PublicationItem[]
@@ -39,7 +40,7 @@ export const Publications = ( {publications} : Props) => {
         if(user && user_permissions.indexOf("publications.edit") > -1) {
             setCanEdit(true)
         }
-    }, [user, user_permissions, navigate]);
+    }, [user, user_permissions, navigate, data]);
 
     // setLoading(false);
 
@@ -97,8 +98,22 @@ export const Publications = ( {publications} : Props) => {
                     <td scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{item.publication_date}</td>
                     <td scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{item.period}</td>
                     <td scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                        <button disabled={!canDelete} className="hover:text-red-900" onClick={() => deletePublication(item.id)}>Eliminar </button>
-                        <button disabled={!canEdit} onClick={() => navigate('/publications/edit/' + item.id)}> Editar </button>
+                        {/* <button disabled={!canDelete} className="hover:text-red-900" onClick={() => deletePublication(item.id)}>Eliminar </button> */}
+                        {/* <button disabled={!canEdit} onClick={() => navigate('/publications/edit/' + item.id)}> Editar </button> */}
+                   
+                     <Button
+                            value={"Eliminar"}
+                            onClick={() => deletePublication(item.id)}
+                            className={!canDelete && user?.id != item.user_id ? 'hidden' : "text-white bg-red-700 hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"}
+                            disabled={!canDelete && user?.id != item.user_id }
+                    />
+                    <Button
+                            value={"Editar"}
+                            onClick={() => navigate('/publications/edit/' + item.id)}
+                            className={!canEdit && user?.id != item.user_id ? 'hidden' : 'text-white bg-purple-700 hover:bg-purple-800 focus:outline-none focus:ring-4 focus:ring-purple-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900"' }
+                            disabled={!canDelete && user?.id != item.user_id }
+                    />
+                   
                     </td>
                     </tr>       
                 ))}
