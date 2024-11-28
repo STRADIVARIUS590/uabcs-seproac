@@ -185,79 +185,143 @@ const initialValues  = {
       {({ isSubmitting }) => (
         <Form>
           <input type="hidden" name='id'/>
-            <section className="py-12 dark:bg-dark">
-              <div className="container">
-                <div className="-mx-4 flex flex-wrap">
-                      <DefaultColumn>
-                        <DefaultInput name='name' label='Nombre'/>
-                        <EmailInput name='email' label='Correo Electronico' placeholder='test@uabcs.mx'/>
-                      </DefaultColumn>
-                      
-                      <DefaultColumn>
-                        <DefaultInput type='date' name='date_ingreso' label='Fecha de ingreso'/>
-                        <DefaultInput type='date' name='birth_date' label='Fecha de nacimiento'/>
-                      </DefaultColumn>
+          <section className="py-12 bg-gray-50 dark:bg-dark">
+            <div className="container mx-auto max-w-4xl p-6 bg-white dark:bg-gray-900 rounded-lg shadow-md">
+              <h2 className="text-2xl font-semibold text-center text-gray-700 dark:text-white mb-6">Formulario</h2>
+              <div className="flex flex-wrap -mx-4">
+                {/* Columna 1 */}
+                <div className="w-full md:w-1/2 px-4 mb-6">
+                  <DefaultInput
+                    name="name"
+                    label="Nombre"
+                    className="mb-4"
+                    inputClass="w-full bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-md shadow-sm focus:ring-2 focus:ring-primary focus:border-primary"
+                  />
+                  <EmailInput
+                    name="email"
+                    label="Correo Electrónico"
+                    placeholder="test@uabcs.mx"
+                    className="mb-4"
+                    inputClass="w-full bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-md shadow-sm focus:ring-2 focus:ring-primary focus:border-primary"
+                  />
+                </div>
 
+                {/* Columna 2 */}
+                <div className="w-full md:w-1/2 px-4 mb-6">
+                  <DefaultInput
+                    type="date"
+                    name="date_ingreso"
+                    label="Fecha de ingreso"
+                    className="mb-4"
+                    inputClass="w-full bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-md shadow-sm focus:ring-2 focus:ring-primary focus:border-primary"
+                  />
+                  <DefaultInput
+                    type="date"
+                    name="birth_date"
+                    label="Fecha de nacimiento"
+                    className="mb-4"
+                    inputClass="w-full bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-md shadow-sm focus:ring-2 focus:ring-primary focus:border-primary"
+                  />
+                </div>
 
-                      <DefaultColumn>
-                        <DefaultInput type='password' name='password' label='Contraseña'/>
-                        <DefaultInput type='password' name='password_confirmation' label='Conforma tu contraseña'/>
-                      </DefaultColumn>
+                {/* Columna 3 */}
+                <div className="w-full md:w-1/2 px-4 mb-6">
+                  <DefaultInput
+                    type="password"
+                    name="password"
+                    label="Contraseña"
+                    className="mb-4"
+                    inputClass="w-full bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-md shadow-sm focus:ring-2 focus:ring-primary focus:border-primary"
+                  />
+                  <DefaultInput
+                    type="password"
+                    name="password_confirmation"
+                    label="Confirma tu contraseña"
+                    className="mb-4"
+                    inputClass="w-full bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-md shadow-sm focus:ring-2 focus:ring-primary focus:border-primary"
+                  />
+                </div>
 
-                      {/* <DefaultColumn> */}
-                        <label htmlFor="role_id" className='mb-[10px] block text-base font-medium text-dark dark:text-white'>Rol</label>
-                        <Field as="select" name="role_id" className="w-full bg-transparent rounded-md border border-stroke dark:border-dark-3 py-[10px] px-5 text-dark-6 outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-gray-2 disabled:border-gray-2">
-                          {roles.map((role) => (
-                            <option key={role.id} value={role.id}>
-                              {role.name}
-                            </option>
-                          ))}
-                        </Field>
-                        <ErrorMessage name="role_id" component="div" className="text-red-500"/>
-                      {/* </Default Column>   */}
+                {/* Selección de Rol */}
+                <div className="w-full px-4 mb-6">
+                  <label
+                    htmlFor="role_id"
+                    className="block text-sm font-medium text-gray-700 dark:text-white mb-2"
+                  >
+                    Rol
+                  </label>
+                  <Field
+                    as="select"
+                    name="role_id"
+                    className="w-full bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-md shadow-sm focus:ring-2 focus:ring-primary focus:border-primary"
+                  >
+                    {roles.map((role) => (
+                      <option key={role.id} value={role.id}>
+                        {role.name}
+                      </option>
+                    ))}
+                  </Field>
+                  <ErrorMessage
+                    name="role_id"
+                    component="div"
+                    className="text-red-500 text-sm mt-1"
+                  />
+                </div>
 
+                {/* Etiquetas */}
+                <div className="w-full px-4 mb-6">
+                  <h3 className="text-sm font-medium text-gray-700 dark:text-white mb-2">
+                    Etiquetas
+                  </h3>
+                  <FieldArray
+                    name="tags"
+                    render={(arrayHelpers) => (
+                      <div className="flex flex-wrap gap-4">
+                        {tags.map((item, index) => (
+                          <label key={index} className="flex items-center space-x-2">
+                            <Field
+                              type="checkbox"
+                              name="tags"
+                              value={item.id}
+                              className="w-4 h-4 text-primary border-gray-300 dark:border-gray-700 rounded focus:ring-2 focus:ring-primary"
+                              checked={arrayHelpers.form.values.tags.includes(item.id)}
+                              onChange={(e) => {
+                                if (e.target.checked) {
+                                  arrayHelpers.push(item.id);
+                                } else {
+                                  const idx = arrayHelpers.form.values.tags.indexOf(
+                                    item.id
+                                  );
+                                  if (idx !== -1) arrayHelpers.remove(idx);
+                                }
+                              }}
+                            />
+                            <span className="text-sm text-gray-700 dark:text-white">
+                              {item.name}
+                            </span>
+                          </label>
+                        ))}
+                      </div>
+                    )}
+                  />
                 </div>
               </div>
 
-               <FieldArray
-                        name="tags"
-                        render={arrayHelpers => (
-                            <div>
-                                {tags.map((item, index) => (
-                                    <div key={index}>
-                                        <label>
-                                            <Field
-                                                type="checkbox"
-                                                name="tags"
-                                                value={item.id}
-                                                checked={
-                                                    arrayHelpers.form.values.tags.some(
-                                                        (tag: string) => tag === item.id
-                                                    )
-                                                }
-                                                onChange={(e : React.ChangeEvent<HTMLInputElement>) => {
-                                                    if (e.target.checked) {
-                                                        arrayHelpers.push(item.id);
-                                                    } else {
-                                                        const idx = arrayHelpers.form.values.tags.indexOf(item.id);
-                                                        if (idx !== -1) arrayHelpers.remove(idx);
-                                                    }
-                                                }}
-                                            />
-                                            {item.name}
-                                        </label>
-                                    </div>
-                                ))}
-                            </div>
-                        )}
-                    />
-
-      </section>
-          <div>
+              <div className="mt-6 text-right">
+                <button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className="px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg shadow-lg hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-200">
+                  {isEditMode ? 'Editar' : 'Guardar'}
+                </button>
+              </div>
+            </div> 
+          </section>
+          {/* <div>
             <button type="submit" disabled={isSubmitting}>
               {isEditMode ? 'Editar' : 'Guardar '}
             </button>
-          </div>
+          </div> */}
         </Form>
       )}
     </Formik>
