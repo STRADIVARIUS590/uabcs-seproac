@@ -41,7 +41,7 @@ class UserSeeder extends Seeder
             'password' => bcrypt('1234567890'),
             'birth_date' => Carbon::parse('07-09-2003'),
             'date_ingreso' => Carbon::parse('28-11-1999'),
-            'role_id' => 3,
+            'role_id' => 2,
         ],
         ];
 

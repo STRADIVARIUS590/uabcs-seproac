@@ -2,31 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\UserRequest;
-use App\Models\AcademicGrade;
-use App\Models\Congress;
-use App\Models\Course;
-use App\Models\Project;
+use App\Models\File;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\Request;
-use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Http\Response as HttpResponse;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
-use Mockery\Matcher\HasKey;
 use Symfony\Component\HttpFoundation\Response;
-use App\Models\Group;
-use App\Models\Publication;
 use App\Models\Tag;
-use Illuminate\Cache\TagSet;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
-
-use function Laravel\Prompts\alert;
-use function Laravel\Prompts\error;
-
+use App\Services\FileService;
+use Illuminate\Support\Facades\Auth; 
 class UserController extends Controller
 {
     use ValidatesRequests;
@@ -54,9 +41,11 @@ class UserController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
-    { 
-   
-        error_log(json_encode($request->all()));
+    {
+        error_log(json_encode(['store', $request->all(), $request->files->count()]));
+        foreach($request->files as $name => $file) {
+             error_log(json_encode([$name, $file]));
+        }
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255', // The name field is required, must be a string, and a max length of 255
             'email' => 'required|string|email|max:255|unique:users,email', // Email is required, must be unique, and a valid email
@@ -106,8 +95,10 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {  
+        // error_log(json_encode(['update ', $request->all(), $request->file('files')]));
+
         $validator = Validator::make($request->all(), [
             'date_ingreso' => 'nullable|date',
             'birth_date' => 'nullable|date',
@@ -118,27 +109,22 @@ class UserController extends Controller
             'name' => 'required|string|max:255|unique:users,name,'.$request->id,
         ]);
 
-        if($validator->fails()) 
-        {     
-            return response()->json([
-            'data' => $validator->errors()
-        ], HttpResponse::HTTP_BAD_REQUEST);
-        
-        } 
+        if($validator->fails()) return response()->json(['data' => $validator->errors()], HttpResponse::HTTP_BAD_REQUEST);
         
         $user = User::findOrFail($request->id);
         
         $request['password'] = isset($request['password']) ? bcrypt($request['password']) : $user->password;
    
-        error_log(json_encode($request->tags));
-       if(isset($request->tags)){
+        if(isset($request->tags)){
             $user->tags()->sync($request->tags);
          }
 
         $user->update($request->all());
-
-        if($request->hasFile('avatar')) $user->addMedia($request->avatar)->toMediaCollection('avatar');
-
+ 
+        $request['fileable_type'] = User::class;
+        $request['fileable_id'] = $user->id;
+        (new class { use FileService;})->store_files($request);
+        
         return $this->jsonResponse('Registro actualizado correctamente', compact('user'), Response::HTTP_OK);
     }
 
