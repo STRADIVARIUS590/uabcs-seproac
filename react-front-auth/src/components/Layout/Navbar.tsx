@@ -1,5 +1,8 @@
 import { Link, useLocation } from "react-router-dom";
 import { useLogout } from "../scripts/Logout";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store";
+import { useEffect } from "react";
 
 // Inside your component or API handler
 
@@ -10,6 +13,10 @@ export const Navbar = () => {
 
   const logout = useLogout(); // Get the logout function from the hook
 
+  const { user } = useSelector((state : RootState) => state.auth);
+
+  const user_permissions: string[] = user?.all_permissions || [];
+ 
   return <div> <nav className="bg-[#180c5c]  fixed w-full z-20 top-0 start-0">
   <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
   <a href="https://flowbite.com/" className="flex items-center space-x-3 rtl:space-x-reverse">
@@ -38,58 +45,83 @@ export const Navbar = () => {
     </Link>
     </li>
     
-    <li>
-      <Link to="/users"
+
+    {user_permissions.indexOf("users.get") !== -1 && <li>
+      <Link to= "/users"
       className={`block py-2 text-gray-900  hover:ring-4 bg-[#180c5c] text-white rounded-[20px]
         ${location.pathname === '/users' ? 'text-blue-500' : ''}`}
     >
       Usuarios
-     {/* { location.pathname } */}
     </Link>
     </li>
-       
+    } 
+
+    { user_permissions.indexOf("congresses.get") !== 0  &&
     <li>
       <Link to="/congresses"
       className={`block py-2 text-gray-900  hover:ring-4 bg-[#180c5c] text-white rounded-[20px]
         ${location.pathname === '/congresses' ? 'text-blue-500' : ''}`}
-    >
-      Congresos 
-    </Link></li>
+        >
+          Congresos 
+    </Link>
+    </li>
+    }
+
+
+    { user_permissions.indexOf("publications.get") !== 0  &&
     <li>
       <Link to="/publications"
     className={`block py-2 text-gray-900  hover:ring-4 bg-[#180c5c] text-white rounded-[20px]
-        ${location.pathname === '/publications' ? 'text-blue-500' : ''}`}
-    >
+      ${location.pathname === '/publications' ? 'text-blue-500' : ''}`}
+      >
       Publicaciones
-    </Link></li>
-    <li>
+    </Link>
+    </li>
+    }
+
+    {  user_permissions.indexOf("courses.get") !== 0  &&
+      <li>
       <Link to="/courses"
      className={`block py-2 text-gray-900  hover:ring-4 bg-[#180c5c] text-white rounded-[20px]
-        ${location.pathname === '/courses' ? 'text-blue-500' : ''}`}
-    >
+      ${location.pathname === '/courses' ? 'text-blue-500' : ''}`}
+      >
       Cursos
-    </Link></li>
-    <li>
-      <Link to="/projects"
-    className={`block py-2 text-gray-900  hover:ring-4 bg-[#180c5c] text-white rounded-[20px]
+    </Link>
+    </li>
+    }
+
+    { user_permissions.indexOf("projects.get") !== 0  &&
+      <li>
+      <Link to="/projects" 
+      className={`block py-2 text-gray-900  hover:ring-4 bg-[#180c5c] text-white rounded-[20px]
         ${location.pathname === '/projects' ? 'text-blue-500' : ''}`}
-    >
-      Proyectos
-    </Link></li>
+        >
+        Proyectos
+      </Link>
+      </li>
+    }
+    
+    {user_permissions.indexOf("tags.get") !== 0  &&
+
       <li>
-      <Link to="/tags"
-  className={`block py-2 text-gray-900  hover:ring-4 bg-[#180c5c] text-white rounded-[20px]
+      <Link to="/tags" 
+      className={`block py-2 text-gray-900  hover:ring-4 bg-[#180c5c] text-white rounded-[20px]
         ${location.pathname === '/tags' ? 'text-blue-500' : ''}`}
-    >
+        >
       Categorias
-    </Link></li>
+    </Link>
+    </li>
+    }
+    { user_permissions.indexOf("academic-grades.get") !== 0  &&
       <li>
-      <Link to="/academic-grades"
-    className={`block py-2 text-gray-900  hover:ring-4 bg-[#180c5c] text-white rounded-[20px]
+      <Link to="/academic-grades" 
+      className={`block py-2 text-gray-900  hover:ring-4 bg-[#180c5c] text-white rounded-[20px]
         ${location.pathname === '/academic-grades' ? 'text-blue-500' : ''}`}
-    >
+        >
       Grados Academicos
-    </Link></li>
+    </Link>
+    </li>
+    }
     </ul>
   </div>
   </div>
