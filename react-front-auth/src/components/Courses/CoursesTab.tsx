@@ -19,7 +19,7 @@ export const CoursesTab = () => {
     const [loading, setLoading] = useState<boolean>(true);
 
     const fetchData = async () => {
-        const response = await Api.get('/courses?include=user&filter[user_id]='+ user?.id, {
+        const response = await Api.get('/courses?include=user,institutution&filter[user_id]='+ user?.id, {
             Authorization: 'Bearer ' + token,
             accept: 'application/json'
         })
