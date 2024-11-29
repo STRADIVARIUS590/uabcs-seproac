@@ -85,19 +85,20 @@ export const UsersTest = () => {
     useEffect(() => { fetchData(); }, [])
 
     const deleteUser = async (id: number | string) => {
-        const response = Api.delete('/users/' + id, {
-            Authorization: 'Bearer ' + token,
-            accept: 'application/json'
-        })
-
-        const result = await response;
-
-        if (result.statusCode == 200) {
-            setError(false);
-        } else {
-            setError(true)
-        }
-        fetchData();
+        return <h1>asdf</h1>;
+        // const response = Api.delete('/users/' + id, {
+        //     Authorization: 'Bearer ' + token,
+        //     accept: 'application/json'
+        // })
+        //
+        // const result = await response;
+        //
+        // if (result.statusCode == 200) {
+        //     setError(false);
+        // } else {
+        //     setError(true)
+        // }
+        // fetchData();
     }
 
     if (error) { return <div className="mt-12"> <MessageToast message='Ha ocurrido un error' type="error" /></div> }

@@ -31,11 +31,11 @@ export default function Table({ section, deleteFn, headsContent, rowsContents }:
                             </thead>
                             <tbody>
                                 {rowsContents.map((row, i) => (
-                                    <tr className={`border-vi-50 border-2 ${(i % 2 == 0) ? evenColor : oddColor}`}>
-                                        {Object.values(row).map((rowContent) => {
-                                            return <td className="whitespace-nowrap px-6 py-4 font-medium">{rowContent || "N/A"}</td>
+                                    <tr key={row.id} className={`border-vi-50 border-2 ${(i % 2 == 0) ? evenColor : oddColor}`}>
+                                        {Object.values(row).map((rowContent, k) => {
+                                            return <td key={(i + 1) * k} className="whitespace-nowrap px-6 py-4 font-medium">{rowContent || "N/A"}</td>
                                         })}
-                                        <td className="whitespace-nowrap px-6 py-4 font-medium space-x-2">
+                                        <td className="whitespace-nowrap px-6 py-4 font-medium space-x-2" >
                                             <Link to={`/${section}/edit/${row.id}`} className=" bg-vi-100  text-vi-500 px-4 py-1 rounded-md hover:bg-vi-400 hover:text-vi-50 active:bg-vi-400 active:text-vi-50" type="button">Editar</Link>
                                             <button onClick={() => deleteFn(row.id)} className="bg-red-100 hover:bg-red-400 active:bg-red-400  text-red-500 hover:text-vi-50 active:text-vi-50 px-4 py-1 rounded-md" type="button">Borrar</button>
                                         </td>

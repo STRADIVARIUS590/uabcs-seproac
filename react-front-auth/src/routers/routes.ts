@@ -15,8 +15,10 @@ import { TagsPage } from "../components/Tags";
 import { AcademicGradesPage } from "../components/AcademicGrades";
 import { AddEditAcademicGradesPage } from "../components/AcademicGrades/AddEditAcademicGrades";
 import { SettingsPage } from "../components/Settings/SettingsPage";
-import { AddEditUserPage } from "../components/Users/addEdit";
-import { UsersIndex } from "../components/Users/Index";
+import { AddEditUserPage } from "../components/users/addEdit";
+import { UsersIndex } from "../components/users/Index";
+import Test from "../components/Test";
+import { UsersTest } from "../components/users/tabletest";
 // import { SettingsPage } from "../components/Settings";
 
 type TypeRoute = {
@@ -27,6 +29,11 @@ type TypeRoute = {
     middleware?: string
 }
 const routes: TypeRoute[] = [
+    {
+        path: '/test',
+        is_protected: false,
+        element: UsersTest
+    },
     {
         path: '/',
         is_protected: true,
@@ -42,7 +49,7 @@ const routes: TypeRoute[] = [
     {
         path: '/reset-password',
         is_protected: true,
-        middleware: 'guest',  
+        middleware: 'guest',
         element: ResetPassword
     },
     {
