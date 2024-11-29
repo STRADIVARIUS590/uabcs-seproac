@@ -26,6 +26,6 @@ abstract class Controller
             'ip' => $ip ?? ''
         ]);
 
-        error_log(json_encode($l));
+        // error_log(json_encode($l));
     }
 }

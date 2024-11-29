@@ -46,7 +46,7 @@ export const Navbar = () => {
     </li>
     
 
-    {user_permissions.indexOf("users.get") !== -1 && <li>
+    {user_permissions.indexOf("users.get") > -1 && <li>
       <Link to= "/users"
       className={`block py-2 text-gray-900  hover:ring-4 bg-[#180c5c] text-white rounded-[20px]
         ${location.pathname === '/users' ? 'text-blue-500' : ''}`}
@@ -56,7 +56,7 @@ export const Navbar = () => {
     </li>
     } 
 
-    { user_permissions.indexOf("congresses.get") !== 0  &&
+    { user_permissions.indexOf("congresses.get") > -1  &&
     <li>
       <Link to="/congresses"
       className={`block py-2 text-gray-900  hover:ring-4 bg-[#180c5c] text-white rounded-[20px]
@@ -68,7 +68,7 @@ export const Navbar = () => {
     }
 
 
-    { user_permissions.indexOf("publications.get") !== 0  &&
+    { user_permissions.indexOf("publications.get") > -1  &&
     <li>
       <Link to="/publications"
     className={`block py-2 text-gray-900  hover:ring-4 bg-[#180c5c] text-white rounded-[20px]
@@ -79,7 +79,7 @@ export const Navbar = () => {
     </li>
     }
 
-    {  user_permissions.indexOf("courses.get") !== 0  &&
+    {  user_permissions.indexOf("courses.get") > -1  &&
       <li>
       <Link to="/courses"
      className={`block py-2 text-gray-900  hover:ring-4 bg-[#180c5c] text-white rounded-[20px]
@@ -90,7 +90,7 @@ export const Navbar = () => {
     </li>
     }
 
-    { user_permissions.indexOf("projects.get") !== 0  &&
+    { user_permissions.indexOf("projects.get") > -1  &&
       <li>
       <Link to="/projects" 
       className={`block py-2 text-gray-900  hover:ring-4 bg-[#180c5c] text-white rounded-[20px]
@@ -101,7 +101,7 @@ export const Navbar = () => {
       </li>
     }
     
-    {user_permissions.indexOf("tags.get") !== 0  &&
+    {user_permissions.indexOf("tags.get") > -1  &&
 
       <li>
       <Link to="/tags" 
@@ -112,7 +112,7 @@ export const Navbar = () => {
     </Link>
     </li>
     }
-    { user_permissions.indexOf("academic-grades.get") !== 0  &&
+    { user_permissions.indexOf("academic-grades.get") > -1  &&
       <li>
       <Link to="/academic-grades" 
       className={`block py-2 text-gray-900  hover:ring-4 bg-[#180c5c] text-white rounded-[20px]
