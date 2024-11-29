@@ -5,6 +5,7 @@ import { MessageToast } from "../MessageToast";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store";
 import { AddEdit } from "./addEdit";
+import Button from "../Buttons/Button";
 
 interface Props {
     tags : { id : string | number ; name : string, slug: string }[]
@@ -85,19 +86,27 @@ export const Tags = ({tags} : Props) => {
                         <th scope="col" className="px-6 py-3"> Acciones </th>
                     </tr>
                 </thead>
-
-                      <tbody>
-
+                
+                    <tbody>
                     {data.map((item) => (
                     <tr className="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700" key={item.id}>
-                        <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{item.id}</th>
-                        <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{item.name}</th>
-                        <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{item.slug}</th>
-                        <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                            <button disabled={!canDelete} onClick={() => deleteTag(item.id)}>Eliminar</button>
-                            <button disabled={!canEdit}  onClick={() => {setShowModal(true) ;setEditId(item.id)}} >Editar</button>
-
-                        </th>
+                        <td scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{item.id}</td>
+                        <td scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{item.name}</td>
+                        <td scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{item.slug}</td>
+                        <td scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                    <Button
+                            value={"Eliminar"}
+                            onClick={() => deleteTag(item.id)}
+                            className={!canDelete ? 'hidden' : "text-white bg-red-700 hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"}
+                            disabled={!canDelete}
+                        />
+                    <Button
+                            value={"Editar"}
+                            onClick={() => { setShowModal(true); setEditId(item.id)}}
+                            className={!canEdit ? 'hidden' : 'text-white bg-purple-700 hover:bg-purple-800 focus:outline-none focus:ring-4 focus:ring-purple-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900"' }
+                            disabled={!canDelete }
+                        />
+                        </td>
                     </tr>
                     ))} 
                 </tbody>

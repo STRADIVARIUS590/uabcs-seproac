@@ -4,6 +4,7 @@ import { RootState } from "../../store";
 import { useNavigate } from "react-router-dom";
 import { Api } from "../../services/Api";
 import { MessageToast } from "../MessageToast";
+import Button from "../Buttons/Button";
 // import { AppContext, Context } from "../scripts/Context";
 interface Props {
     projects : ProjectItem[]
@@ -32,15 +33,28 @@ export const Projects = ({ projects } : Props ) => {
   
     const user_permissions: string[] = user?.all_permissions || [];
 
+    const [canDelete, setCanDelete ] = useState<boolean>(false);
+   
+    const [canEdit, setCanEdit ] = useState<boolean>(false);
+   
+    const [data, setData] = useState<ProjectItem[]>(projects);
+
     useEffect(() => {
         
         if (!user || user_permissions.indexOf("projects.get") === -1) {
             navigate(-1);
         }
-    }, [user, user_permissions, navigate]);
 
-    const [data, setData] = useState<ProjectItem[]>(projects);
+           if(user && user_permissions.indexOf("projects.destroy") > -1) {
+            setCanDelete(true);
+        }
 
+        if(user && user_permissions.indexOf("projects.edit") > -1) {
+            setCanEdit(true)
+        }
+    }, [user, user_permissions, navigate, data]);
+
+     
     const [error, setError] = useState<boolean>(false)
 
       const deleteProject = async ( id: number | string) => {
@@ -61,7 +75,6 @@ export const Projects = ({ projects } : Props ) => {
         }
     }
 
-    // useEffect(() => { }, [])
     
     if(error){  return <MessageToast message='Ha ocurrido un error' type="error"/>}
 
@@ -97,8 +110,21 @@ export const Projects = ({ projects } : Props ) => {
                     <td scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{item.type}</td>
                     <td scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{item.period}</td>
                     <td scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                        <button onClick={() => deleteProject(item.id)}>Eliminar </button>
-                        <button onClick={() => navigate('/projects/edit/' + item.id)}> Editar </button>
+                        {/* <button onClick={() => deleteProject(item.id)}>Eliminar </button> */}
+                        {/* <button onClick={() => navigate('/projects/edit/' + item.id)}> Editar </button> */}
+                    <Button
+                            value={"Eliminar"}
+                            onClick={() => deleteProject(item.id)}
+                            className={!canDelete && user?.id != item.user_id ? 'hidden' : "text-white bg-red-700 hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"}
+                            disabled={!canDelete && user?.id != item.user_id }
+                    />
+                    <Button
+                            value={"Editar"}
+                            onClick={() => navigate('/projects/edit/' + item.id)}
+                            className={!canEdit && user?.id != item.user_id ? 'hidden' : 'text-white bg-purple-700 hover:bg-purple-800 focus:outline-none focus:ring-4 focus:ring-purple-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900"' }
+                            disabled={canDelete && user?.id != item.user_id }
+                        />
+                  
                     </td>
                     </tr>       
                 ))}

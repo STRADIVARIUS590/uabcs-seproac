@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { Api } from "../../services/Api";
 import { useNavigate } from "react-router-dom";
 import * as Yup from  'yup';
+import { MessageToast } from "../MessageToast";
 
 interface Props {
   show: boolean;
@@ -92,7 +93,7 @@ export const AddEdit = ({ show, id, onClose }: Props) => {
   }
 
   if (loading) {
-    // return <MessageToast message="Cargando..." type="info" />;
+    return;
   }
 
   return (
@@ -130,7 +131,7 @@ export const AddEdit = ({ show, id, onClose }: Props) => {
                           <button
                             className="text-white m-4 bg-blue-800 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center"
                             type="submit"
-                            onClick={() => {  }}
+                            onClick={() => { }}
                           >
                             Guardar
                           </button>

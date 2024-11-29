@@ -7,6 +7,7 @@ import { useAppDispatch } from "../store"
 import { loginUser } from "../store/authSlice"
 // import { useSelector } from "react-redux"
 import { useNavigate } from "react-router-dom"
+import { Link } from "react-router-dom";
 // import { useEffect } from "react"
 // import Swal from "sweetalert2"
 const Login = () => {
@@ -81,7 +82,10 @@ const Login = () => {
                                 value={values.password}
                                 onChange={handleChange}
                             />
-                            <a href="null" className="text-left text-xs opacity-85 hover:opacity-100">Olvidé mi contraseña</a>
+                            <Link to="/reset-password" className="text-left text-xs opacity-85 hover:opacity-100">
+                                ¿Olvidaste tu contraseña? Ni modo.
+                            </Link>
+
                             <Button value="Entrar" type="submit" className="rounded-full bg-vi-50 text-vi-900 font-bold py-2 px-4 hover:bg-vi-100 hover:text-vi-800 w-full md:w-1/2 mx-auto" />
 
                         </form>

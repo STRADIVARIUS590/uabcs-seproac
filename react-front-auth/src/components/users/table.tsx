@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Api } from "../../services/Api";
 import { MessageToast } from "../MessageToast";
+import Button from "../Buttons/Button";
 
 interface UserItem {
   id: number;   
@@ -27,15 +28,27 @@ export const Users = () => {
 
         const user_permissions: string[] = user?.all_permissions || [];
 
+        const [canDelete, setCanDelete ] = useState<boolean>(false);
+   
+        const [canEdit, setCanEdit ] = useState<boolean>(false);
+
+        const [error, setError] = useState<boolean>();
+
+        const [data, setData] = useState<UserItem[]>([]); 
+
         useEffect(() => {
             if (!user || user_permissions.indexOf("users.get") === -1) {
                 navigate(-1);
             }
-        }, [user, user_permissions, navigate]);
 
-        const [error, setError] = useState<boolean>();
+            if(user && user_permissions.indexOf("users.destroy") > -1) {
+                setCanDelete(true);
+            }
 
-        const [data, setData] = useState<UserItem[]>([]); // Step 2: Typed state to store data 
+            if(user && user_permissions.indexOf("users.edit") > -1) {
+                setCanEdit(true)
+            }
+        }, [user, user_permissions, navigate, data]);
 
         const [loading, setLoading] = useState<boolean>(true); // Optional: Typed loading state
         
@@ -110,8 +123,19 @@ export const Users = () => {
                         <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{item.sex}</th>
                         <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{item.role?.name}</th>
                         <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                            <button onClick={() => deleteUser(item.id)}> Eliminar</button>
-                            <button onClick={() => navigate('/users/edit/' + item.id)}>Editar</button>
+                            {/* solo puedes actualizar tu propio usuario si no tienes permisos */}
+                            <Button
+                                value={"Eliminar"}
+                                onClick={() => deleteUser(item.id)}
+                                className={!canDelete && user?.id != item.id ? 'hidden' : "text-white bg-red-700 hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"}
+                                disabled={!canDelete && user?.id != item.id }
+                           />
+                            <Button
+                                value={"Editar"}
+                                onClick={() => navigate('/users/edit/' + item.id)}
+                                className={!canEdit && user?.id != item.id ? 'hidden' : 'text-white bg-purple-700 hover:bg-purple-800 focus:outline-none focus:ring-4 focus:ring-purple-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900"' }
+                                disabled={!canDelete && user?.id != item.id }
+                           />
                         </th>
                     </tr>
                     ))} 
