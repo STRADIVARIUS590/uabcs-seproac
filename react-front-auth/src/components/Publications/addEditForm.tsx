@@ -140,81 +140,158 @@
             {({
                 isSubmitting
             }) => (
-                <Form>
-                <input type="hidden"  name='id'/>
                 
-                <section className="py-12 dark:bg-dark">
-                
-                <div className="container">
-                    <div className="-mx-4 flex flex-wrap">
-                        <DefaultColumn>
-                            <DefaultInput name='title' label='Titulo'/>
-                            <DefaultInput name='doi' label='DOI'/>
-                            <DefaultInput name='type' label='tipo'/>
-                            <DefaultInput name='issn_isbn' label='ISSN / ISBN'/>
-                            <DefaultInput name='magazine_name' label='Revista'/>
-                        </DefaultColumn>
+        <Form>
+        <input type="hidden" name="id" />
 
-                        <DefaultColumn>
-                            <DefaultInput name="authors" label="Autores"/>
-                            <DefaultInput name='publication_date' type="date" label='Fecha de publicacion'/>
-                            <DefaultInput name='period' label='Periodo'/>
+        <section className="py-12 bg-gray-100 dark:bg-gray-800">
+            <div className="container mx-auto">
+            <h1 className="text-3xl font-semibold text-gray-800 dark:text-gray-100 mb-8 text-center">
+                {isEditMode ? 'Editar Publicación' : 'Agregar Publicación'}
+            </h1>
+            <div className="bg-white dark:bg-gray-700 shadow-lg rounded-lg p-6 md:p-8">
+                <div className="flex flex-wrap -mx-4">
+                {/* Primera columna */}
+                <DefaultColumn>
+                    <DefaultInput
+                    name="title"
+                    label="Título"
+                    className="mb-4"
+                    inputClass="w-full bg-gray-50 dark:bg-gray-900 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
+                    />
+                    <DefaultInput
+                    name="doi"
+                    label="DOI"
+                    className="mb-4"
+                    inputClass="w-full bg-gray-50 dark:bg-gray-900 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
+                    />
+                    <DefaultInput
+                    name="type"
+                    label="Tipo"
+                    className="mb-4"
+                    inputClass="w-full bg-gray-50 dark:bg-gray-900 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
+                    />
+                    <DefaultInput
+                    name="issn_isbn"
+                    label="ISSN / ISBN"
+                    className="mb-4"
+                    inputClass="w-full bg-gray-50 dark:bg-gray-900 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
+                    />
+                    <DefaultInput
+                    name="magazine_name"
+                    label="Revista"
+                    className="mb-4"
+                    inputClass="w-full bg-gray-50 dark:bg-gray-900 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
+                    />
+                </DefaultColumn>
 
-                        <div>
-                            <label htmlFor="user_id" className="mb-[10px] block text-base font-medium text-dark dark:text-white">Usuario</label>
-                                <Field as="select" name="user_id" className="w-full bg-transparent rounded-md border border-stroke dark:border-dark-3 py-[10px] px-5 text-dark-6 outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-gray-2 disabled:border-gray-2">
-                                    {users.map((user) => (
-                                        <option key={user.id} value={user.id}>
-                                            {user.name}
-                                        </option>
-                                    ))}
-                                </Field>
-                            <ErrorMessage name="user_id" component="div" className="text-red-500"  />
-                        </div>
+                {/* Segunda columna */}
+                <DefaultColumn>
+                    <DefaultInput
+                    name="authors"
+                    label="Autores"
+                    className="mb-4"
+                    inputClass="w-full bg-gray-50 dark:bg-gray-900 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
+                    />
+                    <DefaultInput
+                    name="publication_date"
+                    type="date"
+                    label="Fecha de publicación"
+                    className="mb-4"
+                    inputClass="w-full bg-gray-50 dark:bg-gray-900 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
+                    />
+                    <DefaultInput
+                    name="period"
+                    label="Periodo"
+                    className="mb-4"
+                    inputClass="w-full bg-gray-50 dark:bg-gray-900 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
+                    />
 
-                    <FieldArray
-                                name="tags"
-                                render={arrayHelpers => (
-                                    <div>
-                                        {tags.map((item, index) => (
-                                            <div key={index}>
-                                                <label>
-                                                    <Field
-                                                        type="checkbox"
-                                                        name="tags"
-                                                        value={item.id}
-                                                        checked={
-                                                            arrayHelpers.form.values.tags.some(
-                                                                (tag: string) => tag === item.id
-                                                            )
-                                                        }
-                                                        onChange={(e : React.ChangeEvent<HTMLInputElement>) => {
-                                                            if (e.target.checked) {
-                                                                arrayHelpers.push(item.id);
-                                                            } else {
-                                                                const idx = arrayHelpers.form.values.tags.indexOf(item.id);
-                                                                if (idx !== -1) arrayHelpers.remove(idx);
-                                                            }
-                                                        }}
-                                                    />
-                                                    {item.name}
-                                                </label>
-                                            </div>
-                                        ))}
-                                    </div>
-                                )}
-                            />
-                            </DefaultColumn>    
+                    {/* Selector de Usuario */}
+                    <div className="mb-4">
+                    <label
+                        htmlFor="user_id"
+                        className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
+                    >
+                        Usuario
+                    </label>
+                    <Field
+                        as="select"
+                        name="user_id"
+                        className="w-full rounded-md border border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-900 shadow-sm focus:ring-2 focus:ring-primary focus:border-primary"
+                    >
+                        {users.map((user) => (
+                        <option key={user.id} value={user.id}>
+                            {user.name}
+                        </option>
+                        ))}
+                    </Field>
+                    <ErrorMessage
+                        name="user_id"
+                        component="div"
+                        className="text-red-500 text-sm mt-1"
+                    />
                     </div>
+                </DefaultColumn>
+
+                {/* Tercera columna para etiquetas */}
+                <DefaultColumn>
+                    <FieldArray
+                    name="tags"
+                    render={(arrayHelpers) => (
+                        <div>
+                        <h3 className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                            Etiquetas
+                        </h3>
+                        {tags.map((item, index) => (
+                            <div key={index} className="flex items-center mb-2">
+                            <Field
+                                type="checkbox"
+                                name="tags"
+                                value={item.id}
+                                className="w-4 h-4 text-primary border-gray-300 dark:border-gray-600 rounded focus:ring-2 focus:ring-primary"
+                                checked={arrayHelpers.form.values.tags.some(
+                                (tag: string) => tag === item.id
+                                )}
+                                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                                if (e.target.checked) {
+                                    arrayHelpers.push(item.id);
+                                } else {
+                                    const idx = arrayHelpers.form.values.tags.indexOf(
+                                    item.id
+                                    );
+                                    if (idx !== -1) arrayHelpers.remove(idx);
+                                }
+                                }}
+                            />
+                            <label className="ml-2 text-sm text-gray-700 dark:text-gray-300">
+                                {item.name}
+                            </label>
+                            </div>
+                        ))}
+                        </div>
+                    )}
+                    />
+                </DefaultColumn>
                 </div>
-                </section>
-                    
-                    <div>
-                            <button className="bg-red-800" type="submit" disabled={isSubmitting}>
-                                {isEditMode ? "Update" : "Add"}
-                            </button>
-                    </div> 
-                </Form>
+
+                {/* Botón de acción */}
+                <div className="mt-6 text-right">
+                <button
+                    type="submit"
+                    disabled={isSubmitting}
+                    className="px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg shadow-lg hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-200"
+                >
+                    {isEditMode ? 'Actualizar' : 'Agregar'}
+                </button>
+                </div>
+            </div>
+            </div>
+        </section>
+        </Form>
+
+
+
             )}
         </Formik>)
     }
