@@ -232,7 +232,7 @@ class UserController extends Controller
 
         $email = $request->email;
 
-        $token = Str::random(60);
+        $token = Str::random(6);
 
         //eliminar registros existentes del mismo usuario
         if (DB::table('password_resets')->where('email', $email)->exists()) {
@@ -247,9 +247,7 @@ class UserController extends Controller
         ]);
 
         //enviar correo
-        Mail::raw("Usa este token para restablecer la contrase;a: $token", function ($message) use ($email) {
-            $message->to($email)->subject('Token para restablecer contraseñ');
-        });
+        Mail::to($email)->send(new ResetPasswordMail($token));
     
         return response()->json(['message' => 'Correo enviado correctamente', 'token' => $token], 200);
     }
