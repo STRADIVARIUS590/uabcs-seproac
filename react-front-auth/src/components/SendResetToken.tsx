@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { useParams } from "react-router-dom"; // Importa useParams
 import { Formik } from "formik";
 import * as Yup from "yup";
 import InputLabel from "./inputs/InputLabel";
@@ -7,49 +6,33 @@ import Button from "./Buttons/Button";
 import { Link } from "react-router-dom";
 import axios from "axios";
 
-const ResetPassword = () => {
-    const { token } = useParams(); // Obtén el token desde la URL.
-    const [isPasswordReset, setIsPasswordReset] = useState(false);
-
+const SendResetToken = () => {
+    const [isTokenSent, setIsTokenSent] = useState(false);
     const initialValues = {
-        password: "",
-        confirmPassword: "",
+        email: "",
     };
 
     const onSubmit = (values: typeof initialValues) => {
-        if (!token) {
-            console.error("Token no encontrado en la URL");
-            return;
-        }
-
         axios
-            .post("http://localhost:8000/api/password/reset", {
-                password: values.password,
-                token, // Usa el token obtenido desde la URL.
-            })
+            .post("http://localhost:8000/api/password/send-token", { email: values.email })
             .then(() => {
-                console.log("Contraseña cambiada correctamente");
-                setIsPasswordReset(true);
+                console.log("Correo de restablecimiento enviado");
+                setIsTokenSent(true);
             })
             .catch((error) => {
-                console.error("Error al cambiar la contraseña", error);
+                console.error("Error al enviar el correo de restablecimiento", error);
             });
     };
 
     const validationSchema = Yup.object({
-        password: Yup.string()
-            .min(8, "La contraseña debe tener al menos 8 caracteres")
-            .required("Requerido"),
-        confirmPassword: Yup.string()
-            .oneOf([Yup.ref("password")], "Las contraseñas no coinciden")
-            .required("Requerido"),
+        email: Yup.string().email("Correo no válido").required("Requerido"),
     });
 
     return (
         <div className="w-full h-screen bg-left-top-radial flex justify-center flex-col content-center items-center">
             <div className="w-full my-auto flex flex-col items-center content-center">
-                <img src="/logohd-gm.png" alt="Logo" className="w-[325px] h-auto mb-8" />
-                {!isPasswordReset ? (
+                <img src="./logohd-gm.png" alt="Logo" className="w-[325px] h-auto mb-8" />
+                {!isTokenSent ? (
                     <Formik initialValues={initialValues} onSubmit={onSubmit} validationSchema={validationSchema}>
                         {({ handleSubmit, handleChange, values, errors }) => (
                             <form
@@ -57,26 +40,20 @@ const ResetPassword = () => {
                                 className="font-sans text-violet-50 flex flex-col w-full p-4 space-y-2 md:p-24 md:w-3/4 xl:w-1/3 rounded-xl md:shadow-2xl md:ring-4 m-4 mb-auto space-y-6"
                             >
                                 <InputLabel
-                                    label="Nueva Contraseña"
-                                    name="password"
-                                    type="password"
-                                    error={errors.password}
-                                    value={values.password}
+                                    label="Correo electrónico"
+                                    name="email"
+                                    type="email"
+                                    error={errors.email}
+                                    value={values.email}
                                     onChange={handleChange}
                                 />
-                                <InputLabel
-                                    label="Confirmar Contraseña"
-                                    name="confirmPassword"
-                                    type="password"
-                                    error={errors.confirmPassword}
-                                    value={values.confirmPassword}
-                                    onChange={handleChange}
-                                />
+
                                 <Button
-                                    value="Confirmar Contraseña"
+                                    value="Enviar Código"
                                     type="submit"
                                     className="rounded-full bg-vi-50 text-vi-900 font-bold py-2 px-4 hover:bg-vi-100 hover:text-vi-900 w-full mx-auto"
                                 />
+
                                 <Link
                                     to="/login"
                                     className="text-left text-xs opacity-85 hover:opacity-100 mt-4 flex justify-center"
@@ -88,27 +65,28 @@ const ResetPassword = () => {
                     </Formik>
                 ) : (
                     <div className="text-center text-violet-50 space-y-6 p-6 md:p-8 bg-vi-900/50 rounded-xl shadow-lg">
-                        <h2 className="text-2xl font-bold">¡Contraseña cambiada!</h2>
+                        <h2 className="text-2xl font-bold">¡Código enviado!</h2>
                         <p className="text-lg">
-                            Tu contraseña ha sido cambiada correctamente. Ahora puedes usarla para iniciar sesión.
+                            Revisa tu correo electrónico para obtener el código de verificación.
                         </p>
-                        <br></br>
-                        
+                        <p></p>
+                        <p></p>
+                        <p></p>
                         
                         <Link
                             to="/login"
-                            className="text-violet-900 bg-violet-50 py-2 px-6 rounded-full font-bold hover:bg-violet-100 hover:text-violet-900 transition duration-200"
+                            className="text-sm opacity-85 hover:opacity-100 block mt-4"
                         >
-                            Iniciar Sesión
+                            Regresar al login
                         </Link>
                     </div>
                 )}
             </div>
             <footer className="bg-vi-50 h-1/6 w-full rounded-t-[70px] flex justify-center items-center mt-8">
-                <img src="/dasclogo.png" alt="Logo Footer" className="h-24" />
+                <img src="./dasclogo.png" alt="Logo Footer" className="h-24" />
             </footer>
         </div>
     );
 };
 
-export default ResetPassword;
+export default SendResetToken;

@@ -82,7 +82,7 @@ const Login = () => {
                                 value={values.password}
                                 onChange={handleChange}
                             />
-                            <Link to="/reset-password" className="text-left text-xs opacity-85 hover:opacity-100">
+                            <Link to="/send-reset-token" className="text-left text-xs opacity-85 hover:opacity-100">
                                 ¿Olvidaste tu contraseña? Ni modo.
                             </Link>
 

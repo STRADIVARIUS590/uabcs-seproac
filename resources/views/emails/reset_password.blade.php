@@ -49,7 +49,7 @@
             font-size: 28px;
             font-weight: bold;
             /* letter-spacing: 8px; */
-            /* color: #321d92; */
+            color: #321d92;
             background: #e9e7fc;
             padding: 10px 15px;
             border: 2px solid #321d92;
@@ -75,12 +75,12 @@
             <h1>Solicitud para restablecer tu contraseña</h1>
             <p>Hola,</p>
             <p>Hemos recibido una solicitud para restablecer la contraseña de tu cuenta. Si no realizaste esta solicitud, puedes ignorar este correo.</p>
-            <p>Por favor, utiliza el siguiente código para restablecer tu contraseña:</p>
+            <p>Haz click en el botón a continuación para restablecer tu contraseña:</p>
             <!-- <div class="token">
                 {{ $token }}
             </div> -->
-            <a href="#" class="token">
-                Verificar
+            <a href="http://localhost:5173/reset-password/{{ $token }}" class="token">
+                Restablecer
             </a>
             <p>Este código solo es válido por 30 minutos.</p>
             <p>Gracias,</p>
