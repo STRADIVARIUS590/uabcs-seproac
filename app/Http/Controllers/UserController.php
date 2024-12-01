@@ -255,14 +255,14 @@ class UserController extends Controller
     public function resetPassword(Request $request) {
 
         $request->validate([
-            'email' => 'required|email|exists:users,email',
+            // 'email' => 'email|exists:users,email',
             'token' => 'required',
-            'password' => 'required|min:8|confirmed',
+            'password' => 'required|min:8',
         ]);
 
         //buscar token
         $passwordReset = DB::table('password_resets')
-            ->where('email', $request->email)
+            // ->where('email', $request->email)
             ->where('token', $request->token)
             ->first();
 
@@ -276,17 +276,14 @@ class UserController extends Controller
         }
 
         //restablece
-        $user = \App\Models\User::where('email', $request->email)->first();
+        $user = \App\Models\User::where('email', $passwordReset->email)->first();
         $user->password = Hash::make($request->password);
         $user->save();
 
         //elimar el token
-        DB::table('password_resets')->where('email', $request->email)->delete();
+        DB::table('password_resets')->where('email', $passwordReset->email)->delete();
 
         return response()->json(['message' => 'Contraseña restablecida con éxito.'], 200);
     }
-
-
-
 
 }

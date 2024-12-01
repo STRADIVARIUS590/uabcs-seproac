@@ -47,7 +47,7 @@ const routes: TypeRoute[] = [
         element: SendResetToken
     },
     {
-        path: '/reset-password',
+        path: '/reset-password/:token',
         is_protected: true,
         middleware: 'guest',
         element: ResetPassword

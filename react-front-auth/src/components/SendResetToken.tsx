@@ -67,8 +67,7 @@ const SendResetToken = () => {
                     <div className="text-center text-violet-50 space-y-6 p-6 md:p-8 bg-vi-900/50 rounded-xl shadow-lg">
                         <h2 className="text-2xl font-bold">¡Código enviado!</h2>
                         <p className="text-lg">
-                            Revisa tu correo electrónico para obtener el código de verificación. 
-                            Si no lo encuentras, verifica tu carpeta de spam.
+                            Revisa tu correo electrónico para obtener el código de verificación.
                         </p>
                         <p></p>
                         <p></p>
