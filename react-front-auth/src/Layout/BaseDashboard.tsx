@@ -109,7 +109,7 @@ interface Data {
     return (
         <div className="bg-[#f2f2f2] p-10 rounded-lg flex flex-wrap justify-center gap-6 max-w-full w-full">
             {/* Trayectoria academica */}
-            <div className="bg-white shadow-lg rounded-lg p-6 sm:w-80 md:w-80 lg:w-80 xl:w-72">
+            <div className="bg-white shadow-lg rounded-3xl p-6 sm:w-80 md:w-80 lg:w-80 xl:w-72">
                 <div className="text-center text-3xl font-bold text-[#2a2d77] border-b-2 arial font-sans border-red-500 pb-6 mb-6">
                     Trayectoria Académica
                 </div>
@@ -134,7 +134,7 @@ interface Data {
             {cards.map((card, index) => (
                 <div
                     key={index}
-                    className="bg-white shadow-lg rounded-lg p-6 sm:w-80 md:w-80 lg:w-80 xl:w-72"
+                    className="bg-white shadow-lg rounded-3xl p-6 sm:w-80 md:w-80 lg:w-80 xl:w-72"
                 >
                     {/* Título */}
                     <div className="text-center text-3xl font-bold text-[#2a2d77] border-b-2 arial font-sans border-red-500 pb-6 mb-6">
