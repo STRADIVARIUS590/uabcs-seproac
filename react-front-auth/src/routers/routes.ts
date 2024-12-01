@@ -28,6 +28,10 @@ type TypeRoute = {
     middleware?: string
 }
 const routes: TypeRoute[] = [
+    // {
+    //     path: '/test',
+    //     element: tagstest
+    // },
     {
         path: '/',
         is_protected: true,

@@ -1,0 +1,140 @@
+"use client"
+import { ColumnDef } from "@tanstack/react-table"
+import { TableEditDelete } from "@/components/ui/table-edit-delete";
+import { TableSortButton } from "@/components/ui/table-sort-button";
+import { IUser } from "@/store/authSlice";
+
+const section = 'projects'
+
+export interface ProjectItem {
+    id: string | number;
+    name: string | undefined;
+    description: string | undefined;
+    user_id: string | number | undefined;
+    objetives: string | undefined;
+    colaborators: string | undefined;
+    start_date: string | undefined;
+    end_date: string | undefined;
+    type: string | undefined;
+    period: string | undefined;
+    user: {
+        name: string | undefined
+    }
+}
+
+// hay una muy buena razon para la existencia de esto
+// aun no la descubro
+export const useProjectTableColumns = ({ deleteFn, canModify, user }: { deleteFn: (id: number | string) => Promise<void>, canModify: boolean, user: IUser | null }) => {
+    const userColumns: ColumnDef<ProjectItem>[] = [
+        {
+            accessorKey: "id",
+            header: ({ column }) => {
+                return (
+                    <TableSortButton column={column} headingText={"ID"} />
+                )
+
+            },
+        },
+        {
+            accessorKey: "name",
+            header: ({ column }) => {
+                return (
+                    <TableSortButton column={column} headingText={"Nombre"} />
+                )
+
+            },
+        },
+        {
+            accessorKey: "description",
+            header: ({ column }) => {
+                return (
+                    <TableSortButton column={column} headingText={"Descripción"} />
+                )
+
+            },
+        },
+        {
+            accessorKey: "objetives",
+            header: ({ column }) => {
+                return (
+                    <TableSortButton column={column} headingText={"Objetivos"} />
+                )
+            },
+        },
+        {
+            accessorKey: "colaborators",
+            header: ({ column }) => {
+                return (
+                    <TableSortButton column={column} headingText={"Colaboradores"} />
+                )
+            },
+        },
+        {
+            accessorKey: "start_date",
+            header: ({ column }) => {
+                return (
+                    <TableSortButton column={column} headingText={"Fecha de inicio"} />
+                )
+            },
+            cell: ({ row }) => {
+                const date = new Date(row.getValue("start_date"));
+                return <div className="text-center font-medium" >
+                    {date.toLocaleDateString()}
+                </div>
+            }
+        },
+        {
+            accessorKey: "end_date",
+            header: ({ column }) => {
+                return (
+                    <TableSortButton column={column} headingText={"Fecha de finalización"} />
+                )
+            },
+            cell: ({ row }) => {
+                const date = new Date(row.getValue("end_date"));
+                return <div className="text-center font-medium" >
+                    {date.toLocaleDateString()}
+                </div>
+            }
+        },
+        {
+            accessorKey: "type",
+            header: ({ column }) => {
+                return (
+                    <TableSortButton column={column} headingText={"Tipo"} />
+                )
+            },
+        },
+        {
+            accessorKey: "period",
+            header: ({ column }) => {
+                return (
+                    <TableSortButton column={column} headingText={"Periodo"} />
+                )
+            },
+        },
+        {
+            id: "actions",
+            header: () => <div className="text-center" > Acciones </div>,
+            meta: {
+                headerClassName: "bg-red-400"
+            },
+            cell: ({ row }) => {
+                const rowOriginalData = row.original
+                if (!canModify && user?.id != rowOriginalData.id) {
+                    return;
+                }
+                return (
+                    <TableEditDelete data={rowOriginalData} section={section} deleteFn={deleteFn} />
+                )
+            }
+        },
+    ]
+    return (
+        {
+            userColumns
+        }
+    )
+}
+
+export default useProjectTableColumns;

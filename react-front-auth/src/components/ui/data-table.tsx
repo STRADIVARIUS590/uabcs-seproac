@@ -24,13 +24,17 @@ interface DataTableProps<TData, TValue> {
     data: TData[]
     loading: boolean
     error: boolean
+    filterField: string
+    filterPlaceholder: string
 }
 
 export function DataTable<TData, TValue>({
     columns,
     data,
     loading,
-    error
+    error,
+    filterField,
+    filterPlaceholder,
 }: DataTableProps<TData, TValue>) {
     const [sorting, setSorting] = useState<SortingState>([]);
     const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
@@ -58,7 +62,7 @@ export function DataTable<TData, TValue>({
 
     return (
         <div className="md:w-full space-y-4">
-            <TableInputFilter<number> table={table} field={"email"} placeholder="Buscar por correo" />
+            <TableInputFilter<string> table={table} field={filterField} placeholder={filterPlaceholder} />
             <div className="rounded-md">
                 <TableContent table={table} loading={loading} error={error} />
             </div>

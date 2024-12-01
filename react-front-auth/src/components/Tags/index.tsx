@@ -14,7 +14,7 @@ interface TagItem {
 }
 export const TagsPage = () => {
 
-   const  { token, user } = useSelector((state: RootState ) => state.auth);
+    const { token, user } = useSelector((state: RootState) => state.auth);
 
     const navigate = useNavigate();
 
@@ -27,28 +27,28 @@ export const TagsPage = () => {
     }, [user, user_permissions, navigate]);
 
     const [loading, setLoading] = useState<boolean>(true);
-    
+
     const [data, setData] = useState<TagItem[]>([]);
 
-    const [error, setError] = useState<boolean>(false); 
+    const [error, setError] = useState<boolean>(false);
 
     const fetchData = async () => {
 
-            const response = await Api.get('/tags', {
-                Authorization: 'Bearer ' + token,
-                accept: 'application/json'
-            })
-            
-            const result: TagItem[] = await response.data 
-            
-            if(response.statusCode === 200) {
-                setError(false);
-                setData(result)
-                setLoading(false);
-            }else{
-                setError(true);
-                navigate(-1);
-            }
+        const response = await Api.get('/tags', {
+            Authorization: 'Bearer ' + token,
+            accept: 'application/json'
+        })
+
+        const result: TagItem[] = await response.data
+
+        if (response.statusCode === 200) {
+            setError(false);
+            setData(result)
+            setLoading(false);
+        } else {
+            setError(true);
+            navigate(-1);
+        }
 
     }
 
@@ -58,18 +58,18 @@ export const TagsPage = () => {
 
     return <AppLayout>
         {
-            error && <div className="mt-12"> <MessageToast message='Ha ocurrido un error' type="error"/></div>
+            error && <div className="mt-12"> <MessageToast message='Ha ocurrido un error' type="error" /></div>
         }
         {
-            loading && <div className="mt-12"> <MessageToast message='Cargando...' type="loading"/></div> 
+            loading && <div className="mt-12"> <MessageToast message='Cargando...' type="loading" /></div>
         }
         {
-            !error && !loading && 
-                // <AuthContext.Provider value={user}>
-                    <Tags tags={data} />
-                // </AuthContext.Provider>
+            !error && !loading &&
+            // <AuthContext.Provider value={user}>
+            <Tags tags={data} />
+            // </AuthContext.Provider>
         }
 
     </AppLayout>
-    
+
 }

@@ -7,7 +7,7 @@ export const Users = () => {
     const { userColumns } = useUserTableColumns({ deleteUser, user, canModify });
     return (
         <div className="container mx-auto py-10">
-            <DataTable columns={userColumns} data={data} error={error} loading={loading} />
+            <DataTable filterField={"email"} filterPlaceholder={"correo@uabcs.mx"} columns={userColumns} data={data} error={error} loading={loading} />
         </div>
     )
 }
