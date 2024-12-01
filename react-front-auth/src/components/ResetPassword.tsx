@@ -5,7 +5,6 @@ import Button from "./Buttons/Button";
 import { Link } from "react-router-dom"
 import axios from 'axios'; 
 
-
 const ResetPassword = () => {
     const initialValues = {
         'email': '',
@@ -47,7 +46,7 @@ const ResetPassword = () => {
                             />
 
                             <Button
-                                value="Restablecer Contraseña"
+                                value="Enviar Código"
                                 type="submit"
                                 className="rounded-full bg-vi-50 text-vi-900 font-bold py-2 px-4 hover:bg-vi-100 hover:text-vi-900 w-full mx-auto"
                             />

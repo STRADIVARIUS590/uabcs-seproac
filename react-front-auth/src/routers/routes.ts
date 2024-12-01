@@ -2,6 +2,7 @@ import Customers from "../components/Customers";
 import Login from "../components/Login";
 import Register from "../components/Register";
 import ResetPassword from "../components/ResetPassword";
+import SendResetToken from "../components/SendResetToken";
 import { AddEditCongressPage } from "../components/Congresses/addEdit";
 import { AddEditProjectPage } from "../components/Projects/addEdit";
 import { AddEditPublicationPage } from "../components/Publications/addEdit";
@@ -38,6 +39,12 @@ const routes: TypeRoute[] = [
         is_protected: true,
         middleware: 'guest',
         element: Login
+    },
+    {
+        path: '/send-reset-token',
+        is_protected: true,
+        middleware: 'guest',
+        element: SendResetToken
     },
     {
         path: '/reset-password',
