@@ -3,7 +3,7 @@ import Tab from "../components/Layout/TabPanes"
 
 export const Dashboard = () => {
     return <AppLayout>
-        <Tab></Tab>
+        <Tab />
         {/* <BaseDashBoard> */}
         {/* </BaseDashBoard> */}
     </AppLayout>

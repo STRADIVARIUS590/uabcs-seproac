@@ -10,13 +10,11 @@ interface FilterProperties {
 
 export default function TableInputFilter<InputType extends string | number | readonly string[] | undefined>({ table, field, placeholder }: FilterProperties) {
     return (
-        <div className="flex items-center py-45">
-            <Input placeholder={placeholder}
-                value={(table.getColumn(field)?.getFilterValue() as (InputType)) ?? ""}
-                onChange={(event) => table.getColumn(field)?.setFilterValue(event.target.value)}
-                className="max-w-sm focus-visible:ring-vi-500 focus-visible:border-none"
-            />
-        </div>
+        <Input placeholder={placeholder}
+            value={(table.getColumn(field)?.getFilterValue() as (InputType)) ?? ""}
+            onChange={(event) => table.getColumn(field)?.setFilterValue(event.target.value)}
+            className="w-11/12 md:w-1/4 focus-visible:ring-vi-500 focus-visible:border-none"
+        />
     )
 }
 
