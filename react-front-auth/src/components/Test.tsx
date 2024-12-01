@@ -1,25 +1,27 @@
-import Table, { RawData_T } from './ui/Table'
+import { Button } from "./ui/button";
 
-interface User extends RawData_T {
+type Payment = {
     id: string
-    name: string
+    amount: number
+    status: "pending" | "processing" | "success" | "failed"
     email: string
-    password: string
 }
 
-function del(id: number | string): Promise<any> {
-    console.log(id)
-    return new Promise((resolve) => {
-        resolve(4);
-    });
-}
+export const payments: Payment[] = [
+    {
+        id: "728ed52f",
+        amount: 100,
+        status: "pending",
+        email: "m@example.com",
+    },
+    {
+        id: "489e1d42",
+        amount: 125,
+        status: "processing",
+        email: "example@gmail.com",
+    },
+]
 
 export default function Test() {
-    const heads = ["id", "nombre", "email", "contraseña", "acciones"];
-    const rows = [{ id: 1, name: "pancho", email: "panchogmail.com", password: "popo" }];
-    return (
-        <Table className={""} headsContent={heads} rowsContents={rows} deleteFn={del}>
-        </Table >
-    )
+    return <Button>adsf</Button >
 }
-

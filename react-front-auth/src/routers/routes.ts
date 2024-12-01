@@ -17,8 +17,6 @@ import { AddEditAcademicGradesPage } from "../components/AcademicGrades/AddEditA
 import { SettingsPage } from "../components/Settings/SettingsPage";
 import { AddEditUserPage } from "../components/users/addEdit";
 import { UsersIndex } from "../components/users/Index";
-import Test from "../components/Test";
-import { UsersTest } from "../components/users/tabletest";
 // import { SettingsPage } from "../components/Settings";
 
 type TypeRoute = {
@@ -29,11 +27,6 @@ type TypeRoute = {
     middleware?: string
 }
 const routes: TypeRoute[] = [
-    {
-        path: '/test',
-        is_protected: false,
-        element: UsersTest
-    },
     {
         path: '/',
         is_protected: true,
