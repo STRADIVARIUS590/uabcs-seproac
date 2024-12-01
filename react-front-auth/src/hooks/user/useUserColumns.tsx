@@ -105,8 +105,11 @@ export const useUserTableColumns = ({ deleteUser, canModify, user }: { deleteUse
                     id: number;
                     name: string;
                 } = row.getValue("role");
+                if (!role) {
+                    return;
+                }
                 return <div className="text-center font-medium" >
-                    {role.name}
+                    {role?.name}
                 </div>
             }
         },
