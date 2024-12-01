@@ -8,12 +8,11 @@ import axios from 'axios';
 
 const ResetPassword = () => {
     const initialValues = {
-        'email': 'sistemas@gmail.com',
+        'email': '',
     }
-
+    
     const onSubmit = (values: typeof initialValues) => {
-        //solicitud al backend para el restablecimiento
-        axios.post('/api/password/reset', { email: values.email })
+        axios.post('http://localhost:8000/api/password/send-token', { email: values.email })
             .then((response) => {
                 console.log('Correo de restablecimiento enviado', response);
             })

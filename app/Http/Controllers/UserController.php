@@ -24,6 +24,11 @@ use Illuminate\Cache\TagSet;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
+use Illuminate\Support\Facades\Password;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\ResetPasswordMail;
+use Illuminate\Support\Str;
+
 use function Laravel\Prompts\alert;
 use function Laravel\Prompts\error;
 
@@ -180,42 +185,108 @@ class UserController extends Controller
     
 
     public function dashboard(Request $request){
-    $user_id = Auth::id();
-    
-    $tags = Tag::select('id', 'name')
-        ->withCount([
-            'congresses' => function ($query) use ($user_id) {
-                $query->where('user_id', $user_id);
-            },
-            'projects' => function ($query) use ($user_id) {
-                $query->where('user_id', $user_id);
-            },
-            'courses' => function ($query) use ($user_id) {
-                $query->where('user_id', $user_id);
-            },
-            'publications' => function ($query) use ($user_id) {
-                $query->where('user_id', $user_id);
-            },
-        ])
-        ->get();
+        $user_id = Auth::id();
+        
+        $tags = Tag::select('id', 'name')
+            ->withCount([
+                'congresses' => function ($query) use ($user_id) {
+                    $query->where('user_id', $user_id);
+                },
+                'projects' => function ($query) use ($user_id) {
+                    $query->where('user_id', $user_id);
+                },
+                'courses' => function ($query) use ($user_id) {
+                    $query->where('user_id', $user_id);
+                },
+                'publications' => function ($query) use ($user_id) {
+                    $query->where('user_id', $user_id);
+                },
+            ])
+            ->get();
 
-    $relationships = ['congresses', 'projects', 'courses', 'publications'];
-    $auth_user = User::find($user_id)->loadCount($relationships);
+        $relationships = ['congresses', 'projects', 'courses', 'publications'];
+        $auth_user = User::find($user_id)->loadCount($relationships);
 
-    $data = [];
+        $data = [];
 
-    foreach ($relationships as $relationship) {
+        foreach ($relationships as $relationship) {
 
-        $data[$relationship] = [
-            'count' => $auth_user->{$relationship.'_count'},
-            'tags' => $tags->filter(function ($tag) use ($relationship) {
-                return $tag->{$relationship.'_count'} > 0; // Only include tags with at least one item in the relationship
-            })->values()
-        ];
-    }
+            $data[$relationship] = [
+                'count' => $auth_user->{$relationship.'_count'},
+                'tags' => $tags->filter(function ($tag) use ($relationship) {
+                    return $tag->{$relationship.'_count'} > 0; // Only include tags with at least one item in the relationship
+                })->values()
+            ];
+        }
 
         $data = collect($data); 
         
         return $this->jsonResponse('Registro consultado correctamente',  $data);
     }
+
+    public function sendResetToken(Request $request) {
+        
+        $request->validate([
+            'email' => 'required|email|exists:users,email',
+        ]);
+
+        $email = $request->email;
+
+        $token = Str::random(6);
+
+        //eliminar registros existentes del mismo usuario
+        if (DB::table('password_resets')->where('email', $email)->exists()) {
+            DB::table('password_resets')->where('email', $email)->delete();
+        }
+
+        //insertar
+        DB::table('password_resets')->insert([
+            'email' => $email,
+            'token' => $token,
+            'created_at' => Carbon::now(),
+        ]);
+
+        //enviar correo
+        Mail::to($email)->send(new ResetPasswordMail($token));
+    
+        return response()->json(['message' => 'Correo enviado correctamente', 'token' => $token], 200);
+    }
+
+    public function resetPassword(Request $request) {
+
+        $request->validate([
+            'email' => 'required|email|exists:users,email',
+            'token' => 'required',
+            'password' => 'required|min:8|confirmed',
+        ]);
+
+        //buscar token
+        $passwordReset = DB::table('password_resets')
+            ->where('email', $request->email)
+            ->where('token', $request->token)
+            ->first();
+
+        if (!$passwordReset) {
+            return response()->json(['message' => 'Token inválido o expirado.'], 400);
+        }
+
+        //tiempo d vida, pero puede quitarse o mas/menos tiempo
+        if (Carbon::parse($passwordReset->created_at)->addMinutes(30)->isPast()) {
+            return response()->json(['message' => 'El token ha expirado.'], 400);
+        }
+
+        //restablece
+        $user = \App\Models\User::where('email', $request->email)->first();
+        $user->password = Hash::make($request->password);
+        $user->save();
+
+        //elimar el token
+        DB::table('password_resets')->where('email', $request->email)->delete();
+
+        return response()->json(['message' => 'Contraseña restablecida con éxito.'], 200);
+    }
+
+
+
+
 }

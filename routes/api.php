@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\RoleController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\PublicationController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\PasswordResetController;
 use App\Http\Middleware\Cors;
 use App\Models\File;
 use Database\Seeders\PublicationSeeder;
@@ -24,6 +25,9 @@ Route::get('/user', function (Request $request) {
 Route::get('/pepe', function (Request $request) {
     return "popo";
 });
+
+Route::post('/password/send-token', [UserController::class, 'sendResetToken']);
+Route::post('/password/reset', [UserController::class, 'resetPassword']);
 
 Route::post('/prueba', function(Request $request){
 

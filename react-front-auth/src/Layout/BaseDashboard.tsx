@@ -25,40 +25,31 @@ interface Data {
     }
  }
 
-const BaseDashBoard = () => {
-
+ const BaseDashBoard = () => {
     const { token } = useSelector((state: RootState) => state.auth);
     const navigate = useNavigate();
 
-    // Redirect if not logged in
     useEffect(() => {
         if (!token) {
             navigate("/login");
         }
     }, [token, navigate]);
 
-    const [data, setData] = useState<Data | null >();
+    const [data, setData] = useState<Data | null>();
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<boolean>(false);
+
     const fetchData = async () => {
-        
         try {
-            const response = await Api.get('/dashboard', {
-                Authorization: 'Bearer ' + token,
-                accept: 'application/json'
-            })
-            
-            const result = await response.data; // Assuming response.data is the body
-            
-            setData(result);
-
+            const response = await Api.get("/dashboard", {
+                Authorization: "Bearer " + token,
+                accept: "application/json",
+            });
+            setData(response.data);
             setLoading(false);
-
-
         } catch (error) {
-            setLoading(false);
             setError(true);
-            // console.error("Error fetching dashboard data", error);
+            setLoading(false);
         }
     };
 
@@ -68,95 +59,72 @@ const BaseDashBoard = () => {
         }
     }, [token]);
 
-  
-    if(error){       return <MessageToast message='Ha ocurrido un error' type="error"/>}
-    if(loading){     return <MessageToast message='Cargando...' type="loading"/> }
+    if (error) {
+        return <MessageToast message="Ha ocurrido un error" type="error" />;
+    }
+    if (loading) {
+        return <MessageToast message="Cargando..." type="loading" />;
+    }
 
-
-    const widgetContainerStyle = {
-        display: "flex",
-        justifyContent: "space-between",
-        gap: "20px",
-        marginTop: "20px",
-     };
-
-    const widgetCardStyle: React.CSSProperties = {
-        padding: "20px",
-        backgroundColor: "#fff",
-        borderRadius: "8px",
-        boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
-        width: "45%",
-        textAlign: "center", // Ensure 'center', 'left', or 'right' are used
-    };
-  const widgetTitleStyle = {
-        fontSize: "18px",
-        fontWeight: "bold",
-        marginBottom: "10px",
-  };
-
-  const widgetValueStyle = {
-      fontSize: "24px",
-      fontWeight: "600",
-      color: "#4CAF50", // Green color for positive metrics
-  };
-    
-    return (            
-        <div> <div style={widgetContainerStyle}>
-            {/* projects widget */}
-           <div style={widgetCardStyle}>
-            <div style={widgetTitleStyle}>Proyectos</div>
-            <div style={widgetValueStyle}>{data?.projects?.count}</div>
-                {data?.projects?.tags.map((item) => (
-                    <div key={item.id}>
-                        <p>{item.name}</p>
-                        <p>{item.projects_count ?? 0}</p> 
+    const cards = [
+        {
+            title: "Producción Académica",
+            values: [
+                { label: "Artículos", value: data?.projects?.tags[0]?.projects_count ?? 0 },
+                { label: "Libros", value: data?.projects?.tags[1]?.projects_count ?? 0 },
+                { label: "Capítulos", value: data?.projects?.tags[2]?.projects_count ?? 0 },
+            ],
+        },
+        {
+            title: "Proyectos de Investigación",
+            values: [
+                { label: "Interno", value: data?.projects?.tags[0]?.projects_count ?? 0 },
+                { label: "Externo", value: data?.projects?.tags[1]?.projects_count ?? 0 },
+            ],
+        },
+        {
+            title: "Cursos Impartidos",
+            values: [
+                { label: "Licenciatura", value: data?.courses?.tags[0]?.courses_count ?? 0 },
+                { label: "Maestría", value: data?.courses?.tags[1]?.courses_count ?? 0 },
+                { label: "Doctorado", value: data?.courses?.tags[2]?.courses_count ?? 0 },
+            ],
+        },
+        {
+            title: "Participación en Congresos",
+            values: [
+                { label: "Nacionales", value: data?.congresses?.tags[0]?.congresses_count ?? 0 },
+                { label: "Internacionales", value: data?.congresses?.tags[1]?.congresses_count ?? 0 },
+            ],
+        },
+        {
+            title: "Trabajos de Titulación",
+            values: [
+                { label: "Licenciatura", value: data?.publications?.tags[0]?.publications_count ?? 0 },
+                { label: "Maestría", value: data?.publications?.tags[1]?.publications_count ?? 0 },
+                { label: "Doctorado", value: data?.publications?.tags[2]?.publications_count ?? 0 },
+            ],
+        },
+    ];
+    return (
+            <div className="bg-white p-10 rounded-lg shadow-lg flex flex-wrap justify-center gap-6 max-w-full w-full">
+                {cards.map((card, index) => (
+                    <div key={index} className="bg-white shadow-lg rounded-lg p-6 w-72 sm:w-80 md:w-80 lg:w-80 xl:w-80">
+                        <div className="text-center text-lg font-semibold text-blue-900 border-b-2 border-red-500 pb-2 mb-4">
+                            {card.title}
+                        </div>
+                        {card.values.map((value, i) => (
+                            <div key={i} className="text-center text-blue-800 mb-2">
+                                <p className="text-lg">{value.label}</p>
+                                <p className="text-2xl font-bold">{value.value}</p>
+                            </div>
+                        ))}
                     </div>
                 ))}
-          </div> 
-
-                {/* congress widgets */}
-          <div style={widgetCardStyle}>
-            <div style={widgetTitleStyle}>Congresos</div>
-            <div style={widgetValueStyle}>{data?.congresses?.count ?? 0}</div>
-             {data?.congresses?.tags.map((item) => (
-                    <div key={item.id}>
-                        <p>{item.name}</p>
-                        <p>{item.congresses_count ?? 0}</p> 
-                    </div>
-                ))}
-            
-          </div> 
-                {/* courses widget */}
-           <div style={widgetCardStyle}>
-            <div style={widgetTitleStyle}>Cursos</div>
-            <div style={widgetValueStyle}>{data?.courses.count ?? 0}</div>
-             {data?.courses?.tags.map((item) => (
-                    <div key={item.id}>
-                        <p>{item.name}</p>
-                        <p>{item.courses_count ?? 0}</p> 
-                    </div>
-                ))}
-          </div> 
-
-        { /* publications widget */}
-          <div style={widgetCardStyle}>
-            <div style={widgetTitleStyle}>Publicaciones</div>
-            <div style={widgetValueStyle}>{data?.publications.count ?? 0}</div>
-             {data?.publications?.tags.map((item) => (
-                    <div key={item.id}>
-                        <p>{item.name}</p>
-                        <p>{item.publications_count ?? 0}</p> 
-                    </div>
-                ))}
-          </div> 
-
-          
-        </div>
- 
-            {/* <Outlet /> */}
-         </div>
-
+            </div>
     );
+    
+    
 };
 
 export default BaseDashBoard;
