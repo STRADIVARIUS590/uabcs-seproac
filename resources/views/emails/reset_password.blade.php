@@ -48,13 +48,14 @@
             font-family: "Courier New", Courier, monospace;
             font-size: 28px;
             font-weight: bold;
-            letter-spacing: 8px;
-            color: #321d92;
+            /* letter-spacing: 8px; */
+            /* color: #321d92; */
             background: #e9e7fc;
             padding: 10px 15px;
             border: 2px solid #321d92;
             border-radius: 5px;
             margin: 20px 0;
+            text-decoration: none;
         }
         .email-footer {
             text-align: center;
@@ -75,9 +76,12 @@
             <p>Hola,</p>
             <p>Hemos recibido una solicitud para restablecer la contraseña de tu cuenta. Si no realizaste esta solicitud, puedes ignorar este correo.</p>
             <p>Por favor, utiliza el siguiente código para restablecer tu contraseña:</p>
-            <div class="token">
+            <!-- <div class="token">
                 {{ $token }}
-            </div>
+            </div> -->
+            <a href="#" class="token">
+                Verificar
+            </a>
             <p>Este código solo es válido por 30 minutos.</p>
             <p>Gracias,</p>
             <p>El equipo de Soporte</p>
