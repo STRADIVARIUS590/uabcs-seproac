@@ -107,22 +107,57 @@ interface Data {
         },
     ];
     return (
-            <div className="bg-white p-10 rounded-lg shadow-lg flex flex-wrap justify-center gap-6 max-w-full w-full">
-                {cards.map((card, index) => (
-                    <div key={index} className="bg-white shadow-lg rounded-lg p-6 w-72 sm:w-80 md:w-80 lg:w-80 xl:w-80">
-                        <div className="text-center text-lg font-semibold text-blue-900 border-b-2 border-red-500 pb-2 mb-4">
-                            {card.title}
-                        </div>
-                        {card.values.map((value, i) => (
-                            <div key={i} className="text-center text-blue-800 mb-2">
-                                <p className="text-lg">{value.label}</p>
-                                <p className="text-2xl font-bold">{value.value}</p>
-                            </div>
-                        ))}
-                    </div>
-                ))}
+        <div className="bg-[#f2f2f2] p-10 rounded-lg flex flex-wrap justify-center gap-6 max-w-full w-full">
+            {/* Trayectoria academica */}
+            <div className="bg-white shadow-lg rounded-lg p-6 sm:w-80 md:w-80 lg:w-80 xl:w-72">
+                <div className="text-center text-3xl font-bold text-[#2a2d77] border-b-2 arial font-sans border-red-500 pb-6 mb-6">
+                    Trayectoria Académica
+                </div>
+                <div className="mb-4">
+                    <p className="text-[#2a2d77] font-bold text-lg mb-1">Doctorado en Proyectos</p>
+                    <p className="text-[#ba0d0d] text-sm mb-1">Doctorado - 31 mayo 2021</p>
+                    <p className="text-gray-600 text-sm">Universidad Internacional Iberoamericana</p>
+                </div>
+                <div className="mb-4">
+                    <p className="text-[#2a2d77] font-bold text-lg mb-1">Maestría en Sistemas Computacionales</p>
+                    <p className="text-[#ba0d0d] text-sm mb-1">Maestría - 16 marzo 2005</p>
+                    <p className="text-gray-600 text-sm">Instituto Tecnológico de La Paz</p>
+                </div>
+                <div className="mb-4">
+                    <p className="text-[#2a2d77] font-bold text-lg mb-1">Ingeniería en Sistemas Computacionales</p>
+                    <p className="text-[#ba0d0d] text-sm mb-1">Licenciatura - 01 agosto 1996</p>
+                    <p className="text-gray-600 text-sm">Instituto Tecnológico de La Paz</p>
+                </div>
             </div>
+    
+            {/* Tarjetas dinámicas */}
+            {cards.map((card, index) => (
+                <div
+                    key={index}
+                    className="bg-white shadow-lg rounded-lg p-6 sm:w-80 md:w-80 lg:w-80 xl:w-72"
+                >
+                    {/* Título */}
+                    <div className="text-center text-3xl font-bold text-[#2a2d77] border-b-2 arial font-sans border-red-500 pb-6 mb-6">
+                        {card.title}
+                    </div>
+    
+                    {/* Contenido */}
+                    {card.values.map((value, i) => (
+                        <div key={i} className="mb-4">
+                            <div className="bg-[#eeeaf2] rounded-3xl px-4 py-4 text-center">
+                                <p className="text-[#2a2d77] font-semibold text-center mt-2">{value.label}</p>
+                                <p className="text-5xl font-normal text-[#2a2d77]">{value.value}</p>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            ))}
+        </div>
     );
+    
+    
+    
+    
     
     
 };
