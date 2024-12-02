@@ -1,5 +1,5 @@
 "use client"
-import { ColumnDef } from "@tanstack/react-table"
+import { Column, ColumnDef, Row } from "@tanstack/react-table"
 import { TableEditDelete } from "@/components/ui/table-edit-delete";
 import { TableSortButton } from "@/components/ui/table-sort-button";
 import { IUser } from "@/store/authSlice";
@@ -28,7 +28,8 @@ const usePublicationsTableColumns = ({ deleteFn, canDelete, canEdit, user }: { d
     const userColumns: ColumnDef<PublicationItem>[] = [
         {
             accessorKey: "id",
-            header: ({ column }) => {
+
+            header: ({ column }: { column: Column<PublicationItem, unknown> }) => {
                 return (
                     <TableSortButton column={column} headingText={"ID"} />
                 )
@@ -37,7 +38,7 @@ const usePublicationsTableColumns = ({ deleteFn, canDelete, canEdit, user }: { d
         },
         {
             accessorKey: "title",
-            header: ({ column }) => {
+            header: ({ column }: { column: Column<PublicationItem, unknown> }) => {
                 return (
                     <TableSortButton column={column} headingText={"Titulo"} />
                 )
@@ -46,7 +47,7 @@ const usePublicationsTableColumns = ({ deleteFn, canDelete, canEdit, user }: { d
         },
         {
             accessorKey: "issn_isbn",
-            header: ({ column }) => {
+            header: ({ column }: { column: Column<PublicationItem, unknown> }) => {
                 return (
                     <TableSortButton column={column} headingText={"ISSN/ISBN"} />
                 )
@@ -55,7 +56,7 @@ const usePublicationsTableColumns = ({ deleteFn, canDelete, canEdit, user }: { d
         },
         {
             accessorKey: "doi",
-            header: ({ column }) => {
+            header: ({ column }: { column: Column<PublicationItem, unknown> }) => {
                 return (
                     <TableSortButton column={column} headingText={"DOI"} />
                 )
@@ -64,7 +65,7 @@ const usePublicationsTableColumns = ({ deleteFn, canDelete, canEdit, user }: { d
         },
         {
             accessorKey: "magazine_name",
-            header: ({ column }) => {
+            header: ({ column }: { column: Column<PublicationItem, unknown> }) => {
                 return (
                     <TableSortButton column={column} headingText={"Revista"} />
                 )
@@ -73,7 +74,7 @@ const usePublicationsTableColumns = ({ deleteFn, canDelete, canEdit, user }: { d
         },
         {
             accessorKey: "authors",
-            header: ({ column }) => {
+            header: ({ column }: { column: Column<PublicationItem, unknown> }) => {
                 return (
                     <TableSortButton column={column} headingText={"Autores"} />
                 )
@@ -82,12 +83,12 @@ const usePublicationsTableColumns = ({ deleteFn, canDelete, canEdit, user }: { d
         },
         {
             accessorKey: "user",
-            header: ({ column }) => {
+            header: ({ column }: { column: Column<PublicationItem, unknown> }) => {
                 return (
                     <TableSortButton column={column} headingText={"Usuario"} />
                 )
             },
-            cell: ({ row }) => {
+            cell: ({ row }: { row: Row<PublicationItem> }) => {
                 const user: {
                     name: string;
                 } = row.getValue("user");
@@ -102,12 +103,12 @@ const usePublicationsTableColumns = ({ deleteFn, canDelete, canEdit, user }: { d
 
         {
             accessorKey: "publication_date",
-            header: ({ column }) => {
+            header: ({ column }: { column: Column<PublicationItem, unknown> }) => {
                 return (
                     <TableSortButton column={column} headingText={"Fecha"} />
                 )
             },
-            cell: ({ row }) => {
+            cell: ({ row }: { row: Row<PublicationItem> }) => {
                 const date = new Date(row.getValue("publication_date"));
                 return <div className="text-center font-medium" >
                     {date.toLocaleDateString()}
@@ -116,7 +117,7 @@ const usePublicationsTableColumns = ({ deleteFn, canDelete, canEdit, user }: { d
         },
         {
             accessorKey: "period",
-            header: ({ column }) => {
+            header: ({ column }: { column: Column<PublicationItem, unknown> }) => {
                 return (
                     <TableSortButton column={column} headingText={"Periodo"} />
                 )
@@ -128,7 +129,8 @@ const usePublicationsTableColumns = ({ deleteFn, canDelete, canEdit, user }: { d
             meta: {
                 headerClassName: "bg-red-400"
             },
-            cell: ({ row }) => {
+
+            cell: ({ row }: { row: Row<PublicationItem> }) => {
                 const rowOriginalData = row.original
                 let editSelf = false;
                 let deleteSelf = false;
