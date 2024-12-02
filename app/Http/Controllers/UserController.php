@@ -184,9 +184,11 @@ class UserController extends Controller
     }
     
 
-    public function dashboard(Request $request){
+    public function dashboard(){
         $user_id = Auth::id();
-        
+       
+        $academic_grades = AcademicGrade::with('institution:id,name')->where('user_id', $user_id)->get();
+       
         $tags = Tag::select('id', 'name')
             ->withCount([
                 'congresses' => function ($query) use ($user_id) {
@@ -221,7 +223,10 @@ class UserController extends Controller
 
         $data = collect($data); 
         
-        return $this->jsonResponse('Registro consultado correctamente',  $data);
+        return $this->jsonResponse('Registro consultado correctamente', [
+            'production' => $data,
+            'academic_grades' => $academic_grades
+        ]);
     }
 
     public function sendResetToken(Request $request) {

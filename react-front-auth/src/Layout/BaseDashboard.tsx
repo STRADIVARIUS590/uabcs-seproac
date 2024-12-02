@@ -7,21 +7,33 @@ import { MessageToast } from "../components/MessageToast";
 
 
 interface Data {
-    publications: {
-        count: number;
-        tags: {id: string, name: string, publications_count : number}[]
-    },
-    courses: {
-        count: number;
-        tags: {id: string, name: string, courses_count : number}[]
-    },
-    projects: {
-        count: number;
-        tags: {id: string, name: string, projects_count : number}[]
-    },
-    congresses: {
-        count: number;
-        tags: {id: string, name: string, congresses_count : number}[]
+    academic_grades : {
+        id: string | number;
+        name : string;
+        titulation_date : string;
+        institution: {
+            id: string | number;
+            name: string,
+            titulation_date: string
+        }
+    }[],
+    production : {
+        publications: {
+            count: number;
+            tags: {id: string, name: string, publications_count : number}[]
+        },
+        courses: {
+            count: number;
+            tags: {id: string, name: string, courses_count : number}[]
+        },
+        projects: {
+            count: number;
+            tags: {id: string, name: string, projects_count : number}[]
+        },
+        congresses: {
+            count: number;
+            tags: {id: string, name: string, congresses_count : number}[]
+        }
     }
  }
 
@@ -70,39 +82,39 @@ interface Data {
         {
             title: "Producción Académica",
             values: [
-                { label: "Artículos", value: data?.projects?.tags[0]?.projects_count ?? 0 },
-                { label: "Libros", value: data?.projects?.tags[1]?.projects_count ?? 0 },
-                { label: "Capítulos", value: data?.projects?.tags[2]?.projects_count ?? 0 },
+                { label: "Artículos", value: data?.production?.projects?.tags[0]?.projects_count ?? 0 },
+                { label: "Libros", value: data?.production?.projects?.tags[1]?.projects_count ?? 0 },
+                { label: "Capítulos", value: data?.production?.projects?.tags[2]?.projects_count ?? 0 },
             ],
         },
         {
             title: "Proyectos de Investigación",
             values: [
-                { label: "Interno", value: data?.projects?.tags[0]?.projects_count ?? 0 },
-                { label: "Externo", value: data?.projects?.tags[1]?.projects_count ?? 0 },
+                { label: "Interno", value: data?.production?.projects?.tags[0]?.projects_count ?? 0 },
+                { label: "Externo", value: data?.production?.projects?.tags[1]?.projects_count ?? 0 },
             ],
         },
         {
             title: "Cursos Impartidos",
             values: [
-                { label: "Licenciatura", value: data?.courses?.tags[0]?.courses_count ?? 0 },
-                { label: "Maestría", value: data?.courses?.tags[1]?.courses_count ?? 0 },
-                { label: "Doctorado", value: data?.courses?.tags[2]?.courses_count ?? 0 },
+                { label: "Licenciatura", value: data?.production?.courses?.tags[0]?.courses_count ?? 0 },
+                { label: "Maestría", value: data?.production?.courses?.tags[1]?.courses_count ?? 0 },
+                { label: "Doctorado", value: data?.production?.courses?.tags[2]?.courses_count ?? 0 },
             ],
         },
         {
             title: "Participación en Congresos",
             values: [
-                { label: "Nacionales", value: data?.congresses?.tags[0]?.congresses_count ?? 0 },
-                { label: "Internacionales", value: data?.congresses?.tags[1]?.congresses_count ?? 0 },
+                { label: "Nacionales", value: data?.production?.congresses?.tags[0]?.congresses_count ?? 0 },
+                { label: "Internacionales", value: data?.production?.congresses?.tags[1]?.congresses_count ?? 0 },
             ],
         },
         {
             title: "Trabajos de Titulación",
             values: [
-                { label: "Licenciatura", value: data?.publications?.tags[0]?.publications_count ?? 0 },
-                { label: "Maestría", value: data?.publications?.tags[1]?.publications_count ?? 0 },
-                { label: "Doctorado", value: data?.publications?.tags[2]?.publications_count ?? 0 },
+                { label: "Licenciatura", value: data?.production?.publications?.tags[0]?.publications_count ?? 0 },
+                { label: "Maestría", value: data?.production?.publications?.tags[1]?.publications_count ?? 0 },
+                { label: "Doctorado", value: data?.production?.publications?.tags[2]?.publications_count ?? 0 },
             ],
         },
     ];
@@ -113,7 +125,15 @@ interface Data {
                 <div className="text-center text-3xl font-bold text-[#2a2d77] border-b-2 arial font-sans border-red-500 pb-6 mb-6">
                     Trayectoria Académica
                 </div>
-                <div className="mb-4">
+                {data?.academic_grades.map((item) => (
+                    
+                    <div className="mb-4">
+                    <p className="text-[#2a2d77] font-bold text-lg mb-1">{item.name}</p>
+                    <p className="text-[#ba0d0d] text-sm mb-1">{item.titulation_date}</p>
+                    <p className="text-gray-600 text-sm">{item.institution.name}</p>
+                    </div> 
+                ))}
+                {/* <div className="mb-4">
                     <p className="text-[#2a2d77] font-bold text-lg mb-1">Doctorado en Proyectos</p>
                     <p className="text-[#ba0d0d] text-sm mb-1">Doctorado - 31 mayo 2021</p>
                     <p className="text-gray-600 text-sm">Universidad Internacional Iberoamericana</p>
@@ -127,7 +147,7 @@ interface Data {
                     <p className="text-[#2a2d77] font-bold text-lg mb-1">Ingeniería en Sistemas Computacionales</p>
                     <p className="text-[#ba0d0d] text-sm mb-1">Licenciatura - 01 agosto 1996</p>
                     <p className="text-gray-600 text-sm">Instituto Tecnológico de La Paz</p>
-                </div>
+                </div> */}
             </div>
     
             {/* Tarjetas dinámicas */}
