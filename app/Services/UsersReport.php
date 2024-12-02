@@ -16,13 +16,14 @@ class UsersReport {
     public $request;
     public $format;
     public function __construct(Request $request){
+        $request['format'] = $request['format'] ?? 'xlsx';
         $this->request = $request;
     }
 
     public function query()
     {
         // traemos la info de la bd (aplicando filtros y eso)
-        return User::query()
+        return User::query()->select(((new User())->getFillable()))
         ->with('role')->when(isset($this->request->end_date, $this->request->start_date), function($q){})
         ->get();
     }
@@ -83,6 +84,8 @@ class UsersReport {
             return json_encode($info);
         }
 
+
+        
         // web xml , etc
 
     }

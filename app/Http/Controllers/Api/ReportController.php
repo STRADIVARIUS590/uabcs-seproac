@@ -14,11 +14,7 @@ class ReportController extends Controller
      */
     public function index(Request $request)
     {
-        // $request['start_date'] = now();
-        // $request['end_date'] = now();
-        $request['format'] = 'xlsx';
         return (new UsersReport($request))->make();
-        //
     }
 
     /**
