@@ -14,7 +14,8 @@ export const useProjects = () => {
     const [error, setError] = useState<boolean>(false);
     const [data, setData] = useState<ProjectItem[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
-    const [canModify, setCanModify] = useState<boolean>(true);
+    const [canEdit, setCanEdit] = useState<boolean>(true);
+    const [canDelete, setCanDelete] = useState<boolean>(true);
     const fetchData = async () => {
         const response = await Api.get('/projects?include=user', {
             Authorization: 'Bearer ' + token,
@@ -34,11 +35,16 @@ export const useProjects = () => {
 
     // TODO no retornar con navigate si no retornar un error
     useEffect(() => {
-        if (!user || user_permissions.indexOf("users.get") === -1) {
+        if (!user || user_permissions.indexOf("projects.get") === -1) {
             navigate(-1);
         }
-        if (user && user_permissions.indexOf("users.edit") > -1) {
-            setCanModify(true)
+
+        if (user && user_permissions.indexOf("projects.destroy") > -1) {
+            setCanDelete(true);
+        }
+
+        if (user && user_permissions.indexOf("projects.edit") > -1) {
+            setCanEdit(true)
         }
     }, [user, user_permissions, navigate]);
 
@@ -59,5 +65,5 @@ export const useProjects = () => {
     }
 
     useEffect(() => { fetchData(); }, [])
-    return { data, user, deleteFn, loading, error, canModify }
+    return { data, user, deleteFn, loading, error, canEdit, canDelete }
 }

@@ -4,7 +4,7 @@ import { TableEditDelete } from "@/components/ui/table-edit-delete";
 import { TableSortButton } from "@/components/ui/table-sort-button";
 import { IUser } from "@/store/authSlice";
 
-const section = 'projects'
+const section = 'publications'
 
 export interface PublicationItem {
     id: string;
@@ -147,8 +147,8 @@ const usePublicationsTableColumns = ({ deleteFn, canDelete, canEdit, user }: { d
                 }
                 return (
                     <TableEditDelete
-                        canDelete={canDelete}
-                        canEdit={canEdit}
+                        canDelete={canDelete || deleteSelf}
+                        canEdit={canEdit || editSelf}
                         deleteTitle="Eliminar publicación"
                         deleteQuestion="¿Está seguro que quiere borrar esta publicación?"
                         data={rowOriginalData}

@@ -24,7 +24,7 @@ export interface ProjectItem {
 
 // hay una muy buena razon para la existencia de esto
 // aun no la descubro
-export const useProjectTableColumns = ({ deleteFn, canModify, user }: { deleteFn: (id: number | string) => Promise<void>, canModify: boolean, user: IUser | null }) => {
+export const useProjectTableColumns = ({ deleteFn, canEdit, canDelete, user }: { deleteFn: (id: number | string) => Promise<void>, canEdit: boolean, canDelete: boolean, user: IUser | null }) => {
     const userColumns: ColumnDef<ProjectItem>[] = [
         {
             accessorKey: "id",
@@ -120,12 +120,19 @@ export const useProjectTableColumns = ({ deleteFn, canModify, user }: { deleteFn
                 headerClassName: "bg-red-400"
             },
             cell: ({ row }) => {
+
                 const rowOriginalData = row.original
-                if (!canModify && user?.id != rowOriginalData.id) {
-                    return;
+                let editSelf = false;
+                let deleteSelf = false;
+                if (user?.id == rowOriginalData.user_id) {
+                    editSelf = true;
+                    deleteSelf = true;
                 }
+
                 return (
                     <TableEditDelete
+                        canEdit={canEdit || editSelf}
+                        canDelete={canDelete || deleteSelf}
                         deleteTitle="Eliminar proyecto"
                         deleteQuestion="¿Está seguro que quiere borrar este proyecto?"
                         data={rowOriginalData}

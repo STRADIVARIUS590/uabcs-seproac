@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button'
 
 export const TableSortButton = ({ column, headingText }: { column: Column<any, unknown>, headingText: string }) => {
     return (
+        // todo centar el boton porque se ve feo
         <Button
             className="text-center hover:bg-inherit hover:text-vi-50"
             variant="ghost"

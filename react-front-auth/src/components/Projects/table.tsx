@@ -4,8 +4,8 @@ import { useProjects } from "@/hooks/projects/useProjectsData";
 import { MessageToast } from "../MessageToast";
 
 export const Projects = () => {
-    const { data, deleteFn, loading, error, user, canModify } = useProjects()
-    const { userColumns } = useProjectTableColumns({ deleteFn, user, canModify });
+    const { data, deleteFn, loading, error, user, canDelete, canEdit } = useProjects()
+    const { userColumns } = useProjectTableColumns({ deleteFn, user, canDelete, canEdit });
 
     if (error) {
         <div className="mt-12"> <MessageToast message='Ha ocurrido un error' type="error" /></div>
@@ -21,6 +21,7 @@ export const Projects = () => {
         </div>
     )
 }
+
 // import { useEffect, useState } from "react";
 // import { useSelector } from "react-redux";
 // import { RootState } from "../../store";

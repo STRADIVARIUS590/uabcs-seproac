@@ -4,7 +4,7 @@ import { TableEditDelete } from "@/components/ui/table-edit-delete";
 import { TableSortButton } from "@/components/ui/table-sort-button";
 import { IUser } from "@/store/authSlice";
 
-const section = 'projects'
+const section = 'congresses'
 
 export interface CongressItem {
     id: string | number;
