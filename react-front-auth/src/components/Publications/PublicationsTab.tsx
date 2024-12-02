@@ -43,7 +43,7 @@ export const PublicationsTab = () => {
             loading && <MessageToast message='Cargando...' type="loading" />
         }
         {
-            !error && !loading && <Publications />
+            !error && !loading && <Publications getEndpoint={`/publications?include=user&filter[user_id]=${user?.id}`} />
         }
     </>
 }

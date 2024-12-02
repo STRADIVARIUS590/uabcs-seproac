@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { PublicationItem } from "./usePublicationsColumns";
 
-export const usePublications = () => {
+export const usePublications = (getEndpoint: string) => {
     const { token, user } = useSelector((state: RootState) => state.auth);
     const navigate = useNavigate();
     const user_permissions: string[] = user?.all_permissions || [];
@@ -16,7 +16,7 @@ export const usePublications = () => {
     const [canDelete, setCanDelete] = useState<boolean>(true);
     const fetchData = async () => {
         // const response = await Api.get('/publications?include=user&filter[user_id]=' + user?.id, {
-        const response = await Api.get('/publications?include=user', {
+        const response = await Api.get(getEndpoint, {
             Authorization: 'Bearer ' + token,
             accept: 'application/json'
         })
