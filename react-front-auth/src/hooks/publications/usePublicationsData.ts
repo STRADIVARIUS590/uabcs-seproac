@@ -47,7 +47,7 @@ export const usePublications = () => {
     }, [user, user_permissions, navigate]);
 
     const deleteFn = async (id: number | string) => {
-        const response = Api.delete('/congresses/' + id, {
+        const response = Api.delete('/publications/' + id, {
             Authorization: 'Bearer ' + token,
             accept: 'application/json'
         })
