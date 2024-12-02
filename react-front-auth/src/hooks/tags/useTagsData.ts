@@ -14,7 +14,6 @@ export const useTags = () => {
     const [error, setError] = useState<boolean>(false);
     const [data, setData] = useState<TagItem[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
-    const [canModify, setCanModify] = useState<boolean>(true);
     const fetchData = async () => {
         const response = await Api.get('/tags', {
             Authorization: 'Bearer ' + token,
@@ -34,11 +33,8 @@ export const useTags = () => {
 
     // TODO no retornar con navigate si no retornar un error
     useEffect(() => {
-        if (!user || user_permissions.indexOf("users.get") === -1) {
+        if (!user || user_permissions.indexOf("tags.get") === -1) {
             navigate(-1);
-        }
-        if (user && user_permissions.indexOf("users.edit") > -1) {
-            setCanModify(true)
         }
     }, [user, user_permissions, navigate]);
 
@@ -59,5 +55,5 @@ export const useTags = () => {
     }
 
     useEffect(() => { fetchData(); }, [])
-    return { data, user, deleteFn, fetchData, loading, error, canModify }
+    return { data, user, deleteFn, fetchData, loading, error, canEdit: true, canDelete: true }
 }
