@@ -1,5 +1,5 @@
 "use client"
-import { ColumnDef } from "@tanstack/react-table"
+import { Column, ColumnDef, Row } from "@tanstack/react-table"
 import { TableEditDelete } from "@/components/ui/table-edit-delete";
 import { TableSortButton } from "@/components/ui/table-sort-button";
 import { IUser } from "@/store/authSlice";
@@ -26,7 +26,8 @@ export const useUserTableColumns = ({ deleteUser, canEdit, canDelete, user }: { 
     const userColumns: ColumnDef<UserItem_T>[] = [
         {
             accessorKey: "id",
-            header: ({ column }) => {
+
+            header: ({ column }: { column: Column<UserItem_T, unknown> }) => {
                 return (
                     <TableSortButton column={column} headingText={"ID"} />
                 )
@@ -35,7 +36,7 @@ export const useUserTableColumns = ({ deleteUser, canEdit, canDelete, user }: { 
         },
         {
             accessorKey: "name",
-            header: ({ column }) => {
+            header: ({ column }: { column: Column<UserItem_T, unknown> }) => {
                 return (
                     <TableSortButton column={column} headingText={"Nombre"} />
                 )
@@ -44,7 +45,7 @@ export const useUserTableColumns = ({ deleteUser, canEdit, canDelete, user }: { 
         },
         {
             accessorKey: "email",
-            header: ({ column }) => {
+            header: ({ column }: { column: Column<UserItem_T, unknown> }) => {
                 return (
                     <TableSortButton column={column} headingText={"Correo electrónico"} />
                 )
@@ -53,12 +54,12 @@ export const useUserTableColumns = ({ deleteUser, canEdit, canDelete, user }: { 
         },
         {
             accessorKey: "date_ingreso",
-            header: ({ column }) => {
+            header: ({ column }: { column: Column<UserItem_T, unknown> }) => {
                 return (
                     <TableSortButton column={column} headingText={"Fecha de ingreso"} />
                 )
             },
-            cell: ({ row }) => {
+            cell: ({ row }: { row: Row<UserItem_T> }) => {
                 const date = new Date(row.getValue("date_ingreso"));
                 return <div className="text-center font-medium" >
                     {date.toLocaleDateString()}
@@ -67,12 +68,12 @@ export const useUserTableColumns = ({ deleteUser, canEdit, canDelete, user }: { 
         },
         {
             accessorKey: "birth_date",
-            header: ({ column }) => {
+            header: ({ column }: { column: Column<UserItem_T, unknown> }) => {
                 return (
                     <TableSortButton column={column} headingText={"Fecha de nacimiento"} />
                 )
             },
-            cell: ({ row }) => {
+            cell: ({ row }: { row: Row<UserItem_T> }) => {
                 const date = new Date(row.getValue("date_ingreso"));
                 return <div className="text-center font-medium" >
                     {date.toLocaleDateString()}
@@ -81,12 +82,12 @@ export const useUserTableColumns = ({ deleteUser, canEdit, canDelete, user }: { 
         },
         {
             accessorKey: "sex",
-            header: ({ column }) => {
+            header: ({ column }: { column: Column<UserItem_T, unknown> }) => {
                 return (
                     <TableSortButton column={column} headingText={"Género"} />
                 )
             },
-            cell: ({ row }) => {
+            cell: ({ row }: { row: Row<UserItem_T> }) => {
                 const gender: string = row.getValue("sex");
                 return <div className="text-center font-medium" >
                     {gender}
@@ -95,12 +96,13 @@ export const useUserTableColumns = ({ deleteUser, canEdit, canDelete, user }: { 
         },
         {
             accessorKey: "role",
-            header: ({ column }) => {
+            header: ({ column }: { column: Column<UserItem_T, unknown> }) => {
                 return (
                     <TableSortButton column={column} headingText={"Rol"} />
                 )
             },
-            cell: ({ row }) => {
+
+            cell: ({ row }: { row: Row<UserItem_T> }) => {
                 const role: {
                     id: number;
                     name: string;
@@ -119,7 +121,7 @@ export const useUserTableColumns = ({ deleteUser, canEdit, canDelete, user }: { 
             meta: {
                 headerClassName: "bg-red-400"
             },
-            cell: ({ row }) => {
+            cell: ({ row }: { row: Row<UserItem_T> }) => {
                 const rowUser = row.original
                 let editSelf = false;
                 let deleteSelf = false;
