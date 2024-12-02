@@ -22,15 +22,17 @@ class PermissionSeeder extends Seeder
 
         $permissions = [
             [   'name' => 'users.add',
-                'roles' => [ 'Sistemas', 'Admin' ],
+                'roles' => [ 'Sistemas', 'Admin', 'Profesor'],
             ],
             [   'name' => 'users.get',
                 'roles' => [ 'Sistemas', 'Admin' ]
             ],
             [   'name' => 'users.destroy',
-                'roles' => [ 'Sistemas' ] ],
+                'roles' => [ 'Sistemas' ] 
+            ],
             [   'name' => 'users.edit',
-                'roles' => [ 'Sistemas' ] ],
+                'roles' => [ 'Sistemas' ] 
+            ],
             
 
 
@@ -48,26 +50,71 @@ class PermissionSeeder extends Seeder
             ],
 
 
-
+            /// PRODUCCION ACADEMICA
             [   'name' => 'congresses.add',
-                'roles' => [ 'Sistemas', 'Admin' ],
+                'roles' => [ 'Sistemas', 'Admin', 'Profesor'],
             ],
             [   'name' => 'congresses.get',
-                'roles' => [ 'Sistemas', 'Admin' ],
+                'roles' => [ 'Sistemas', 'Admin', 'Profesor'],
             ],
             [   'name' => 'congresses.destroy',
-                'roles' => [ 'Sistemas' ]
+                'roles' => [ 'Sistemas', 'Profesor' ]
             ],
             [   'name' => 'congresses.edit',
                 'roles' => [ 'Sistemas' ]
             ],
 
 
-            [   'name' => 'academic-grades.add',
+            [   'name' => 'publications.add',
+                'roles' => [ 'Sistemas', 'Admin', 'Profesor' ],
+            ],
+             [   'name' => 'publications.get',
+                'roles' => [ 'Sistemas' ]
+            ],
+            [   'name' => 'publications.destroy',
+                'roles' => [ 'Sistemas' ]
+            ],
+            [   'name' => 'publications.edit',
+                'roles' => [ 'Sistemas', 'Profesor' ]
+            ],
+            
+
+            [   'name' => 'projects.add',
                 'roles' => [ 'Sistemas', 'Admin' ],
             ],
-             [   'name' => 'academic-grades.get',
+             [   'name' => 'projects.get',
+                'roles' => [ 'Sistemas', 'Profesor' ]
+            ],
+            [   'name' => 'projects.destroy',
                 'roles' => [ 'Sistemas' ]
+            ],
+            [   'name' => 'projects.edit',
+                'roles' => [ 'Sistemas', 'Profesor' ]
+            ],
+
+
+
+            [   'name' => 'courses.add',
+                'roles' => [ 'Sistemas', 'Admin' ],
+            ],
+             [   'name' => 'courses.get',
+                'roles' => [ 'Sistemas' ]
+            ],
+            [   'name' => 'courses.destroy',
+                'roles' => [ 'Sistemas' ]
+            ],
+            [   'name' => 'courses.edit',
+                'roles' => [ 'Sistemas', 'Profesor' ]
+            ],
+
+
+            ///<< PRODUCCION ACADEMICA
+
+            [   'name' => 'academic-grades.add',
+                'roles' => [ 'Sistemas', 'Admin', 'Profesor' ],
+            ],
+             [   'name' => 'academic-grades.get',
+                'roles' => [ 'Sistemas', 'Profesor' ]
             ],
             [   'name' => 'academic-grades.destroy',
                 'roles' => [ 'Sistemas' ]
@@ -91,48 +138,6 @@ class PermissionSeeder extends Seeder
             ],
 
 
-            [   'name' => 'publications.add',
-                'roles' => [ 'Sistemas', 'Admin' ],
-            ],
-             [   'name' => 'publications.get',
-                'roles' => [ 'Sistemas' ]
-            ],
-            [   'name' => 'publications.destroy',
-                'roles' => [ 'Sistemas' ]
-            ],
-            [   'name' => 'publications.edit',
-                'roles' => [ 'Sistemas' ]
-            ],
-            
-
-            [   'name' => 'projects.add',
-                'roles' => [ 'Sistemas', 'Admin' ],
-            ],
-             [   'name' => 'projects.get',
-                'roles' => [ 'Sistemas' ]
-            ],
-            [   'name' => 'projects.destroy',
-                'roles' => [ 'Sistemas' ]
-            ],
-            [   'name' => 'projects.edit',
-                'roles' => [ 'Sistemas' ]
-            ],
-
-
-
-            [   'name' => 'courses.add',
-                'roles' => [ 'Sistemas', 'Admin' ],
-            ],
-             [   'name' => 'courses.get',
-                'roles' => [ 'Sistemas' ]
-            ],
-            [   'name' => 'courses.destroy',
-                'roles' => [ 'Sistemas' ]
-            ],
-            [   'name' => 'courses.edit',
-                'roles' => [ 'Sistemas' ]
-            ],
-
             [   'name' => 'roles.add',
                 'roles' => [ 'Sistemas', 'Admin' ],
             ],
@@ -147,12 +152,6 @@ class PermissionSeeder extends Seeder
             ],
 
 
-
-        
-
-
-
-
         ];
         $role_sistemas = Role::create(['name' => 'Sistemas', 
         // 'guard_name'=> 'api'
@@ -160,6 +159,20 @@ class PermissionSeeder extends Seeder
         $role_admin = Role::create(['name' => 'Admin',
         //  'guard_name' => 'api'
         ]);
+
+         $role_admin = Role::create(['name' => 'Profesor',
+        //  'guard_name' => 'api'
+        ]);
+
+         $role_admin = Role::create(['name' => 'Coordinador',
+        //  'guard_name' => 'api'
+        ]);
+
+
+     
+
+
+
 
         foreach($permissions as $permission){
             $p = Permission::create([

@@ -36,13 +36,22 @@ class UserSeeder extends Seeder
             'role_id' => 2,
         ],
         [
-            'name' => 'Andrea',
-            'email' => 'alucero_21@alu.uabcs.mx',
+            'name' => 'Marcos',
+            'email' => 'masrcons_21@alu.uabcs.mx',
             'password' => bcrypt('1234567890'),
             'birth_date' => Carbon::parse('07-09-2003'),
             'date_ingreso' => Carbon::parse('28-11-1999'),
-            'role_id' => 2,
+            'role_id' => 3,
         ],
+        [
+            'name' => 'Hazael',
+            'email' => 'hazaels_21@alu.uabcs.mx',
+            'password' => bcrypt('1234567890'),
+            'birth_date' => Carbon::parse('07-09-2003'),
+            'date_ingreso' => Carbon::parse('28-11-1999'),
+            'role_id' => 4,
+        ],
+        
         ];
 
         $users = [];
