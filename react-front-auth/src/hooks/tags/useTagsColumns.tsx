@@ -1,5 +1,5 @@
 "use client"
-import { ColumnDef } from "@tanstack/react-table"
+import { Column, ColumnDef, Row } from "@tanstack/react-table"
 import { TableEditDelete } from "@/components/ui/table-edit-delete";
 import { TableSortButton } from "@/components/ui/table-sort-button";
 import { TagForm } from "@/components/Tags/tag-form";
@@ -19,7 +19,8 @@ export const useTagsTableColumns = ({ deleteFn, updateFn, canDelete, canEdit }: 
     const userColumns: ColumnDef<TagItem>[] = [
         {
             accessorKey: "id",
-            header: ({ column }) => {
+
+            header: ({ column }: { column: Column<TagItem, unknown> }) => {
                 return (
                     <TableSortButton column={column} headingText={"ID"} />
                 )
@@ -28,7 +29,7 @@ export const useTagsTableColumns = ({ deleteFn, updateFn, canDelete, canEdit }: 
         },
         {
             accessorKey: "name",
-            header: ({ column }) => {
+            header: ({ column }: { column: Column<TagItem, unknown> }) => {
                 return (
                     <TableSortButton column={column} headingText={"Nombre"} />
                 )
@@ -37,7 +38,7 @@ export const useTagsTableColumns = ({ deleteFn, updateFn, canDelete, canEdit }: 
         },
         {
             accessorKey: "slug",
-            header: ({ column }) => {
+            header: ({ column }: { column: Column<TagItem, unknown> }) => {
                 return (
                     <TableSortButton column={column} headingText={"Descripción"} />
                 )
@@ -50,7 +51,7 @@ export const useTagsTableColumns = ({ deleteFn, updateFn, canDelete, canEdit }: 
             meta: {
                 headerClassName: "bg-red-400"
             },
-            cell: ({ row }) => {
+            cell: ({ row }: { row: Row<TagItem> }) => {
                 const rowOriginalData = row.original
                 return (
                     <TableEditDelete

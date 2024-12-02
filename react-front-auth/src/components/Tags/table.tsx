@@ -2,10 +2,8 @@ import { DataTable } from "@/components/ui/data-table";
 import { MessageToast } from "../MessageToast";
 import { useTags } from "@/hooks/tags/useTagsData";
 import useTagsTableColumns from "@/hooks/tags/useTagsColumns";
-import { Link } from "react-router-dom"
 import {
     Dialog,
-    DialogClose,
     DialogContent,
     DialogTrigger,
 } from "@/components/ui/dialog"
@@ -25,11 +23,6 @@ export const Tags = () => {
             <DialogContent className="sm:max-w-md">
                 <ModalContent title={"Etiquetas"} description={""}>
                     <TagForm updateFn={updateFn} isEditMode={false} />
-                    <DialogClose asChild>
-                        <Button type="button" className=" bg-vi-100 hover:bg-vi-400 active:bg-vi-400  text-vi-500 hover:text-vi-50 active:text-vi-50 rounded-md h-fit px-4 py-1" variant="secondary">
-                            Cancelar
-                        </Button>
-                    </DialogClose>
                 </ModalContent>
             </DialogContent>
         </Dialog>
