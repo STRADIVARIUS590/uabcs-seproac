@@ -17,6 +17,7 @@ import { useState } from "react"
 import TableContent from "../ui/table-content"
 import TableInputFilter from "../ui/table-input-filter"
 import TableNextPrev from "../ui/table-next-prev"
+import { Link } from "react-router-dom"
 // import TableVisibility from "../ui/table-visibility"
 
 interface DataTableProps<TData, TValue> {
@@ -24,6 +25,8 @@ interface DataTableProps<TData, TValue> {
     data: TData[]
     loading: boolean
     error: boolean
+    addButton?: React.ReactNode;
+    isModal?: boolean
     filterField: string
     filterPlaceholder: string
 }
@@ -35,6 +38,7 @@ export function DataTable<TData, TValue>({
     error,
     filterField,
     filterPlaceholder,
+    addButton
 }: DataTableProps<TData, TValue>) {
     const [sorting, setSorting] = useState<SortingState>([]);
     const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
@@ -62,7 +66,13 @@ export function DataTable<TData, TValue>({
 
     return (
         <div className="md:w-full space-y-4">
-            <TableInputFilter<string> table={table} field={filterField} placeholder={filterPlaceholder} />
+            <div className="flex flex-col  md:flex-row md:items-center space-y-3 md:space-y-0 md:space-x-8">
+                <TableInputFilter<string> table={table} field={filterField} placeholder={filterPlaceholder} />
+                {
+                    addButton ||
+                    <Link to={`./edit`} className="bg-vi-200 hover:bg-vi-400 active:bg-vi-400  text-vi-900 hover:text-vi-50 active:text-vi-50 rounded-md h-fit px-4 py-1">Agregar</Link>
+                }
+            </div>
             <div className="rounded-md">
                 <TableContent table={table} loading={loading} error={error} />
             </div>

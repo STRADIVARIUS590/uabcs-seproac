@@ -13,7 +13,7 @@ export default function TableInputFilter<InputType extends string | number | rea
         <Input placeholder={placeholder}
             value={(table.getColumn(field)?.getFilterValue() as (InputType)) ?? ""}
             onChange={(event) => table.getColumn(field)?.setFilterValue(event.target.value)}
-            className="w-11/12 md:w-1/4 focus-visible:ring-vi-500 focus-visible:border-none"
+            className="md:w-1/4 focus-visible:ring-vi-500 focus-visible:border-none"
         />
     )
 }

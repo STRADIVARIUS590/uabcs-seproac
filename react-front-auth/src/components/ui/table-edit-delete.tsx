@@ -24,6 +24,7 @@ interface EditDeleteActionProps {
     editTitle?: string
     isEditModal?: boolean;
     editModalContent?: React.ReactNode;
+
 }
 
 export const TableEditDelete = ({ data, section, deleteFn, deleteTitle, canEdit, canDelete, deleteQuestion, isEditModal, editTitle, editModalContent }: EditDeleteActionProps) => {

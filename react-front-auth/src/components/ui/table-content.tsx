@@ -19,7 +19,7 @@ export default function TableContent({ table, loading, error }: { table: ReactTa
                     <TableRow key={headerGroup.id} className="">
                         {headerGroup.headers.map((header) => {
                             return (
-                                <TableHead key={header.id} className="text-snow-50 font-medium bg-vi-500">
+                                <TableHead key={header.id} className="text-snow-50 font-medium bg-vi-900">
                                     {header.isPlaceholder
                                         ? null
                                         : flexRender(

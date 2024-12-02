@@ -61,7 +61,7 @@ export const TagForm = ({ data, updateFn, isEditMode, }: Props) => {
             <Formik initialValues={initialValues} enableReinitialize onSubmit={handleSubmit} validationSchema={validationSchema}>
                 {() => (
                     <Form className="space-y-6">
-                        <h2>Actualizar etiqueta</h2>
+                        <h2>{(isEditMode) ? "Actualizar etiqueta" : "Agregar etiqueta"}</h2>
                         <DefaultInput name="name" label="Nombre" />
                         <DefaultInput name="slug" label="Slug" />
                         <div className="flex items-center justify-around p-6 border-t border-solid border-blueGray-200 rounded-b">

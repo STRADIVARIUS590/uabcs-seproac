@@ -81,15 +81,6 @@ const usePublicationsTableColumns = ({ deleteFn, canDelete, canEdit, user }: { d
             },
         },
         {
-            accessorKey: "magazine_name",
-            header: ({ column }) => {
-                return (
-                    <TableSortButton column={column} headingText={"Revista"} />
-                )
-
-            },
-        },
-        {
             accessorKey: "user",
             header: ({ column }) => {
                 return (

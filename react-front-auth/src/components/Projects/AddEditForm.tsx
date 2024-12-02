@@ -38,17 +38,17 @@ interface ProjectItem {
 
 interface UserItem {
     name: string;
-    id: string 
+    id: string
 }
 export const AddEditForm = () => {
-    
-      // MIDDLEWARE
+
+    // MIDDLEWARE
     const { token, user } = useSelector((state: RootState) => state.auth);
-    
+
     const { id } = useParams<{ id?: string }>();
-    
+
     const navigate = useNavigate();
-    
+
     const user_permissions: string[] = user?.all_permissions || [];
 
     const [tags, setTags] = useState<TagItem[]>();
@@ -59,13 +59,13 @@ export const AddEditForm = () => {
     }, [user, user_permissions, navigate]);
 
     // INITIALIZE
-   
+
     const [loading, setLoading] = useState<boolean>(true);
-    
+
     const [error, setError] = useState<boolean>(false);
 
     const [data, setData] = useState<ProjectItem>();
-    
+
     const [users, setUsers] = useState<UserItem[]>([]);
     const loadData = async () => {
         if (id) {
@@ -78,22 +78,22 @@ export const AddEditForm = () => {
         }
 
         const response = await Api.get('/users', {
-                Authorization: "Bearer " + token,
-                accept: "application/json",
-            })
+            Authorization: "Bearer " + token,
+            accept: "application/json",
+        })
 
-            
+
         const result: UserItem[] = await response.data;
 
         const response_tags = await Api.get('/tags', {
             Authorization: "Bearer " + token,
             accept: "application/json",
         });
-        
+
         const result_tags: TagItem[] = await response_tags.data;
-        
+
         setTags(result_tags);
-        
+
         setUsers(result);
 
         setLoading(false);
@@ -110,7 +110,7 @@ export const AddEditForm = () => {
         id: data?.id || 0,
         name: data?.name || "",
         description: data?.description || "",
-        user_id: data?.user_id || 1, 
+        user_id: data?.user_id || 1,
         objetives: data?.objetives || "",
         colaborators: data?.colaborators || "",
         start_date: data?.start_date || "",
@@ -120,219 +120,219 @@ export const AddEditForm = () => {
         tags: data?.tags?.map(tag => tag.id) || [],
         user: {
             name: data?.user?.name || "",
-            }
+        }
     }
 
     const isEditMode = !!id;
 
-       // HANDLE
-    const handleSubmit = async (values: typeof initialValues, { setFieldError }: FormikHelpers<typeof initialValues> ) => {
+    // HANDLE
+    const handleSubmit = async (values: typeof initialValues, { setFieldError }: FormikHelpers<typeof initialValues>) => {
         console.error(JSON.stringify(values));
-        
+
         const response = isEditMode
-        ? await Api.put(`/projects`, values, {
-            Authorization: `Bearer ${token}`,
-            'Content-Type': 'application/json',
-        })
-        : await Api.post(`/projects`, values, {
-            Authorization: `Bearer ${token}`,
-            'Content-Type': 'application/json',
-        });
+            ? await Api.put(`/projects`, values, {
+                Authorization: `Bearer ${token}`,
+                'Content-Type': 'application/json',
+            })
+            : await Api.post(`/projects`, values, {
+                Authorization: `Bearer ${token}`,
+                'Content-Type': 'application/json',
+            });
         console.error(response);
-        
-    if (response.statusCode === 200) {
-        navigate('/projects');
-    } else {
-        const errors = response.data as { [key: string]: string[] };
-        Object.entries(errors).forEach(([field, messages]) => {
-            setFieldError(field, messages[0]);
-        });
-    }
+
+        if (response.statusCode === 200) {
+            navigate('/projects');
+        } else {
+            const errors = response.data as { [key: string]: string[] };
+            Object.entries(errors).forEach(([field, messages]) => {
+                setFieldError(field, messages[0]);
+            });
+        }
     };
-   
-    if(error){       return<div className="mt-12"> <MessageToast message='Ha ocurrido un error' type="error"/></div>}
-    if(loading){     return <div className="mt-12"> <MessageToast message='Cargando...' type="loading"/></div>  }
 
-    return ( <div> 
-        <h1>{isEditMode ? 'Editar Proyecto' : 'Agregar Proyecto'}</h1> 
-    <Formik 
-      initialValues={initialValues}
-      validationSchema={validationSchema}
-      onSubmit={handleSubmit} 
-    >
-      {({ isSubmitting }) => (
-        <Form>
-          <input type="hidden"  name='id'/>
+    if (error) { return <div className="mt-12"> <MessageToast message='Ha ocurrido un error' type="error" /></div> }
+    if (loading) { return <div className="mt-12"> <MessageToast message='Cargando...' type="loading" /></div> }
 
-          <section className="py-12 bg-gray-100 dark:bg-gray-800">
-            <div className="container mx-auto">
-                <h1 className="text-3xl font-semibold text-gray-800 dark:text-gray-100 mb-8 text-center">
-                {isEditMode ? 'Editar Proyecto' : 'Agregar Proyecto'}
-                </h1>
-                <Formik
-                initialValues={initialValues}
-                validationSchema={validationSchema}
-                onSubmit={handleSubmit}
-                >
-                {({ isSubmitting }) => (
-                    <Form className="bg-white dark:bg-gray-700 shadow-lg rounded-lg p-6 md:p-8">
-                        <div className="flex flex-wrap">
-                            {/* Nombre y Descripción */}
-                            <DefaultColumn>
-                                <DefaultInput
-                                    name="name"
-                                    label="Nombre"
-                                    className="mb-4"
-                                    inputClass="w-full bg-gray-50 dark:bg-gray-900 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
-                                />
-                                <DefaultInput
-                                    name="description"
-                                    label="Descripción"
-                                    className="mb-4"
-                                    inputClass="w-full bg-gray-50 dark:bg-gray-900 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
-                                />
-                            </DefaultColumn>
+    return (<div>
+        <h1>{isEditMode ? 'Editar Proyecto' : 'Agregar Proyecto'}</h1>
+        <Formik
+            initialValues={initialValues}
+            validationSchema={validationSchema}
+            onSubmit={handleSubmit}
+        >
+            {({ isSubmitting }) => (
+                <Form>
+                    <input type="hidden" name='id' />
 
-                            {/* Objetivos y Colaboradores */}
-                            <DefaultColumn>
-                                <DefaultInput
-                                    name="objetives"
-                                    label="Objetivos"
-                                    className="mb-4"
-                                    inputClass="w-full bg-gray-50 dark:bg-gray-900 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
-                                />
-                                <DefaultInput
-                                    name="colaborators"
-                                    label="Colaboradores"
-                                    className="mb-4"
-                                    inputClass="w-full bg-gray-50 dark:bg-gray-900 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
-                                />
-                            </DefaultColumn>
+                    <section className="py-12 bg-gray-100 dark:bg-gray-800">
+                        <div className="container mx-auto">
+                            <h1 className="text-3xl font-semibold text-gray-800 dark:text-gray-100 mb-8 text-center">
+                                {isEditMode ? 'Editar Proyecto' : 'Agregar Proyecto'}
+                            </h1>
+                            <Formik
+                                initialValues={initialValues}
+                                validationSchema={validationSchema}
+                                onSubmit={handleSubmit}
+                            >
+                                {({ isSubmitting }) => (
+                                    <Form className="bg-white dark:bg-gray-700 shadow-lg rounded-lg p-6 md:p-8">
+                                        <div className="flex flex-wrap">
+                                            {/* Nombre y Descripción */}
+                                            <DefaultColumn>
+                                                <DefaultInput
+                                                    name="name"
+                                                    label="Nombre"
+                                                    className="mb-4"
+                                                    inputClass="w-full bg-gray-50 dark:bg-gray-900 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
+                                                />
+                                                <DefaultInput
+                                                    name="description"
+                                                    label="Descripción"
+                                                    className="mb-4"
+                                                    inputClass="w-full bg-gray-50 dark:bg-gray-900 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
+                                                />
+                                            </DefaultColumn>
 
-                            {/* Fechas */}
-                            <DefaultColumn>
-                                <DefaultInput
-                                    name="start_date"
-                                    label="Fecha de Inicio"
-                                    type="date"
-                                    className="mb-4"
-                                    inputClass="w-full bg-gray-50 dark:bg-gray-900 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
-                                />
-                                <DefaultInput
-                                    name="end_date"
-                                    label="Fecha de Fin"
-                                    type="date"
-                                    className="mb-4"
-                                    inputClass="w-full bg-gray-50 dark:bg-gray-900 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
-                                />
-                            </DefaultColumn>
+                                            {/* Objetivos y Colaboradores */}
+                                            <DefaultColumn>
+                                                <DefaultInput
+                                                    name="objetives"
+                                                    label="Objetivos"
+                                                    className="mb-4"
+                                                    inputClass="w-full bg-gray-50 dark:bg-gray-900 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
+                                                />
+                                                <DefaultInput
+                                                    name="colaborators"
+                                                    label="Colaboradores"
+                                                    className="mb-4"
+                                                    inputClass="w-full bg-gray-50 dark:bg-gray-900 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
+                                                />
+                                            </DefaultColumn>
 
-                            {/* Usuario */}
-                            <DefaultColumn>
-                                <label
-                                    htmlFor="user_id"
-                                    className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
-                                >
-                                    Usuario
-                                </label>
-                                <Field
-                                    as="select"
-                                    name="user_id"
-                                    className="w-full rounded-md border border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-900 shadow-sm focus:ring-2 focus:ring-primary focus:border-primary"
-                                >
-                                    {users.map((user) => (
-                                        <option key={user.id} value={user.id}>
-                                            {user.name}
-                                        </option>
-                                    ))}
-                                </Field>
-                                <ErrorMessage
-                                    name="user_id"
-                                    component="div"
-                                    className="text-red-500 text-sm mt-1"
-                                />
-                            </DefaultColumn>
+                                            {/* Fechas */}
+                                            <DefaultColumn>
+                                                <DefaultInput
+                                                    name="start_date"
+                                                    label="Fecha de Inicio"
+                                                    type="date"
+                                                    className="mb-4"
+                                                    inputClass="w-full bg-gray-50 dark:bg-gray-900 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
+                                                />
+                                                <DefaultInput
+                                                    name="end_date"
+                                                    label="Fecha de Fin"
+                                                    type="date"
+                                                    className="mb-4"
+                                                    inputClass="w-full bg-gray-50 dark:bg-gray-900 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
+                                                />
+                                            </DefaultColumn>
 
-                            {/* Tipo y Periodo */}
-                            <DefaultColumn>
-                                <DefaultInput
-                                    type="number"
-                                    name="type"
-                                    label="Tipo"
-                                    className="mb-4"
-                                    inputClass="w-full bg-gray-50 dark:bg-gray-900 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
-                                />
-                                <DefaultInput
-                                    name="period"
-                                    label="Periodo"
-                                    className="mb-4"
-                                    inputClass="w-full bg-gray-50 dark:bg-gray-900 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
-                                />
-                            </DefaultColumn>
+                                            {/* Usuario */}
+                                            <DefaultColumn>
+                                                <label
+                                                    htmlFor="user_id"
+                                                    className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
+                                                >
+                                                    Usuario
+                                                </label>
+                                                <Field
+                                                    as="select"
+                                                    name="user_id"
+                                                    className="w-full rounded-md border border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-900 shadow-sm focus:ring-2 focus:ring-primary focus:border-primary"
+                                                >
+                                                    {users.map((user) => (
+                                                        <option key={user.id} value={user.id}>
+                                                            {user.name}
+                                                        </option>
+                                                    ))}
+                                                </Field>
+                                                <ErrorMessage
+                                                    name="user_id"
+                                                    component="div"
+                                                    className="text-red-500 text-sm mt-1"
+                                                />
+                                            </DefaultColumn>
 
-                            {/* Tags */}
-                            <DefaultColumn>
-                                <FieldArray
-                                    name="tags"
-                                    render={(arrayHelpers) => (
-                                        <div>
-                                            <h3 className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                                                Etiquetas
-                                            </h3>
-                                            {tags?.map((tag, index) => (
-                                                <div key={index} className="flex items-center mb-2">
-                                                    <Field
-                                                        type="checkbox"
-                                                        name="tags"
-                                                        value={tag.id}
-                                                        className="w-4 h-4 text-primary border-gray-300 dark:border-gray-600 rounded focus:ring-2 focus:ring-primary"
-                                                        checked={arrayHelpers.form.values.tags.includes(tag.id)}
-                                                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                                                            if (e.target.checked) {
-                                                                arrayHelpers.push(tag.id);
-                                                            } else {
-                                                                const idx = arrayHelpers.form.values.tags.indexOf(tag.id);
-                                                                if (idx !== -1) arrayHelpers.remove(idx);
-                                                            }
-                                                        }}
-                                                    />
-                                                    <label className="ml-2 text-sm text-gray-700 dark:text-gray-300">
-                                                        {tag.name}
-                                                    </label>
-                                                </div>
-                                            ))}
+                                            {/* Tipo y Periodo */}
+                                            <DefaultColumn>
+                                                <DefaultInput
+                                                    type="number"
+                                                    name="type"
+                                                    label="Tipo"
+                                                    className="mb-4"
+                                                    inputClass="w-full bg-gray-50 dark:bg-gray-900 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
+                                                />
+                                                <DefaultInput
+                                                    name="period"
+                                                    label="Periodo"
+                                                    className="mb-4"
+                                                    inputClass="w-full bg-gray-50 dark:bg-gray-900 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
+                                                />
+                                            </DefaultColumn>
+
+                                            {/* Tags */}
+                                            <DefaultColumn>
+                                                <FieldArray
+                                                    name="tags"
+                                                    render={(arrayHelpers) => (
+                                                        <div>
+                                                            <h3 className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                                                                Etiquetas
+                                                            </h3>
+                                                            {tags?.map((tag, index) => (
+                                                                <div key={index} className="flex items-center mb-2">
+                                                                    <Field
+                                                                        type="checkbox"
+                                                                        name="tags"
+                                                                        value={tag.id}
+                                                                        className="w-4 h-4 text-primary border-gray-300 dark:border-gray-600 rounded focus:ring-2 focus:ring-primary"
+                                                                        checked={arrayHelpers.form.values.tags.includes(tag.id)}
+                                                                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                                                                            if (e.target.checked) {
+                                                                                arrayHelpers.push(tag.id);
+                                                                            } else {
+                                                                                const idx = arrayHelpers.form.values.tags.indexOf(tag.id);
+                                                                                if (idx !== -1) arrayHelpers.remove(idx);
+                                                                            }
+                                                                        }}
+                                                                    />
+                                                                    <label className="ml-2 text-sm text-gray-700 dark:text-gray-300">
+                                                                        {tag.name}
+                                                                    </label>
+                                                                </div>
+                                                            ))}
+                                                        </div>
+                                                    )}
+                                                />
+                                            </DefaultColumn>
                                         </div>
-                                    )}
-                                />
-                            </DefaultColumn>
+
+                                        {/* Botón de acción */}
+                                        <div className="mt-6 text-right">
+                                            <button
+                                                type="submit"
+                                                disabled={isSubmitting}
+                                                className="px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg shadow-lg hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-200"
+                                            >
+                                                {isEditMode ? 'Actualizar' : 'Agregar'}
+                                            </button>
+                                        </div>
+                                    </Form>
+                                )}
+                            </Formik>
                         </div>
+                    </section>
 
-                    {/* Botón de acción */}
-                    <div className="mt-6 text-right">
-                        <button
-                        type="submit"
-                        disabled={isSubmitting}
-                        className="px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg shadow-lg hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-200"
-                        >
-                        {isEditMode ? 'Actualizar' : 'Agregar'}
-                        </button>
-                    </div>
-                    </Form>
-                )}
-                </Formik>
-            </div>
-            </section>
 
-   
-            {/* <div>
+                    {/* <div>
                 <button type="submit" disabled={isSubmitting}>
                     {isEditMode ? "Update" : "Add"}
                 </button>
             </div> */}
-        </Form>
-        )}
-</Formik>
-</div>)
+                </Form>
+            )}
+        </Formik>
+    </div>)
                 /* <input type="hidden" name="id" />
                     <div>
                         <label htmlFor="name">Nombre</label>
@@ -351,7 +351,7 @@ export const AddEditForm = () => {
                         <Field name="objetives" type="text" />
                         <ErrorMessage name="objetives" component="div" style={{ color: "red" }} />
                     </div>
-                        
+
                     <div>
                         <label htmlFor="colaborators">Colaboradores</label>
                         <Field name="colaborators" type="text" />
@@ -369,7 +369,7 @@ export const AddEditForm = () => {
                         <Field name="end_date" type="date" />
                         <ErrorMessage name="end_date" component="div" style={{ color: "red" }} />
                     </div>
-                        
+
                     <div>
                         <label htmlFor="type">Tipo</label>
                         <Field name="type" type="text" />
@@ -386,7 +386,7 @@ export const AddEditForm = () => {
                     <label htmlFor="user_id">Usuario</label>
                     <Field as="select" name="user_id">
                         <option value="">Select a user</option> {/* Default empty option */}
-                        {/* {users.map((user) => (
+{/* {users.map((user) => (
                         <option key={user.id} value={user.id}>
                             {user.name}
                         </option>
@@ -402,6 +402,6 @@ export const AddEditForm = () => {
                         </button>
                     </div>
                     )} */}
-            {/* </Form>   */}
-    
-    {/* </Formik> <div/> */}
+{/* </Form>   */ }
+
+{/* </Formik> <div/> */ }
