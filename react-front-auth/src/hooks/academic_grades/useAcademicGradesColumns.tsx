@@ -1,5 +1,5 @@
 "use client"
-import { ColumnDef } from "@tanstack/react-table"
+import { Column, ColumnDef, Row } from "@tanstack/react-table"
 import { TableEditDelete } from "@/components/ui/table-edit-delete";
 import { TableSortButton } from "@/components/ui/table-sort-button";
 import { IUser } from "@/store/authSlice";
@@ -26,7 +26,8 @@ const useAcademicGradesTableColumns = ({ deleteFn, canEdit, canDelete, user }: {
     const userColumns: ColumnDef<AcademicGradeItem>[] = [
         {
             accessorKey: "id",
-            header: ({ column }) => {
+            header: ({ column }: { column: Column<AcademicGradeItem, unknown> }) => {
+
                 return (
                     <TableSortButton column={column} headingText={"ID"} />
                 )
@@ -35,7 +36,7 @@ const useAcademicGradesTableColumns = ({ deleteFn, canEdit, canDelete, user }: {
         },
         {
             accessorKey: "name",
-            header: ({ column }) => {
+            header: ({ column }: { column: Column<AcademicGradeItem, unknown> }) => {
                 return (
                     <TableSortButton column={column} headingText={"Nombre"} />
                 )
@@ -44,12 +45,13 @@ const useAcademicGradesTableColumns = ({ deleteFn, canEdit, canDelete, user }: {
         },
         {
             accessorKey: "user",
-            header: ({ column }) => {
+            header: ({ column }: { column: Column<AcademicGradeItem, unknown> }) => {
                 return (
                     <TableSortButton column={column} headingText={"Usuario"} />
                 )
             },
-            cell: ({ row }) => {
+
+            cell: ({ row }: { row: Row<AcademicGradeItem> }) => {
                 const user: {
                     name: string;
                 } = row.getValue("user");
@@ -63,12 +65,12 @@ const useAcademicGradesTableColumns = ({ deleteFn, canEdit, canDelete, user }: {
         },
         {
             accessorKey: "titulation_date",
-            header: ({ column }) => {
+            header: ({ column }: { column: Column<AcademicGradeItem, unknown> }) => {
                 return (
                     <TableSortButton column={column} headingText={"Fecha de titulación"} />
                 )
             },
-            cell: ({ row }) => {
+            cell: ({ row }: { row: Row<AcademicGradeItem> }) => {
                 const date = new Date(row.getValue("titulation_date"));
                 return <div className="text-center font-medium" >
                     {date.toLocaleDateString()}
@@ -77,12 +79,12 @@ const useAcademicGradesTableColumns = ({ deleteFn, canEdit, canDelete, user }: {
         },
         {
             accessorKey: "institution",
-            header: ({ column }) => {
+            header: ({ column }: { column: Column<AcademicGradeItem, unknown> }) => {
                 return (
                     <TableSortButton column={column} headingText={"Institución"} />
                 )
             },
-            cell: ({ row }) => {
+            cell: ({ row }: { row: Row<AcademicGradeItem> }) => {
                 const institution: {
                     name: string;
                 } = row.getValue("institution");
@@ -100,7 +102,7 @@ const useAcademicGradesTableColumns = ({ deleteFn, canEdit, canDelete, user }: {
             meta: {
                 headerClassName: "bg-red-400"
             },
-            cell: ({ row }) => {
+            cell: ({ row }: { row: Row<AcademicGradeItem> }) => {
                 const rowOriginalData = row.original
                 let editSelf = false;
                 let deleteSelf = false;
