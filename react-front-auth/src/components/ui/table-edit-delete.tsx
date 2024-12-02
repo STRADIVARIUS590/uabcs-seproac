@@ -17,20 +17,42 @@ interface EditDeleteActionProps {
     data: Data_T;
     section: string;
     deleteFn: (id: number | string) => Promise<any>;
+    deleteTitle: string
+    deleteQuestion: string
+    editTitle?: string
+    isEditModal?: boolean;
+    editModalContent?: React.ReactNode;
 }
 
-export const TableEditDelete = ({ data, section, deleteFn }: EditDeleteActionProps) => {
+export const TableEditDelete = ({ data, section, deleteFn, deleteTitle, deleteQuestion, isEditModal, editTitle, editModalContent }: EditDeleteActionProps) => {
+    const editAction = (isEditModal)
+        ?
+        <div className={`flex flex-col space-y-2  justify-center`}>
+            <Dialog>
+                <DialogTrigger asChild >
+                    <Button className="bg-vi-100 hover:bg-vi-400 active:bg-vi-400  text-vi-500 hover:text-vi-50 active:text-vi-50 rounded-md h-fit px-4 py-1">Editar</Button>
+                </DialogTrigger>
+                <DialogContent className="sm:max-w-md">
+                    <ModalContent title={editTitle} description={""}>
+                        {editModalContent}
+                    </ModalContent>
+                </DialogContent>
+            </Dialog>
+        </div>
+        :
+        <Link to={`/${section}/edit/${data.id}`} className="bg-vi-100  text-vi-500 px-4 py-1 rounded-md hover:bg-vi-400 hover:text-vi-50 active:bg-vi-400 active:text-vi-50" type="button">Editar</Link>
+
     return (
         <div className={`flex flex-col space-y-2  justify-center`}>
-            <Link to={`/${section}/edit/${data.id}`} className="bg-vi-100  text-vi-500 px-4 py-1 rounded-md hover:bg-vi-400 hover:text-vi-50 active:bg-vi-400 active:text-vi-50" type="button">Editar</Link>
+            {editAction}
             <Dialog>
                 <DialogTrigger asChild >
                     <Button className="bg-red-100 hover:bg-red-400 active:bg-red-400  text-red-500 hover:text-vi-50 active:text-vi-50 rounded-md h-fit px-4 py-1">Eliminar</Button>
                 </DialogTrigger>
                 <DialogContent className="sm:max-w-md">
-                    <ModalContent title={"Eliminar usuario"} description={""}>
+                    <ModalContent title={deleteTitle}>
                         <div className="flex flex-col items-center space-y-6">
-                            <h2>¿Está seguro que desea borrar el usuario?</h2>
+                            <h2>{deleteQuestion}</h2>
                             <div className="flex w-full justify-around">
                                 <DialogClose asChild>
                                     <Button type="button" className=" bg-vi-100 hover:bg-vi-400 active:bg-vi-400  text-vi-500 hover:text-vi-50 active:text-vi-50 rounded-md h-fit px-4 py-1" variant="secondary">

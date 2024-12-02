@@ -18,6 +18,7 @@ import { AddEditAcademicGradesPage } from "../components/AcademicGrades/AddEditA
 import { SettingsPage } from "../components/Settings/SettingsPage";
 import { AddEditUserPage } from "../components/users/addEdit";
 import { UsersIndex } from "../components/users/Index";
+// import { ProjectsTest } from "@/components/Projects/testtable";
 // import { SettingsPage } from "../components/Settings";
 
 type TypeRoute = {

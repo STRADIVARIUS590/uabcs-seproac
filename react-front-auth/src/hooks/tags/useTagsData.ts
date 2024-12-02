@@ -59,5 +59,5 @@ export const useTags = () => {
     }
 
     useEffect(() => { fetchData(); }, [])
-    return { data, user, deleteFn, loading, error, canModify }
+    return { data, user, deleteFn, fetchData, loading, error, canModify }
 }

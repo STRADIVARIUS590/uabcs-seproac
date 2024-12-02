@@ -125,7 +125,12 @@ export const useProjectTableColumns = ({ deleteFn, canModify, user }: { deleteFn
                     return;
                 }
                 return (
-                    <TableEditDelete data={rowOriginalData} section={section} deleteFn={deleteFn} />
+                    <TableEditDelete
+                        deleteTitle="Eliminar proyecto"
+                        deleteQuestion="¿Está seguro que quiere borrar este proyecto?"
+                        data={rowOriginalData}
+                        section={section}
+                        deleteFn={deleteFn} />
                 )
             }
         },

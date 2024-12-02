@@ -5,13 +5,13 @@ import {
     DialogTitle,
 } from "@/components/ui/dialog"
 
-export default function ModalContent({ title, description, children }: { title: string, description: string, children: React.ReactNode }) {
+export default function ModalContent({ title, description, children }: { title: string | undefined, description?: string | undefined, children: React.ReactNode }) {
     return (
         <>
             <DialogHeader>
-                <DialogTitle>{title}</DialogTitle>
+                <DialogTitle>{title || ""}</DialogTitle>
                 <DialogDescription>
-                    {description}
+                    {description || ""}
                 </DialogDescription>
             </DialogHeader>
             {children}

@@ -11,7 +11,7 @@ export const AppLayout = ({ children }: Props) => {
         <div className="flex flex-col">
             <Navbar />
             {/* <div className="p12"></div> */}
-            <main className="">
+            <main className="min-h-[900px]">
                 {children}
             </main>
             <Footer />

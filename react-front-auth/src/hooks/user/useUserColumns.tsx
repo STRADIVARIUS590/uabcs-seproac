@@ -125,7 +125,12 @@ export const useUserTableColumns = ({ deleteUser, canModify, user }: { deleteUse
                     return;
                 }
                 return (
-                    <TableEditDelete data={rowUser} section={section} deleteFn={deleteUser} />
+                    <TableEditDelete
+                        deleteTitle="Eliminar usuario"
+                        deleteQuestion="¿Está seguro que quiere borrar este usuario?"
+                        data={rowUser}
+                        section={section}
+                        deleteFn={deleteUser} />
                 )
             }
         },

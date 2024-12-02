@@ -3,6 +3,7 @@ import { ColumnDef } from "@tanstack/react-table"
 import { TableEditDelete } from "@/components/ui/table-edit-delete";
 import { TableSortButton } from "@/components/ui/table-sort-button";
 import { IUser } from "@/store/authSlice";
+import { TagForm } from "@/components/Tags/tag-form";
 
 const section = 'tags'
 
@@ -12,9 +13,10 @@ export interface TagItem {
     slug: string
 }
 
+
 // hay una muy buena razon para la existencia de esto
 // aun no la descubro
-export const useTagsTableColumns = ({ deleteFn, canModify, user }: { deleteFn: (id: number | string) => Promise<void>, canModify: boolean, user: IUser | null }) => {
+export const useTagsTableColumns = ({ deleteFn, updateFn, canModify, user }: { deleteFn: (id: number | string) => Promise<void>, updateFn: () => void, canModify: boolean, user: IUser | null }) => {
     const userColumns: ColumnDef<TagItem>[] = [
         {
             accessorKey: "id",
@@ -55,7 +57,14 @@ export const useTagsTableColumns = ({ deleteFn, canModify, user }: { deleteFn: (
                     return;
                 }
                 return (
-                    <TableEditDelete data={rowOriginalData} section={section} deleteFn={deleteFn} />
+                    <TableEditDelete
+                        editModalContent=<TagForm updateFn={updateFn} isEditMode={true} data={rowOriginalData} />
+                        deleteTitle="Eliminar etiqueta"
+                        deleteQuestion="¿Está seguro que quiere borrar esta etiqueta?"
+                        isEditModal={true}
+                        data={rowOriginalData}
+                        section={section}
+                        deleteFn={deleteFn} />
                 )
             }
         },

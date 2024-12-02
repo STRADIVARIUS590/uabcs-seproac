@@ -3,24 +3,24 @@ import { RootState } from "@/store";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { UserItem_T } from "./useUserColumns";
+import { CongressItem } from "./useCongressesColumns";
 
-export const useUser = () => {
+export const useCongresses = () => {
     const { token, user } = useSelector((state: RootState) => state.auth);
     const navigate = useNavigate();
     const user_permissions: string[] = user?.all_permissions || [];
 
 
     const [error, setError] = useState<boolean>(false);
-    const [data, setData] = useState<UserItem_T[]>([]);
+    const [data, setData] = useState<CongressItem[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
     const [canModify, setCanModify] = useState<boolean>(true);
     const fetchData = async () => {
-        const response = await Api.get('/users', {
+        const response = await Api.get('/congresses?include=user', {
             Authorization: 'Bearer ' + token,
             accept: 'application/json'
         })
-        const result: UserItem_T[] = await response.data
+        const result: CongressItem[] = await response.data
         if (response.statusCode === 200) {
             setError(false);
             setLoading(false);
@@ -42,8 +42,8 @@ export const useUser = () => {
         }
     }, [user, user_permissions, navigate]);
 
-    const deleteUser = async (id: number | string) => {
-        const response = Api.delete('/users/' + id, {
+    const deleteFn = async (id: number | string) => {
+        const response = Api.delete('/congresses/' + id, {
             Authorization: 'Bearer ' + token,
             accept: 'application/json'
         })
@@ -59,5 +59,5 @@ export const useUser = () => {
     }
 
     useEffect(() => { fetchData(); }, [])
-    return { data, user, deleteUser, loading, error, canModify }
+    return { data, user, deleteFn, loading, error, canModify }
 }
