@@ -4,26 +4,28 @@ import { TableEditDelete } from "@/components/ui/table-edit-delete";
 import { TableSortButton } from "@/components/ui/table-sort-button";
 import { IUser } from "@/store/authSlice";
 
-const section = 'users'
+const section = 'projects'
 
-export interface UserItem_T {
-    id: number;
-    name: string;
-    email: string;
-    date_ingreso: string;
-    birth_date: string;
-    sex: string;
-    role_id: string | number;
-    role: {
-        id: number;
-        name: string;
+export interface PublicationItem {
+    id: string;
+    title: string | undefined;
+    user_id: string | undefined;
+    type: string | undefined;
+    issn_isbn: string | undefined;
+    doi: string | undefined;
+    magazine_name: string | undefined;
+    authors: string | undefined;
+    publication_date: string | undefined;
+    period: string | undefined;
+    user: {
+        name: string | undefined
     }
 }
 
 // hay una muy buena razon para la existencia de esto
 // aun no la descubro
-export const useUserTableColumns = ({ deleteUser, canModify, user }: { deleteUser: (id: number | string) => Promise<void>, canModify: boolean, user: IUser | null }) => {
-    const userColumns: ColumnDef<UserItem_T>[] = [
+const usePublicationsTableColumns = ({ deleteFn, canDelete, canEdit, user }: { deleteFn: (id: number | string) => Promise<void>, canEdit: boolean, canDelete: boolean, user: IUser | null }) => {
+    const userColumns: ColumnDef<PublicationItem>[] = [
         {
             accessorKey: "id",
             header: ({ column }) => {
@@ -34,84 +36,100 @@ export const useUserTableColumns = ({ deleteUser, canModify, user }: { deleteUse
             },
         },
         {
-            accessorKey: "name",
+            accessorKey: "title",
             header: ({ column }) => {
                 return (
-                    <TableSortButton column={column} headingText={"Nombre"} />
+                    <TableSortButton column={column} headingText={"Titulo"} />
                 )
 
             },
         },
         {
-            accessorKey: "email",
+            accessorKey: "issn_isbn",
             header: ({ column }) => {
                 return (
-                    <TableSortButton column={column} headingText={"Correo electrónico"} />
+                    <TableSortButton column={column} headingText={"ISSN/ISBN"} />
                 )
 
             },
         },
         {
-            accessorKey: "date_ingreso",
+            accessorKey: "doi",
             header: ({ column }) => {
                 return (
-                    <TableSortButton column={column} headingText={"Fecha de ingreso"} />
+                    <TableSortButton column={column} headingText={"DOI"} />
                 )
+
             },
-            cell: ({ row }) => {
-                const date = new Date(row.getValue("date_ingreso"));
-                return <div className="text-center font-medium" >
-                    {date.toLocaleDateString()}
-                </div>
-            }
         },
         {
-            accessorKey: "birth_date",
+            accessorKey: "magazine_name",
             header: ({ column }) => {
                 return (
-                    <TableSortButton column={column} headingText={"Fecha de nacimiento"} />
+                    <TableSortButton column={column} headingText={"Revista"} />
                 )
+
             },
-            cell: ({ row }) => {
-                const date = new Date(row.getValue("date_ingreso"));
-                return <div className="text-center font-medium" >
-                    {date.toLocaleDateString()}
-                </div>
-            }
         },
         {
-            accessorKey: "sex",
+            accessorKey: "authors",
             header: ({ column }) => {
                 return (
-                    <TableSortButton column={column} headingText={"Género"} />
+                    <TableSortButton column={column} headingText={"Autores"} />
                 )
+
             },
-            cell: ({ row }) => {
-                const gender: string = row.getValue("sex");
-                return <div className="text-center font-medium" >
-                    {gender}
-                </div>
-            }
         },
         {
-            accessorKey: "role",
+            accessorKey: "magazine_name",
             header: ({ column }) => {
                 return (
-                    <TableSortButton column={column} headingText={"Rol"} />
+                    <TableSortButton column={column} headingText={"Revista"} />
+                )
+
+            },
+        },
+        {
+            accessorKey: "user",
+            header: ({ column }) => {
+                return (
+                    <TableSortButton column={column} headingText={"Usuario"} />
                 )
             },
             cell: ({ row }) => {
-                const role: {
-                    id: number;
+                const user: {
                     name: string;
-                } = row.getValue("role");
-                if (!role) {
+                } = row.getValue("user");
+                if (!user) {
                     return;
                 }
                 return <div className="text-center font-medium" >
-                    {role?.name}
+                    {user?.name}
                 </div>
             }
+        },
+
+        {
+            accessorKey: "publication_date",
+            header: ({ column }) => {
+                return (
+                    <TableSortButton column={column} headingText={"Fecha"} />
+                )
+            },
+            cell: ({ row }) => {
+                const date = new Date(row.getValue("publication_date"));
+                return <div className="text-center font-medium" >
+                    {date.toLocaleDateString()}
+                </div>
+            }
+        },
+        {
+            accessorKey: "period",
+            header: ({ column }) => {
+                return (
+                    <TableSortButton column={column} headingText={"Periodo"} />
+                )
+            },
         },
         {
             id: "actions",
@@ -120,18 +138,22 @@ export const useUserTableColumns = ({ deleteUser, canModify, user }: { deleteUse
                 headerClassName: "bg-red-400"
             },
             cell: ({ row }) => {
-                const rowUser = row.original
-                if (!canModify && user?.id != rowUser.id) {
-                    return;
+                const rowOriginalData = row.original
+                let editSelf = false;
+                let deleteSelf = false;
+                if (user?.id == rowOriginalData.user_id) {
+                    editSelf = true;
+                    deleteSelf = true;
                 }
                 return (
                     <TableEditDelete
+                        canDelete={canDelete}
+                        canEdit={canEdit}
                         deleteTitle="Eliminar publicación"
                         deleteQuestion="¿Está seguro que quiere borrar esta publicación?"
-                        data={rowUser}
+                        data={rowOriginalData}
                         section={section}
-                        deleteFn={deleteUser}
-                    />
+                        deleteFn={deleteFn} />
                 )
             }
         },
@@ -143,4 +165,4 @@ export const useUserTableColumns = ({ deleteUser, canModify, user }: { deleteUse
     )
 }
 
-export default useUserTableColumns;
+export default usePublicationsTableColumns;

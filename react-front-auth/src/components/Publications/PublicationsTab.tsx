@@ -6,13 +6,13 @@ import { Api } from "../../services/Api";
 import { MessageToast } from "../MessageToast";
 import { PublicationItem } from ".";
 export const PublicationsTab = () => {
-    
-    const { token, user } = useSelector((state : RootState) => state.auth);
+
+    const { token, user } = useSelector((state: RootState) => state.auth);
 
     const [data, setData] = useState<PublicationItem[]>();
 
     const [error, setError] = useState<boolean>(false);
-    
+
     const [loading, setLoading] = useState<boolean>(true);
 
     const fetchData = async () => {
@@ -23,8 +23,8 @@ export const PublicationsTab = () => {
 
         const result: PublicationItem[] = await response.data;
 
-        if(response.statusCode === 200){
-            
+        if (response.statusCode === 200) {
+
             setError(false);
             setData(result);
             setLoading(false)
@@ -35,15 +35,15 @@ export const PublicationsTab = () => {
         fetchData();
     }, []);
 
-    return <>    
+    return <>
         {
-            error && <MessageToast message='Ha ocurrido un error' type="error"/>
+            error && <MessageToast message='Ha ocurrido un error' type="error" />
         }
         {
-            loading && <MessageToast message='Cargando...' type="loading"/> 
+            loading && <MessageToast message='Cargando...' type="loading" />
         }
         {
-            !error && !loading && data &&  <Publications publications={data}/>
-        }  
+            !error && !loading && data && <Publications publications={data} />
+        }
     </>
 }
