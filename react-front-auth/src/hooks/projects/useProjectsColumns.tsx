@@ -1,5 +1,5 @@
 "use client"
-import { ColumnDef } from "@tanstack/react-table"
+import { Column, ColumnDef, Row } from "@tanstack/react-table"
 import { TableEditDelete } from "@/components/ui/table-edit-delete";
 import { TableSortButton } from "@/components/ui/table-sort-button";
 import { IUser } from "@/store/authSlice";
@@ -28,7 +28,8 @@ export const useProjectTableColumns = ({ deleteFn, canEdit, canDelete, user }: {
     const userColumns: ColumnDef<ProjectItem>[] = [
         {
             accessorKey: "id",
-            header: ({ column }) => {
+
+            header: ({ column }: { column: Column<ProjectItem, unknown> }) => {
                 return (
                     <TableSortButton column={column} headingText={"ID"} />
                 )
@@ -37,7 +38,7 @@ export const useProjectTableColumns = ({ deleteFn, canEdit, canDelete, user }: {
         },
         {
             accessorKey: "name",
-            header: ({ column }) => {
+            header: ({ column }: { column: Column<ProjectItem, unknown> }) => {
                 return (
                     <TableSortButton column={column} headingText={"Nombre"} />
                 )
@@ -46,7 +47,7 @@ export const useProjectTableColumns = ({ deleteFn, canEdit, canDelete, user }: {
         },
         {
             accessorKey: "description",
-            header: ({ column }) => {
+            header: ({ column }: { column: Column<ProjectItem, unknown> }) => {
                 return (
                     <TableSortButton column={column} headingText={"Descripción"} />
                 )
@@ -55,7 +56,7 @@ export const useProjectTableColumns = ({ deleteFn, canEdit, canDelete, user }: {
         },
         {
             accessorKey: "objetives",
-            header: ({ column }) => {
+            header: ({ column }: { column: Column<ProjectItem, unknown> }) => {
                 return (
                     <TableSortButton column={column} headingText={"Objetivos"} />
                 )
@@ -63,7 +64,7 @@ export const useProjectTableColumns = ({ deleteFn, canEdit, canDelete, user }: {
         },
         {
             accessorKey: "colaborators",
-            header: ({ column }) => {
+            header: ({ column }: { column: Column<ProjectItem, unknown> }) => {
                 return (
                     <TableSortButton column={column} headingText={"Colaboradores"} />
                 )
@@ -71,12 +72,13 @@ export const useProjectTableColumns = ({ deleteFn, canEdit, canDelete, user }: {
         },
         {
             accessorKey: "start_date",
-            header: ({ column }) => {
+            header: ({ column }: { column: Column<ProjectItem, unknown> }) => {
                 return (
                     <TableSortButton column={column} headingText={"Fecha de inicio"} />
                 )
             },
-            cell: ({ row }) => {
+
+            cell: ({ row }: { row: Row<ProjectItem> }) => {
                 const date = new Date(row.getValue("start_date"));
                 return <div className="text-center font-medium" >
                     {date.toLocaleDateString()}
@@ -85,12 +87,12 @@ export const useProjectTableColumns = ({ deleteFn, canEdit, canDelete, user }: {
         },
         {
             accessorKey: "end_date",
-            header: ({ column }) => {
+            header: ({ column }: { column: Column<ProjectItem, unknown> }) => {
                 return (
                     <TableSortButton column={column} headingText={"Fecha de finalización"} />
                 )
             },
-            cell: ({ row }) => {
+            cell: ({ row }: { row: Row<ProjectItem> }) => {
                 const date = new Date(row.getValue("end_date"));
                 return <div className="text-center font-medium" >
                     {date.toLocaleDateString()}
@@ -99,7 +101,7 @@ export const useProjectTableColumns = ({ deleteFn, canEdit, canDelete, user }: {
         },
         {
             accessorKey: "type",
-            header: ({ column }) => {
+            header: ({ column }: { column: Column<ProjectItem, unknown> }) => {
                 return (
                     <TableSortButton column={column} headingText={"Tipo"} />
                 )
@@ -107,7 +109,7 @@ export const useProjectTableColumns = ({ deleteFn, canEdit, canDelete, user }: {
         },
         {
             accessorKey: "period",
-            header: ({ column }) => {
+            header: ({ column }: { column: Column<ProjectItem, unknown> }) => {
                 return (
                     <TableSortButton column={column} headingText={"Periodo"} />
                 )
@@ -119,7 +121,7 @@ export const useProjectTableColumns = ({ deleteFn, canEdit, canDelete, user }: {
             meta: {
                 headerClassName: "bg-red-400"
             },
-            cell: ({ row }) => {
+            cell: ({ row }: { row: Row<ProjectItem> }) => {
 
                 const rowOriginalData = row.original
                 let editSelf = false;
