@@ -17,7 +17,7 @@ export const Publications = () => {
 
     return (
         <div className="container mx-auto py-10">
-            <DataTable filterField={"name"} filterPlaceholder={"Nombre del proyecto"} columns={userColumns} data={data} error={error} loading={loading} />
+            <DataTable filterField={"name"} filterPlaceholder={"Nombre de la publicación"} columns={userColumns} data={data} error={error} loading={loading} />
         </div>
     )
 }

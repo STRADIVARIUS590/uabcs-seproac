@@ -1,11 +1,10 @@
 import { useSelector } from "react-redux";
-import { Projects } from "./table"
+import { ProjectItem, Projects } from "./table"
 import { RootState } from "../../store";
 import { useEffect, useState } from "react";
 import { Api } from "../../services/Api";
 import { MessageToast } from "../MessageToast";
 import { useNavigate } from "react-router-dom";
-import { ProjectItem } from "@/hooks/projects/useProjectsColumns";
 
 export const ProjectsTab = () => {
     const { token, user } = useSelector((state: RootState) => state.auth);
@@ -46,7 +45,7 @@ export const ProjectsTab = () => {
             loading && <MessageToast message='Cargando...' type="loading" />
         }
         {
-            !error && !loading && data && <Projects />
+            !error && !loading && data && <Projects projects={data} />
         }
     </>
 }

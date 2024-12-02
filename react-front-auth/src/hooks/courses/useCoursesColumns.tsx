@@ -44,7 +44,7 @@ const useCoursesTableColumns = ({ deleteFn, canEdit, canDelete, user }: { delete
             accessorKey: "name",
             header: ({ column }) => {
                 return (
-                    <TableSortButton column={column} headingText={"Titulo del trabajo"} />
+                    <TableSortButton column={column} headingText={"Curso"} />
                 )
 
             },
@@ -53,7 +53,7 @@ const useCoursesTableColumns = ({ deleteFn, canEdit, canDelete, user }: { delete
             accessorKey: "total_hours",
             header: ({ column }) => {
                 return (
-                    <TableSortButton column={column} headingText={"Titulo del trabajo"} />
+                    <TableSortButton column={column} headingText={"Horas totales"} />
                 )
 
             },
@@ -62,7 +62,7 @@ const useCoursesTableColumns = ({ deleteFn, canEdit, canDelete, user }: { delete
             accessorKey: "total_students",
             header: ({ column }) => {
                 return (
-                    <TableSortButton column={column} headingText={"Titulo del trabajo"} />
+                    <TableSortButton column={column} headingText={"Estudiantes totales"} />
                 )
 
             },
@@ -127,7 +127,7 @@ const useCoursesTableColumns = ({ deleteFn, canEdit, canDelete, user }: { delete
             accessorKey: "institution",
             header: ({ column }) => {
                 return (
-                    <TableSortButton column={column} headingText={"Usuario"} />
+                    <TableSortButton column={column} headingText={"Institución"} />
                 )
             },
             cell: ({ row }) => {

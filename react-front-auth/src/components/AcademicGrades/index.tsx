@@ -8,31 +8,31 @@ import { useNavigate } from "react-router-dom";
 import { Api } from "../../services/Api";
 
 
-interface AcademicGradeItem  {
+interface AcademicGradeItem {
     id: string | number;
     name: string,
-    titulation_date : string | number;
-    institution : {
+    titulation_date: string | number;
+    institution: {
         id: string | number;
         name: string | number;
-
     }
-    user : {
+    user: {
         id: string | number;
         name: string | number;
     }
 }
+
 export const AcademicGradesPage = () => {
-    
-    const { token, user } = useSelector((state : RootState) => state.auth);
-    
+
+    const { token, user } = useSelector((state: RootState) => state.auth);
+
     const navigate = useNavigate();
 
-    const user_permissions: string[]  = user?.all_permissions || [];
+    const user_permissions: string[] = user?.all_permissions || [];
 
 
     useEffect(() => {
-        if(!user || user_permissions.indexOf('academic-grades.get') === -1) {
+        if (!user || user_permissions.indexOf('academic-grades.get') === -1) {
             navigate(-1);
         }
     }, [user, user_permissions, navigate]);
@@ -40,7 +40,7 @@ export const AcademicGradesPage = () => {
     const [data, setData] = useState<AcademicGradeItem[]>();
 
     const [error, setError] = useState<boolean>(false);
-    
+
     const [loading, setLoading] = useState<boolean>(true);
 
     const fetchData = async () => {
@@ -51,8 +51,8 @@ export const AcademicGradesPage = () => {
 
         const result: AcademicGradeItem[] = await response.data;
 
-        if(response.statusCode === 200){
-            
+        if (response.statusCode === 200) {
+
             setError(false);
             setData(result);
             setLoading(false)
@@ -64,21 +64,21 @@ export const AcademicGradesPage = () => {
     useEffect(() => {
         fetchData();
     }, []);
-   
+
     return <AppLayout>
         {
             error && <div className="mt-12">
-            <MessageToast message='Ha ocurrido un error' type="error"/>
-            </div> 
-        }
-        {
-            loading && 
-            <div className="mt-12"><MessageToast message='Cargando...' type="loading"/> 
+                <MessageToast message='Ha ocurrido un error' type="error" />
             </div>
         }
         {
-            !error && !loading && data && <AcademicGrades academic_grades= {data}/> 
+            loading &&
+            <div className="mt-12"><MessageToast message='Cargando...' type="loading" />
+            </div>
         }
-        </AppLayout>
+        {
+            !error && !loading && data && <AcademicGrades academic_grades={data} />
+        }
+    </AppLayout>
 
 }

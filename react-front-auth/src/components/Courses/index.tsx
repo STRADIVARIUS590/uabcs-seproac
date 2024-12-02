@@ -1,18 +1,19 @@
 import { useSelector } from "react-redux";
 import { AppLayout } from "../Layout/AppLayout"
-import { CourseItem, Courses } from "./table"
 import { RootState } from "../../store";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { Api } from "../../services/Api";
 import { MessageToast } from "../MessageToast";
+import { CourseItem } from "@/hooks/courses/useCoursesColumns";
+import { Courses } from "./table";
 
 export const CoursesIndex = () => {
 
-    const  { token, user } = useSelector((state: RootState ) => state.auth);
+    const { token, user } = useSelector((state: RootState) => state.auth);
 
     const navigate = useNavigate();
- 
+
     const user_permissions: string[] = user?.all_permissions || [];
 
     useEffect(() => {
@@ -21,44 +22,44 @@ export const CoursesIndex = () => {
         }
     }, [user, user_permissions, navigate]);
 
-    const [loading, setLoading] = useState<boolean>(true);    
+    const [loading, setLoading] = useState<boolean>(true);
 
     const [error, setError] = useState<boolean>(false);
 
     const [data, setData] = useState<CourseItem[]>([]);
 
     const fetchData = async () => {
-        
-        const response =  await Api.get('/courses?include=user,institution', {
+
+        const response = await Api.get('/courses?include=user,institution', {
             Authorization: 'Bearer ' + token,
-            accept: 'application/json'    
+            accept: 'application/json'
         })
 
         const result: CourseItem[] = await response.data
 
-        if(response.statusCode === 200) {
+        if (response.statusCode === 200) {
             setError(false);
             setData(result)
             setLoading(false);
-        }else{
+        } else {
             setError(true);
             navigate(-1)
         }
     }
 
-    useEffect(() => {fetchData()}, [])
+    useEffect(() => { fetchData() }, [])
 
-    return (  <AppLayout>
+    return (<AppLayout>
         {
-            error && <div className="mt-12"> <MessageToast message='Ha ocurrido un error' type="error"/></div>
+            error && <div className="mt-12"> <MessageToast message='Ha ocurrido un error' type="error" /></div>
         }
         {
-            loading && <div className="mt-12"> <MessageToast message='Cargando...' type="loading"/></div> 
+            loading && <div className="mt-12"> <MessageToast message='Cargando...' type="loading" /></div>
         }
         {
-        !error && !loading && data &&      
-                    <Courses courses={data}/>
+            !error && !loading && data &&
+            <Courses courses={data} />
         }
-        </AppLayout>
+    </AppLayout>
     )
 }
