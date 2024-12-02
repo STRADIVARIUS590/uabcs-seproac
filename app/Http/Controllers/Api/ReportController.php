@@ -15,7 +15,7 @@ class ReportController extends Controller
      */
     public function index(Request $request)
     {
-        $request['format'] = 'txt';
+        // $request['format'] = 'xml';
 
         return (new UsersReport($request))->make();
     }

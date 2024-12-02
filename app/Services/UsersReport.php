@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Maatwebsite\Excel\Facades\Excel;
 use MathieuViossat\Util\ArrayToTextTable;
+use Saloon\XmlWrangler\XmlWriter;
 
 class UsersReport {
 
@@ -83,7 +84,21 @@ class UsersReport {
 
             return response()->download($name)->deleteFileAfterSend();
 
-        }else if($this->request->format == 'json') {
+        }
+        else if ($this->request->format == 'xml') {
+            $xmlFriendlyData = ['user' => []];
+        
+            foreach ($info as $row) {
+                // $xmlFriendlyData['user'][] = $user->toArray(); 
+            $xmlFriendlyData['user'][] = array_combine($report->headings(), $report->map($row));
+            }
+        
+            return (new XmlWriter())->write('users', $xmlFriendlyData);
+        }
+        
+        
+        
+        else if($this->request->format == 'json') {
             return json_encode($info);
         }
 
