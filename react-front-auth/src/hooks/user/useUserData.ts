@@ -14,7 +14,8 @@ export const useUser = () => {
     const [error, setError] = useState<boolean>(false);
     const [data, setData] = useState<UserItem_T[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
-    const [canModify, setCanModify] = useState<boolean>(true);
+    const [canEdit, setCanEdit] = useState<boolean>(true);
+    const [canDelete, setCanDelete] = useState<boolean>(true);
     const fetchData = async () => {
         const response = await Api.get('/users', {
             Authorization: 'Bearer ' + token,
@@ -37,8 +38,12 @@ export const useUser = () => {
         if (!user || user_permissions.indexOf("users.get") === -1) {
             navigate(-1);
         }
+        if (user && user_permissions.indexOf("users.destroy") > -1) {
+            setCanDelete(true);
+        }
+
         if (user && user_permissions.indexOf("users.edit") > -1) {
-            setCanModify(true)
+            setCanEdit(true)
         }
     }, [user, user_permissions, navigate]);
 
@@ -59,5 +64,5 @@ export const useUser = () => {
     }
 
     useEffect(() => { fetchData(); }, [])
-    return { data, user, deleteUser, loading, error, canModify }
+    return { data, user, deleteUser, loading, error, canDelete, canEdit }
 }

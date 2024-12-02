@@ -22,7 +22,7 @@ export interface UserItem_T {
 
 // hay una muy buena razon para la existencia de esto
 // aun no la descubro
-export const useUserTableColumns = ({ deleteUser, canModify, user }: { deleteUser: (id: number | string) => Promise<void>, canModify: boolean, user: IUser | null }) => {
+export const useUserTableColumns = ({ deleteUser, canEdit, canDelete, user }: { deleteUser: (id: number | string) => Promise<void>, canEdit: boolean, canDelete: boolean, user: IUser | null }) => {
     const userColumns: ColumnDef<UserItem_T>[] = [
         {
             accessorKey: "id",
@@ -121,11 +121,16 @@ export const useUserTableColumns = ({ deleteUser, canModify, user }: { deleteUse
             },
             cell: ({ row }) => {
                 const rowUser = row.original
-                if (!canModify && user?.id != rowUser.id) {
-                    return;
+                let editSelf = false;
+                let deleteSelf = false;
+                if (user?.id == rowUser.id) {
+                    editSelf = true;
+                    deleteSelf = true;
                 }
                 return (
                     <TableEditDelete
+                        canDelete={canDelete || deleteSelf}
+                        canEdit={canEdit || editSelf}
                         deleteTitle="Eliminar usuario"
                         deleteQuestion="¿Está seguro que quiere borrar este usuario?"
                         data={rowUser}
