@@ -1,5 +1,5 @@
 "use client"
-import { ColumnDef } from "@tanstack/react-table"
+import { Column, ColumnDef, Row } from "@tanstack/react-table"
 import { TableEditDelete } from "@/components/ui/table-edit-delete";
 import { TableSortButton } from "@/components/ui/table-sort-button";
 import { IUser } from "@/store/authSlice";
@@ -24,7 +24,8 @@ export const useCongressesTableColumns = ({ deleteFn, canEdit, canDelete, user }
     const userColumns: ColumnDef<CongressItem>[] = [
         {
             accessorKey: "id",
-            header: ({ column }) => {
+
+            header: ({ column }: { column: Column<CongressItem, unknown> }) => {
                 return (
                     <TableSortButton column={column} headingText={"ID"} />
                 )
@@ -33,7 +34,7 @@ export const useCongressesTableColumns = ({ deleteFn, canEdit, canDelete, user }
         },
         {
             accessorKey: "title_trabajo",
-            header: ({ column }) => {
+            header: ({ column }: { column: Column<CongressItem, unknown> }) => {
                 return (
                     <TableSortButton column={column} headingText={"Titulo del trabajo"} />
                 )
@@ -42,12 +43,12 @@ export const useCongressesTableColumns = ({ deleteFn, canEdit, canDelete, user }
         },
         {
             accessorKey: "user",
-            header: ({ column }) => {
+            header: ({ column }: { column: Column<CongressItem, unknown> }) => {
                 return (
                     <TableSortButton column={column} headingText={"Usuario"} />
                 )
             },
-            cell: ({ row }) => {
+            cell: ({ row }: { row: Row<CongressItem> }) => {
                 const user: {
                     name: string;
                 } = row.getValue("user");
@@ -61,7 +62,7 @@ export const useCongressesTableColumns = ({ deleteFn, canEdit, canDelete, user }
         },
         {
             accessorKey: "event_name",
-            header: ({ column }) => {
+            header: ({ column }: { column: Column<CongressItem, unknown> }) => {
                 return (
                     <TableSortButton column={column} headingText={"Nombre del evento"} />
                 )
@@ -69,12 +70,12 @@ export const useCongressesTableColumns = ({ deleteFn, canEdit, canDelete, user }
         },
         {
             accessorKey: "date",
-            header: ({ column }) => {
+            header: ({ column }: { column: Column<CongressItem, unknown> }) => {
                 return (
                     <TableSortButton column={column} headingText={"Fecha"} />
                 )
             },
-            cell: ({ row }) => {
+            cell: ({ row }: { row: Row<CongressItem> }) => {
                 const date = new Date(row.getValue("date"));
                 return <div className="text-center font-medium" >
                     {date.toLocaleDateString()}
@@ -83,7 +84,7 @@ export const useCongressesTableColumns = ({ deleteFn, canEdit, canDelete, user }
         },
         {
             accessorKey: "colaborators",
-            header: ({ column }) => {
+            header: ({ column }: { column: Column<CongressItem, unknown> }) => {
                 return (
                     <TableSortButton column={column} headingText={"No. de colaboradores"} />
                 )
@@ -95,7 +96,8 @@ export const useCongressesTableColumns = ({ deleteFn, canEdit, canDelete, user }
             meta: {
                 headerClassName: "bg-red-400"
             },
-            cell: ({ row }) => {
+
+            cell: ({ row }: { row: Row<CongressItem> }) => {
                 const rowOriginalData = row.original
                 let editSelf = false;
                 let deleteSelf = false;
