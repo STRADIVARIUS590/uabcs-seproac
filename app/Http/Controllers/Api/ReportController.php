@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Services\UserReport;
 use App\Services\UsersReport;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class ReportController extends Controller
@@ -14,6 +15,8 @@ class ReportController extends Controller
      */
     public function index(Request $request)
     {
+        $request['format'] = 'txt';
+
         return (new UsersReport($request))->make();
     }
 

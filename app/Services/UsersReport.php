@@ -10,6 +10,7 @@ use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Maatwebsite\Excel\Facades\Excel;
+use MathieuViossat\Util\ArrayToTextTable;
 
 class UsersReport {
 
@@ -23,7 +24,7 @@ class UsersReport {
     public function query()
     {
         // traemos la info de la bd (aplicando filtros y eso)
-        return User::query()->select(((new User())->getFillable()))
+        return User::query()->select(['id', ...(new User())->getFillable()])
         ->with('role')->when(isset($this->request->end_date, $this->request->start_date), function($q){})
         ->get();
     }
@@ -34,11 +35,10 @@ class UsersReport {
         // proceso de hacer el reporte (calculos, etc)
         // return User::query()->get();
         foreach ($collection as $key => $value){
-         ///;
-            // $data[] = $value * 3;
+            $collection[$key]['A_PENDED'] = $value['id'] * 3;
         }
 
-        // return $data;
+        
         return $collection;
     }
 
@@ -46,6 +46,7 @@ class UsersReport {
     {
         return [
             ['heading' => 'Nombre', 'get' => 'name', 'transform' => function($value) { return strtoupper($value); }],
+            // ['heading' => 'test', 'get' => 'A_PENDED'],
             ['heading' => 'Correo', 'get' => 'email', 'transform' => function($value) { return strtoupper($value); }],
             ['heading' => 'Fecha de nacimiento', 'get' => 'birth_date', 'transform' => function($value) { return strtoupper($value); }],
             ['heading' => 'Fecha de ingreso', 'get' => 'date_ingreso', 'transform' => function($value) { return strtoupper($value); }],
@@ -62,7 +63,7 @@ class UsersReport {
 
         $report = new ExportsUsersReport($info, $this->mapping());
 
-        if(true || $this->request->format == 'xlsx'){
+        if($this->request->format == 'xlsx'){
 
             return Excel::download($report, $this->file_name());
 
@@ -71,14 +72,16 @@ class UsersReport {
             $data = [];
 
             foreach($info as $key => $row) {
-                $data[] = $report->map($row);
+                $data[] = array_combine($report->headings(), $report->map($row));
             }
 
             $name = storage_path($this->file_name());
+           
+            $str = $this->renderer($data);
+          
+            file_put_contents($name , $str);
 
-            Storage::put($name, json_encode($data));
-
-            return Storage::download($name)->deleteAfterSend();
+            return response()->download($name)->deleteFileAfterSend();
 
         }else if($this->request->format == 'json') {
             return json_encode($info);
@@ -93,6 +96,8 @@ class UsersReport {
     public function file_name()
     {
         return 
+        strtoupper(
+        Str::slug(
         'REPORTE_USUARIOS_SEPROAC'.
 
         (isset($this->request->start_date, $this->request->end_date) 
@@ -100,9 +105,13 @@ class UsersReport {
         : '') . 
     
 
-        '_CREATED_'.Carbon::now()->format('Y-m-d H:i:s').'_.' 
+        '_CREATED_'.Carbon::now()->format('Y-m-d H:i:s'), '_')).'.'.
         
-        . $this->request->format;
+        $this->request->format;
+    }
+
+     public static function renderer($array){
+        return (new ArrayToTextTable($array))->getTable();
     }
 }
 
