@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\BaseController;
+use App\Http\Controllers\Api\ReportController;
 use App\Http\Controllers\Api\RoleController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\PublicationController;
@@ -29,6 +30,7 @@ Route::get('/pepe', function (Request $request) {
 Route::post('/password/send-token', [UserController::class, 'sendResetToken']);
 Route::post('/password/reset', [UserController::class, 'resetPassword']);
 
+Route::get('/create', [ReportController::class , 'index']);
 Route::post('/prueba', function(Request $request){
 
     $request->validate([
