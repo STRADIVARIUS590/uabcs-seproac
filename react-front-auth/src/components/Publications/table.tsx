@@ -17,7 +17,7 @@ export const Publications = ({ getEndpoint = '/publications?include=user' }: { g
 
     return (
         <div className="container mx-auto py-10">
-            <DataTable filterField={"name"} filterPlaceholder={"Nombre de la publicación"} columns={userColumns} data={data} error={error} loading={loading} />
+            <DataTable pathName={"publications"} filterField={"name"} filterPlaceholder={"Nombre de la publicación"} columns={userColumns} data={data} error={error} loading={loading} />
         </div>
     )
 }

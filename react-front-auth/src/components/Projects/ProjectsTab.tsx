@@ -46,7 +46,7 @@ export const ProjectsTab = () => {
             loading && <MessageToast message='Cargando...' type="loading" />
         }
         {
-            !error && !loading && <Projects />
+            !error && !loading && <Projects getEndpoint={`/projects?include=user&filter[user_id]=${user?.id}`} />
         }
     </>
 }

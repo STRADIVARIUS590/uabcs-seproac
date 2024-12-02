@@ -17,7 +17,7 @@ export const AcademicGrades = ({ getEndpoint = "/academic-grades?include=institu
 
     return (
         <div className="container mx-auto py-10">
-            <DataTable filterField={"name"} filterPlaceholder={"Nombre del grado académico"} columns={userColumns} data={data} error={error} loading={loading} />
+            <DataTable pathName={"academic-grades"} filterField={"name"} filterPlaceholder={"Nombre del grado académico"} columns={userColumns} data={data} error={error} loading={loading} />
         </div>
     )
 }

@@ -3,8 +3,8 @@ import useProjectTableColumns from "@/hooks/projects/useProjectsColumns";
 import { useProjects } from "@/hooks/projects/useProjectsData";
 import { MessageToast } from "../MessageToast";
 
-export const Projects = () => {
-    const { data, deleteFn, loading, error, user, canDelete, canEdit } = useProjects()
+export const Projects = ({ getEndpoint = "/projects?include=user" }: { getEndpoint: string }) => {
+    const { data, deleteFn, loading, error, user, canDelete, canEdit } = useProjects(getEndpoint)
     const { userColumns } = useProjectTableColumns({ deleteFn, user, canDelete, canEdit });
 
     if (error) {
@@ -17,7 +17,7 @@ export const Projects = () => {
 
     return (
         <div className="container mx-auto py-10">
-            <DataTable filterField={"name"} filterPlaceholder={"Nombre del proyecto"} columns={userColumns} data={data} error={error} loading={loading} />
+            <DataTable pathName={"projects"} filterField={"name"} filterPlaceholder={"Nombre del proyecto"} columns={userColumns} data={data} error={error} loading={loading} />
         </div>
     )
 }

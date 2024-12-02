@@ -29,6 +29,7 @@ interface DataTableProps<TData, TValue> {
     isModal?: boolean
     filterField: string
     filterPlaceholder: string
+    pathName: string
 }
 
 export function DataTable<TData, TValue>({
@@ -38,6 +39,7 @@ export function DataTable<TData, TValue>({
     error,
     filterField,
     filterPlaceholder,
+    pathName,
     addButton
 }: DataTableProps<TData, TValue>) {
     const [sorting, setSorting] = useState<SortingState>([]);
@@ -70,7 +72,7 @@ export function DataTable<TData, TValue>({
                 <TableInputFilter<string> table={table} field={filterField} placeholder={filterPlaceholder} />
                 {
                     addButton ||
-                    <Link to={`./edit`} className="bg-vi-200 hover:bg-vi-400 active:bg-vi-400  text-vi-900 hover:text-vi-50 active:text-vi-50 rounded-md h-fit px-4 py-1">Agregar</Link>
+                    <Link to={`/${pathName}/edit`} className="bg-vi-200 hover:bg-vi-400 active:bg-vi-400  text-vi-900 hover:text-vi-50 active:text-vi-50 rounded-md h-fit px-4 py-1">Agregar</Link>
                 }
             </div>
             <div className="rounded-md">

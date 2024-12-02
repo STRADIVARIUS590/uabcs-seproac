@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { ProjectItem } from "./useProjectsColumns";
 
-export const useProjects = () => {
+export const useProjects = (getEndpoint: string) => {
     const { token, user } = useSelector((state: RootState) => state.auth);
     const navigate = useNavigate();
     const user_permissions: string[] = user?.all_permissions || [];
@@ -17,7 +17,7 @@ export const useProjects = () => {
     const [canEdit, setCanEdit] = useState<boolean>(true);
     const [canDelete, setCanDelete] = useState<boolean>(true);
     const fetchData = async () => {
-        const response = await Api.get('/projects?include=user', {
+        const response = await Api.get(getEndpoint, {
             Authorization: 'Bearer ' + token,
             accept: 'application/json'
         })

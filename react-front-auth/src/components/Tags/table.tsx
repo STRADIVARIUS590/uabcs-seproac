@@ -38,7 +38,7 @@ export const Tags = () => {
 
     return (
         <div className="container mx-auto py-10">
-            <DataTable addButton={addButton} filterField={"name"} filterPlaceholder={"Nombre de la etiqueta"} columns={userColumns} data={data} error={error} loading={loading} />
+            <DataTable pathName={"tags"} addButton={addButton} filterField={"name"} filterPlaceholder={"Nombre de la etiqueta"} columns={userColumns} data={data} error={error} loading={loading} />
         </div>
     )
 }

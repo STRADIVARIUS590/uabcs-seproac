@@ -17,7 +17,7 @@ export const Courses = ({ getEndpoint = "/courses?include=user,institution" }: {
 
     return (
         <div className="container mx-auto py-10">
-            <DataTable filterField={"name"} filterPlaceholder={"Nombre del curso"} columns={userColumns} data={data} error={error} loading={loading} />
+            <DataTable pathName={"courses"} filterField={"name"} filterPlaceholder={"Nombre del curso"} columns={userColumns} data={data} error={error} loading={loading} />
         </div>
     )
 }
