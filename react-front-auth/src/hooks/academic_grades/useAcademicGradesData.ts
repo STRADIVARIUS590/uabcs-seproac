@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { AcademicGradeItem } from "./useAcademicGradesColumns";
 
-const useAcademicGrades = () => {
+const useAcademicGrades = (getEndpoint: string) => {
     const { token, user } = useSelector((state: RootState) => state.auth);
     const navigate = useNavigate();
     const user_permissions: string[] = user?.all_permissions || [];
@@ -16,7 +16,7 @@ const useAcademicGrades = () => {
     const [canEdit, setCanEdit] = useState<boolean>(true);
     const [canDelete, setCanDelete] = useState<boolean>(true);
     const fetchData = async () => {
-        const response = await Api.get('/academic-grades?include=institution,user', {
+        const response = await Api.get(getEndpoint, {
             Authorization: 'Bearer ' + token,
             accept: 'application/json'
         })
@@ -25,6 +25,7 @@ const useAcademicGrades = () => {
             setError(false);
             setLoading(false);
             setData(result)
+            console.log('culoooo', result, getEndpoint)
         } else {
             // no usar navigate!
             setError(true);

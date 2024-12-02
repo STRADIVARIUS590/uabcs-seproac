@@ -3,8 +3,8 @@ import { MessageToast } from "../MessageToast";
 import useAcademicGrades from "@/hooks/academic_grades/useAcademicGradesData";
 import useAcademicGradesTableColumns from "@/hooks/academic_grades/useAcademicGradesColumns";
 
-export const AcademicGrades = () => {
-    const { data, deleteFn, loading, error, user, canDelete, canEdit } = useAcademicGrades()
+export const AcademicGrades = ({ getEndpoint = "/academic-grades?include=institution,user" }: { getEndpoint?: string }) => {
+    const { data, deleteFn, loading, error, user, canDelete, canEdit } = useAcademicGrades(getEndpoint)
     const { userColumns } = useAcademicGradesTableColumns({ deleteFn, user, canDelete, canEdit });
 
     if (error) {

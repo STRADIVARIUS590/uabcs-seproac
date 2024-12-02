@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { CourseItem } from "./useCoursesColumns";
 
-export const useCourses = () => {
+export const useCourses = (getEndpoint: string) => {
     const { token, user } = useSelector((state: RootState) => state.auth);
     const navigate = useNavigate();
     const user_permissions: string[] = user?.all_permissions || [];
@@ -17,7 +17,7 @@ export const useCourses = () => {
     const [canEdit, setCanEdit] = useState<boolean>(true);
     const [canDelete, setCanDelete] = useState<boolean>(true);
     const fetchData = async () => {
-        const response = await Api.get('/courses?include=user,institution', {
+        const response = await Api.get(getEndpoint, {
             Authorization: 'Bearer ' + token,
             accept: 'application/json'
         })

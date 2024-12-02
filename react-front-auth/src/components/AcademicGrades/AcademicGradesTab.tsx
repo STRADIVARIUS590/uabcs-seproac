@@ -59,7 +59,7 @@ export const AcademicGradesTab = () => {
             loading && <MessageToast message='Cargando...' type="loading" />
         }
         {
-            !error && !loading && <AcademicGrades />
+            !error && !loading && <AcademicGrades getEndpoint={`/academic-grades?include=institution,user&filter[user_id]=${user?.id}`} />
         }
     </>
 }

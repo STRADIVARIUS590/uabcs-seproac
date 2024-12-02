@@ -77,29 +77,30 @@ export const AcademicGradesForm = () => {
                 setData(result);
 
                 // ¿Por que solamente se traen las instituciones si se esta editando?
-                const response_institutions = await Api.get('/institutions', {
-                    Authorization: "Bearer " + token,
-                    accept: "application/json",
-                })
-
-                const result_institutions: InstitutionItem[] = response_institutions.data;
-
-                setInstitutions(result_institutions);
-
-                const response_users = await Api.get('/users', {
-                    Authorization: "Bearer " + token,
-                    accept: "application/json",
-                })
-
-                const result_users: UserItem[] = response_users.data;
-
-                setUsers(result_users);
-
                 setLoading(false);
             }
         } catch (e) {
             setError(true);
         }
+
+        const response_institutions = await Api.get('/institutions', {
+            Authorization: "Bearer " + token,
+            accept: "application/json",
+        })
+
+        const result_institutions: InstitutionItem[] = response_institutions.data;
+
+        setInstitutions(result_institutions);
+
+        const response_users = await Api.get('/users', {
+            Authorization: "Bearer " + token,
+            accept: "application/json",
+        })
+
+        const result_users: UserItem[] = response_users.data;
+
+        setUsers(result_users);
+
 
         setLoading(false);
     }

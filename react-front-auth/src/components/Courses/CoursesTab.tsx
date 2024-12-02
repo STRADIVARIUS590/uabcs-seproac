@@ -47,7 +47,7 @@ export const CoursesTab = () => {
             loading && <MessageToast message='Cargando...' type="loading" />
         }
         {
-            !error && !loading && <Courses />
+            !error && !loading && <Courses getEndpoint={`/courses?include=user,institution&filter[user_id]=${user?.id}`} />
         }
     </>
 }

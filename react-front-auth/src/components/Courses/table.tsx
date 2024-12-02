@@ -3,8 +3,8 @@ import useCoursesTableColumns from "@/hooks/courses/useCoursesColumns";
 import { useCourses } from "@/hooks/courses/useCoursesData";
 import { MessageToast } from "../MessageToast";
 
-export const Courses = () => {
-    const { data, deleteFn, loading, error, user, canDelete, canEdit } = useCourses()
+export const Courses = ({ getEndpoint = "/courses?include=user,institution" }: { getEndpoint?: string }) => {
+    const { data, deleteFn, loading, error, user, canDelete, canEdit } = useCourses(getEndpoint)
     const { userColumns } = useCoursesTableColumns({ deleteFn, user, canDelete, canEdit });
 
     if (error) {
