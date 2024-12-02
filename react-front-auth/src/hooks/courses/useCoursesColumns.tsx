@@ -4,26 +4,33 @@ import { TableEditDelete } from "@/components/ui/table-edit-delete";
 import { TableSortButton } from "@/components/ui/table-sort-button";
 import { IUser } from "@/store/authSlice";
 
-const section = 'users'
+const section = 'courses'
 
-export interface UserItem_T {
-    id: number;
-    name: string;
-    email: string;
-    date_ingreso: string;
-    birth_date: string;
-    sex: string;
-    role_id: string | number;
-    role: {
-        id: number;
-        name: string;
+export interface CourseItem {
+    id: string | number;
+    user_id: string | number;
+    institution_id: string | undefined | null;
+    total_hours: number | string | undefined;
+    name: string | undefined;
+    total_students: number | string | undefined;
+    educative_level: number | string | undefined;
+    period: number | string | undefined;
+    start_date: number | string | undefined;
+    end_date: number | string | undefined;
+    user: {
+        id: string,
+        name: string,
+    },
+    institution: {
+        id: string,
+        name: string,
     }
 }
 
 // hay una muy buena razon para la existencia de esto
 // aun no la descubro
-export const useUserTableColumns = ({ deleteUser, canModify, user }: { deleteUser: (id: number | string) => Promise<void>, canModify: boolean, user: IUser | null }) => {
-    const userColumns: ColumnDef<UserItem_T>[] = [
+const useCoursesTableColumns = ({ deleteFn, canEdit, canDelete, user }: { deleteFn: (id: number | string) => Promise<void>, canEdit: boolean, canDelete: boolean, user: IUser | null }) => {
+    const userColumns: ColumnDef<CourseItem>[] = [
         {
             accessorKey: "id",
             header: ({ column }) => {
@@ -37,79 +44,101 @@ export const useUserTableColumns = ({ deleteUser, canModify, user }: { deleteUse
             accessorKey: "name",
             header: ({ column }) => {
                 return (
-                    <TableSortButton column={column} headingText={"Nombre"} />
+                    <TableSortButton column={column} headingText={"Titulo del trabajo"} />
                 )
 
             },
         },
         {
-            accessorKey: "email",
+            accessorKey: "total_hours",
             header: ({ column }) => {
                 return (
-                    <TableSortButton column={column} headingText={"Correo electrónico"} />
+                    <TableSortButton column={column} headingText={"Titulo del trabajo"} />
                 )
 
             },
         },
         {
-            accessorKey: "date_ingreso",
+            accessorKey: "total_students",
             header: ({ column }) => {
                 return (
-                    <TableSortButton column={column} headingText={"Fecha de ingreso"} />
+                    <TableSortButton column={column} headingText={"Titulo del trabajo"} />
+                )
+
+            },
+        },
+        {
+            accessorKey: "educative_level",
+            header: ({ column }) => {
+                return (
+                    <TableSortButton column={column} headingText={"Nivel educativo"} />
+                )
+
+            },
+        },
+        {
+            accessorKey: "start_date",
+            header: ({ column }) => {
+                return (
+                    <TableSortButton column={column} headingText={"Fecha de inicio"} />
                 )
             },
             cell: ({ row }) => {
-                const date = new Date(row.getValue("date_ingreso"));
+                const date = new Date(row.getValue("start_date"));
                 return <div className="text-center font-medium" >
                     {date.toLocaleDateString()}
                 </div>
             }
         },
         {
-            accessorKey: "birth_date",
+            accessorKey: "end_date",
             header: ({ column }) => {
                 return (
-                    <TableSortButton column={column} headingText={"Fecha de nacimiento"} />
+                    <TableSortButton column={column} headingText={"Fecha de finalización"} />
                 )
             },
             cell: ({ row }) => {
-                const date = new Date(row.getValue("date_ingreso"));
+                const date = new Date(row.getValue("end_date"));
                 return <div className="text-center font-medium" >
                     {date.toLocaleDateString()}
                 </div>
             }
         },
         {
-            accessorKey: "sex",
+            accessorKey: "user",
             header: ({ column }) => {
                 return (
-                    <TableSortButton column={column} headingText={"Género"} />
+                    <TableSortButton column={column} headingText={"Usuario"} />
                 )
             },
             cell: ({ row }) => {
-                const gender: string = row.getValue("sex");
-                return <div className="text-center font-medium" >
-                    {gender}
-                </div>
-            }
-        },
-        {
-            accessorKey: "role",
-            header: ({ column }) => {
-                return (
-                    <TableSortButton column={column} headingText={"Rol"} />
-                )
-            },
-            cell: ({ row }) => {
-                const role: {
-                    id: number;
+                const user: {
                     name: string;
-                } = row.getValue("role");
-                if (!role) {
+                } = row.getValue("user");
+                if (!user) {
                     return;
                 }
                 return <div className="text-center font-medium" >
-                    {role?.name}
+                    {user?.name}
+                </div>
+            }
+        },
+        {
+            accessorKey: "institution",
+            header: ({ column }) => {
+                return (
+                    <TableSortButton column={column} headingText={"Usuario"} />
+                )
+            },
+            cell: ({ row }) => {
+                const institution: {
+                    name: string;
+                } = row.getValue("institution");
+                if (!institution) {
+                    return;
+                }
+                return <div className="text-center font-medium" >
+                    {institution?.name}
                 </div>
             }
         },
@@ -120,12 +149,22 @@ export const useUserTableColumns = ({ deleteUser, canModify, user }: { deleteUse
                 headerClassName: "bg-red-400"
             },
             cell: ({ row }) => {
-                const rowUser = row.original
-                if (!canModify && user?.id != rowUser.id) {
-                    return;
+                const rowOriginalData = row.original
+                let editSelf = false;
+                let deleteSelf = false;
+                if (user?.id == rowOriginalData.user_id) {
+                    editSelf = true;
+                    deleteSelf = true;
                 }
                 return (
-                    <TableEditDelete data={rowUser} section={section} deleteFn={deleteUser} />
+                    <TableEditDelete
+                        canEdit={canEdit || editSelf}
+                        canDelete={canDelete || editSelf}
+                        deleteTitle="Eliminar curso"
+                        deleteQuestion="¿Está seguro que quiere borrar este curso?"
+                        data={rowOriginalData}
+                        section={section}
+                        deleteFn={deleteFn} />
                 )
             }
         },
@@ -136,5 +175,4 @@ export const useUserTableColumns = ({ deleteUser, canModify, user }: { deleteUse
         }
     )
 }
-
-export default useUserTableColumns;
+export default useCoursesTableColumns
