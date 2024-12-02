@@ -3,11 +3,38 @@ import { AppLayout } from "../Layout/AppLayout"
 import { CourseItem, Courses } from "./table"
 import { RootState } from "../../store";
 import { useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import { Api } from "../../services/Api";
 import { MessageToast } from "../MessageToast";
+import { BaseFilter } from "../BaseFilter";
+
+
+// Define the context shape
+interface ContextType {
+  userIds: Array<string | number>;
+  setUserIds: React.Dispatch<React.SetStateAction<Array<string | number>>>;
+}
+
+// Create the context with default values
+export const R = createContext<ContextType>({
+  userIds: [],
+  setUserIds: () => {}
+});
+
+// Provide the context to your application
+export const ContextProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const [userIds, setUserIds] = useState<Array<string | number>>([]);
+
+  return (
+    <R.Provider value={{ userIds, setUserIds }}>
+      {children}
+    </R.Provider>
+  );
+};
+
 
 export const CoursesIndex = () => {
+
 
     const  { token, user } = useSelector((state: RootState ) => state.auth);
 
@@ -48,7 +75,8 @@ export const CoursesIndex = () => {
 
     useEffect(() => {fetchData()}, [])
 
-    return (  <AppLayout>
+    const users = (data.map(item => item.user).filter(item => item != null)); // filters both null and undefined
+    return (<AppLayout>
         {
             error && <div className="mt-12"> <MessageToast message='Ha ocurrido un error' type="error"/></div>
         }
@@ -56,8 +84,13 @@ export const CoursesIndex = () => {
             loading && <div className="mt-12"> <MessageToast message='Cargando...' type="loading"/></div> 
         }
         {
-        !error && !loading && data &&      
+        !error && !loading && data &&    
+                    <div className="mt-20">
+                    <ContextProvider>
+                    <BaseFilter users={users}/>
                     <Courses courses={data}/>
+                        </ContextProvider>
+                    </div>
         }
         </AppLayout>
     )
