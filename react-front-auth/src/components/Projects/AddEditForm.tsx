@@ -7,7 +7,7 @@ import * as Yup from 'yup';
 import { MessageToast } from "../MessageToast";
 import { ErrorMessage, Field, Formik, FormikHelpers, Form, FieldArray } from "formik";
 import { DefaultColumn, DefaultInput } from "../inputs/Forms";
-import { TagItem } from "../Users/AddEditForm";
+import { TagItem } from "../users/AddEditForm";
 const validationSchema = Yup.object({
     name: Yup.string().required('El nombre es requerido'),
     description: Yup.string().required('La descripcion es requerida'),
@@ -160,7 +160,7 @@ export const AddEditForm = () => {
             validationSchema={validationSchema}
             onSubmit={handleSubmit}
         >
-            {({ isSubmitting }) => (
+            {() => (
                 <Form>
                     <input type="hidden" name='id' />
 
@@ -182,14 +182,14 @@ export const AddEditForm = () => {
                                                 <DefaultInput
                                                     name="name"
                                                     label="Nombre"
-                                                    className="mb-4"
-                                                    inputClass="w-full bg-gray-50 dark:bg-gray-900 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
+
+
                                                 />
                                                 <DefaultInput
                                                     name="description"
                                                     label="Descripción"
-                                                    className="mb-4"
-                                                    inputClass="w-full bg-gray-50 dark:bg-gray-900 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
+
+
                                                 />
                                             </DefaultColumn>
 
@@ -198,14 +198,14 @@ export const AddEditForm = () => {
                                                 <DefaultInput
                                                     name="objetives"
                                                     label="Objetivos"
-                                                    className="mb-4"
-                                                    inputClass="w-full bg-gray-50 dark:bg-gray-900 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
+
+
                                                 />
                                                 <DefaultInput
                                                     name="colaborators"
                                                     label="Colaboradores"
-                                                    className="mb-4"
-                                                    inputClass="w-full bg-gray-50 dark:bg-gray-900 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
+
+
                                                 />
                                             </DefaultColumn>
 
@@ -215,15 +215,15 @@ export const AddEditForm = () => {
                                                     name="start_date"
                                                     label="Fecha de Inicio"
                                                     type="date"
-                                                    className="mb-4"
-                                                    inputClass="w-full bg-gray-50 dark:bg-gray-900 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
+
+
                                                 />
                                                 <DefaultInput
                                                     name="end_date"
                                                     label="Fecha de Fin"
                                                     type="date"
-                                                    className="mb-4"
-                                                    inputClass="w-full bg-gray-50 dark:bg-gray-900 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
+
+
                                                 />
                                             </DefaultColumn>
 
@@ -259,14 +259,14 @@ export const AddEditForm = () => {
                                                     type="number"
                                                     name="type"
                                                     label="Tipo"
-                                                    className="mb-4"
-                                                    inputClass="w-full bg-gray-50 dark:bg-gray-900 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
+
+
                                                 />
                                                 <DefaultInput
                                                     name="period"
                                                     label="Periodo"
-                                                    className="mb-4"
-                                                    inputClass="w-full bg-gray-50 dark:bg-gray-900 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
+
+
                                                 />
                                             </DefaultColumn>
 

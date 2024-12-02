@@ -161,7 +161,7 @@ const useCoursesTableColumns = ({ deleteFn, canEdit, canDelete, user }: { delete
                 return (
                     <TableEditDelete
                         canEdit={canEdit || editSelf}
-                        canDelete={canDelete || editSelf}
+                        canDelete={canDelete || deleteSelf}
                         deleteTitle="Eliminar curso"
                         deleteQuestion="¿Está seguro que quiere borrar este curso?"
                         data={rowOriginalData}

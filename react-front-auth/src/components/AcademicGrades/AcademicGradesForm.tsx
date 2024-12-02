@@ -8,7 +8,7 @@ import { MessageToast } from "../MessageToast";
 import * as Yup from 'yup';
 import { Formik, Field, Form, ErrorMessage, FormikHelpers } from "formik";
 import { DefaultColumn, DefaultInput } from "../inputs/Forms";
-import { UserItem } from "../Users/AddEditForm";
+import { UserItem } from "../users/AddEditForm";
 interface AcademicGradeItem {
     id: string | number;
     name: string,

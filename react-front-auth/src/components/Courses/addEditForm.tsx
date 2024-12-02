@@ -7,26 +7,26 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../../store';
 import { MessageToast } from '../MessageToast';
 import { DefaultColumn, DefaultInput } from '../inputs/Forms';
-import { TagItem } from '../Users/AddEditForm';
+import { TagItem } from '../users/AddEditForm';
 interface CourseItem {
 
     id: string;
     user_id: string;
-    institution_id: string | undefined | null; 
+    institution_id: string | undefined | null;
     total_hours: number | string | undefined;
     name: string | undefined;
     total_students: number | string | undefined;
     educative_level: number | string | undefined;
-    period: number | string | undefined;   
+    period: number | string | undefined;
     start_date: number | string | undefined;
-    end_date: number | string | undefined; 
+    end_date: number | string | undefined;
     tags: TagItem[]
     user: {
         id: string,
         name: string,
     },
     institution: {
-        id: string, 
+        id: string,
         name: string,
     }
 }
@@ -45,14 +45,14 @@ const validationSchema = Yup.object({
     total_hours: Yup.number().required('El total de horas es requerido').min(50),
     total_students: Yup.number().required('El total de estudiantes es requerido').min(5),
     period: Yup.string().required('El periodo es requerido'),
-    educative_level : Yup.string().required('El nivel educativo es requerido'),
+    educative_level: Yup.string().required('El nivel educativo es requerido'),
     start_date: Yup.date().required('La fecha de inicio es requerida'),
     end_date: Yup.date().required('La fecha de fin es requerida'),
     institution_id: Yup.date().required('La institucion es requerida'),
 });
 
 export const AddEditForm = () => {
-     // MIDDLEWARE
+    // MIDDLEWARE
     const { token, user } = useSelector((state: RootState) => state.auth);
     const { id } = useParams<{ id?: string }>();
     const navigate = useNavigate();
@@ -72,7 +72,7 @@ export const AddEditForm = () => {
     const [users, setUsers] = useState<UserItem[]>([]);
     const [tags, setTags] = useState<TagItem[]>([]);
     const [institutions, setInstantutions] = useState<InstitutionItem[]>([]);
-       const loadData = async () => {
+    const loadData = async () => {
         try {
             if (id) {
                 const response = await Api.get("/courses/get/" + id + "?include=user,tags", {
@@ -100,14 +100,14 @@ export const AddEditForm = () => {
 
             const response_institutions = await Api.get('/institutions', {
                 Authorization: "Bearer " + token,
-                accept: "application/json",   
+                accept: "application/json",
             })
 
             const result_institutions: InstitutionItem[] = await response_institutions.data;
             setInstantutions(result_institutions);
-          
+
             setLoading(false);
-            
+
         } catch (error) {
             setError(true);
             setLoading(false);
@@ -135,7 +135,7 @@ export const AddEditForm = () => {
             name: data?.user.name ?? ''
         },
         institution: {
-            id: data?.institution_id || "", 
+            id: data?.institution_id || "",
             name: data?.institution?.name || ''
         }
     }
@@ -157,7 +157,7 @@ export const AddEditForm = () => {
                 'Content-Type': 'application/json',
             });
         console.error(response);
-        
+
         if (response.statusCode === 200) {
             navigate('/courses');
         } else {
@@ -167,115 +167,115 @@ export const AddEditForm = () => {
             });
         }
     };
-     // HTML
-     if(error){       return<div className="mt-12"> <MessageToast message='Ha ocurrido un error' type="error"/></div>}
-     if(loading){     return <div className="mt-12"> <MessageToast message='Cargando...' type="loading"/></div>  }
- 
-    return ( <div> <h1>{isEditMode ? 'Editar Curso' : 'Agregar curso'}</h1> 
-        <Formik 
+    // HTML
+    if (error) { return <div className="mt-12"> <MessageToast message='Ha ocurrido un error' type="error" /></div> }
+    if (loading) { return <div className="mt-12"> <MessageToast message='Cargando...' type="loading" /></div> }
+
+    return (<div> <h1>{isEditMode ? 'Editar Curso' : 'Agregar curso'}</h1>
+        <Formik
             initialValues={initialValues}
             validationSchema={validationSchema}
-            onSubmit={handleSubmit} 
+            onSubmit={handleSubmit}
         >
-          {({ isSubmitting }) => (
-            <Form>
-              <input type="hidden"  name='id'/>
-                <section className="py-12 dark:bg-dark">
-                  <div className="container">
-                    <div className="-mx-4 flex flex-wrap">
-                          <DefaultColumn>
-                            <DefaultInput name='name' label='Nombre'/>
-                            <DefaultInput name='total_hours' type='number' label='Horas'/>
-                          </DefaultColumn>
-                          
-                          <DefaultColumn>
-                            <DefaultInput  name='total_students' type='number' label='Nro de estudiantes'/>
-                            <DefaultInput  name='educative_level' label='Nivel educativo'/>
-                          </DefaultColumn>
-    
-    
-                        <DefaultColumn>
-                            <DefaultInput type='date' name='start_date' label='Fecha de inicio'/>
-                            <DefaultInput type='date' name='end_date' label='Fecha de fin'/>
-                        </DefaultColumn>
-                    <DefaultColumn>
-                            <DefaultInput name='period' label='Periodo'/>
-                            <div>
-                                <label htmlFor="institution_id" className="mb-[10px] block text-base font-medium text-dark dark:text-white">Institucion</label>
-                                    <Field as="select" name="institution_id" className="w-full bg-transparent rounded-md border border-stroke dark:border-dark-3 py-[10px] px-5 text-dark-6 outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-gray-2 disabled:border-gray-2">
-                                        {institutions.map((item) => (
-                                            <option key={item.id} value={item.id}>
-                                                {item.name}
-                                            </option>
-                                        ))}
-                                    </Field>
-                                <ErrorMessage name="institution_id" component="div" className="text-red-500"  />
+            {({ isSubmitting }) => (
+                <Form>
+                    <input type="hidden" name='id' />
+                    <section className="py-12 dark:bg-dark">
+                        <div className="container">
+                            <div className="-mx-4 flex flex-wrap">
+                                <DefaultColumn>
+                                    <DefaultInput name='name' label='Nombre' />
+                                    <DefaultInput name='total_hours' type='number' label='Horas' />
+                                </DefaultColumn>
+
+                                <DefaultColumn>
+                                    <DefaultInput name='total_students' type='number' label='Nro de estudiantes' />
+                                    <DefaultInput name='educative_level' label='Nivel educativo' />
+                                </DefaultColumn>
+
+
+                                <DefaultColumn>
+                                    <DefaultInput type='date' name='start_date' label='Fecha de inicio' />
+                                    <DefaultInput type='date' name='end_date' label='Fecha de fin' />
+                                </DefaultColumn>
+                                <DefaultColumn>
+                                    <DefaultInput name='period' label='Periodo' />
+                                    <div>
+                                        <label htmlFor="institution_id" className="mb-[10px] block text-base font-medium text-dark dark:text-white">Institucion</label>
+                                        <Field as="select" name="institution_id" className="w-full bg-transparent rounded-md border border-stroke dark:border-dark-3 py-[10px] px-5 text-dark-6 outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-gray-2 disabled:border-gray-2">
+                                            {institutions.map((item) => (
+                                                <option key={item.id} value={item.id}>
+                                                    {item.name}
+                                                </option>
+                                            ))}
+                                        </Field>
+                                        <ErrorMessage name="institution_id" component="div" className="text-red-500" />
+                                    </div>
+
+                                </DefaultColumn>
+
+                                <DefaultColumn>
+                                    <div>
+                                        <label htmlFor="user_id" className="mb-[10px] block text-base font-medium text-dark dark:text-white">Usuario</label>
+                                        <Field as="select" name="user_id" className="w-full bg-transparent rounded-md border border-stroke dark:border-dark-3 py-[10px] px-5 text-dark-6 outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-gray-2 disabled:border-gray-2">
+                                            {users.map((user) => (
+                                                <option key={user.id} value={user.id}>
+                                                    {user.name}
+                                                </option>
+                                            ))}
+                                        </Field>
+                                        <ErrorMessage name="user_id" component="div" className="text-red-500" />
+                                    </div>
+
+                                    <FieldArray
+                                        name="tags"
+                                        render={arrayHelpers => (
+                                            <div>
+                                                {tags.map((item, index) => (
+                                                    <div key={index}>
+                                                        <label>
+                                                            <Field
+                                                                type="checkbox"
+                                                                name="tags"
+                                                                value={item.id}
+                                                                checked={
+                                                                    arrayHelpers.form.values.tags.some(
+                                                                        (tag: string) => tag === item.id
+                                                                    )
+                                                                }
+                                                                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                                                                    if (e.target.checked) {
+                                                                        arrayHelpers.push(item.id);
+                                                                    } else {
+                                                                        const idx = arrayHelpers.form.values.tags.indexOf(item.id);
+                                                                        if (idx !== -1) arrayHelpers.remove(idx);
+                                                                    }
+                                                                }}
+                                                            />
+                                                            {item.name}
+                                                        </label>
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        )}
+                                    />
+                                </DefaultColumn>
+
+
                             </div>
+                        </div>
 
-                    </DefaultColumn>
 
-                        <DefaultColumn>
-                            <div>
-                                <label htmlFor="user_id" className="mb-[10px] block text-base font-medium text-dark dark:text-white">Usuario</label>
-                                    <Field as="select" name="user_id" className="w-full bg-transparent rounded-md border border-stroke dark:border-dark-3 py-[10px] px-5 text-dark-6 outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-gray-2 disabled:border-gray-2">
-                                        {users.map((user) => (
-                                            <option key={user.id} value={user.id}>
-                                                {user.name}
-                                            </option>
-                                        ))}
-                                    </Field>
-                                <ErrorMessage name="user_id" component="div" className="text-red-500"  />
-                            </div>
 
-                            <FieldArray
-                            name="tags"
-                            render={arrayHelpers => (
-                                <div>
-                                    {tags.map((item, index) => (
-                                        <div key={index}>
-                                            <label>
-                                                <Field
-                                                    type="checkbox"
-                                                    name="tags"
-                                                    value={item.id}
-                                                    checked={
-                                                        arrayHelpers.form.values.tags.some(
-                                                            (tag: string) => tag === item.id
-                                                        )
-                                                    }
-                                                    onChange={(e : React.ChangeEvent<HTMLInputElement>) => {
-                                                        if (e.target.checked) {
-                                                            arrayHelpers.push(item.id);
-                                                        } else {
-                                                            const idx = arrayHelpers.form.values.tags.indexOf(item.id);
-                                                            if (idx !== -1) arrayHelpers.remove(idx);
-                                                        }
-                                                    }}
-                                                />
-                                                {item.name}
-                                            </label>
-                                        </div>
-                                    ))}
-                                </div>
-                            )}
-                        />
-                        </DefaultColumn>
-    
-        
+                    </section>
+                    <div>
+                        <button type="submit" disabled={isSubmitting}>
+                            {isEditMode ? 'Editar' : 'Guardar '}
+                        </button>
                     </div>
-                  </div>
-    
-                 
-    
-          </section>
-              <div>
-                <button type="submit" disabled={isSubmitting}>
-                  {isEditMode ? 'Editar' : 'Guardar '}
-                </button>
-              </div>
-            </Form>
-          )}
+                </Form>
+            )}
         </Formik>
-          </div>
+    </div>
     );
-    };
+};

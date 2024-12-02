@@ -1,12 +1,13 @@
 import { useSelector } from "react-redux";
 import { AppLayout } from "../Layout/AppLayout"
-import { ProjectItem, Projects } from "./table"
+import { Projects } from "./table"
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { Api } from "../../services/Api";
 import { RootState } from "../../store";
 import { MessageToast } from "../MessageToast";
 import { Context } from "../scripts/Context";
+import { ProjectItem } from "@/hooks/projects/useProjectsColumns";
 
 export const ProjectsIndex = () => {
 
@@ -63,9 +64,10 @@ export const ProjectsIndex = () => {
 
             <div>
                 <Context>
-                    <Projects projects={data} />
+                    <Projects />
                 </Context>
             </div>
         }
     </AppLayout>
 }
+// projects={data}

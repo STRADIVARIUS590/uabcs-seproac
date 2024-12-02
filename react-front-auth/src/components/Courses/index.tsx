@@ -58,8 +58,9 @@ export const CoursesIndex = () => {
         }
         {
             !error && !loading && data &&
-            <Courses courses={data} />
+            <Courses />
         }
     </AppLayout>
     )
 }
+// courses={data}

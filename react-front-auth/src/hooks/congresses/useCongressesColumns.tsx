@@ -108,7 +108,7 @@ export const useCongressesTableColumns = ({ deleteFn, canEdit, canDelete, user }
                 return (
                     <TableEditDelete
                         canEdit={canEdit || editSelf}
-                        canDelete={canDelete || editSelf}
+                        canDelete={canDelete || deleteSelf}
                         deleteTitle="Eliminar congreso"
                         deleteQuestion="¿Está seguro que quiere borrar este congreso?"
                         data={rowOriginalData}

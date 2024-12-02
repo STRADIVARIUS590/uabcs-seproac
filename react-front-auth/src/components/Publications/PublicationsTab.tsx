@@ -9,7 +9,7 @@ export const PublicationsTab = () => {
 
     const { token, user } = useSelector((state: RootState) => state.auth);
 
-    const [data, setData] = useState<PublicationItem[]>();
+    const [, setData] = useState<PublicationItem[]>();
 
     const [error, setError] = useState<boolean>(false);
 
@@ -43,7 +43,7 @@ export const PublicationsTab = () => {
             loading && <MessageToast message='Cargando...' type="loading" />
         }
         {
-            !error && !loading && data && <Publications publications={data} />
+            !error && !loading && <Publications />
         }
     </>
 }

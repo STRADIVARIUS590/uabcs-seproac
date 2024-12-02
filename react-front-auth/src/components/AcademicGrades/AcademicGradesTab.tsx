@@ -5,29 +5,29 @@ import { useEffect, useState } from "react";
 import { Api } from "../../services/Api";
 import { MessageToast } from "../MessageToast";
 interface AcademicGradeItem {
+    id: string | number;
+    name: string,
+    titulation_date: string | number;
+    institution: {
         id: string | number;
-        name: string,
-        titulation_date : string | number;
-        institution : {
-            id: string | number;
-            name: string | number;
+        name: string | number;
 
-        }
-        user : {
-            id: string | number;
-            name: string | number;
-        }
     }
+    user: {
+        id: string | number;
+        name: string | number;
+    }
+}
 
 
 export const AcademicGradesTab = () => {
 
-    const { token, user } = useSelector((state : RootState) => state.auth);
+    const { token, user } = useSelector((state: RootState) => state.auth);
 
-    const [data, setData] = useState<AcademicGradeItem[]>();
+    const [, setData] = useState<AcademicGradeItem[]>();
 
     const [error, setError] = useState<boolean>(false);
-    
+
     const [loading, setLoading] = useState<boolean>(true);
 
     const fetchData = async () => {
@@ -38,8 +38,8 @@ export const AcademicGradesTab = () => {
 
         const result: AcademicGradeItem[] = await response.data;
 
-        if(response.statusCode === 200){
-            
+        if (response.statusCode === 200) {
+
             setError(false);
             setData(result);
             setLoading(false)
@@ -51,15 +51,16 @@ export const AcademicGradesTab = () => {
     }, []);
 
 
-    return <>    
+    return <>
         {
-            error && <MessageToast message='Ha ocurrido un error' type="error"/>
+            error && <MessageToast message='Ha ocurrido un error' type="error" />
         }
         {
-            loading && <MessageToast message='Cargando...' type="loading"/> 
+            loading && <MessageToast message='Cargando...' type="loading" />
         }
         {
-            !error && !loading && data &&  <AcademicGrades academic_grades={data}/>
-        }  
+            !error && !loading && <AcademicGrades />
+        }
     </>
 }
+// academic_grades={data}

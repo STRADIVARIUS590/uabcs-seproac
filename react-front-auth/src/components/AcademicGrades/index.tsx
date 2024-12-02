@@ -37,7 +37,7 @@ export const AcademicGradesPage = () => {
         }
     }, [user, user_permissions, navigate]);
 
-    const [data, setData] = useState<AcademicGradeItem[]>();
+    const [, setData] = useState<AcademicGradeItem[]>();
 
     const [error, setError] = useState<boolean>(false);
 
@@ -77,8 +77,9 @@ export const AcademicGradesPage = () => {
             </div>
         }
         {
-            !error && !loading && data && <AcademicGrades academic_grades={data} />
+            !error && !loading && <AcademicGrades />
         }
     </AppLayout>
 
 }
+// academic_grades={data}

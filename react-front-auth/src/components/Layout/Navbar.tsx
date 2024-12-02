@@ -2,7 +2,6 @@ import { Link, useLocation } from "react-router-dom";
 import { useLogout } from "../scripts/Logout";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store";
-import { useEffect } from "react";
 
 // Inside your component or API handler
 

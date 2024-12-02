@@ -107,13 +107,14 @@ const useAcademicGradesTableColumns = ({ deleteFn, canEdit, canDelete, user }: {
                 let editSelf = false;
                 let deleteSelf = false;
                 if (user?.id == rowOriginalData?.user?.id) {
+                    // si
                     editSelf = true;
                     deleteSelf = true;
                 }
                 return (
                     <TableEditDelete
                         canEdit={canEdit || editSelf}
-                        canDelete={canDelete || editSelf}
+                        canDelete={canDelete || deleteSelf}
                         deleteTitle="Eliminar grado académico"
                         deleteQuestion="¿Está seguro que quiere borrar este grado académico?"
                         data={rowOriginalData}

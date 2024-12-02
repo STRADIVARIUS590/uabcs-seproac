@@ -13,7 +13,7 @@ export interface PublicationItem {
     type: string | undefined;
     issn_isbn: string | undefined;
     doi: string | undefined;
-    magazine_name : string | undefined;
+    magazine_name: string | undefined;
     authors: string | undefined;
     publication_date: string | undefined;
     period: string | undefined;
@@ -23,7 +23,7 @@ export interface PublicationItem {
 }
 export const PulicationsIndex = () => {
 
-    const  { token, user } = useSelector((state: RootState ) => state.auth);
+    const { token, user } = useSelector((state: RootState) => state.auth);
 
     const navigate = useNavigate();
 
@@ -36,45 +36,46 @@ export const PulicationsIndex = () => {
     }, [user, user_permissions, navigate]);
 
     const [loading, setLoading] = useState<boolean>(true);
-    
-    const [data, setData] = useState<PublicationItem[]>([]);
 
-    const [error, setError] = useState<boolean>(false); 
+    const [, setData] = useState<PublicationItem[]>([]);
+
+    const [error, setError] = useState<boolean>(false);
 
     const fetchData = async () => {
 
-            const response = await Api.get('/publications?include=user', {
-                Authorization: 'Bearer ' + token,
-                accept: 'application/json'
-            })
-            
-            const result: PublicationItem[] = await response.data 
-            
-            if(response.statusCode === 200) {
-                setError(false);
-                setData(result)
-                setLoading(false);
-            }else{
-                setError(true);
-                navigate(-1);
-            }
+        const response = await Api.get('/publications?include=user', {
+            Authorization: 'Bearer ' + token,
+            accept: 'application/json'
+        })
+
+        const result: PublicationItem[] = await response.data
+
+        if (response.statusCode === 200) {
+            setError(false);
+            setData(result)
+            setLoading(false);
+        } else {
+            setError(true);
+            navigate(-1);
+        }
 
     }
 
     useEffect(() => { fetchData() }, []);
     return (<AppLayout>
         {
-            error && <div className="mt-12"> <MessageToast message='Ha ocurrido un error' type="error"/></div>
+            error && <div className="mt-12"> <MessageToast message='Ha ocurrido un error' type="error" /></div>
         }
         {
-            loading && <div className="mt-12"> <MessageToast message='Cargando...' type="loading"/></div> 
+            loading && <div className="mt-12"> <MessageToast message='Cargando...' type="loading" /></div>
         }
         {
-            !error && !loading && 
-                // <AuthContext.Provider value={user}>
-                    <Publications publications={data} />
-                // </AuthContext.Provider>
+            !error && !loading &&
+            // <AuthContext.Provider value={user}>
+            <Publications />
+            // </AuthContext.Provider>
         }
-        </AppLayout>
+    </AppLayout>
     )
 }
+// publications={data}
