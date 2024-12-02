@@ -1,5 +1,5 @@
 "use client"
-import { ColumnDef } from "@tanstack/react-table"
+import { Column, ColumnDef, Row } from "@tanstack/react-table"
 import { TableEditDelete } from "@/components/ui/table-edit-delete";
 import { TableSortButton } from "@/components/ui/table-sort-button";
 import { IUser } from "@/store/authSlice";
@@ -33,7 +33,8 @@ const useCoursesTableColumns = ({ deleteFn, canEdit, canDelete, user }: { delete
     const userColumns: ColumnDef<CourseItem>[] = [
         {
             accessorKey: "id",
-            header: ({ column }) => {
+
+            header: ({ column }: { column: Column<CourseItem, unknown> }) => {
                 return (
                     <TableSortButton column={column} headingText={"ID"} />
                 )
@@ -42,7 +43,7 @@ const useCoursesTableColumns = ({ deleteFn, canEdit, canDelete, user }: { delete
         },
         {
             accessorKey: "name",
-            header: ({ column }) => {
+            header: ({ column }: { column: Column<CourseItem, unknown> }) => {
                 return (
                     <TableSortButton column={column} headingText={"Curso"} />
                 )
@@ -51,7 +52,7 @@ const useCoursesTableColumns = ({ deleteFn, canEdit, canDelete, user }: { delete
         },
         {
             accessorKey: "total_hours",
-            header: ({ column }) => {
+            header: ({ column }: { column: Column<CourseItem, unknown> }) => {
                 return (
                     <TableSortButton column={column} headingText={"Horas totales"} />
                 )
@@ -60,7 +61,7 @@ const useCoursesTableColumns = ({ deleteFn, canEdit, canDelete, user }: { delete
         },
         {
             accessorKey: "total_students",
-            header: ({ column }) => {
+            header: ({ column }: { column: Column<CourseItem, unknown> }) => {
                 return (
                     <TableSortButton column={column} headingText={"Estudiantes totales"} />
                 )
@@ -69,7 +70,7 @@ const useCoursesTableColumns = ({ deleteFn, canEdit, canDelete, user }: { delete
         },
         {
             accessorKey: "educative_level",
-            header: ({ column }) => {
+            header: ({ column }: { column: Column<CourseItem, unknown> }) => {
                 return (
                     <TableSortButton column={column} headingText={"Nivel educativo"} />
                 )
@@ -78,12 +79,13 @@ const useCoursesTableColumns = ({ deleteFn, canEdit, canDelete, user }: { delete
         },
         {
             accessorKey: "start_date",
-            header: ({ column }) => {
+            header: ({ column }: { column: Column<CourseItem, unknown> }) => {
                 return (
                     <TableSortButton column={column} headingText={"Fecha de inicio"} />
                 )
             },
-            cell: ({ row }) => {
+
+            cell: ({ row }: { row: Row<CourseItem> }) => {
                 const date = new Date(row.getValue("start_date"));
                 return <div className="text-center font-medium" >
                     {date.toLocaleDateString()}
@@ -92,12 +94,12 @@ const useCoursesTableColumns = ({ deleteFn, canEdit, canDelete, user }: { delete
         },
         {
             accessorKey: "end_date",
-            header: ({ column }) => {
+            header: ({ column }: { column: Column<CourseItem, unknown> }) => {
                 return (
                     <TableSortButton column={column} headingText={"Fecha de finalización"} />
                 )
             },
-            cell: ({ row }) => {
+            cell: ({ row }: { row: Row<CourseItem> }) => {
                 const date = new Date(row.getValue("end_date"));
                 return <div className="text-center font-medium" >
                     {date.toLocaleDateString()}
@@ -106,12 +108,12 @@ const useCoursesTableColumns = ({ deleteFn, canEdit, canDelete, user }: { delete
         },
         {
             accessorKey: "user",
-            header: ({ column }) => {
+            header: ({ column }: { column: Column<CourseItem, unknown> }) => {
                 return (
                     <TableSortButton column={column} headingText={"Usuario"} />
                 )
             },
-            cell: ({ row }) => {
+            cell: ({ row }: { row: Row<CourseItem> }) => {
                 const user: {
                     name: string;
                 } = row.getValue("user");
@@ -125,12 +127,12 @@ const useCoursesTableColumns = ({ deleteFn, canEdit, canDelete, user }: { delete
         },
         {
             accessorKey: "institution",
-            header: ({ column }) => {
+            header: ({ column }: { column: Column<CourseItem, unknown> }) => {
                 return (
                     <TableSortButton column={column} headingText={"Institución"} />
                 )
             },
-            cell: ({ row }) => {
+            cell: ({ row }: { row: Row<CourseItem> }) => {
                 const institution: {
                     name: string;
                 } = row.getValue("institution");
@@ -148,7 +150,7 @@ const useCoursesTableColumns = ({ deleteFn, canEdit, canDelete, user }: { delete
             meta: {
                 headerClassName: "bg-red-400"
             },
-            cell: ({ row }) => {
+            cell: ({ row }: { row: Row<CourseItem> }) => {
                 const rowOriginalData = row.original
                 let editSelf = false;
                 let deleteSelf = false;
