@@ -3,7 +3,7 @@ import useProjectTableColumns from "@/hooks/projects/useProjectsColumns";
 import { useProjects } from "@/hooks/projects/useProjectsData";
 import { MessageToast } from "../MessageToast";
 
-export const Projects = ({ getEndpoint = "/projects?include=user" }: { getEndpoint: string }) => {
+export const Projects = ({ getEndpoint = "/projects?include=user" }: { getEndpoint?: string }) => {
     const { data, deleteFn, loading, error, user, canDelete, canEdit } = useProjects(getEndpoint)
     const { userColumns } = useProjectTableColumns({ deleteFn, user, canDelete, canEdit });
 
