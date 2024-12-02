@@ -18,6 +18,7 @@ import { AddEditAcademicGradesPage } from "../components/AcademicGrades/AddEditA
 import { SettingsPage } from "../components/Settings/SettingsPage";
 import { AddEditUserPage } from "../components/users/addEdit";
 import { UsersIndex } from "../components/users/Index";
+import { RolesIndex } from "@/components/Roles";
 // import { ProjectsTest } from "@/components/Projects/testtable";
 // import { SettingsPage } from "../components/Settings";
 
@@ -159,6 +160,11 @@ const routes: TypeRoute[] = [
         is_protected: true,
         path: '/settings',
         element: SettingsPage
+    },
+    {
+        is_protected: true,
+        path: '/roles',
+        element: RolesIndex
     }
 ];
 
