@@ -14,7 +14,8 @@ export const useCongresses = () => {
     const [error, setError] = useState<boolean>(false);
     const [data, setData] = useState<CongressItem[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
-    const [canModify, setCanModify] = useState<boolean>(true);
+    const [canEdit, setCanEdit] = useState<boolean>(true);
+    const [canDelete, setCanDelete] = useState<boolean>(true);
     const fetchData = async () => {
         const response = await Api.get('/congresses?include=user', {
             Authorization: 'Bearer ' + token,
@@ -34,11 +35,16 @@ export const useCongresses = () => {
 
     // TODO no retornar con navigate si no retornar un error
     useEffect(() => {
-        if (!user || user_permissions.indexOf("users.get") === -1) {
+        if (!user || user_permissions.indexOf('congresses.get') === -1) {
             navigate(-1);
         }
-        if (user && user_permissions.indexOf("users.edit") > -1) {
-            setCanModify(true)
+
+        if (user && user_permissions.indexOf("congresses.destroy") > -1) {
+            setCanDelete(true);
+        }
+
+        if (user && user_permissions.indexOf("congresses.edit") > -1) {
+            setCanEdit(true)
         }
     }, [user, user_permissions, navigate]);
 
@@ -59,5 +65,5 @@ export const useCongresses = () => {
     }
 
     useEffect(() => { fetchData(); }, [])
-    return { data, user, deleteFn, loading, error, canModify }
+    return { data, user, deleteFn, loading, error, canDelete, canEdit }
 }

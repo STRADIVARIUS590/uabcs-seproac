@@ -4,8 +4,8 @@ import useCongressesTableColumns from "@/hooks/congresses/useCongressesColumns";
 import { useCongresses } from "@/hooks/congresses/useCongressesData";
 
 export const Congresses = () => {
-    const { data, deleteFn, loading, error, user, canModify } = useCongresses()
-    const { userColumns } = useCongressesTableColumns({ deleteFn, user, canModify });
+    const { data, deleteFn, loading, error, user, canDelete, canEdit } = useCongresses()
+    const { userColumns } = useCongressesTableColumns({ deleteFn, user, canDelete, canEdit });
 
     if (error) {
         <div className="mt-12"> <MessageToast message='Ha ocurrido un error' type="error" /></div>

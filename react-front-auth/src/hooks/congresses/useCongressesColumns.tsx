@@ -20,7 +20,7 @@ export interface CongressItem {
 
 // hay una muy buena razon para la existencia de esto
 // aun no la descubro
-export const useCongressesTableColumns = ({ deleteFn, canModify, user }: { deleteFn: (id: number | string) => Promise<void>, canModify: boolean, user: IUser | null }) => {
+export const useCongressesTableColumns = ({ deleteFn, canEdit, canDelete, user }: { deleteFn: (id: number | string) => Promise<void>, canEdit: boolean, canDelete: boolean, user: IUser | null }) => {
     const userColumns: ColumnDef<CongressItem>[] = [
         {
             accessorKey: "id",
@@ -97,11 +97,16 @@ export const useCongressesTableColumns = ({ deleteFn, canModify, user }: { delet
             },
             cell: ({ row }) => {
                 const rowOriginalData = row.original
-                if (!canModify && user?.id != rowOriginalData.id) {
-                    return;
+                let editSelf = false;
+                let deleteSelf = false;
+                if (user?.id == rowOriginalData.user_id) {
+                    editSelf = true;
+                    deleteSelf = true;
                 }
                 return (
                     <TableEditDelete
+                        canEdit={canEdit || editSelf}
+                        canDelete={canDelete || editSelf}
                         deleteTitle="Eliminar congreso"
                         deleteQuestion="¿Está seguro que quiere borrar este congreso?"
                         data={rowOriginalData}
