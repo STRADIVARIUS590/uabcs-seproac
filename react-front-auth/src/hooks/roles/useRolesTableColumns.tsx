@@ -1,12 +1,12 @@
-import { Column, ColumnDef, Row } from "@tanstack/react-table"
-import { TableEditDelete } from "@/components/ui/table-edit-delete";
+import { Column, ColumnDef } from "@tanstack/react-table"
+// import { TableEditDelete } from "@/components/ui/table-edit-delete";
 import { TableSortButton } from "@/components/ui/table-sort-button";
-import { IUser } from "@/store/authSlice";
+// import { IUser } from "@/store/authSlice";
 export interface RoleItem_T {
     id: string | number; 
     name: string;
 }
-const section = 'roles';
+// const section = 'roles';
 export const useRolesTableColumns = ({}) => {
     const rolesColumns: ColumnDef<RoleItem_T>[] = [
         {

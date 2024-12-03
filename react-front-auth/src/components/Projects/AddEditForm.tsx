@@ -7,7 +7,7 @@ import * as Yup from 'yup';
 import { MessageToast } from "../MessageToast";
 import { ErrorMessage, Field, Formik, FormikHelpers, Form, FieldArray } from "formik";
 import { DefaultColumn, DefaultInput } from "../inputs/Forms";
-import { TagItem } from "../users/AddEditForm";
+import { TagItem } from "../Users/AddEditForm";
 const validationSchema = Yup.object({
     name: Yup.string().required('El nombre es requerido'),
     description: Yup.string().required('La descripcion es requerida'),

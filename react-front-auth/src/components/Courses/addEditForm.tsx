@@ -7,7 +7,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../../store';
 import { MessageToast } from '../MessageToast';
 import { DefaultColumn, DefaultInput } from '../inputs/Forms';
-import { TagItem } from '../users/AddEditForm';
+import { TagItem } from '../Users/AddEditForm';
 interface CourseItem {
 
     id: string;

@@ -6,7 +6,7 @@ import { Api } from "../../services/Api";
 import { ErrorMessage, Field, FieldArray, Form, Formik, FormikHelpers } from "formik";
 import { MessageToast } from "../MessageToast";
 import { DefaultColumn, DefaultInput } from "../inputs/Forms";
-import { TagItem } from "../users/AddEditForm";
+import { TagItem } from "../Users/AddEditForm";
 
 interface PublicationItem {
     id: string;
