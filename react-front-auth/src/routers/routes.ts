@@ -17,6 +17,7 @@ import { AddEditAcademicGradesPage } from "../components/AcademicGrades/AddEditA
 import { SettingsPage } from "../components/Settings/SettingsPage";
 import { AddEditUserPage } from "../components/Users/addEdit";
 import { UsersIndex } from "../components/Users/Index";
+import { Form } from "../components/Settings/hookformtest/form";
 // import { SettingsPage } from "../components/Settings";
 
 type TypeRoute = {
@@ -147,6 +148,11 @@ const routes: TypeRoute[] = [
         is_protected: true,
         path: '/settings',
         element: SettingsPage
+    },
+    {
+        is_protected: true,
+        path: '/form',
+        element: Form
     }
 ];
 
