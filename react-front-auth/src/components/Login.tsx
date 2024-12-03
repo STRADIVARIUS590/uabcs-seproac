@@ -37,7 +37,7 @@ const Login = () => {
                 navigate('/dashboard');
             } else {
                 // console.log('si esto sale no funciona')
-                navigate('/dashboard');
+                navigate('/login');
 
             }
         })

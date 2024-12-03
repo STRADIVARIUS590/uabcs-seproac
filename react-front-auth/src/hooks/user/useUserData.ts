@@ -12,8 +12,8 @@ export const useUser = () => {
 
 
     const [error, setError] = useState<boolean>(false);
-    const [data, setData] = useState<UserItem_T[]>([]);
-    const [loading, setLoading] = useState<boolean>(true);
+    // const [data, setData] = useState<UserItem_T[]>([]);
+    const [loading] = useState<boolean>(true);
     const [canEdit, setCanEdit] = useState<boolean>(true);
     const [canDelete, setCanDelete] = useState<boolean>(true);
     const fetchData = async () => {
@@ -23,13 +23,9 @@ export const useUser = () => {
         })
         const result: UserItem_T[] = await response.data
         if (response.statusCode === 200) {
-            setError(false);
-            setLoading(false);
-            setData(result)
+            return result;
         } else {
-            // no usar navigate!
-            setError(true);
-            navigate(-1);
+            return [];
         }
     }
 
@@ -63,6 +59,14 @@ export const useUser = () => {
         fetchData();
     }
 
-    useEffect(() => { fetchData(); }, [])
-    return { data, user, deleteUser, loading, error, canDelete, canEdit }
+    const getById = async (id : number | string) => {
+        const response = await Api.get('/users/get/' + id + '?include=tags', {
+            Authorization: 'Bearer ' + token,
+            accept: 'application/json'
+        })
+
+        const result: UserItem_T = await response.data
+        return result || null
+    }
+    return { fetchData, getById, user, deleteUser, loading, error, canDelete, canEdit }
 }
