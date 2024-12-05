@@ -39,9 +39,9 @@ class User extends Authenticatable implements HasMedia
 
     public function avatar()
     {
-        return $this->morphOne(\Spatie\MediaLibrary\MediaCollections\Models\Media::class, 'model')->where('collection_name', 'avatar');
+        return $this->morphOne(\Spatie\MediaLibrary\MediaCollections\Models\Media::class, 'model')->where('collection_name', 'avatar')->latest();
     }
-    public function registerMediaConversions(?Media $media = null): void
+    public function registerMediaConversions(?Media $media = null): void    
     {
         $this->addMediaConversion('preview')
         ->fit(Fit::Contain, 300, 300)

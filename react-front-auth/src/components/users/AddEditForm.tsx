@@ -67,8 +67,9 @@ export const AddEditForm = () => {
         reset(fetchedData);
         if (fetchedData.tags) {
           setValue('tags', fetchedData.tags.map((tag: TagItem) => tag.id)); // Assuming `tags` in user data is an array of tag objects
-          // setAvatarPreview(fetchedData.avatar.preview_url); // Set the initial avatar preview
-        // }
+          if(fetchedData.avatar.preview_url){
+            setAvatarPreview(fetchedData.avatar.preview_url); // Set the initial avatar preview
+          }
         }
       }
       const roles: RoleItem_T[] = await fetchRoles();

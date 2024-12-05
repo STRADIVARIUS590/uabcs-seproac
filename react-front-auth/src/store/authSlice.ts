@@ -6,7 +6,13 @@ export interface IUser {
     name: string
     email: string
     all_permissions: []
-    roles: []
+    role: {
+        id: number | string ,
+        name: string
+    },
+    avatar? : {
+        preview_url : string
+    }
     // isLogged: boolean
     // isLoading: boolean
 }
