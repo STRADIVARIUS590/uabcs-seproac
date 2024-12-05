@@ -101,7 +101,7 @@ class BaseController extends Controller implements HasMiddleware
       
         $data = QueryBuilder::for($this->model)
         ->allowedFilters(['id',...$fields])
-        ->allowedIncludes(['user', 'tags', 'institution'])
+        ->allowedIncludes(['user', 'tags', 'institution', 'cover'])
         ->select('id',...$fields)
         ->where('id', $id)
         ->firstOrFail();

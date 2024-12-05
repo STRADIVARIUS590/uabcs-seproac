@@ -62,6 +62,31 @@ export const usePublications = (getEndpoint: string) => {
         fetchData();
     }
 
+    const post = async (url : string, data: any, headers : {}) => {
+        const response = await fetch(`${Api.baseUrl}${url}`, {
+            method: 'POST',
+            headers : headers,
+            body : data
+        });
+
+        const dataResponse = await response.json();
+
+        return {
+            statusCode: response.status,
+            data: dataResponse.data
+        }
+    } 
+
+    const getById = async (id : number | string) => {
+        const response = await Api.get(getEndpoint + '/get/' + id + '?include=tags,cover', {
+            Authorization: 'Bearer ' + token,
+            accept: 'application/json'
+        })
+
+        const result = await response.data
+        return result || null
+    }
+
     useEffect(() => { fetchData(); }, [])
-    return { data, user, deleteFn, loading, error, canDelete, canEdit }
+    return { data, post, getById, user, deleteFn, loading, error, canDelete, canEdit }
 }

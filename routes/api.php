@@ -73,7 +73,7 @@ Route::middleware(['auth:sanctum'])->group(function(){
     Route::controller(BaseController::class)->prefix('publications')->group(function(){
         Route::get('/', 'index');
         Route::post('/', 'store');
-        Route::put('/', 'update');
+        Route::post('/update', [PublicationController::class, 'update']);
         Route::get('/get/{id}', 'get');
         Route::delete('/{id}', 'destroy');
     });

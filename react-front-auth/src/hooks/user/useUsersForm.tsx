@@ -49,6 +49,8 @@ const validationSchema = Yup.object({
 //     errors: { [key: string]: FieldError };
 //     getById: (id: number | string) => Promise<void>
 // }
+
+
 export const useUsersForm = ({id}: {id ?  : number | string | null | undefined } ) => {
 
     const navigate = useNavigate();
@@ -73,10 +75,10 @@ export const useUsersForm = ({id}: {id ?  : number | string | null | undefined }
                 const fetchedData = await getById(id);
                 reset(fetchedData);
                 if (fetchedData.tags) {
-                setValue('tags', fetchedData.tags.map((tag: TagItem) => tag.id)); // Assuming `tags` in user data is an array of tag objects
+                  setValue('tags', fetchedData.tags.map((tag: TagItem) => tag.id)); // Assuming `tags` in user data is an array of tag objects
                 }
                 if(fetchedData.avatar.preview_url){
-                setAvatarPreview(fetchedData.avatar.preview_url); // Set the initial avatar preview
+                  setAvatarPreview(fetchedData.avatar.preview_url); // Set the initial avatar preview
                 }
             }
             const roles: RoleItem_T[] = await fetchRoles();
@@ -123,29 +125,29 @@ export const useUsersForm = ({id}: {id ?  : number | string | null | undefined }
         // });
       }
 
-         const isEditMode = !!id;
+        const isEditMode = !!id;
         // Append form fields to formData...
-         try {
-        const response = await (isEditMode
-          ? post('/users/update', formData, { Authorization: 'Bearer ' + token })
-          : post('/users', formData, { Authorization: 'Bearer ' + token })
-        );
+        try {
+          const response = await (isEditMode
+            ? post('/users/update', formData, { Authorization: 'Bearer ' + token })
+            : post('/users', formData, { Authorization: 'Bearer ' + token })
+          );
 
-        if (response.statusCode === 200) {
-          navigate('/users');
-        } else if (response.statusCode === 400) {
-          Object.entries(response.data).forEach(([key, value]) => {
-            const errorMessages = value as string[];
-            setError(key as keyof formValues, {
-              type: 'server',
-              message: errorMessages.join(', '),
+          if (response.statusCode === 200) {
+            navigate('/users');
+          } else if (response.statusCode === 400) {
+            Object.entries(response.data).forEach(([key, value]) => {
+              const errorMessages = value as string[];
+              setError(key as keyof formValues, {
+                type: 'server',
+                message: errorMessages.join(', '),
+              });
             });
-          });
-        }
+          }
       } catch (error) {
         console.error('Submission Error:', error);
         // MessageToast({ message: "Error submitting the form", type: "error" });
-      }
+        }
       };
     
       return {

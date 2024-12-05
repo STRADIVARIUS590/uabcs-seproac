@@ -18,6 +18,8 @@ import { useUsersForm } from '@/hooks/user/useUsersForm';
 
       return (
       <form onSubmit={handleSubmit(onSubmit)}>
+
+
         <section className="py-12 bg-gray-50 dark:bg-dark">
           <div className="container mx-auto max-w-4xl p-6 bg-white dark:bg-gray-900 rounded-lg shadow-md">
             <div className="flex flex-wrap -mx-4">
@@ -103,6 +105,8 @@ import { useUsersForm } from '@/hooks/user/useUsersForm';
                 />
                   {errors.role_id && <p className="text-red-500">{errors.role_id.message}</p>}
               </div>
+
+             
             </div>
             {avatarPreview && (
             <div className="mt-4">
@@ -150,9 +154,6 @@ import { useUsersForm } from '@/hooks/user/useUsersForm';
                 ))}
                   {errors.avatar && <p className="text-red-500">{errors.avatar.message}</p>}
 
-                {/* <div>
-                  {JSON.stringify(watch(), null, 2)}
-                </div> */}
               </div>
             </div>
           </div>

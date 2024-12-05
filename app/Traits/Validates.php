@@ -28,7 +28,7 @@ class Validates
     {
         return match($this->model){
         Publication::class => [
-             'title' => 'nullable|string|max:255',                   
+            'title' => 'nullable|string|max:255',                   
             'user_id' => 'nullable|exists:users,id',                
             'type' => 'nullable|string|max:10',                     
             'issn-isbn' => 'nullable|string|max:255',             
