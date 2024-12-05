@@ -1,17 +1,16 @@
 import { useUser } from '@/hooks/user/useUserData';
-import { useRoles } from '@/hooks/roles/useRolesData';
 import { useTags } from '@/hooks/tags/useTagsData';
 import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useState } from 'react';
 import { TagItem } from '../tags/useTagsColumns';
-import { RoleItem_T } from '../roles/useRolesTableColumns';
 import { useSelector } from 'react-redux';
 
 import { RootState } from '@/store';
 import * as Yup from 'yup';
 import { usePublications } from './usePublicationsData';
+import { UserItem_T } from '../user/useUserColumns';
 
 const validationSchema = Yup.object({
     title: Yup.string().required('El título es requerido'),
@@ -39,7 +38,7 @@ interface FormValues {
     publication_date: string;
     period: string ;
     tags?: any[];
-    cover? : File | string ;
+    cover? : File;
     // user: {
     //     name: string | undefined
     // },
@@ -49,6 +48,8 @@ interface FormValues {
 export const usePublicationsForm = (/* {id}: {id ?  : number | string | null | undefined } */ ) => {
     const { getById, post } = usePublications('/publications');
     const [ loading, setLoading ] = useState<boolean>(true);
+    const { fetchData : fetchUsers } = useUser();
+    const [ users, setUsers ] = useState<UserItem_T[]>([]);
     const { token, user } = useSelector((state: RootState) => state.auth);
     const [tags, setTags] = useState<TagItem[]>([]);
     const { fetchData : fetchTags } = useTags();
@@ -68,16 +69,19 @@ export const usePublicationsForm = (/* {id}: {id ?  : number | string | null | u
                 if(id){
                     const fetchedData = await getById(id);
                     reset(fetchedData);
-                    if(fetchedData.tags) {
+                    if(fetchedData?.tags) {
                         setValue('tags', fetchedData.tags.map((tag: TagItem) => tag.id));
                     }
-                    if(fetchedData.cover.preview_url){
-
+                    if(fetchedData?.cover?.preview_url){
                         setCover(fetchedData.cover.preview_url); // Set the initial avatar preview
                     }
                 }
-                const tags = await fetchTags();
+
+                const users: UserItem_T[] = await fetchUsers();
+                const tags: TagItem[] = await fetchTags();
+                setUsers(users);
                 setTags(tags);
+                setLoading(false);
             }catch{
                 setLoading(false);
             }
@@ -96,8 +100,6 @@ export const usePublicationsForm = (/* {id}: {id ?  : number | string | null | u
 
     const onSubmit = async (data : FormValues) => {
         const formData = createFormData(data);
-
-        console.log(data);
         
         if(data.tags && data.tags.length > 0) {
             data.tags.forEach((tag) => {
@@ -112,10 +114,9 @@ export const usePublicationsForm = (/* {id}: {id ?  : number | string | null | u
         try {
              const response = await (isEditMode 
             ? post('/publications/update', formData, { Authorization: 'Bearer ' + token, 'Accept' : 'application/json'})
-            : post('/publications', formData, { Authorization: 'Bearer ' + token })
-        )
+            : post('/publications', formData, { Authorization: 'Bearer ' + token, 'Accept' : 'application/json' }))
 
-    
+
         if(response.statusCode === 200){
             navigate('/publications');
         }else if (response.statusCode === 400) {
@@ -132,5 +133,5 @@ export const usePublicationsForm = (/* {id}: {id ?  : number | string | null | u
         }
     }
 
-    return {  loadData, loading, register, onSubmit, handleSubmit, errors, tags, control, watch, cover, setCover, setValue };
+    return {  loadData, loading, register, onSubmit, handleSubmit, errors, tags, control, watch, cover, setCover, setValue, users };
 };
