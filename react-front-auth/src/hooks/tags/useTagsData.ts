@@ -21,13 +21,15 @@ export const useTags = () => {
         })
         const result: TagItem[] = await response.data
         if (response.statusCode === 200) {
-            setError(false);
-            setLoading(false);
-            setData(result)
+            return result;
+            // setError(false);
+            // setLoading(false);
+            // setData(result)
         } else {
+            return [];
             // no usar navigate!
-            setError(true);
-            navigate(-1);
+            // setError(true);
+            // navigate(-1);
         }
     }
 
@@ -54,6 +56,6 @@ export const useTags = () => {
         fetchData();
     }
 
-    useEffect(() => { fetchData(); }, [])
-    return { data, user, deleteFn, fetchData, loading, error, canEdit: true, canDelete: true }
+    // useEffect(() => { fetchData(); }, [])
+    return { user, deleteFn, fetchData, loading, error, canEdit: true, canDelete: true }
 }

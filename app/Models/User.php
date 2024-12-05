@@ -3,6 +3,8 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -35,8 +37,9 @@ class User extends Authenticatable implements HasMedia
         'role_id',
     ];
 
-    public function avatar(){
-        return $this->getMedia('avatar')->first();
+    public function avatar()
+    {
+        return $this->morphOne(\Spatie\MediaLibrary\MediaCollections\Models\Media::class, 'model')->where('collection_name', 'avatar');
     }
     public function registerMediaConversions(?Media $media = null): void
     {

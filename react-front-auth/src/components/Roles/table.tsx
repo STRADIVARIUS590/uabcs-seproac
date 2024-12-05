@@ -1,9 +1,21 @@
 import { useRoles } from "@/hooks/roles/useRolesData"
-import useRolesTableColumns from "@/hooks/roles/useRolesTableColumns"
+import useRolesTableColumns, { RoleItem_T } from "@/hooks/roles/useRolesTableColumns"
 import { DataTable } from "../ui/data-table";
+import { useEffect, useState } from "react";
 
 export const Roles = () => {
-    const { data, error, loading } = useRoles()
+    const { fetchData, error, loading } = useRoles()
+    const [data, setData] = useState<RoleItem_T[]>([]);
+
+    const loadData = async () => { 
+        const fetchedData = await fetchData();
+        setData(fetchedData); 
+    };
+    
+    useEffect(() => {
+        loadData(); 
+    }, []);
+    
     const { rolesColumns } = useRolesTableColumns({});
     
     return (

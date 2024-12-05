@@ -59,14 +59,30 @@ export const useUser = () => {
         fetchData();
     }
 
+
+
+     const post = async(url: string, data: any, headers : {}): Promise<any>  => {
+        const response = await fetch(`${Api.baseUrl}${url}`, {
+            method: 'POST',
+            headers : headers,
+            body: data
+        })
+    
+        const dataResponse = await response.json()
+        
+        return {
+            statusCode : response.status,
+            data: dataResponse.data
+        }
+    }
     const getById = async (id : number | string) => {
-        const response = await Api.get('/users/get/' + id + '?include=tags', {
+        const response = await Api.get('/users/get/' + id + '?include=tags,avatar', {
             Authorization: 'Bearer ' + token,
             accept: 'application/json'
         })
 
-        const result: UserItem_T = await response.data
+        const result = await response.data
         return result || null
     }
-    return { fetchData, getById, user, deleteUser, loading, error, canDelete, canEdit }
+    return { post, fetchData, getById, user, deleteUser, loading, error, canDelete, canEdit }
 }

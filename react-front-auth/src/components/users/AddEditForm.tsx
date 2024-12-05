@@ -1,319 +1,303 @@
-import { useEffect, useState } from 'react';
-import { Formik, Field, Form, ErrorMessage, FormikHelpers, FieldArray } from 'formik';
-import * as Yup from 'yup';
-import { useParams, useNavigate } from 'react-router-dom';
-import { Api } from '../../services/Api';
-import { useSelector } from 'react-redux';
-import { RootState } from '../../store';
-import { DefaultInput, EmailInput } from '../inputs/Forms';
+import { UserItem_T } from '@/hooks/user/useUserColumns';
+import { useUser } from '@/hooks/user/useUserData';
+import { ChangeEvent, useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import { Controller, useForm } from 'react-hook-form';
 import { MessageToast } from '../MessageToast';
-interface RoleItem {
-    id: string;
-    name: string;
-}
-export interface UserItem {
-    id: number;
-    name: string;
-    email: string;
-    password: string;
-    date_ingreso: string;
-    birth_date: string;
-    role_id: string;
-    sex: string;
-    role: RoleItem;
-    tags: { id: number, name: string }[];
-}
+import * as Yup from 'yup';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { Api } from '@/services/Api';
+import { useSelector } from 'react-redux';
+import { RootState } from '@/store';
+import { useUsersForm } from '@/hooks/user/useUsersForm';
+import { useRoles } from '@/hooks/roles/useRolesData';
+import { RoleItem_T } from '@/hooks/roles/useRolesTableColumns';
+import { TagItem } from '@/hooks/tags/useTagsColumns';
+import { useTags } from '@/hooks/tags/useTagsData';
 
-export interface TagItem {
-    id: string;
-    name: string;
-}
-// Validation schema using Yup
 const validationSchema = Yup.object({
-    name: Yup.string().required('El nombre es requerido'),
-    email: Yup.string().email('Direccion de correo inválida').required('El correo es requerido'),
-    password: Yup.string()
-        .min(5, 'la contraseña debe tener minimo 5 caracteres')
-        // .max(10, 'la contraseña debe maximo 10 caracteres')
-        .required('La contraseña es requerida'),
-    password_confirmation: Yup.string()
-        .oneOf([Yup.ref('password')], 'Las contraseñas no coinciden').required('la confirmación de contraseña es requerida'),
-
-    // date_ingreso: Yup.date().max(
-    //     (new Date()).setHours(0,0,0,0),
-    //      'Selecciona una fecha valida'),
-    //     //  .required('La fecha de ingreso es requerida'),
-
-    // birth_date: Yup.date().max(
-    //     ((new Date()).setHours(0,0,0,0)),
-    //      'Selecciona una fecha valida')
-    //      .required('La fecha de nacimiento es requerida'),
-
-    // role_id:
-
+  name: Yup.string().required('El nombre es requerido'),
+  email: Yup.string().email('Direccion de correo inválida').required('El correo es requerido'),
+  password: Yup.string()
+    .min(5, 'La contraseña debe tener mínimo 5 caracteres')
+    .required('La contraseña es requerida'),
+  password_confirmation: Yup.string()
+    .oneOf([Yup.ref('password')], 'Las contraseñas no coinciden')
+    .required('La confirmación de contraseña es requerida'),
+  date_ingreso: Yup.string().required('La fecha de inicio es requerida'),
+  birth_date: Yup.string().required('La fecha de inicio es requerida'),
+  role_id: Yup.string().required('El rol es requerida'),
+  tags: Yup.array().optional(),
+  avatar : Yup.mixed()
 });
 
+interface formValues {
+  name: string;
+  email: string;
+  date_ingreso: string;
+  birth_date: string;
+  avatar?: File;
+  password: string;
+  password_confirmation: string;
+  role_id: string;
+  tags?: any[];
+}
+
 export const AddEditForm = () => {
+  const { id } = useParams<{ id?: string }>();
+  const [loading, setLoading] = useState(true);
+  const { getById, post } = useUser();
+  const { token } = useSelector((state: RootState) => state.auth);
+  const navigate = useNavigate();
+    const [avatarPreview, setAvatarPreview] = useState<string | null>(null); // State for preview URL
 
-    const { id } = useParams<{ id?: string }>(); // Grab the id from the URL, optional
+  const { fetchData: fetchRoles } = useRoles();
+  const { fetchData: fetchTags } = useTags();
+  const [roles, setRoles] = useState<RoleItem_T[]>([]);
+  const [tags, setTags] = useState<TagItem[]>([]);
+  const { reset, setError, watch, control, setValue, register, handleSubmit, formState: { errors } } = useForm<formValues>({
+    mode: 'onChange',
+    resolver: yupResolver(validationSchema),
+  });
 
-    const navigate = useNavigate();
-
-    const [user, setData] = useState<UserItem>()
-
-    const [roles, setRoles] = useState<RoleItem[]>([]);
-
-    const [loading, setLoading] = useState(true);
-
-    const [tags, setTags] = useState<TagItem[]>([]);
-
-    const [error, setError] = useState(false);
-
-    const { token } = useSelector((state: RootState) => state.auth)
-
-    const loadData = async () => {
-        try {
-
-
-            if (id) {
-
-                const response = await Api.get('/users/get/' + id + '?include=tags', {
-                    Authorization: 'Bearer ' + token,
-                    accept: 'application/json'
-                })
-
-                const result: UserItem = await response.data
-
-
-                setData(result);
-            }
-
-            const response_roles = await Api.get('/roles', {
-                Authorization: "Bearer " + token,
-                accept: "application/json",
-            });
-            const result_roles: RoleItem[] = await response_roles.data;
-            setRoles(result_roles);
-
-
-            const response_tags = await Api.get('/tags', {
-                Authorization: "Bearer " + token,
-                accept: "application/json",
-            });
-
-            const result_tags = await response_tags.data;
-            setTags(result_tags);
-
-            setLoading(false);
-
-        } catch (error) {
-            setError(true);
-            setLoading(false)
+  const loadData = async () => {
+    try {
+      if (id) {
+        const fetchedData = await getById(id);
+        reset(fetchedData);
+        if (fetchedData.tags) {
+          setValue('tags', fetchedData.tags.map((tag: TagItem) => tag.id)); // Assuming `tags` in user data is an array of tag objects
+          // setAvatarPreview(fetchedData.avatar.preview_url); // Set the initial avatar preview
+        // }
         }
+      }
+      const roles: RoleItem_T[] = await fetchRoles();
+      const tags: TagItem[] = await fetchTags();
+      setRoles(roles);
+      setTags(tags);
+      setLoading(false);
+    } catch {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    loadData();
+  }, [id]);
+
+  const isEditMode = !!id;
+  const onSubmit = async (data: formValues) => {
+    const formData = new FormData();
+
+    // Attach normal fields
+    if (id) {
+      formData.append('id', id);
     }
 
-    useEffect(() => {
-        loadData();
-    }, [id]);
+    formData.append('name', data.name);
+    formData.append('email', data.email);
+    formData.append('password', data.password);
+    formData.append('password_confirmation', data.password_confirmation);
+    formData.append('role_id', data.role_id);
+    formData.append('birth_date', data.birth_date);
+    formData.append('date_ingreso', data.date_ingreso);
+
+    // Attach tags as individual entries
+    if (data.tags && data.tags.length > 0) {
+      data.tags.forEach((tag) => {
+        formData.append('tags[]', tag); // Backend must handle `tags[]` format
+      });
+    }
+
+    // Attach files if any
+    if (data.avatar)  {
+      formData.append('avatar', data.avatar);
+      // const file = Array.from(data.files)[0] ?? undefined;
+      // if(file) formData.append('avatar', file);
+      // Array.from(data.files).forEach(file => {
+      //   formData.append('avatar', file); // Append each file separately
+      // });
+    }
+
+    try {
+      const response = await (isEditMode
+        ? post('/users/update', formData, { Authorization: 'Bearer ' + token })
+        : post('/users', formData, { Authorization: 'Bearer ' + token })
+      );
+
+      if (response.statusCode === 200) {
+        navigate('/users');
+      } else if (response.statusCode === 400) {
+        Object.entries(response.data).forEach(([key, value]) => {
+          const errorMessages = value as string[];
+          setError(key as keyof formValues, {
+            type: 'server',
+            message: errorMessages.join(', '),
+          });
+        });
+      }
+    } catch (error) {
+      console.error('Submission Error:', error);
+      // MessageToast({ message: "Error submitting the form", type: "error" });
+    }
+  };
+
+  if (loading) return <MessageToast message="Cargando..." type="loading" />;
+
+  return (
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <section className="py-12 bg-gray-50 dark:bg-dark">
+        <div className="container mx-auto max-w-4xl p-6 bg-white dark:bg-gray-900 rounded-lg shadow-md">
+          <div className="flex flex-wrap -mx-4">
+            <div className="w-full md:w-1/2 px-4 mb-6">
+              <label className="mb-[10px] block text-base font-medium text-dark dark:text-white" htmlFor="name">Nombre</label>
+              <input
+                type="text"
+                {...register('name')}
+                id="name"
+                className="w-full bg-transparent rounded-md border border-stroke dark:border-dark-3 py-[10px] px-5 text-dark-6 outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-gray-2 disabled:border-gray-2"
+              />
+              {errors.name && <p className="text-red-500">{errors.name.message}</p>}
+
+              <label className="mb-[10px] block text-base font-medium text-dark dark:text" >Correo</label>
+              <input
+                type="email"
+                {...register('email')}
+                id="email"
+                className="w-full bg-transparent rounded-md border border-stroke dark:border-dark-3 py-[10px] px-5 text-dark-6 outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-gray-2 disabled:border-gray-2"
+              />
 
 
-    const initialValues = {
-        id: user?.id || 0,
-        name: user?.name || '',
-        email: user?.email || '',
-        password: user?.password || '',
-        role_id: user?.role_id,
-        date_ingreso: user?.date_ingreso || '',
-        birth_date: user?.birth_date || '',
-        sex: user?.sex || '',
-        tags: user?.tags?.map(tag => tag.id) || [],
-        role: {
-            id: user?.role_id,
-            name: user?.role?.name
-        }
-    };
+              {errors.email && <p className="text-red-500">{errors.email.message}</p>}
+            </div>
+            <div className="w-full md:w-1/2 px-4 mb-6">
+              <label className="mb-[10px] block text-base font-medium text-dark dark:text" >Fecha de ingreso</label>
+              <input
+                type="date"
+                {...register('date_ingreso')}
+                id="date_ingreso"
+                className="w-full bg-transparent rounded-md border border-stroke dark:border-dark-3 py-[10px] px-5 text-dark-6 outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-gray-2 disabled:border-gray-2"
+              />
+              {errors.date_ingreso && <p className="text-red-500">{errors.date_ingreso.message}</p>}
 
-    const isEditMode = !!id; // True if we are editing
+              <label className="mb-[10px] block text-base font-medium text-dark dark:text" >Fecha de nacimiento</label>
+              <input
+                type="date"
+                {...register('birth_date')}
+                id="birth_date"
+                className="w-full bg-transparent rounded-md border border-stroke dark:border-dark-3 py-[10px] px-5 text-dark-6 outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-gray-2 disabled:border-gray-2"
+              />
+              {errors.birth_date && <p className="text-red-500">{errors.birth_date.message}</p>}
+            </div>
 
-    // Submit handler
-    const handleSubmit = async (values: typeof initialValues, { setFieldError }: FormikHelpers<typeof initialValues>) => {
+            <div className="w-full md:w-1/2 px-4 mb-6">
+              <label className="mb-[10px] block text-base font-medium text-dark dark:text" >Contraseña</label>
+              <input
+                type="password"
+                {...register('password')}
+                id="password"
+                className="w-full bg-transparent rounded-md border border-stroke dark:border-dark-3 py-[10px] px-5 text-dark-6 outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-gray-2 disabled:border-gray-2"
+              />
+              {errors.password && <p className="text-red-500">{errors.password.message}</p>}
 
-        if (isEditMode) {
-            const response = await Api.put('/users/' + id, values, {
-                Authorization: 'Bearer ' + token,
-                "Content-Type": 'application/json',
-                accept: 'application/json'
+              <label className="mb-[10px] block text-base font-medium text-dark dark:text" >Confirmar Contraseña</label>
+              <input
+                type="password"
+                {...register('password_confirmation')}
+                id="password_confirmation"
+                className="w-full bg-transparent rounded-md border border-stroke dark:border-dark-3 py-[10px] px-5 text-dark-6 outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-gray-2 disabled:border-gray-2"
+              />
+              {errors.password_confirmation && <p className="text-red-500">{errors.password_confirmation.message}</p>}
+            </div>
+
+            <div className="w-full px-4 mb-6">
+              <label className="block text-sm font-medium text-gray-700 dark:text-white mb-2">Rol</label>
+              <Controller
+                name="role_id"
+                control={control}
+                render={({ field }) => (
+                  <select
+                    {...field}
+                    className="w-full bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-md shadow-sm focus:ring-2 focus:ring-primary focus:border-primary"
+                  >
+                    {roles && roles.map((role) => (
+                      <option key={role.id} value={role.id}>
+                        {role.name}
+                      </option>
+                    ))}
+                  </select>
+                )}
+              />
+            </div>
+          </div>
+           {avatarPreview && (
+          <div className="mt-4">
+            <img
+              src={avatarPreview}
+              alt="Avatar Preview"
+              className="w-32 h-32 object-cover rounded-full"
+            />
+          </div>
+        )}
+
+          {/* Etiquetas */}
+          <div className="w-full px-4 mb-6">
+            <h3 className="text-sm font-medium text-gray-700 dark:text-white mb-2">
+              Etiquetas
+            </h3>
+            <div className="flex flex-wrap gap-4">
+              {tags.map((item) => (
+                <label key={item.id} className="flex items-center space-x-2">
+                  <Controller
+                    name="tags"
+                    control={control}
+                    render={({ field: { value, onChange } }) => {
+                      const isChecked = value?.includes(item.id);
+                      return (
+                        <input
+                          type="checkbox"
+                          value={item.id}
+                          checked={isChecked}
+                          onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                            const newValue = isChecked
+                              ? value?.filter((v: number) => v !== item.id)
+                              : [...(value || []), item.id];
+                            onChange(newValue);
+                            // console.log(watch('tags'));
+                          }}
+                          className="w-4 h-4 text-primary border-gray-300 dark:border-gray-700 rounded focus:ring-2 focus:ring-primary"
+                        />
+                      );
+                    }}
+                  />
+                  <span className="text-sm text-gray-700 dark:text-white">{item.name}</span>
+                </label>
+              ))}
+
+              {/* <div>
+                {JSON.stringify(watch(), null, 2)}
+              </div> */}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div>
+        <label htmlFor="file">Archivo</label>
+        <input
+          onChange={(e: ChangeEvent<HTMLInputElement>) => {
+            const fileList = e.target.files;
+            if (fileList && fileList.length > 0) {
+              const file = fileList[0];
+              setValue('avatar', file);
+              setAvatarPreview(URL.createObjectURL(file));
             }
-            );
-
-            if (response.statusCode == 200) {
-                navigate(0); // Redirect after submission;
-            } else {
-                const errors = response.data as { [key: string]: string[] };
-                Object.entries(errors).forEach(([field, messages]) => {
-                    setFieldError(field, messages[0]);
-                });
-            }
-
-        } else {
-            const response = await Api.post('/users', values, {
-                Authorization: 'Bearer ' + token,
-                "Content-Type": 'application/json',
-                accept: 'application/json'
-
-            });
-
-            if (response.statusCode == 200) {
-                navigate('/users'); // Redirect after submission;
-            } else {
-                Object.entries(response.data).forEach((key) => {
-                    console.log(key);
-                });
-            }
-        }
-    };
-
-    if (error) { return <div className="mt-12"> <MessageToast message='Ha ocurrido un error' type="error" /></div> }
-    if (loading) { return <div className="mt-12"> <MessageToast message='Cargando...' type="loading" /></div> }
-
-
-    return (<div> <h1>{isEditMode ? 'Editar usuario' : 'Agregar usuario'}</h1>
-        <Formik
-            initialValues={initialValues}
-            validationSchema={validationSchema}
-            onSubmit={handleSubmit}
-        >
-            {({ isSubmitting }) => (
-                <Form>
-                    <input type="hidden" name='id' />
-                    <section className="py-12 bg-gray-50 dark:bg-dark">
-                        <div className="container mx-auto max-w-4xl p-6 bg-white dark:bg-gray-900 rounded-lg shadow-md">
-                            <h2 className="text-2xl font-semibold text-center text-gray-700 dark:text-white mb-6">Formulario</h2>
-                            <div className="flex flex-wrap -mx-4">
-                                {/* Columna 1 */}
-                                <div className="w-full md:w-1/2 px-4 mb-6">
-                                    <DefaultInput
-                                        name="name"
-                                        label="Nombre"
-                                    />
-                                    <EmailInput
-                                        name="email"
-                                        label="Correo Electrónico"
-                                        placeholder="test@uabcs.mx"
-                                    />
-                                </div>
-
-                                {/* Columna 2 */}
-                                <div className="w-full md:w-1/2 px-4 mb-6">
-                                    <DefaultInput
-                                        type="date"
-                                        name="date_ingreso"
-                                        label="Fecha de ingreso"
-                                    />
-                                    <DefaultInput
-                                        type="date"
-                                        name="birth_date"
-                                        label="Fecha de nacimiento"
-                                    />
-                                </div>
-
-                                {/* Columna 3 */}
-                                <div className="w-full md:w-1/2 px-4 mb-6">
-                                    <DefaultInput
-                                        type="password"
-                                        name="password"
-                                        label="Contraseña"
-                                    />
-                                    <DefaultInput
-                                        type="password"
-                                        name="password_confirmation"
-                                        label="Confirma tu contraseña"
-                                    />
-                                </div>
-
-                                {/* Selección de Rol */}
-                                <div className="w-full px-4 mb-6">
-                                    <label
-                                        htmlFor="role_id"
-                                        className="block text-sm font-medium text-gray-700 dark:text-white mb-2"
-                                    >
-                                        Rol
-                                    </label>
-                                    <Field
-                                        as="select"
-                                        name="role_id"
-                                        className="w-full bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-md shadow-sm focus:ring-2 focus:ring-primary focus:border-primary"
-                                    >
-                                        {roles.map((role) => (
-                                            <option key={role.id} value={role.id}>
-                                                {role.name}
-                                            </option>
-                                        ))}
-                                    </Field>
-                                    <ErrorMessage
-                                        name="role_id"
-                                        component="div"
-                                        className="text-red-500 text-sm mt-1"
-                                    />
-                                </div>
-
-                                {/* Etiquetas */}
-                                <div className="w-full px-4 mb-6">
-                                    <h3 className="text-sm font-medium text-gray-700 dark:text-white mb-2">
-                                        Etiquetas
-                                    </h3>
-                                    <FieldArray
-                                        name="tags"
-                                        render={(arrayHelpers) => (
-                                            <div className="flex flex-wrap gap-4">
-                                                {tags.map((item, index) => (
-                                                    <label key={index} className="flex items-center space-x-2">
-                                                        <Field
-                                                            type="checkbox"
-                                                            name="tags"
-                                                            value={item.id}
-                                                            className="w-4 h-4 text-primary border-gray-300 dark:border-gray-700 rounded focus:ring-2 focus:ring-primary"
-                                                            checked={arrayHelpers.form.values.tags.includes(item.id)}
-                                                            onChange={(e: any) => {
-                                                                if (e.target.checked) {
-                                                                    arrayHelpers.push(item.id);
-                                                                } else {
-                                                                    const idx = arrayHelpers.form.values.tags.indexOf(
-                                                                        item.id
-                                                                    );
-                                                                    if (idx !== -1) arrayHelpers.remove(idx);
-                                                                }
-                                                            }}
-                                                        />
-                                                        <span className="text-sm text-gray-700 dark:text-white">
-                                                            {item.name}
-                                                        </span>
-                                                    </label>
-                                                ))}
-                                            </div>
-                                        )}
-                                    />
-                                </div>
-                            </div>
-
-                            <div className="mt-6 text-right">
-                                <button
-                                    type="submit"
-                                    disabled={isSubmitting}
-                                    className="px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg shadow-lg hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-200">
-                                    {isEditMode ? 'Editar' : 'Guardar'}
-                                </button>
-                            </div>
-                        </div>
-                    </section>
-                    {/* <div>
-            <button type="submit" disabled={isSubmitting}>
-              {isEditMode ? 'Editar' : 'Guardar '}
-            </button>
-          </div> */}
-                </Form>
-            )}
-        </Formik>
-    </div>
-    );
+          }}
+          type="file"
+          id="file"
+        />
+      </div>
+      <input type="submit" value="Enviar solicitud" />
+    </form>
+  );
 };

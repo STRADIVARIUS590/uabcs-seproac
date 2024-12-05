@@ -93,7 +93,7 @@ class UserController extends Controller
      */
     public function get($id)
     {
-        $user = User::with('role', 'tags')->findOrfail($id);
+        $user = User::with('role', 'tags', 'avatar')->findOrfail($id);
 
         // $this->log(__FUNCTION__, 'users', 'get users', Auth::id(),$user->id);
 
@@ -111,8 +111,9 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {  
+        error_log(json_encode([$request->all(), $request->files->count()]));
         $validator = Validator::make($request->all(), [
             'date_ingreso' => 'nullable|date',
             'birth_date' => 'nullable|date',
@@ -121,6 +122,7 @@ class UserController extends Controller
             'role_id' => 'nullable|exists:roles,id',
             'email' => 'required|string|email|max:255|unique:users,email,'.$request->id,
             'name' => 'required|string|max:255|unique:users,name,'.$request->id,
+            'avatar' => 'required|image'
         ]);
 
         if($validator->fails()) 
@@ -135,13 +137,11 @@ class UserController extends Controller
         
         $request['password'] = isset($request['password']) ? bcrypt($request['password']) : $user->password;
    
-        error_log(json_encode($request->tags));
        if(isset($request->tags)){
             $user->tags()->sync($request->tags);
          }
 
         $user->update($request->all());
-
         if($request->hasFile('avatar')) $user->addMedia($request->avatar)->toMediaCollection('avatar');
 
         return $this->jsonResponse('Registro actualizado correctamente', compact('user'), Response::HTTP_OK);
