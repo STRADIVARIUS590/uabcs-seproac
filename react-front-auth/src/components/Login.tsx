@@ -31,20 +31,13 @@ const Login = () => {
 
     const onSubmit = (values: typeof initialValues) => {
         dispatch(loginUser(values)).then((response) => {
-            console.log(response);
-
-            if (response.type == 'auth/loginUser/fulfilled') {
+            if (response.type == 'auth/loginUser/fulfilled' && response.payload.id) {
                 navigate('/dashboard');
             } else {
-                // console.log('si esto sale no funciona')
                 navigate('/login');
 
             }
         })
-
-        // Api.post('/users/login', values).then((response) => {
-        //     console.log(response)
-        // });
     }
 
     const validationSchema = Yup.object({
