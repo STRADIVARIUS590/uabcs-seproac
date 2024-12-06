@@ -51,10 +51,10 @@ const validationSchema = Yup.object({
 // }
 
 
-export const useUsersForm = ({id}: {id ?  : number | string | null | undefined } ) => {
+export const useUsersForm = ({id}: {id ?  : number | string | null | undefined }  = {}) => {
 
     const navigate = useNavigate();
-    const { getById, post } = useUser();
+    const { getById, post } = useUser({id});
     const { fetchData: fetchRoles } = useRoles();
     const { fetchData: fetchTags } = useTags();
     const [tags, setTags] = useState<TagItem[]>([]);

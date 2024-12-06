@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { PublicationItem } from "./usePublicationsColumns";
 
-export const usePublications = (getEndpoint: string) => {
+export const usePublications = ({getEndpoint, id}: {id ?  : number | string | null | undefined,  getEndpoint : string }) => {
     const { token, user } = useSelector((state: RootState) => state.auth);
     const navigate = useNavigate();
     const user_permissions: string[] = user?.all_permissions || [];
@@ -87,6 +87,6 @@ export const usePublications = (getEndpoint: string) => {
         return result || null
     }
 
-    useEffect(() => { fetchData(); }, [])
+    useEffect(() => { if(!id) fetchData(); },[])
     return { data, post, getById, user, deleteFn, loading, error, canDelete, canEdit }
 }

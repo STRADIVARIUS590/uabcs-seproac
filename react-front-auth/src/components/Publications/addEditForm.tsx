@@ -4,7 +4,6 @@ import { MessageToast } from "../MessageToast";
 import { Controller } from "react-hook-form";
 // import { TagItem } from "../Users/AddEditForm";
 import { usePublicationsForm } from "@/hooks/publications/usePublicationForm";
-import { DefaultColumn, DefaultInput } from "../inputs/Forms";
 
 export const AddEditForm = () => {
   const { id } = useParams<{ id?: string }>();
@@ -22,7 +21,7 @@ export const AddEditForm = () => {
     setCover,
     setValue,
     users,
-  } = usePublicationsForm();
+  } = usePublicationsForm({id});
 
   useEffect(() => {
     loadData({ id });
