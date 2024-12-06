@@ -45,8 +45,8 @@ interface FormValues {
     // tags: TagItem[]
   }
 
-export const usePublicationsForm = (/* {id}: {id ?  : number | string | null | undefined } */ ) => {
-    const { getById, post } = usePublications('/publications');
+export const usePublicationsForm = ({id}: {id ?  : number | string | null | undefined } ) => {
+    const { getById, post } = usePublications({getEndpoint: '/publications', id: id});
     const [ loading, setLoading ] = useState<boolean>(true);
     const { fetchData : fetchUsers } = useUser();
     const [ users, setUsers ] = useState<UserItem_T[]>([]);
@@ -76,9 +76,8 @@ export const usePublicationsForm = (/* {id}: {id ?  : number | string | null | u
                         setCover(fetchedData.cover.preview_url); // Set the initial avatar preview
                     }
                 }
-
-                const users: UserItem_T[] = await fetchUsers();
-                const tags: TagItem[] = await fetchTags();
+                const users: UserItem_T[] = await fetchUsers() ?? [] //                
+                const tags: TagItem[] = await fetchTags() ?? [];
                 setUsers(users);
                 setTags(tags);
                 setLoading(false);

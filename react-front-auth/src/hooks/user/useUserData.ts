@@ -27,6 +27,7 @@ export const useUser = ({id}: {id ?  : number | string | null | undefined }  = {
             setError(false);
             setLoading(false);
             setData(result)
+            return result;
         } else {
             // no usar navigate!
             setError(true);
@@ -90,5 +91,5 @@ export const useUser = ({id}: {id ?  : number | string | null | undefined }  = {
 
     useEffect(() => { if(!id) fetchData(); },[])
  
-    return { data, user, getById, post , deleteUser, loading, error, canDelete, canEdit }
+    return { data, user, fetchData, getById, post , deleteUser, loading, error, canDelete, canEdit }
 }

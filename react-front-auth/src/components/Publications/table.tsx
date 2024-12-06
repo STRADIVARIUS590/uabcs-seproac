@@ -4,7 +4,7 @@ import { MessageToast } from "../MessageToast";
 import { DataTable } from "../ui/data-table";
 
 export const Publications = ({ getEndpoint = '/publications?include=user' }: { getEndpoint?: string }) => {
-    const { data, deleteFn, loading, error, user, canEdit, canDelete } = usePublications(getEndpoint)
+    const { data, deleteFn, loading, error, user, canEdit, canDelete } = usePublications({getEndpoint})
     const { userColumns } = usePublicationsTableColumns({ deleteFn, user, canDelete, canEdit });
 
     if (error) {
