@@ -219,13 +219,7 @@ export const AddEditForm = () => {
           </div>
 
         <div>
-        
-        </div>
-
-        {cover && (
-          <div className="mt-4">
-          
-              <label htmlFor="cover">Archivo</label>
+          <label htmlFor="cover">Archivo</label>
           <input
             onChange={(e: ChangeEvent<HTMLInputElement>) => {
               const fileList = e.target.files;
@@ -238,6 +232,10 @@ export const AddEditForm = () => {
             type="file"
             id="file"
           />
+        </div>
+
+        {cover && (
+          <div className="mt-4">
             <img
               src={cover}
               alt="Avatar Preview"
