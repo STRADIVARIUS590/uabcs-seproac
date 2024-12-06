@@ -19,6 +19,7 @@ import { SettingsPage } from "../components/Settings/SettingsPage";
 import { RolesIndex } from "@/components/Roles";
 import { AddEditUserPage } from "@/components/users/addEdit";
 import { UsersIndex } from "@/components/users/Index";
+import { RolesAddEditForm } from "@/components/Roles/RolesAddEditForm";
 // import { ProjectsTest } from "@/components/Projects/testtable";
 // import { SettingsPage } from "../components/Settings";
 
@@ -165,6 +166,11 @@ const routes: TypeRoute[] = [
         is_protected: true,
         path: '/roles',
         element: RolesIndex
+    },
+    {
+        is_protected: true,
+        path: '/roles/edit/:id?',
+        element: RolesAddEditForm
     }
 ];
 

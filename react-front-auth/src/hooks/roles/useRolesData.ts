@@ -1,9 +1,13 @@
 import { Api } from "@/services/Api";
 import { RootState } from "@/store";
-import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { useLoaderData, useNavigate } from "react-router-dom";
-import { RoleItem_T } from "./useRolesTableColumns";
+
+interface RoleItem_T {
+    name: string;
+    permissions?: any[];
+}
+
+const ENDPOINT = 'roles'
 
 export const useRoles = () => {
     const { token, user } = useSelector((state: RootState) => state.auth);
@@ -15,7 +19,7 @@ export const useRoles = () => {
     const loading = false;
 
     const fetchData = async () => {
-        const response = await Api.get('/roles', {
+        const response = await Api.get(`/${ENDPOINT}`, {
             Authorization: 'Bearer ' + token,
             accept: 'application/json'
         })
@@ -31,7 +35,16 @@ export const useRoles = () => {
         }
     }
 
-    // useEffect(() => { fetchData() }, [])
+    const storeRole = async (data: RoleItem_T) => {
+        const response = await Api.post(`/${ENDPOINT}`, data, {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json',
+        });
+        if (response.statusCode === 200) {
+            return response.data;
+        }
+        console.log(response)
+    }
 
-    return { fetchData, user, error, loading };
+    return { fetchData, storeRole, user, error, loading };
 }
