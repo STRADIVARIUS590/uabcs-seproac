@@ -23,17 +23,18 @@ export interface PublicationItem {
 export const PulicationsIndex = () => {
 
     
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
 
-    const { user } = useSelector((state: RootState) => state.auth);
+    // // const { user } = useSelector((state: RootState) => state.auth);
 
-    const user_permissions: string[] = user?.all_permissions || [];
+    // // const user_permissions: string[] = user?.all_permissions || [];
 
-    useEffect(() => {
-        if (!user || user_permissions.indexOf("publications.get") === -1) {
-            navigate(-1);
-        }
-    }, [user, user_permissions, navigate]);
+    // // useEffect(() => {
+    // //     if (!user || user_permissions.indexOf("publications.get") === -1) {
+    // //         alert('wer');
+    // //         navigate(-1);
+    // //     }
+    // }, [user, user_permissions, navigate]);
 
     // const [loading, setLoading] = useState<boolean>(true);
 

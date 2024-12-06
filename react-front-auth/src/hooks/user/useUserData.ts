@@ -31,14 +31,14 @@ export const useUser = ({id}: {id ?  : number | string | null | undefined }  = {
         } else {
             // no usar navigate!
             setError(true);
-            navigate(-1);
+            // navigate(-1);
         }
     }
 
     // TODO no retornar con navigate si no retornar un error
     useEffect(() => {
         if (!user || user_permissions.indexOf("users.get") === -1) {
-            navigate(-1);
+            // navigate(-1);
         }
         if (user && user_permissions.indexOf("users.destroy") > -1) {
             setCanDelete(true);

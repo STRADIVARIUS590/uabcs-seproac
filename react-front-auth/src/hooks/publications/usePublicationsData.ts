@@ -26,16 +26,14 @@ export const usePublications = ({getEndpoint, id}: {id ?  : number | string | nu
             setLoading(false);
             setData(result)
         } else {
-            // no usar navigate!
             setError(true);
-            navigate(-1);
         }
     }
 
     // TODO no retornar con navigate si no retornar un error
     useEffect(() => {
         if (!user || user_permissions.indexOf("publications.get") === -1) {
-            navigate(-1);
+            // navigate(-1);
         }
         if (user && user_permissions.indexOf("publications.destroy") > -1) {
             setCanDelete(true);

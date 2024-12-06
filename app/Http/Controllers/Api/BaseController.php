@@ -15,6 +15,7 @@ use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
 use ReflectionClass;
@@ -25,6 +26,7 @@ class BaseController extends Controller implements HasMiddleware
     protected $model;
 
     public function __construct(){
+        $this->middleware('auth');
         $this->model = 'App\\Models\\'.Str::singular(str_replace(' ', '', ucwords(basename(preg_replace('/\/get\/(\d+)|\/(\d+)$|-/', ' ', request()->url())))));
     }
 
@@ -50,14 +52,17 @@ class BaseController extends Controller implements HasMiddleware
     public static function middleware() : array 
     {
         $base_name = basename(preg_replace('/\/get\/(\d+)|\/(\d+)$/', '',request()->url()));
-       
-        return [
-            'index' => 'permission:'.$base_name.'.get',
-            'get' => 'permission:'.$base_name.'.get',
-            'store' => 'permission:'.$base_name.'.add',
-            'update' => 'permission:'.$base_name.'.edit',
-            'destroy' => 'permission:'.$base_name.'.destroy'
+        
+        $own = request()->query('filter')['user_id'] ?? null;        
+        $m = [
+             new Middleware('permission:'.$base_name.'.get', only: !$own ? ['index'] : []),
+             new Middleware('permission:'.$base_name.'.get', only: ['get']),
+             new Middleware('permission:'.$base_name.'.add', only: ['store']),
+             new Middleware('permission:'.$base_name.'.edit', only: ['update']),
+             new Middleware('permission:'.$base_name.'.delete', only: ['destroy']),
         ];
+
+        return $m;
     }
 
   
