@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { TagItem } from "./useTagsColumns";
 
-export const useTags = () => {
+export const useTags = ({id}: {id ?  : number | string | null | undefined } = {}) => {
     const { token, user } = useSelector((state: RootState) => state.auth);
     const navigate = useNavigate();
     const user_permissions: string[] = user?.all_permissions || [];
@@ -20,15 +20,15 @@ export const useTags = () => {
             accept: 'application/json'
         })
         const result: TagItem[] = await response.data
-        if (response.statusCode === 200) {
+        if (response.statusCode == 200) {
+            setError(false);
+            setLoading(false);
+            setData(result)
             return result;
-            // setError(false);
-            // setLoading(false);
-            // setData(result)
         } else {
+            setError(true);
             return [];
             // no usar navigate!
-            // setError(true);
             // navigate(-1);
         }
     }
@@ -56,6 +56,6 @@ export const useTags = () => {
         fetchData();
     }
 
-    // useEffect(() => { fetchData(); }, [])
-    return { user, deleteFn, fetchData, loading, error, canEdit: true, canDelete: true }
+    useEffect(() => {  if(!id) { fetchData(); } }, [])
+    return {data, user, deleteFn, fetchData, loading, error, canEdit: true, canDelete: true }
 }

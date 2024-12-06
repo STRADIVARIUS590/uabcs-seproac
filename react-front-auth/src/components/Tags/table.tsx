@@ -13,16 +13,17 @@ import ModalContent from "../ui/modal-content";
 import { useEffect, useState } from "react";
 
 export const Tags = () => {
-    const { fetchData, deleteFn, loading, error, canEdit, canDelete, fetchData: updateFn } = useTags()
-    const [ data, setData ] = useState<TagItem[]>([]);
-    const loadData = async() => {
-        const fetchedData = await fetchData();
-        setData(fetchedData);
-    }
+    const { data, deleteFn, loading, error, canEdit, canDelete, fetchData: updateFn } = useTags()
 
-    useEffect(() => {
-        loadData();
-    }, []);
+    // const [ data, setData ] = useState<TagItem[]>([]);
+    // const loadData = async() => {
+    //     const fetchedData = await fetchData();
+    //     setData(fetchedData);
+    // }
+
+    // useEffect(() => {
+    //     loadData();
+    // }, []);
     
     const { userColumns } = useTagsTableColumns({ deleteFn, updateFn, canDelete, canEdit });
 
@@ -39,13 +40,13 @@ export const Tags = () => {
         </Dialog>
     </div>)
 
-    if (error) {
-        <div className="mt-12"> <MessageToast message='Ha ocurrido un error' type="error" /></div>
-    }
+    // if (error) {
+    //     <div className="mt-12"> <MessageToast message='Ha ocurrido un error' type="error" /></div>
+    // }
 
-    if (loading) {
-        <div className="mt-12"> <MessageToast message='Cargando...' type="loading" /></div>
-    }
+    // if (loading) {
+    //     <div className="mt-12"> <MessageToast message='Cargando...' type="loading" /></div>
+    // }
 
     return (
         <div className="container mx-auto py-10">
