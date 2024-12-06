@@ -27,19 +27,23 @@ Route::get('/pepe', function (Request $request) {
     return "popo";
 });
 
+Route::get('/caca', function (Request $request) {
+    return "pipi";
+});
+
 Route::post('/password/send-token', [UserController::class, 'sendResetToken']);
 Route::post('/password/reset', [UserController::class, 'resetPassword']);
 
-Route::get('/create', [ReportController::class , 'index']);
-Route::post('/prueba', function(Request $request){
+Route::get('/create', [ReportController::class, 'index']);
+Route::post('/prueba', function (Request $request) {
 
     $request->validate([
         'images.*' => 'file',
     ]);
-    
-    foreach($request->images as $key => $file){ 
+
+    foreach ($request->images as $key => $file) {
         // error_log(json_encode($image));
-        $name = uniqid().'.png';
+        $name = uniqid() . '.png';
         $file->storeAs('public/lasd', $name);
 
         $file = File::create([
@@ -52,16 +56,16 @@ Route::post('/prueba', function(Request $request){
 
 Route::post('/users/login', [UserController::class, 'login']);
 Route::post('/users', [UserController::class, 'store']);
-Route::middleware(['auth:sanctum'])->group(function(){
+Route::middleware(['auth:sanctum'])->group(function () {
 
-    Route::prefix('/users')->group(function(){
+    Route::prefix('/users')->group(function () {
         Route::get('/',  [UserController::class, 'index'])->middleware([\Illuminate\Auth\Middleware\Authorize::using('users.get')]);
         Route::post('/update',  [UserController::class, 'update'])->middleware([\Illuminate\Auth\Middleware\Authorize::using('users.edit')]);
         Route::get('/get/{id}', [UserController::class, 'get'])->middleware([\Illuminate\Auth\Middleware\Authorize::using('users.get')]);
         Route::delete('/{id}', [UserController::class, 'destroy'])->middleware([\Illuminate\Auth\Middleware\Authorize::using('users.destroy')]);
-    }); 
+    });
 
-    Route::controller(BaseController::class)->prefix('projects')->group(function(){
+    Route::controller(BaseController::class)->prefix('projects')->group(function () {
         Route::get('/', 'index');
         Route::post('/', 'store');
         Route::put('/', 'update');
@@ -70,7 +74,15 @@ Route::middleware(['auth:sanctum'])->group(function(){
     });
 
 
-    Route::controller(BaseController::class)->prefix('publications')->group(function(){
+    Route::controller(BaseController::class)->prefix('publications')->group(function () {
+        Route::get('/', 'index');
+        Route::post('/', 'store');
+        Route::post('/update', [PublicationController::class, 'update']);
+        Route::get('/get/{id}', 'get');
+        Route::delete('/{id}', 'destroy');
+    });
+
+    Route::controller(BaseController::class)->prefix('permissions')->group(function () {
         Route::get('/', 'index');
         Route::post('/', 'store');
         Route::post('/update', [PublicationController::class, 'update']);
@@ -79,7 +91,7 @@ Route::middleware(['auth:sanctum'])->group(function(){
     });
 
 
-    Route::controller(BaseController::class)->prefix('tags')->group(function(){
+    Route::controller(BaseController::class)->prefix('tags')->group(function () {
         Route::get('/', 'index');
         Route::post('/', 'store');
         Route::put('/', 'update');
@@ -88,7 +100,7 @@ Route::middleware(['auth:sanctum'])->group(function(){
     });
 
 
-    Route::controller(BaseController::class)->prefix('congresses')->group(function(){
+    Route::controller(BaseController::class)->prefix('congresses')->group(function () {
         Route::get('/', 'index');
         Route::post('/', 'store');
         Route::put('/', 'update');
@@ -96,7 +108,7 @@ Route::middleware(['auth:sanctum'])->group(function(){
         Route::delete('/{id}', 'destroy');
     });
 
-    Route::controller(BaseController::class)->prefix('academic-grades')->group(function(){
+    Route::controller(BaseController::class)->prefix('academic-grades')->group(function () {
         Route::get('/', 'index');
         Route::post('/', 'store');
         Route::put('/', 'update');
@@ -104,7 +116,7 @@ Route::middleware(['auth:sanctum'])->group(function(){
         Route::delete('/{id}', 'destroy');
     });
 
-      Route::controller(BaseController::class)->prefix('institutions')->group(function(){
+    Route::controller(BaseController::class)->prefix('institutions')->group(function () {
         Route::get('/', 'index');
         Route::post('/', 'store');
         Route::put('/', 'update');
@@ -113,7 +125,7 @@ Route::middleware(['auth:sanctum'])->group(function(){
     });
 
 
-    Route::controller(BaseController::class)->prefix('courses')->group(function(){
+    Route::controller(BaseController::class)->prefix('courses')->group(function () {
         Route::get('/', 'index');
         Route::post('/', 'store');
         Route::put('/', 'update');
@@ -121,7 +133,7 @@ Route::middleware(['auth:sanctum'])->group(function(){
         Route::delete('/{id}', 'destroy');
     });
 
-    Route::controller(RoleController::class)->prefix('roles')->group(function(){
+    Route::controller(RoleController::class)->prefix('roles')->group(function () {
         Route::get('/', 'index');
         Route::post('/', 'store');
         Route::put('/', 'update');
@@ -129,10 +141,9 @@ Route::middleware(['auth:sanctum'])->group(function(){
         Route::delete('/{id}', 'destroy');
     });
 
-    Route::controller(UserController::class)->prefix('dashboard')->group(function(){
+    Route::controller(UserController::class)->prefix('dashboard')->group(function () {
         Route::get('/', 'dashboard');
     });
-
 });
 
 // Route::get('/roles', function(){
@@ -140,4 +151,3 @@ Route::middleware(['auth:sanctum'])->group(function(){
 //         'data' => Role::get()
 //     ]);
 // });
-

@@ -21,174 +21,228 @@ class PermissionSeeder extends Seeder
     {
 
         $permissions = [
-            [   'name' => 'users.add',
-                'roles' => [ 'Sistemas', 'Admin', 'Profesor'],
+            [
+                'name' => 'users.add',
+                'roles' => ['Sistemas', 'Admin', 'Profesor'],
             ],
-            [   'name' => 'users.get',
-                'roles' => [ 'Sistemas', 'Admin' ]
+            [
+                'name' => 'users.get',
+                'roles' => ['Sistemas', 'Admin']
             ],
-            [   'name' => 'users.destroy',
-                'roles' => [ 'Sistemas' ] 
+            [
+                'name' => 'users.destroy',
+                'roles' => ['Sistemas']
             ],
-            [   'name' => 'users.edit',
-                'roles' => [ 'Sistemas' ] 
+            [
+                'name' => 'users.edit',
+                'roles' => ['Sistemas']
             ],
-            
 
 
-            [   'name' => 'tags.add',
-                'roles' => [ 'Sistemas', 'Admin' ] 
+
+            [
+                'name' => 'tags.add',
+                'roles' => ['Sistemas', 'Admin']
             ],
-            [   'name' => 'tags.get',
-                'roles' => [ 'Sistemas', 'Admin' ]
+            [
+                'name' => 'tags.get',
+                'roles' => ['Sistemas', 'Admin']
             ],
-            [   'name' => 'tags.destroy',
-                'roles' => [ 'Sistemas' ]
+            [
+                'name' => 'tags.destroy',
+                'roles' => ['Sistemas']
             ],
-            [   'name' => 'tags.edit',
-                'roles' => [ 'Sistemas' ]
+            [
+                'name' => 'tags.edit',
+                'roles' => ['Sistemas']
             ],
 
 
             /// PRODUCCION ACADEMICA
-            [   'name' => 'congresses.add',
-                'roles' => [ 'Sistemas', 'Admin', 'Profesor'],
+            [
+                'name' => 'congresses.add',
+                'roles' => ['Sistemas', 'Admin', 'Profesor'],
             ],
-            [   'name' => 'congresses.get',
-                'roles' => [ 'Sistemas', 'Admin', 'Profesor'],
+            [
+                'name' => 'congresses.get',
+                'roles' => ['Sistemas', 'Admin', 'Profesor'],
             ],
-            [   'name' => 'congresses.destroy',
-                'roles' => [ 'Sistemas', 'Profesor' ]
+            [
+                'name' => 'congresses.destroy',
+                'roles' => ['Sistemas', 'Profesor']
             ],
-            [   'name' => 'congresses.edit',
-                'roles' => [ 'Sistemas' ]
-            ],
-
-
-            [   'name' => 'publications.add',
-                'roles' => [ 'Sistemas', 'Admin', 'Profesor' ],
-            ],
-             [   'name' => 'publications.get',
-                'roles' => [ 'Sistemas' ]
-            ],
-            [   'name' => 'publications.destroy',
-                'roles' => [ 'Sistemas' ]
-            ],
-            [   'name' => 'publications.edit',
-                'roles' => [ 'Sistemas', 'Profesor' ]
-            ],
-            
-
-            [   'name' => 'projects.add',
-                'roles' => [ 'Sistemas', 'Admin' ],
-            ],
-             [   'name' => 'projects.get',
-                'roles' => [ 'Sistemas', 'Profesor' ]
-            ],
-            [   'name' => 'projects.destroy',
-                'roles' => [ 'Sistemas' ]
-            ],
-            [   'name' => 'projects.edit',
-                'roles' => [ 'Sistemas', 'Profesor' ]
+            [
+                'name' => 'congresses.edit',
+                'roles' => ['Sistemas']
             ],
 
 
+            [
+                'name' => 'publications.add',
+                'roles' => ['Sistemas', 'Admin', 'Profesor'],
+            ],
+            [
+                'name' => 'publications.get',
+                'roles' => ['Sistemas']
+            ],
+            [
+                'name' => 'publications.destroy',
+                'roles' => ['Sistemas']
+            ],
+            [
+                'name' => 'publications.edit',
+                'roles' => ['Sistemas', 'Profesor']
+            ],
 
-            [   'name' => 'courses.add',
-                'roles' => [ 'Sistemas', 'Admin' ],
+
+            [
+                'name' => 'projects.add',
+                'roles' => ['Sistemas', 'Admin'],
             ],
-             [   'name' => 'courses.get',
-                'roles' => [ 'Sistemas' ]
+            [
+                'name' => 'projects.get',
+                'roles' => ['Sistemas', 'Profesor']
             ],
-            [   'name' => 'courses.destroy',
-                'roles' => [ 'Sistemas' ]
+            [
+                'name' => 'projects.destroy',
+                'roles' => ['Sistemas']
             ],
-            [   'name' => 'courses.edit',
-                'roles' => [ 'Sistemas', 'Profesor' ]
+            [
+                'name' => 'projects.edit',
+                'roles' => ['Sistemas', 'Profesor']
+            ],
+
+
+
+            [
+                'name' => 'courses.add',
+                'roles' => ['Sistemas', 'Admin'],
+            ],
+            [
+                'name' => 'courses.get',
+                'roles' => ['Sistemas']
+            ],
+            [
+                'name' => 'courses.destroy',
+                'roles' => ['Sistemas']
+            ],
+            [
+                'name' => 'courses.edit',
+                'roles' => ['Sistemas', 'Profesor']
             ],
 
 
             ///<< PRODUCCION ACADEMICA
 
-            [   'name' => 'academic-grades.add',
-                'roles' => [ 'Sistemas', 'Admin', 'Profesor' ],
+            [
+                'name' => 'academic-grades.add',
+                'roles' => ['Sistemas', 'Admin', 'Profesor'],
             ],
-             [   'name' => 'academic-grades.get',
-                'roles' => [ 'Sistemas', 'Profesor' ]
+            [
+                'name' => 'academic-grades.get',
+                'roles' => ['Sistemas', 'Profesor']
             ],
-            [   'name' => 'academic-grades.destroy',
-                'roles' => [ 'Sistemas' ]
+            [
+                'name' => 'academic-grades.destroy',
+                'roles' => ['Sistemas']
             ],
-            [   'name' => 'academic-grades.edit',
-                'roles' => [ 'Sistemas' ]
-            ],
-
-            
-            [   'name' => 'institutions.add',
-                'roles' => [ 'Sistemas', 'Admin' ],
-            ],
-             [   'name' => 'institutions.get',
-                'roles' => [ 'Sistemas' ]
-            ],
-            [   'name' => 'institutions.destroy',
-                'roles' => [ 'Sistemas' ]
-            ],
-            [   'name' => 'institutions.edit',
-                'roles' => [ 'Sistemas' ]
+            [
+                'name' => 'academic-grades.edit',
+                'roles' => ['Sistemas']
             ],
 
 
-            [   'name' => 'roles.add',
-                'roles' => [ 'Sistemas', 'Admin' ],
+            [
+                'name' => 'institutions.add',
+                'roles' => ['Sistemas', 'Admin'],
             ],
-             [   'name' => 'roles.get',
-                'roles' => [ 'Sistemas' ]
+            [
+                'name' => 'institutions.get',
+                'roles' => ['Sistemas']
             ],
-            [   'name' => 'roles.destroy',
-                'roles' => [ 'Sistemas' ]
+            [
+                'name' => 'institutions.destroy',
+                'roles' => ['Sistemas']
             ],
-            [   'name' => 'roles.edit',
-                'roles' => [ 'Sistemas' ]
+            [
+                'name' => 'institutions.edit',
+                'roles' => ['Sistemas']
+            ],
+
+
+            [
+                'name' => 'roles.add',
+                'roles' => ['Sistemas', 'Admin'],
+            ],
+            [
+                'name' => 'roles.get',
+                'roles' => ['Sistemas']
+            ],
+            [
+                'name' => 'roles.destroy',
+                'roles' => ['Sistemas']
+            ],
+            [
+                'name' => 'roles.edit',
+                'roles' => ['Sistemas']
+            ],
+            [
+                'name' => 'permissions.add',
+                'roles' => ['Sistemas', 'Admin'],
+            ],
+            [
+                'name' => 'permissions.get',
+                'roles' => ['Sistemas']
+            ],
+            [
+                'name' => 'permissions.destroy',
+                'roles' => ['Sistemas']
+            ],
+            [
+                'name' => 'permissions.edit',
+                'roles' => ['Sistemas']
             ],
 
 
         ];
-        $role_sistemas = Role::create(['name' => 'Sistemas', 
-        // 'guard_name'=> 'api'
+        $role_sistemas = Role::create([
+            'name' => 'Sistemas',
+            // 'guard_name'=> 'api'
         ]);
-        $role_admin = Role::create(['name' => 'Admin',
-        //  'guard_name' => 'api'
-        ]);
-
-         $role_admin = Role::create(['name' => 'Profesor',
-        //  'guard_name' => 'api'
+        $role_admin = Role::create([
+            'name' => 'Admin',
+            //  'guard_name' => 'api'
         ]);
 
-         $role_admin = Role::create(['name' => 'Coordinador',
-        //  'guard_name' => 'api'
+        $role_admin = Role::create([
+            'name' => 'Profesor',
+            //  'guard_name' => 'api'
+        ]);
+
+        $role_admin = Role::create([
+            'name' => 'Coordinador',
+            //  'guard_name' => 'api'
         ]);
 
 
-     
 
 
 
 
-        foreach($permissions as $permission){
+
+        foreach ($permissions as $permission) {
             $p = Permission::create([
                 'name' => $permission['name'],
                 // 'guard_name' => 'api'
             ]);
 
-            foreach($permission['roles'] as $role){
+            foreach ($permission['roles'] as $role) {
                 $p->assignRole($role);
             }
         }
 
-        foreach(User::get() as $user){
+        foreach (User::get() as $user) {
             $user->assignRole($user->role_id);
         }
-    
-
     }
 }
