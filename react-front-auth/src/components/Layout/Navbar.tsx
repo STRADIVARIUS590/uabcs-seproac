@@ -21,16 +21,16 @@ export const Navbar = () => {
             <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
                 <div className="flex items-center gap-4">
                     <img className="w-10 h-10 rounded-full" src={
-                        user?.avatar?.preview_url ? user?.avatar?.preview_url : 'https://ui-avatars.com/api/?name=' + user?.name 
-                    } alt="Avatar-image"/>
+                        user?.avatar?.preview_url ? user?.avatar?.preview_url : 'https://ui-avatars.com/api/?name=' + user?.name
+                    } alt="Avatar-image" />
                     <div className="font-medium text-white">
                         <div>{user?.name}</div>
                         <div className="text-sm text-gray-500 dark:text-gray-400">{user?.role?.name}</div>
                     </div>
                 </div>
                 {/* <a href="https://flowbite.com/" className="flex items-center space-x-3 rtl:space-x-reverse"> */}
-                    {/* <img src="https://www.uabcs.mx/dasc/mati/img/logouabcs1.png" className="h-12" alt="Flowbite Logo" /> */}
-                    {/* <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">Flowbyte</span> */}
+                {/* <img src="https://www.uabcs.mx/dasc/mati/img/logouabcs1.png" className="h-12" alt="Flowbite Logo" /> */}
+                {/* <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">Flowbyte</span> */}
                 {/* </a> */}
                 <div className="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
                     <button type="button" onClick={() => logout()} className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Cerrar Sesion</button>
@@ -128,6 +128,16 @@ export const Navbar = () => {
         ${location.pathname === '/academic-grades' ? 'text-blue-500' : ''}`}
                                 >
                                     Grados Academicos
+                                </Link>
+                            </li>
+                        }
+                        {user_permissions.indexOf("roles.get") > -1 &&
+                            <li>
+                                <Link to="/roles"
+                                    className={`block py-2 text-gray-900  hover:ring-4 bg-[#180c5c] text-white rounded-[20px]
+        ${location.pathname === '/academic-grades' ? 'text-blue-500' : ''}`}
+                                >
+                                    Roles
                                 </Link>
                             </li>
                         }

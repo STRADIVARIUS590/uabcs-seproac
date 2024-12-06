@@ -7,20 +7,20 @@ export const Roles = () => {
     const { fetchData, error, loading } = useRoles()
     const [data, setData] = useState<RoleItem_T[]>([]);
 
-    const loadData = async () => { 
+    const loadData = async () => {
         const fetchedData = await fetchData();
-        setData(fetchedData); 
+        setData(fetchedData);
     };
-    
+
     useEffect(() => {
-        loadData(); 
+        loadData();
     }, []);
-    
+
     const { rolesColumns } = useRolesTableColumns({});
-    
+
     return (
         <div className="container mx-auto py-10">
-            <DataTable pathName="users" filterField={"name"} filterPlaceholder={"..."} columns={rolesColumns} data={data} error={error} loading={loading} />
+            <DataTable pathName="roles" filterField={"name"} filterPlaceholder={"Nombre..."} columns={rolesColumns} data={data} error={error} loading={loading} />
         </div>
     )
 }
