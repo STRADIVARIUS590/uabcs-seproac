@@ -5,27 +5,32 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { UserItem_T } from "./useUserColumns";
 
-export const useUser = () => {
+export const useUser = ({id}: {id ?  : number | string | null | undefined }  = {}) => {
     const { token, user } = useSelector((state: RootState) => state.auth);
     const navigate = useNavigate();
     const user_permissions: string[] = user?.all_permissions || [];
 
 
     const [error, setError] = useState<boolean>(false);
-    // const [data, setData] = useState<UserItem_T[]>([]);
-    const [loading] = useState<boolean>(true);
+    const [data, setData] = useState<UserItem_T[]>([]);
+    const [loading, setLoading] = useState<boolean>(true);
     const [canEdit, setCanEdit] = useState<boolean>(true);
     const [canDelete, setCanDelete] = useState<boolean>(true);
     const fetchData = async () => {
+        
         const response = await Api.get('/users', {
             Authorization: 'Bearer ' + token,
             accept: 'application/json'
         })
         const result: UserItem_T[] = await response.data
         if (response.statusCode === 200) {
-            return result;
+            setError(false);
+            setLoading(false);
+            setData(result)
         } else {
-            return [];
+            // no usar navigate!
+            setError(true);
+            navigate(-1);
         }
     }
 
@@ -59,9 +64,7 @@ export const useUser = () => {
         fetchData();
     }
 
-
-
-     const post = async(url: string, data: any, headers : {}): Promise<any>  => {
+    const post = async(url: string, data: any, headers : {}): Promise<any>  => {
         const response = await fetch(`${Api.baseUrl}${url}`, {
             method: 'POST',
             headers : headers,
@@ -84,5 +87,8 @@ export const useUser = () => {
         const result = await response.data
         return result || null
     }
-    return { post, fetchData, getById, user, deleteUser, loading, error, canDelete, canEdit }
+
+    useEffect(() => { if(!id) fetchData(); },[])
+ 
+    return { data, user, getById, post , deleteUser, loading, error, canDelete, canEdit }
 }
