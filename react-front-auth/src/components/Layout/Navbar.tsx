@@ -135,7 +135,7 @@ export const Navbar = () => {
                             <li>
                                 <Link to="/roles"
                                     className={`block py-2 text-gray-900  hover:ring-4 bg-[#180c5c] text-white rounded-[20px]
-        ${location.pathname === '/academic-grades' ? 'text-blue-500' : ''}`}
+        ${location.pathname === '/roles' ? 'text-blue-500' : ''}`}
                                 >
                                     Roles
                                 </Link>

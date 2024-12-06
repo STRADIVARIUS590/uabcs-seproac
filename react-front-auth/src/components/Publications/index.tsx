@@ -2,10 +2,9 @@ import { useSelector } from "react-redux";
 import { AppLayout } from "../Layout/AppLayout"
 import { Publications } from "./table"
 import { useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { RootState } from "../../store";
-import { Api } from "../../services/Api";
-import { MessageToast } from "../MessageToast";
+
 export interface PublicationItem {
     id: string;
     title: string | undefined;
@@ -23,9 +22,10 @@ export interface PublicationItem {
 }
 export const PulicationsIndex = () => {
 
-    const { token, user } = useSelector((state: RootState) => state.auth);
-
+    
     const navigate = useNavigate();
+
+    const { user } = useSelector((state: RootState) => state.auth);
 
     const user_permissions: string[] = user?.all_permissions || [];
 
@@ -35,42 +35,42 @@ export const PulicationsIndex = () => {
         }
     }, [user, user_permissions, navigate]);
 
-    const [loading, setLoading] = useState<boolean>(true);
+    // const [loading, setLoading] = useState<boolean>(true);
 
-    const [, setData] = useState<PublicationItem[]>([]);
+    // const [, setData] = useState<PublicationItem[]>([]);
 
-    const [error, setError] = useState<boolean>(false);
+    // const [error, setError] = useState<boolean>(false);
 
-    const fetchData = async () => {
+    // const fetchData = async () => {
 
-        const response = await Api.get('/publications?include=user', {
-            Authorization: 'Bearer ' + token,
-            accept: 'application/json'
-        })
+    //     const response = await Api.get('/publications?include=user', {
+    //         Authorization: 'Bearer ' + token,
+    //         accept: 'application/json'
+    //     })
 
-        const result: PublicationItem[] = await response.data
+    //     const result: PublicationItem[] = await response.data
 
-        if (response.statusCode === 200) {
-            setError(false);
-            setData(result)
-            setLoading(false);
-        } else {
-            setError(true);
-            navigate(-1);
-        }
+    //     if (response.statusCode === 200) {
+    //         setError(false);
+    //         setData(result)
+    //         setLoading(false);
+    //     } else {
+    //         setError(true);
+    //         navigate(-1);
+    //     }
 
-    }
+    // }
 
-    useEffect(() => { fetchData() }, []);
+    // useEffect(() => { fetchData() }, []);
     return (<AppLayout>
-        {
+        {/* {
             error && <div className="mt-12"> <MessageToast message='Ha ocurrido un error' type="error" /></div>
         }
         {
             loading && <div className="mt-12"> <MessageToast message='Cargando...' type="loading" /></div>
-        }
+        } */}
         {
-            !error && !loading &&
+            // !error && !loading &&
             // <AuthContext.Provider value={user}>
             <Publications />
             // </AuthContext.Provider>

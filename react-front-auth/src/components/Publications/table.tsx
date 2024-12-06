@@ -7,13 +7,13 @@ export const Publications = ({ getEndpoint = '/publications?include=user' }: { g
     const { data, deleteFn, loading, error, user, canEdit, canDelete } = usePublications({getEndpoint})
     const { userColumns } = usePublicationsTableColumns({ deleteFn, user, canDelete, canEdit });
 
-    if (error) {
-        <div className="mt-12"> <MessageToast message='Ha ocurrido un error' type="error" /></div>
-    }
+    // if (error) {
+    //     <div className="mt-12"> <MessageToast message='Ha ocurrido un error' type="error" /></div>
+    // }
 
-    if (loading) {
-        <div className="mt-12"> <MessageToast message='Cargando...' type="loading" /></div>
-    }
+    // if (loading) {
+    //     <div className="mt-12"> <MessageToast message='Cargando...' type="loading" /></div>
+    // }
 
     return (
         <div className="container mx-auto py-10">
