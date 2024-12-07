@@ -85,7 +85,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::controller(BaseController::class)->prefix('permissions')->group(function () {
         Route::get('/', 'index');
         Route::post('/', 'store');
-        Route::post('/update', [PublicationController::class, 'update']);
+        Route::post('/update', 'update');
         Route::get('/get/{id}', 'get');
         Route::delete('/{id}', 'destroy');
     });
