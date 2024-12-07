@@ -20,21 +20,36 @@ export interface PublicationItem {
     user: {
         name: string | undefined
     }
+    cover: {
+        original_url: string
+        name: string
+    }
 }
 
 // hay una muy buena razon para la existencia de esto
 // aun no la descubro
+// src={cover?.original_url}
 const usePublicationsTableColumns = ({ deleteFn, canDelete, canEdit, user }: { deleteFn: (id: number | string) => Promise<void>, canEdit: boolean, canDelete: boolean, user: IUser | null }) => {
     const userColumns: ColumnDef<PublicationItem>[] = [
         {
-            accessorKey: "id",
-
+            accessorKey: "cover",
             header: ({ column }: { column: Column<PublicationItem, unknown> }) => {
                 return (
-                    <TableSortButton column={column} headingText={"ID"} />
+                    <TableSortButton column={column} headingText={"Portada"} />
                 )
-
             },
+            cell: ({ row }: { row: Row<PublicationItem> }) => {
+                const cover: {
+                    original_url: string;
+                    name: string;
+                } = row.getValue("cover");
+                if (!cover) {
+                    return;
+                }
+                return <div className="text-center font-medium" >
+                    <img src={cover?.original_url} alt={"portada"} className="max-h-[70px]" />
+                </div>
+            }
         },
         {
             accessorKey: "title",
