@@ -71,7 +71,7 @@ class BaseController extends Controller implements HasMiddleware
         $fields = (new $this->model)->getFillable();   
         $data = QueryBuilder::for($this->model)
         ->allowedFilters(['id',...$fields])
-        ->allowedIncludes(['user', 'tags', 'institution'])
+        ->allowedIncludes(['user', 'tags', 'institution', 'cover'])
         ->allowedSorts(['id',...$fields, 'created_at', 'updated_at', 'created_at'])   
         ->select('id',...$fields)
         ->get();
