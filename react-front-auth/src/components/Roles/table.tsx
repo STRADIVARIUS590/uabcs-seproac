@@ -4,19 +4,15 @@ import { DataTable } from "../ui/data-table";
 import { useEffect, useState } from "react";
 
 export const Roles = () => {
-    const { fetchData, error, loading } = useRoles()
-    const [data, setData] = useState<RoleItem_T[]>([]);
-
-    const loadData = async () => {
-        const fetchedData = await fetchData();
-        setData(fetchedData);
-    };
+    const { data, fetchData, deleteFn, error, loading } = useRoles()
 
     useEffect(() => {
-        loadData();
+        fetchData();
     }, []);
 
-    const { rolesColumns } = useRolesTableColumns({});
+    const { rolesColumns } = useRolesTableColumns({ deleteFn: deleteFn, canDelete: false, canEdit: true });
+
+    console.log(data)
 
     return (
         <div className="container mx-auto py-10">

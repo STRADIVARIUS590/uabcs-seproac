@@ -1,8 +1,11 @@
 import { Api } from "@/services/Api";
 import { RootState } from "@/store";
+import { useState } from "react";
 import { useSelector } from "react-redux";
+import { data } from "react-router-dom";
 
 interface RoleItem_T {
+    id?: number | string
     name: string;
     permissions?: any[];
 }
@@ -11,6 +14,7 @@ const ENDPOINT = 'roles'
 
 export const useRoles = () => {
     const { token, user } = useSelector((state: RootState) => state.auth);
+    const [data, setData] = useState<RoleItem_T[]>([]);
     // const [loading, setLoading] = useState<boolean>(true);
     // const [error, setError] = useState<boolean>(false);
     // esto por mientras asi para que no de error cn los setters y pues si deje compilar
@@ -25,17 +29,15 @@ export const useRoles = () => {
         })
         const result = await response.data
         if (response.statusCode === 200) {
+            setData(result)
             return result;
-            // setData(result)
         } else {
             return null
-            // no sar navigate!
-            // setError(true);
-            // navigate(-1);
         }
     }
 
     const storeRole = async (data: RoleItem_T) => {
+        console.log("wep", data)
         const response = await Api.post(`/${ENDPOINT}`, data, {
             Authorization: `Bearer ${token}`,
             'Content-Type': 'application/json',
@@ -46,5 +48,45 @@ export const useRoles = () => {
         console.log(response)
     }
 
-    return { fetchData, storeRole, user, error, loading };
+    const updateRole = async (data: RoleItem_T) => {
+        const response = await Api.put(`/${ENDPOINT}`, data, {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json',
+        });
+
+        console.log(response)
+        if (response.statusCode === 200) {
+            return response.data;
+        }
+    }
+    const createUpdateRole = async (data: RoleItem_T) => {
+        console.log(data)
+        if (data.id) {
+            updateRole(data);
+        } else {
+            storeRole(data);
+        }
+    }
+
+    const getRoleById = async (id: string) => {
+        const response = await Api.get(`/${ENDPOINT}/get/${id}?include=permissions`, {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json',
+        });
+        if (response.statusCode === 200) {
+            return response.data;
+        }
+    }
+
+    async function deleteFn(id: string | number): Promise<void> {
+        const response = Api.delete(`/${ENDPOINT}/` + id, {
+            Authorization: 'Bearer ' + token,
+            accept: 'application/json'
+        })
+        const result = await response;
+        console.log(result)
+        fetchData();
+    }
+
+    return { data, fetchData, getRoleById, deleteFn, createUpdateRole, user, error, loading };
 }

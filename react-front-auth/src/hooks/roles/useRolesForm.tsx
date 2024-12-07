@@ -6,21 +6,25 @@ import usePermissions from '../permissions/usePermissionsData';
 import { useRoles } from './useRolesData';
 
 const validationSchema = Yup.object({
+    id: Yup.string().optional(),
     name: Yup.string().required('El título es requerido'),
     permissions: Yup.array().optional(),
 });
 
 interface FormValues {
+    id?: string
     name: string;
     permissions?: any[];
 }
 
 export const useRolesForm = () => {
     const { getPermissions } = usePermissions();
-    const { storeRole } = useRoles();
+    const { createUpdateRole } = useRoles();
     const [permissions, setPermissions] = useState([{ id: 0, name: "", guard_name: "" }]);
     const
         {
+            // reset,
+            // setError,
             watch,
             control,
             setValue,
@@ -41,7 +45,7 @@ export const useRolesForm = () => {
         fetchPermissions();
     }, [])
 
-    const onSubmit: SubmitHandler<FormValues> = (data) => storeRole(data)
+    const onSubmit: SubmitHandler<FormValues> = (data) => createUpdateRole(data)
 
     return { register, handleSubmit, onSubmit, errors, control, watch, setValue, permissions };
 };
