@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useSelector } from "react-redux";
 
 interface RoleItem_T {
-    id?: number | string | undefined;
+    id: string;
     name: string;
     permissions?: any[];
 }
@@ -59,7 +59,6 @@ export const useRoles = () => {
         }
     }
     const createUpdateRole = async (data: RoleItem_T) => {
-        console.log(data)
         if (data.id) {
             updateRole(data);
         } else {

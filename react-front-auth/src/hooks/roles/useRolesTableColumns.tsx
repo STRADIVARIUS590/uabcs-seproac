@@ -3,7 +3,7 @@ import { TableSortButton } from "@/components/ui/table-sort-button";
 import { TableEditDelete } from "@/components/ui/table-edit-delete";
 
 export interface RoleItem_T {
-    id? : string | number;
+    id: string;
     name: string;
 }
 
@@ -12,7 +12,6 @@ export const useRolesTableColumns = ({ deleteFn, canDelete, canEdit }: { deleteF
     const rolesColumns: ColumnDef<RoleItem_T>[] = [
         {
             accessorKey: "id",
-
             header: ({ column }: { column: Column<RoleItem_T, unknown> }) => {
                 return <TableSortButton column={column} headingText={"ID"} />
             }
