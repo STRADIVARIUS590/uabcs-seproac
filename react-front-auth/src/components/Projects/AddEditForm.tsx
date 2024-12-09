@@ -127,7 +127,6 @@ export const AddEditForm = () => {
 
     // HANDLE
     const handleSubmit = async (values: typeof initialValues, { setFieldError }: FormikHelpers<typeof initialValues>) => {
-        console.error(JSON.stringify(values));
 
         const response = isEditMode
             ? await Api.put(`/projects`, values, {
@@ -160,7 +159,7 @@ export const AddEditForm = () => {
             validationSchema={validationSchema}
             onSubmit={handleSubmit}
         >
-            {() => (
+            {( _isSubmitting ) => (
                 <Form>
                     <input type="hidden" name='id' />
 
@@ -169,13 +168,13 @@ export const AddEditForm = () => {
                             <h1 className="text-3xl font-semibold text-gray-800 dark:text-gray-100 mb-8 text-center">
                                 {isEditMode ? 'Editar Proyecto' : 'Agregar Proyecto'}
                             </h1>
-                            <Formik
-                                initialValues={initialValues}
-                                validationSchema={validationSchema}
-                                onSubmit={handleSubmit}
+                            <div
+                                // initialValues={initialValues}
+                                // validationSchema={validationSchema}
+                                // onSubmit={handleSubmit}
                             >
-                                {({ isSubmitting }) => (
-                                    <Form className="bg-white dark:bg-gray-700 shadow-lg rounded-lg p-6 md:p-8">
+                                {/* {({ isSubmitting }) => ( */}
+                                    <div className="bg-white dark:bg-gray-700 shadow-lg rounded-lg p-6 md:p-8">
                                         <div className="flex flex-wrap">
                                             {/* Nombre y Descripción */}
                                             <DefaultColumn>
@@ -311,15 +310,15 @@ export const AddEditForm = () => {
                                         <div className="mt-6 text-right">
                                             <button
                                                 type="submit"
-                                                disabled={isSubmitting}
+                                                // disabled={}isSubmitting}
                                                 className="px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg shadow-lg hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-200"
                                             >
                                                 {isEditMode ? 'Actualizar' : 'Agregar'}
                                             </button>
                                         </div>
-                                    </Form>
-                                )}
-                            </Formik>
+                                    </div>
+                                {/* )} */}
+                            </div>
                         </div>
                     </section>
 

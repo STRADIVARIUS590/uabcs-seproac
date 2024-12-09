@@ -74,15 +74,15 @@ export const useUsersForm = ({ id }: { id?: number | string | null | undefined }
             if (id) {
                 const fetchedData = await getById(id);
                 reset(fetchedData);
-                console.log(fetchedData)
-                if (fetchedData.tags) {
+                if (fetchedData?.tags) {
                     setValue('tags', fetchedData.tags.map((tag: TagItem) => tag.id)); // Assuming `tags` in user data is an array of tag objects
                 }
-                if (fetchedData.avatar.preview_url) {
+                if (fetchedData?.avatar?.preview_url) {
                     setAvatarPreview(fetchedData.avatar.preview_url); // Set the initial avatar preview
                 }
             }
             const roles: RoleItem_T[] = await fetchRoles();
+            console.log('qe' + JSON.stringify(roles));
             const tags: TagItem[] = await fetchTags();
             setRoles(roles);
             setTags(tags);
@@ -117,7 +117,9 @@ export const useUsersForm = ({ id }: { id?: number | string | null | undefined }
         }
 
         // Attach files if any
-        if (data.avatar) {
+        if (data.avatar && data.avatar instanceof File) {
+
+            
             formData.append('avatar', data.avatar);
             // const file = Array.from(data.files)[0] ?? undefined;
             // if(file) formData.append('avatar', file);

@@ -1,13 +1,6 @@
-import { useSelector } from "react-redux";
 import { AppLayout } from "../Layout/AppLayout"
 import { Projects } from "./table"
-import { useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
-import { Api } from "../../services/Api";
-import { RootState } from "../../store";
-import { MessageToast } from "../MessageToast";
 import { Context } from "../scripts/Context";
-import { ProjectItem } from "@/hooks/projects/useProjectsColumns";
 
 export const ProjectsIndex = () => {
 

@@ -1,7 +1,7 @@
 import { useRoles } from "@/hooks/roles/useRolesData"
-import useRolesTableColumns, { RoleItem_T } from "@/hooks/roles/useRolesTableColumns"
+import useRolesTableColumns from "@/hooks/roles/useRolesTableColumns"
 import { DataTable } from "../ui/data-table";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 export const Roles = () => {
     const { data, fetchData, deleteFn, error, loading } = useRoles()
@@ -11,8 +11,6 @@ export const Roles = () => {
     }, []);
 
     const { rolesColumns } = useRolesTableColumns({ deleteFn: deleteFn, canDelete: false, canEdit: true });
-
-    console.log(data)
 
     return (
         <div className="container mx-auto py-10">

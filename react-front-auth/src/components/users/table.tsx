@@ -1,7 +1,6 @@
 import { useUser } from "@/hooks/user/useUserData";
-import { UserItem_T, useUserTableColumns } from "@/hooks/user/useUserColumns";
+import { useUserTableColumns } from "@/hooks/user/useUserColumns";
 import { DataTable } from "@/components/ui/data-table";
-import { useEffect, useState } from "react";
 
 export const Users = () => {
     const { data, deleteUser, loading, error, user, canDelete, canEdit } = useUser();

@@ -1,6 +1,5 @@
 import usePublicationsTableColumns from "@/hooks/publications/usePublicationsColumns";
 import { usePublications } from "@/hooks/publications/usePublicationsData";
-import { MessageToast } from "../MessageToast";
 import { DataTable } from "../ui/data-table";
 
 export const Publications = ({ getEndpoint = '/publications?&include=user,cover' }: { getEndpoint?: string }) => {

@@ -1,9 +1,5 @@
-import { useSelector } from "react-redux";
 import { AppLayout } from "../Layout/AppLayout"
 import { Publications } from "./table"
-import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
-import { RootState } from "../../store";
 
 export interface PublicationItem {
     id: string;

@@ -4,8 +4,16 @@ import { Controller} from 'react-hook-form';
 import { MessageToast } from '../MessageToast';
 import { useUsersForm } from '@/hooks/user/useUsersForm';
    
+export interface UserItem {
+  id: string; 
+  name: string;  
+}
+export interface TagItem {
+  name: string;
+  id: string | number;
+}
 
-  export const AddEditForm = () => {
+export const AddEditForm = () => {
     const { id } = useParams<{ id?: string }>();
     const {avatarPreview, setAvatarPreview, handleSubmit, loadData, roles, tags, onSubmit, loading, register,errors, control , setValue} = useUsersForm({id})
     
@@ -137,7 +145,7 @@ import { useUsersForm } from '@/hooks/user/useUsersForm';
                             type="checkbox"
                             value={item.id}
                             checked={isChecked}
-                            onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                            onChange={(_e: ChangeEvent<HTMLInputElement>) => {
                               const newValue = isChecked
                                 ? value?.filter((v: number) => v !== item.id)
                                 : [...(value || []), item.id];

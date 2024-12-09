@@ -1,10 +1,6 @@
 import { useSelector } from "react-redux";
 import { Publications } from "./table"
 import { RootState } from "../../store";
-import { useEffect, useState } from "react";
-import { Api } from "../../services/Api";
-import { MessageToast } from "../MessageToast";
-import { PublicationItem } from ".";
 export const PublicationsTab = () => {
 
     const { user } = useSelector((state: RootState) => state.auth);

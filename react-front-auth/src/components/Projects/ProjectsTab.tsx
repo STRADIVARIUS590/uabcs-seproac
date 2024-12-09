@@ -1,11 +1,6 @@
 import { useSelector } from "react-redux";
 import { Projects } from "./table"
 import { RootState } from "../../store";
-import { useEffect, useState } from "react";
-import { Api } from "../../services/Api";
-import { MessageToast } from "../MessageToast";
-import { useNavigate } from "react-router-dom";
-import { ProjectItem } from "@/hooks/projects/useProjectsColumns";
 
 export const ProjectsTab = () => {
     const {  user } = useSelector((state: RootState) => state.auth);

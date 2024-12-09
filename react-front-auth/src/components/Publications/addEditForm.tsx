@@ -16,7 +16,7 @@ export const AddEditForm = () => {
     errors,
     tags,
     control,
-    watch,
+    // watch,
     cover,
     setCover,
     setValue,
@@ -60,6 +60,7 @@ export const AddEditForm = () => {
                     className="w-full bg-transparent rounded-md border border-stroke dark:border-dark-3 py-[10px] px-5 text-dark-6 outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-gray-2 disabled:border-gray-2"
                     type="text"
                     {...register("doi")}
+                    
                   />
                   {errors.doi && (
                     <p className="text-red-500">{errors.doi.message}</p>
@@ -195,7 +196,7 @@ export const AddEditForm = () => {
                                 type="checkbox"
                                 value={item.id}
                                 checked={isChecked}
-                                onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                                onChange={(_e: ChangeEvent<HTMLInputElement>) => {
                                   const newValue = isChecked
                                     ? value?.filter((v: number) => v !== item.id)
                                     : [...(value || []), item.id];

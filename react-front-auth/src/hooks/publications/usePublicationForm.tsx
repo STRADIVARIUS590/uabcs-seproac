@@ -50,7 +50,7 @@ export const usePublicationsForm = ({id}: {id ?  : number | string | null | unde
     const [ loading, setLoading ] = useState<boolean>(true);
     const { fetchData : fetchUsers } = useUser();
     const [ users, setUsers ] = useState<UserItem_T[]>([]);
-    const { token, user } = useSelector((state: RootState) => state.auth);
+    const { token } = useSelector((state: RootState) => state.auth);
     const [tags, setTags] = useState<TagItem[]>([]);
     const { fetchData : fetchTags } = useTags();
     const [ cover, setCover ] = useState<string | undefined>();
@@ -106,7 +106,7 @@ export const usePublicationsForm = ({id}: {id ?  : number | string | null | unde
             });
         }        
 
-        if (data.cover)  {
+        if (data.cover && data.cover instanceof File) { 
             formData.append('cover', data.cover);
         }
         const isEditMode = !!data.id 

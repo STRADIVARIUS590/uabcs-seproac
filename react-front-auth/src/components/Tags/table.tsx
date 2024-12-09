@@ -1,7 +1,7 @@
 import { DataTable } from "@/components/ui/data-table";
-import { MessageToast } from "../MessageToast";
 import { useTags } from "@/hooks/tags/useTagsData";
-import useTagsTableColumns, { TagItem } from "@/hooks/tags/useTagsColumns";
+import useTagsTableColumns from "@/hooks/tags/useTagsColumns";
+
 import {
     Dialog,
     DialogContent,
@@ -10,7 +10,6 @@ import {
 import { Button } from "@/components/ui/button"
 import { TagForm } from "../Tags/tag-form"
 import ModalContent from "../ui/modal-content";
-import { useEffect, useState } from "react";
 
 export const Tags = () => {
     const { data, deleteFn, loading, error, canEdit, canDelete, fetchData: updateFn } = useTags()

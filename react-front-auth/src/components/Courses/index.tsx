@@ -1,11 +1,4 @@
-import { useSelector } from "react-redux";
 import { AppLayout } from "../Layout/AppLayout"
-import { RootState } from "../../store";
-import { useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
-import { Api } from "../../services/Api";
-import { MessageToast } from "../MessageToast";
-import { CourseItem } from "@/hooks/courses/useCoursesColumns";
 import { Courses } from "./table";
 
 export const CoursesIndex = () => {

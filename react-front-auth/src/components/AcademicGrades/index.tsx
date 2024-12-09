@@ -1,11 +1,5 @@
-import { useEffect, useState } from "react"
 import { AppLayout } from "../Layout/AppLayout"
-import { MessageToast } from "../MessageToast";
 import { AcademicGrades } from "./table";
-import { useSelector } from "react-redux";
-import { RootState } from "../../store";
-import { useNavigate } from "react-router-dom";
-import { Api } from "../../services/Api";
 
 
 // interface AcademicGradeItem {

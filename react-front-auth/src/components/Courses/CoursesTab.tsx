@@ -1,11 +1,6 @@
 import { useSelector } from "react-redux"
 import { RootState } from "../../store"
-import { useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
 import { Courses } from "./table";
-import { Api } from "../../services/Api";
-import { MessageToast } from "../MessageToast";
-import { CourseItem } from "@/hooks/courses/useCoursesColumns";
 
 export const CoursesTab = () => {
 

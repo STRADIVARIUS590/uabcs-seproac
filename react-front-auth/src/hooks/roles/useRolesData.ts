@@ -2,10 +2,9 @@ import { Api } from "@/services/Api";
 import { RootState } from "@/store";
 import { useState } from "react";
 import { useSelector } from "react-redux";
-import { data } from "react-router-dom";
 
 interface RoleItem_T {
-    id?: number | string
+    id?: number | string | undefined;
     name: string;
     permissions?: any[];
 }

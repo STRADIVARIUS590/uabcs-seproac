@@ -6,13 +6,13 @@ import usePermissions from '../permissions/usePermissionsData';
 import { useRoles } from './useRolesData';
 
 const validationSchema = Yup.object({
-    id: Yup.string().optional(),
+    // id: Yup.string().optional(),
     name: Yup.string().required('El título es requerido'),
     permissions: Yup.array().optional(),
 });
 
 interface FormValues {
-    id?: string
+    id?: number | string | undefined;
     name: string;
     permissions?: any[];
 }
