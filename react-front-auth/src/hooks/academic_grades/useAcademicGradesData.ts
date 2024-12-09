@@ -36,7 +36,7 @@ const useAcademicGrades = (getEndpoint: string) => {
     // TODO no retornar con navigate si no retornar un error
     useEffect(() => {
         if (!user || user_permissions.indexOf('academic-grades.get') === -1) {
-            navigate(-1);
+            // navigate(-1);
         }
 
         if (user && user_permissions.indexOf("academic-grades.destroy") > -1) {

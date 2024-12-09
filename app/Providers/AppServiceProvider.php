@@ -25,11 +25,11 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Event::listen(RouteMatched::class, function($e){
-            error_log(json_encode($e));
+            // error_log(json_encode($e));
         });
         
         Event::listen(QueryExecuted::class, function($e){
-            // error_log(json_encode($e));
+            error_log(json_encode($e));
         });
         
         Gate::define('admin', function ($user, $id){

@@ -36,7 +36,7 @@ export const useProjects = (getEndpoint: string) => {
     // TODO no retornar con navigate si no retornar un error
     useEffect(() => {
         if (!user || user_permissions.indexOf("projects.get") === -1) {
-            navigate(-1);
+            // navigate(-1);
         }
 
         if (user && user_permissions.indexOf("projects.destroy") > -1) {

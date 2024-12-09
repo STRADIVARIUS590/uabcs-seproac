@@ -36,7 +36,7 @@ export const useCourses = (getEndpoint: string) => {
     // TODO no retornar con navigate si no retornar un error
     useEffect(() => {
         if (!user || user_permissions.indexOf('courses.get') === -1) {
-            navigate(-1);
+            // navigate(-1);
         }
 
         if (user && user_permissions.indexOf("courses.destroy") > -1) {

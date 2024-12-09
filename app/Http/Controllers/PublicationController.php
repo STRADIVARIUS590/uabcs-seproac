@@ -7,6 +7,7 @@ use App\Services\FileService;
 use App\Traits\Validates;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response as FacadesResponse;
+use Spatie\QueryBuilder\QueryBuilder;
 use Symfony\Component\HttpFoundation\Response;
 
 class PublicationController extends Controller
@@ -34,12 +35,24 @@ class PublicationController extends Controller
      */
     public function store(Request $request)
     {
+        $validator = (new Validates(Publication::class, $request))->creating()->validator();
+        if($validator->fails()) return $this->jsonResponse('Ha ocurrido un error', $validator->errors(), Response::HTTP_BAD_REQUEST);
+        
+
         $publication = Publication::create($request->all());
 
-        $request['fileable_type'] = Publication::class;
-        $request['fileable_id'] = $publication->id;
+          
+        if($request->hasFile('cover')){
+            $publication->addMedia($request->cover)->toMediaCollection('cover');
+        }
 
-        (new class { use FileService; })->store_files($request);
+        if($request->has('tags')){
+            $publication->tags()->sync($request->tags);
+        }
+        // $request['fileable_type'] = Publication::class;
+        // $request['fileable_id'] = $publication->id;
+
+        // (new class { use FileService; })->store_files($request);
 
         return $this->jsonResponse('Registro creado correctamente', compact('publication'), Response::HTTP_OK);
     }
@@ -67,7 +80,6 @@ class PublicationController extends Controller
      */
     public function update(Request $request)
     {
-        error_log(json_encode($request->all()));
         $validator= (new Validates(Publication::class, $request))->validator();
         if($validator->fails()) return $this->jsonResponse('Ha ocurrido un error', $validator->errors(), Response::HTTP_BAD_REQUEST);
         

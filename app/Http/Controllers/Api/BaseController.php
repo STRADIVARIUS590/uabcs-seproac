@@ -21,7 +21,8 @@ use Illuminate\Support\Str;
 use ReflectionClass;
 use Spatie\QueryBuilder\QueryBuilder;
 
-class BaseController extends Controller implements HasMiddleware
+class BaseController extends Controller 
+// }implements HasMiddleware
 {
     protected $model;
 
@@ -66,14 +67,25 @@ class BaseController extends Controller implements HasMiddleware
     }
 
   
-    public function index()
+    public function index(Request $request)
     {
+        $base_name = basename(preg_replace('/\/get\/(\d+)|\/(\d+)$/', '',request()->url()));
+        $p = $base_name.'.get';
+        if(! $request->user()->hasPermissionTo($p)) $request['user_id'] = auth()->id();
+
+
         $fields = (new $this->model)->getFillable();   
         $data = QueryBuilder::for($this->model)
         ->allowedFilters(['id',...$fields])
         ->allowedIncludes(['user', 'tags', 'institution', 'cover'])
         ->allowedSorts(['id',...$fields, 'created_at', 'updated_at', 'created_at'])   
         ->select('id',...$fields)
+
+
+         ->when(isset($request->user_id), function($q) use ($request){
+            $q->where('user_id', $request->user_id);
+        })
+
         ->get();
 
         $this->log(__FUNCTION__, $this->model, '', auth()->id(), request()->url(), 0);
