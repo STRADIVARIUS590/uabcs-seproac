@@ -16,7 +16,7 @@ interface formValues {
     email: string;
     date_ingreso: string;
     birth_date: string;
-    avatar?: File;
+    avatar?: File | null;
     password: string;
     password_confirmation: string;
     role_id: string;
@@ -37,7 +37,7 @@ const validationSchema = Yup.object({
     birth_date: Yup.string().required('La fecha de inicio es requerida'),
     role_id: Yup.string().required('El rol es requerida'),
     tags: Yup.array().optional(),
-    avatar: Yup.mixed()
+    // avatar: Yup.mixed().optional()
 });
 
 // interface Props {
