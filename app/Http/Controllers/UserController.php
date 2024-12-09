@@ -122,7 +122,7 @@ class UserController extends Controller
             'role_id' => 'nullable|exists:roles,id',
             'email' => 'required|string|email|max:255|unique:users,email,'.$request->id,
             'name' => 'required|string|max:255|unique:users,name,'.$request->id,
-            'avatar' => 'required|image'
+            'avatar' => 'sometimes|nullable|image'
         ]);
 
         if($validator->fails()) 

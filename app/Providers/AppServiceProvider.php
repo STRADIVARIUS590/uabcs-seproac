@@ -29,12 +29,12 @@ class AppServiceProvider extends ServiceProvider
         });
         
         Event::listen(QueryExecuted::class, function($e){
-            error_log(json_encode($e));
+            // error_log(json_encode($e));
         });
         
         Gate::define('admin', function ($user, $id){
-            dd($user);
-            return true;
+            // dd($user);
+            // return true;
         });
   
     }
