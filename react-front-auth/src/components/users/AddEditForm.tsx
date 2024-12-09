@@ -176,7 +176,21 @@ export const AddEditForm = () => {
           </div>
         </section>
 
-       
+        <div>
+          <label htmlFor="avatar">Archivo</label>
+          <input
+            onChange={(e: ChangeEvent<HTMLInputElement>) => {
+              const fileList = e.target.files;
+              if (fileList && fileList.length > 0) {
+                const file = fileList[0];
+                setValue('avatar', file);
+                setAvatarPreview(URL.createObjectURL(file));
+              }
+            }}
+            type="file"
+            id="file"
+          />
+        </div>
            
 
         {/* <input type="submit" value="Enviar solicitud" /> */}

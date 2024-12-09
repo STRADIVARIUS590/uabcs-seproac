@@ -268,11 +268,19 @@ export const AddEditForm = () => {
 
 
                     </section>
-                    <div>
+                    <div className="mt-6 text-right">
+                        <button
+                                type="submit"
+                                className="px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg shadow-lg hover:bg-blue-700 focus:ring-2 focus:ring-blue-500"
+                            >
+                            {isEditMode ? "Actualizar" : "Guardar"}
+                        </button>
+                    </div>
+                    {/* <div>
                         <button type="submit" disabled={isSubmitting}>
                             {isEditMode ? 'Editar' : 'Guardar '}
                         </button>
-                    </div>
+                    </div> */}
                 </Form>
             )}
         </Formik>

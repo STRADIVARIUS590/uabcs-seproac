@@ -216,6 +216,14 @@ export const AddEditForm = () => {
                 </div>
               </div>
             </div>
+            <div className="mt-6 text-right">
+              <button
+                type="submit"
+                className="px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg shadow-lg hover:bg-blue-700 focus:ring-2 focus:ring-blue-500"
+              >
+              {isEditMode ? "Actualizar" : "Guardar"}
+            </button>
+          </div>
           </div>
 
         <div>
@@ -244,14 +252,7 @@ export const AddEditForm = () => {
           </div>
         )}
 
-          <div className="mt-6 text-right">
-            <button
-              type="submit"
-              className="px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg shadow-lg hover:bg-blue-700 focus:ring-2 focus:ring-blue-500"
-            >
-              {isEditMode ? "Actualizar" : "Guardar"}
-            </button>
-          </div>
+         
         </div>
       </section>
     </form>
