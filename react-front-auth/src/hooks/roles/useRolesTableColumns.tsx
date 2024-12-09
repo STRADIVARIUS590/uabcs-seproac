@@ -3,7 +3,7 @@ import { TableSortButton } from "@/components/ui/table-sort-button";
 import { TableEditDelete } from "@/components/ui/table-edit-delete";
 
 export interface RoleItem_T {
-    id: string | number;
+    id? : string | number;
     name: string;
 }
 

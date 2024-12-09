@@ -16,7 +16,8 @@ export interface TagItem {
 export const AddEditForm = () => {
     const { id } = useParams<{ id?: string }>();
     const {avatarPreview, setAvatarPreview, handleSubmit, loadData, roles, tags, onSubmit, loading, register,errors, control , setValue} = useUsersForm({id})
-    
+    const isEditMode = !!id
+
     useEffect(() => {
       loadData();
     }, [id]);
@@ -164,25 +165,21 @@ export const AddEditForm = () => {
 
               </div>
             </div>
+             <div className="mt-6 text-right">
+            <button
+              type="submit"
+              className="px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg shadow-lg hover:bg-blue-700 focus:ring-2 focus:ring-blue-500"
+            >
+              {isEditMode ? "Actualizar" : "Guardar"}
+            </button>
+          </div>
           </div>
         </section>
 
-        <div>
-          <label htmlFor="avatar">Archivo</label>
-          <input
-            onChange={(e: ChangeEvent<HTMLInputElement>) => {
-              const fileList = e.target.files;
-              if (fileList && fileList.length > 0) {
-                const file = fileList[0];
-                setValue('avatar', file);
-                setAvatarPreview(URL.createObjectURL(file));
-              }
-            }}
-            type="file"
-            id="file"
-          />
-        </div>
-        <input type="submit" value="Enviar solicitud" />
+       
+           
+
+        {/* <input type="submit" value="Enviar solicitud" /> */}
       </form>
     );
   };
