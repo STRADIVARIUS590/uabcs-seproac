@@ -23,8 +23,8 @@ const Login = () => {
     // }
 
     const initialValues = {
-        'email': 'miriam@car.com',
-        'password': '123123',
+        'email': 'sistemas@gmail.com',
+        'password': 'secret',
     }
 
 
