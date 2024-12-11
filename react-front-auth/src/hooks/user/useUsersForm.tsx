@@ -11,7 +11,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from '@/store';
 import * as Yup from 'yup';
 
-interface formValues {
+interface FormValues {
     name: string;
     email: string;
     date_ingreso: string;
@@ -62,7 +62,7 @@ export const useUsersForm = ({ id }: { id?: number | string | null | undefined }
     const [roles, setRoles] = useState<RoleItem_T[]>([]);
     const [avatarPreview, setAvatarPreview] = useState<string | null>(null); // State for preview URL
     const [loading, setLoading] = useState(true)
-    const { reset, setError, watch, control, setValue, register, handleSubmit, formState: { errors } } = useForm<formValues>({
+    const { reset, setError, watch, control, setValue, register, handleSubmit, formState: { errors } } = useForm<FormValues>({
 
         mode: 'onChange',
         resolver: yupResolver(validationSchema),
@@ -92,7 +92,7 @@ export const useUsersForm = ({ id }: { id?: number | string | null | undefined }
         }
     };
 
-    const onSubmit = async (data: formValues) => {
+    const onSubmit = async (data: FormValues) => {
 
         const formData = new FormData();
 
@@ -141,7 +141,7 @@ export const useUsersForm = ({ id }: { id?: number | string | null | undefined }
             } else if (response.statusCode === 400) {
                 Object.entries(response.data).forEach(([key, value]) => {
                     const errorMessages = value as string[];
-                    setError(key as keyof formValues, {
+                    setError(key as keyof FormValues, {
                         type: 'server',
                         message: errorMessages.join(', '),
                     });

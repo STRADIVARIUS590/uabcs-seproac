@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { AcademicGradeItem } from "./useAcademicGradesColumns";
 
-const useAcademicGrades = ({getEndpoint, id} : { getEndpoint : string, id? : number | string | null | undefined}) => {
+const useAcademicGrades = ({getEndpoint, id} : { getEndpoint? : string, id? : number | string | null | undefined}) => {
     const { token, user } = useSelector((state: RootState) => state.auth);
     const navigate = useNavigate();
     const user_permissions: string[] = user?.all_permissions || [];
@@ -16,7 +16,7 @@ const useAcademicGrades = ({getEndpoint, id} : { getEndpoint : string, id? : num
     const [canEdit, setCanEdit] = useState<boolean>(true);
     const [canDelete, setCanDelete] = useState<boolean>(true);
     const fetchData = async () => {
-        const response = await Api.get(getEndpoint, {
+        const response = await Api.get(getEndpoint ?? '', {
             Authorization: 'Bearer ' + token,
             accept: 'application/json'
         })
@@ -64,7 +64,35 @@ const useAcademicGrades = ({getEndpoint, id} : { getEndpoint : string, id? : num
         fetchData();
     }
 
-    useEffect(() => { if(!id) fetchData(); }, [])
-    return { data, user, deleteFn, loading, error, canDelete, canEdit }
+    const post = async(url: string, data: any, headers : {}): Promise<any>  => {
+        const response = await fetch(`${Api.baseUrl}${url}`, {
+            method: 'POST',
+            headers : headers,
+            body: data
+        })
+    
+        const dataResponse = await response.json()
+        
+        return {
+            statusCode : response.status,
+            data: dataResponse.data
+        }
+    }
+    const getById = async (id : number | string) => {
+
+        const response = await Api.get('/academic-grades/get/' + id, {
+
+            Authorization: 'Bearer ' + token,
+            accept: 'application/json'
+        })
+
+        const result = await response.data
+        return result || null
+    }
+
+
+    useEffect(() => { if(!id)   { fetchData(); } }, [])
+        
+    return { data, user, deleteFn, loading, error, canDelete, canEdit, post, getById }
 }
 export default useAcademicGrades

@@ -25,7 +25,15 @@ const validationSchema = Yup.object({
     tags: Yup.array().optional(),
     cover: Yup.mixed()
 });
-
+export const createFormData = (data: Record<string, any>): FormData => {
+    const formData = new FormData();
+        Object.entries(data).forEach(([key, value]) => {
+            if (value !== undefined && value !== null) { // Ensure only valid values are appended
+                formData.append(key, value);
+            }
+        });
+        return formData;
+    };
 interface FormValues {
     id? : string;
     title: string;
@@ -87,15 +95,7 @@ export const usePublicationsForm = ({id}: {id ?  : number | string | null | unde
             setLoading(false);
         };
 
-    const createFormData = (data: Record<string, any>): FormData => {
-    const formData = new FormData();
-        Object.entries(data).forEach(([key, value]) => {
-            if (value !== undefined && value !== null) { // Ensure only valid values are appended
-                formData.append(key, value);
-            }
-        });
-        return formData;
-    };
+
 
     const onSubmit = async (data : FormValues) => {
         const formData = createFormData(data);

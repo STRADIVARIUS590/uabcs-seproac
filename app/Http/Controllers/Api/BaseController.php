@@ -21,6 +21,8 @@ use Illuminate\Support\Str;
 use ReflectionClass;
 use Spatie\QueryBuilder\QueryBuilder;
 
+use function Laravel\Prompts\error;
+
 class BaseController extends Controller 
 // }implements HasMiddleware
 {
@@ -28,7 +30,19 @@ class BaseController extends Controller
 
     public function __construct(){
         $this->middleware('auth');
-        $this->model = 'App\\Models\\'.Str::singular(str_replace(' ', '', ucwords(basename(preg_replace('/\/get\/(\d+)|\/(\d+)$|-/', ' ', request()->url())))));
+        $this->model = 'App\\Models\\' . Str::singular(
+            str_replace(
+                ' ', 
+                '', 
+                ucwords(
+                    basename(
+                        preg_replace('/\/get\/(\d+)|\/(\d+)$|\/update|-/', ' ', request()->url())
+                    )
+                )
+            )
+        );    
+        
+        error_log($this->model);
     }
 
 

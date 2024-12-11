@@ -8,164 +8,101 @@ import { MessageToast } from "../MessageToast";
 import * as Yup from 'yup';
 import { Formik, Field, Form, ErrorMessage, FormikHelpers } from "formik";
 import { DefaultColumn, DefaultInput } from "../inputs/Forms";
-import { UserItem } from "../Users/AddEditForm";
-interface AcademicGradeItem {
-    id: string | number;
-    name: string,
-    titulation_date: string | number;
-    institution_id: string | number;
-    user_id: string | number;
-    institution: {
-        id: string | number;
-        name: string | number;
-
-    }
-    user: {
-        id: string | number;
-        name: string | number;
-    }
-}
-
-interface InstitutionItem {
-    id: string | number;
-    name: string | number;
-}
-
-
-
-const validationSchema = Yup.object({
-    name: Yup.string().required('El nombre es requerido')
-})
+import { UserItem } from "../Users/AddEditForm"
+import useAcademicGradesTableColumns from "@/hooks/academic_grades/useAcademicGradesColumns";
+import { useAcademicGradesForm } from "@/hooks/academic_grades/useAcademicGradesForm";
+import { register } from "module";
+import { Controller } from "react-hook-form";
 
 export const AcademicGradesForm = () => {
-
-    const { token, user } = useSelector((state: RootState) => state.auth);
-
     const { id } = useParams<{ id?: string }>();
-
-    const navigate = useNavigate();
-
-    const [error, setError] = useState<boolean>(false);
-
-    const [loading, setLoading] = useState<boolean>(true);
-
-    const user_permissions: string[] = user?.all_permissions || [];
-
+    
+    const { loadData, loading, handleSubmit, onSubmit, register, users, institutions, control, errors  } = useAcademicGradesForm({id});
+    
     useEffect(() => {
-        if (!user || user_permissions.indexOf("academic-grades.edit") === -1) {
-            navigate("/dashboard");
-        }
-    }, [user, user_permissions, navigate]);
+        loadData();
+    }, [id]);
 
-    const [data, setData] = useState<AcademicGradeItem>();
-
-    const [institutions, setInstitutions] = useState<InstitutionItem[]>([]);
-
-    const [users, setUsers] = useState<UserItem[]>([]);
-
-    const loadData = async () => {
-        try {
-
-            if (id) {
-                const response = await Api.get('/academic-grades/get/' + id + '?include=user,institution', {
-                    Authorization: 'Bearer ' + token,
-                    accept: 'application/json'
-                })
-
-                const result: AcademicGradeItem = response.data;
-
-                setData(result);
-
-                // ¿Por que solamente se traen las instituciones si se esta editando?
-                setLoading(false);
-            }
-        } catch (e) {
-            setError(true);
-        }
-
-        const response_institutions = await Api.get('/institutions', {
-            Authorization: "Bearer " + token,
-            accept: "application/json",
-        })
-
-        const result_institutions: InstitutionItem[] = response_institutions.data;
-
-        setInstitutions(result_institutions);
-
-        const response_users = await Api.get('/users', {
-            Authorization: "Bearer " + token,
-            accept: "application/json",
-        })
-
-        const result_users: UserItem[] = response_users.data;
-
-        setUsers(result_users);
-
-
-        setLoading(false);
-    }
-
-    useEffect(() => { loadData() }, [id]);
-
-    const handleSubmit = async (values: typeof initialValues, { setFieldError }: FormikHelpers<typeof initialValues>) => {
-
-        if (isEditMode) {
-            const response = await Api.put('/academic-grades/', values, {
-                Authorization: 'Bearer ' + token,
-                "Content-Type": 'application/json',
-                accept: 'application/json'
-            }
-            );
-
-            if (response.statusCode == 200) {
-                navigate(-1); // Redirect after submission;
-            } else {
-                const errors = response.data as { [key: string]: string[] };
-                Object.entries(errors).forEach(([field, messages]) => {
-                    setFieldError(field, messages[0]);
-                });
-            }
-
-        } else {
-            const response = await Api.post('/academic-grades', values, {
-                Authorization: 'Bearer ' + token,
-                "Content-Type": 'application/json',
-                accept: 'application/json'
-
-            });
-
-            if (response.statusCode == 200) {
-                navigate(-1); // Redirect after submission;
-            } else {
-                Object.entries(response.data).forEach((key) => {
-                    console.log(key);
-                })
-            }
-        }
-    };
-
-    if (error) { return <div className="mt-12"> <MessageToast message='Ha ocurrido un error' type="error" /></div> }
-    if (loading) { return <div className="mt-12"> <MessageToast message='Cargando...' type="loading" /></div> }
+    if(loading) return <MessageToast message="Cargando..." type="loading" />; 
 
     const isEditMode = !!id;
+    return <form onSubmit={handleSubmit(onSubmit)}>
 
-    const initialValues = {
-        id: data?.id || 0,
-        name: data?.name || '',
-        titulation_date: data?.titulation_date,
-        institution_id: data?.institution_id,
-        institution: {
-            id: data?.institution_id,
-            name: data?.institution?.name,
-        },
-        user_id: data?.user_id,
-        user: {
-            id: data?.user_id,
-            name: data?.user?.name
-        }
-    }
+   <section className="py-12 bg-gray-50 dark:bg-dark">
+        <div className="container mx-auto max-w-4xl p-6 bg-white dark:bg-gray-900 rounded-lg shadow-md">
+            <div className="flex flex-wrap -mx-4">
+                <div className="w-full md:w-1/2 px-4 mb-6">
+                    <label className="block text-base font-medium text-[#180c5c] mb-2 text-left" htmlFor="name">Nombre</label>
+                        <input
+                        type="text"
+                        {...register('name')}
+                        id="name"
+                        className="w-full bg-transparent rounded-md border border-gray-300 dark:border-gray-700 py-[10px] px-5 text-dark-6 outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-gray-2 disabled:border-gray-2"
+                        />
+                        {errors.name && <p className="text-red-500 ">{errors.name.message}</p>}
+                    <div className="mt-4" >
+                        <label className="block text-base font-medium text-[#180c5c] mb-2 text-left" >Fecha de Titulacion</label>
+                        <input className="w-full bg-transparent rounded-md border border-gray-300 dark:border-gray-700 py-[10px] px-5 text-dark-6 outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-gray-2 disabled:border-gray-2" 
+                        type="date" {...register('titulation_date')} />
+                        {errors.titulation_date && <p className="text-red-500 ">{errors.titulation_date.message}</p>}
+                    </div>
+                </div>
 
+                 <div className="w-full md:w-1/2 px-4 mb-6">
+                    <label className="block text-base font-medium text-[#180c5c] mb-2 text-left">Usuario</label>
+                    <Controller
+                    name="user_id"
+                    control={control}
+                    render={({ field }) => (
+                    <select
+                    className="w-full bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-md shadow-sm focus:border-gray-300"
+                    
+                        {...field}
+                    >
+                        {users && users.map((item) => (
+                        <option key={item.id} value={item.id}>
+                            {item.name}
+                        </option>
+                        ))}
+                    </select>
+                    )}
+                    />
+                    {errors.user_id && <p className="text-red-500">{errors.user_id.message}</p>}
+                  
 
-    return 
-    
-};
+                    <div className="mt-6">
+                    <label className="block text-base font-medium text-[#180c5c] mb-2 text-left">Institucion</label>
+                    <Controller
+                        name="institution_id"
+                        control={control}
+                        render={({ field }) => (
+                            <select
+                            className="w-full bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-md shadow-sm focus:border-gray-300"
+                            {...field}
+                        >
+                            {institutions && institutions.map((item) => (
+                                <option key={item.id} value={item.id}>
+                                {item.name}
+                            </option>
+                            ))}
+                        </select>
+                        )}
+                    />
+                        {errors.institution_id && <p className="text-red-500">{errors.institution_id.message}</p>}
+                    </div>
+                    <div className="mt-6 text-right">
+                        <button
+                            type="submit"
+                            className="px-6 py-3 bg-[#180c5c] text-white font-semibold rounded-lg shadow-lg hover:bg-blue-700 focus:ring-2 focus:ring-blue-500">
+                            {isEditMode ? "Actualizar" : "Guardar"}
+                        </button>
+                    </div>
+                </div> 
+            </div>
+        </div>
+    </section>
+        
+      
+        <input type="submit" value={'asd'}/>;
+    </form>
+}
