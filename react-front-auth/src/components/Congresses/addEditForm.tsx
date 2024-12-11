@@ -137,11 +137,11 @@ export const AddEditForm = () => {
                 <Form>
                     <input type="hidden" name="id" />
 
-                    <section className="py-12 dark:bg-dark">
-                        <div className="container">
-                            <div className="-mx-4 flex flex-wrap">
+                    <section className="py-12">
+                        <div className="container mx-auto max-w-4xl p-6 bg-white dark:bg-gray-900 rounded-lg shadow-md">
+                            <div className="flex flex-wrap -mx-4">
                                 <DefaultColumn>
-                                    <DefaultInput name='title_trabajo' label='Título del trabajo' />
+                                    <DefaultInput name='title_trabajo' label='Título del trabajo'/>
                                     <DefaultInput name='event_name' label='Evento' />
                                 </DefaultColumn>
 
@@ -197,13 +197,13 @@ export const AddEditForm = () => {
                                 </DefaultColumn>
                             </div>
                         </div>
-                    </section>
-
                     <div className="mt-4">
                         <button type="submit" className="px-4 py-2 bg-blue-600 text-white rounded-md" disabled={isSubmitting}>
                             {isEditMode ? "Actualizar" : "Agregar"}
                         </button>
                     </div>
+                    </section>
+
                 </Form>
             )}
         </Formik>
