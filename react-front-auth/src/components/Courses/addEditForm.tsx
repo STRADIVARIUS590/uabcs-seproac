@@ -177,7 +177,7 @@ export const AddEditForm = () => {
             validationSchema={validationSchema}
             onSubmit={handleSubmit}
         >
-            {({ isSubmitting }) => (
+            {({ /* isSubmitting */ }) => (
                 <Form>
                     <input type="hidden" name='id' />
                     <section className="py-12 dark:bg-dark">

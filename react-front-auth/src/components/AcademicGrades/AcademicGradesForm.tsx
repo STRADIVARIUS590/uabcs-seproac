@@ -1,23 +1,14 @@
 // Los valores por defecto de los select no son detectados, aunque aparezcan seleccionados por default se deben de seleccionar especificamente otra vez para que el formulario mande los datos
-import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom"
-import { Api } from "../../services/Api";
-import { useSelector } from "react-redux";
-import { RootState } from "../../store";
+import { useEffect } from "react";
+import { useParams } from "react-router-dom"
 import { MessageToast } from "../MessageToast";
-import * as Yup from 'yup';
-import { Formik, Field, Form, ErrorMessage, FormikHelpers } from "formik";
-import { DefaultColumn, DefaultInput } from "../inputs/Forms";
-import { UserItem } from "../Users/AddEditForm"
-import useAcademicGradesTableColumns from "@/hooks/academic_grades/useAcademicGradesColumns";
 import { useAcademicGradesForm } from "@/hooks/academic_grades/useAcademicGradesForm";
-import { register } from "module";
 import { Controller } from "react-hook-form";
 
 export const AcademicGradesForm = () => {
     const { id } = useParams<{ id?: string }>();
     
-    const { loadData, loading, handleSubmit, onSubmit, register, users, institutions, control, errors  } = useAcademicGradesForm({id});
+    const { loadData, loading, handleSubmit,    onSubmit, register, users, institutions, control, errors  } = useAcademicGradesForm({id});
     
     useEffect(() => {
         loadData();

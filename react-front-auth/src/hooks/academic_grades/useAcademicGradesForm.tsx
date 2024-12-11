@@ -34,7 +34,7 @@ export const useAcademicGradesForm = ({id}: {id ?  : number | string | null | un
     const { post } = useAcademicGrades({id});
     const navigate = useNavigate();
 
-    const { reset, setError, watch, control, setValue, register, handleSubmit, formState: { errors } } = useForm<FormValues>({
+    const { reset, setError, watch, control, register, handleSubmit, formState: { errors } } = useForm<FormValues>({
         mode: 'onChange',
         resolver: yupResolver(validationSchema),
     });
@@ -51,12 +51,18 @@ export const useAcademicGradesForm = ({id}: {id ?  : number | string | null | un
                 : post('/academic-grades', formData, { Authorization: 'Bearer ' + token, 'Accept' : 'application/json'})
             );
 
-            if(response.statusCode) {
+            if(response.statusCode == 200) {
                 navigate('/academic-grades');
+            } else if (response.statusCode === 400) {
+                Object.entries(response.data).forEach(([key, value]) => {
+                    const errorMessages = value as string[];
+                    setError(key as keyof FormValues, {
+                        type: 'server',
+                        message: errorMessages.join(', '),
+                    });
+                });
             }
-            
         }catch(err) {
-            console.log(JSON.stringify(err));
         }finally {
 
         }
