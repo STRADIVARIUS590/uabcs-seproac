@@ -33,75 +33,80 @@ export const AddEditForm = () => {
           <div className="container mx-auto max-w-4xl p-6 bg-white dark:bg-gray-900 rounded-lg shadow-md">
             <div className="flex flex-wrap -mx-4">
               <div className="w-full md:w-1/2 px-4 mb-6">
-                <label className="mb-[10px] block text-base font-medium text-dark dark:text-white" htmlFor="name">Nombre</label>
+                <label className="block text-base font-medium text-[#180c5c] mb-2 text-left" htmlFor="name">Nombre</label>
                 <input
                   type="text"
                   {...register('name')}
                   id="name"
-                  className="w-full bg-transparent rounded-md border border-stroke dark:border-dark-3 py-[10px] px-5 text-dark-6 outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-gray-2 disabled:border-gray-2"
+                  className="w-full bg-transparent rounded-md border border-gray-300 dark:border-gray-700 py-[10px] px-5 text-dark-6 outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-gray-2 disabled:border-gray-2"
                 />
-                {errors.name && <p className="text-red-500">{errors.name.message}</p>}
+                {errors.name && <p className="text-red-500 ">{errors.name.message}</p>}
 
-                <label className="mb-[10px] block text-base font-medium text-dark dark:text" >Correo</label>
-                <input
-                  type="email"
-                  {...register('email')}
-                  id="email"
-                  className="w-full bg-transparent rounded-md border border-stroke dark:border-dark-3 py-[10px] px-5 text-dark-6 outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-gray-2 disabled:border-gray-2"
-                />
-
+                <div className='mt-4'>
+                  <label className="block text-base font-medium text-[#180c5c] mb-2 text-left" >Correo</label>
+                  <input
+                    type="email"
+                    {...register('email')}
+                    id="email"
+                    className="w-full bg-transparent rounded-md border border-gray-300 dark:border-gray-700 py-[10px] px-5 text-dark-6 outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-gray-2 disabled:border-gray-2"
+                  />
+                </div>
 
                 {errors.email && <p className="text-red-500">{errors.email.message}</p>}
               </div>
               <div className="w-full md:w-1/2 px-4 mb-6">
-                <label className="mb-[10px] block text-base font-medium text-dark dark:text" >Fecha de ingreso</label>
+                <label className="block text-base font-medium text-[#180c5c] mb-2 text-left" >Fecha de ingreso</label>
                 <input
                   type="date"
                   {...register('date_ingreso')}
                   id="date_ingreso"
-                  className="w-full bg-transparent rounded-md border border-stroke dark:border-dark-3 py-[10px] px-5 text-dark-6 outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-gray-2 disabled:border-gray-2"
+                  className="w-full bg-transparent rounded-md border border-gray-300 dark:border-gray-700 py-[10px] px-5 text-dark-6 outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-gray-2 disabled:border-gray-2"
                 />
                 {errors.date_ingreso && <p className="text-red-500">{errors.date_ingreso.message}</p>}
 
-                <label className="mb-[10px] block text-base font-medium text-dark dark:text" >Fecha de nacimiento</label>
-                <input
-                  type="date"
-                  {...register('birth_date')}
-                  id="birth_date"
-                  className="w-full bg-transparent rounded-md border border-stroke dark:border-dark-3 py-[10px] px-5 text-dark-6 outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-gray-2 disabled:border-gray-2"
-                />
-                {errors.birth_date && <p className="text-red-500">{errors.birth_date.message}</p>}
-              </div>
+                <div className='mt-4'>
+                  <label className="block text-base font-medium text-[#180c5c] mb-2 text-left" >Fecha de nacimiento</label>
+                  <input
+                    type="date"
+                    {...register('birth_date')}
+                    id="birth_date"
+                    className="w-full bg-transparent rounded-md border border-gray-300 dark:border-gray-700 py-[10px] px-5 text-dark-6 outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-gray-2 disabled:border-gray-2"
+                  />
+                  {errors.birth_date && <p className="text-red-500">{errors.birth_date.message}</p>}
+                  </div>
+                </div>
 
               <div className="w-full md:w-1/2 px-4 mb-6">
-                <label className="mb-[10px] block text-base font-medium text-dark dark:text" >Contraseña</label>
+                <label className="block text-base font-medium text-[#180c5c] mb-2 text-left" >Contraseña</label>
                 <input
                   type="password"
                   {...register('password')}
                   id="password"
-                  className="w-full bg-transparent rounded-md border border-stroke dark:border-dark-3 py-[10px] px-5 text-dark-6 outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-gray-2 disabled:border-gray-2"
+                  className="w-full bg-transparent rounded-md border border-gray-300 dark:border-gray-700 py-[10px] px-5 text-dark-6 outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-gray-2 disabled:border-gray-2"
                 />
                 {errors.password && <p className="text-red-500">{errors.password.message}</p>}
 
-                <label className="mb-[10px] block text-base font-medium text-dark dark:text" >Confirmar Contraseña</label>
-                <input
-                  type="password"
-                  {...register('password_confirmation')}
-                  id="password_confirmation"
-                  className="w-full bg-transparent rounded-md border border-stroke dark:border-dark-3 py-[10px] px-5 text-dark-6 outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-gray-2 disabled:border-gray-2"
-                />
-                {errors.password_confirmation && <p className="text-red-500">{errors.password_confirmation.message}</p>}
-              </div>
+                <div className='mt-4'>
+                  <label className="block text-base font-medium text-[#180c5c] mb-2 text-left" >Confirmar Contraseña</label>
+                  <input
+                    type="password"
+                    {...register('password_confirmation')}
+                    id="password_confirmation"
+                    className="w-full bg-transparent rounded-md border border-gray-300 dark:border-gray-700 py-[10px] px-5 text-dark-6 outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-gray-2 disabled:border-gray-2"
+                  />
+                  {errors.password_confirmation && <p className="text-red-500">{errors.password_confirmation.message}</p>}
+                  </div>
+                </div>
 
               <div className="w-full px-4 mb-6">
-                <label className="block text-sm font-medium text-gray-700 dark:text-white mb-2">Rol</label>
+                <label className="block text-base font-medium text-[#180c5c] mb-2 text-left">Rol</label>
                 <Controller
                   name="role_id"
                   control={control}
                   render={({ field }) => (
                     <select
                       {...field}
-                      className="w-full bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-md shadow-sm focus:ring-2 focus:ring-primary focus:border-primary"
+                      className="w-full bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-md shadow-sm focus:border-gray-300"
                     >
                       {roles && roles.map((role) => (
                         <option key={role.id} value={role.id}>
@@ -115,22 +120,11 @@ export const AddEditForm = () => {
                   {errors.role_id && <p className="text-red-500">{errors.role_id.message}</p>}
               </div>
 
-             
             </div>
-            {avatarPreview && (
-            <div className="mt-4">
-              <img
-                src={avatarPreview}
-                alt="Avatar Preview"
-                className="w-32 h-32 object-cover rounded-full"
-              />
-            </div>
-          )}
-          {errors.password_confirmation && <p className="text-red-500">{errors.password_confirmation.message}</p>}
 
             {/* Etiquetas */}
-            <div className="w-full px-4 mb-6">
-              <h3 className="text-sm font-medium text-gray-700 dark:text-white mb-2">
+            <div className="">
+              <h3 className="block text-base font-medium text-[#180c5c] mb-2 text-left">
                 Etiquetas
               </h3>
               <div className="flex flex-wrap gap-4">
@@ -151,9 +145,8 @@ export const AddEditForm = () => {
                                 ? value?.filter((v: number) => v !== item.id)
                                 : [...(value || []), item.id];
                               onChange(newValue);
-                              // console.log(watch('tags'));
                             }}
-                            className="w-4 h-4 text-primary border-gray-300 dark:border-gray-700 rounded focus:ring-2 focus:ring-primary"
+                            className="peer w-4 h-4 text-[#180c5c] border-gray-300 dark:border-gray-700 rounded  focus:ring-[#180c5c]"
                           />
                         );
                       }}
@@ -161,37 +154,55 @@ export const AddEditForm = () => {
                     <span className="text-sm text-gray-700 dark:text-white">{item.name}</span>
                   </label>
                 ))}
-                  {errors.avatar && <p className="text-red-500">{errors.avatar.message}</p>}
-
+                {errors.avatar && <p className="text-red-500">{errors.avatar.message}</p>}
               </div>
+
+              <div className="mt-6">
+                <label
+                  className="block text-base font-medium text-[#180c5c] mb-2 text-left"
+                  htmlFor="file"
+                >
+                  Adjuntar archivo
+                </label>
+                <input
+                  type="file"
+                  id="file"
+                  onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                    const fileList = e.target.files;
+                    if (fileList && fileList.length > 0) {
+                      const file = fileList[0];
+                      setValue('avatar', file);
+                      setAvatarPreview(URL.createObjectURL(file));
+                    }
+                  }}
+                  className="w-full bg-[#f9fafb] dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-md focus:ring-blue-500 focus:border-blue-500"
+                />
+                
+                  {/*previsualizacion*/}
+                  {avatarPreview && (
+                    <div className="mt-4">
+                      <img 
+                        src={avatarPreview} 
+                        alt="Previsualización" 
+                        className="w-40 h-40 object-cover rounded-full" 
+                      />
+                    </div>
+                  )}
+                </div>
+
+
             </div>
+
              <div className="mt-6 text-right">
-            <button
-              type="submit"
-              className="px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg shadow-lg hover:bg-blue-700 focus:ring-2 focus:ring-blue-500"
-            >
-              {isEditMode ? "Actualizar" : "Guardar"}
-            </button>
-          </div>
+                <button
+                  type="submit"
+                  className="px-6 py-3 bg-[#180c5c] text-white font-semibold rounded-lg shadow-lg hover:bg-blue-700 focus:ring-2 focus:ring-blue-500">
+                  {isEditMode ? "Actualizar" : "Guardar"}
+                </button>
+              </div>
+              
           </div>
         </section>
-
-        <div>
-          <label htmlFor="avatar">Archivo</label>
-          <input
-            onChange={(e: ChangeEvent<HTMLInputElement>) => {
-              const fileList = e.target.files;
-              if (fileList && fileList.length > 0) {
-                const file = fileList[0];
-                setValue('avatar', file);
-                setAvatarPreview(URL.createObjectURL(file));
-              }
-            }}
-            type="file"
-            id="file"
-          />
-        </div>
-           
 
         {/* <input type="submit" value="Enviar solicitud" /> */}
       </form>
