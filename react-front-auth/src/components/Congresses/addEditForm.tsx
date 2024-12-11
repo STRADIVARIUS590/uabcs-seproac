@@ -144,10 +144,12 @@ export const AddEditForm = () => {
                                     <DefaultInput name='title_trabajo' label='Título del trabajo'/>
                                     <DefaultInput name='event_name' label='Evento' />
                                 </DefaultColumn>
-
+                              
                                 <DefaultColumn>
                                     <DefaultInput name="date" label='Fecha' type='date' />
+                                    <DefaultInput name="colaborators" label='Nro COlaboradores' type='number' />
                                 </DefaultColumn>
+
 
                                 <DefaultColumn>
                                     <label htmlFor="user_id" className='mb-[10px] block text-base font-medium text-dark dark:text-white'>Usuario</label>
@@ -196,12 +198,14 @@ export const AddEditForm = () => {
                                     />
                                 </DefaultColumn>
                             </div>
-                        </div>
-                    <div className="mt-4">
-                        <button type="submit" className="px-4 py-2 bg-blue-600 text-white rounded-md" disabled={isSubmitting}>
+                    <div className="mt-4 mt-6 text-right">
+                        <button type="submit"    className="px-6 py-3 bg-[#180c5c] text-white font-semibold rounded-lg shadow-lg hover:bg-blue-700 focus:ring-2 focus:ring-blue-500"
+                        disabled={isSubmitting}>
                             {isEditMode ? "Actualizar" : "Agregar"}
-                        </button>
+                                {/* <p>{JSON.stringify(errors)}</p> */}
+                            </button>
                     </div>
+                            </div>
                     </section>
 
                 </Form>

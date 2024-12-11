@@ -166,62 +166,6 @@ export const AcademicGradesForm = () => {
     }
 
 
-    return (<div> <h1>{isEditMode ? 'Editar' : 'Agregar'}</h1>
-        <Formik
-            initialValues={initialValues}
-            validationSchema={validationSchema}
-            onSubmit={handleSubmit}
-        >
-            {({ isSubmitting }) => (
-                <Form>
-                    <input type="hidden" name='id' />
-                    <section className="py-12 dark:bg-dark">
-                        <div className="container">
-                            <div className="-mx-4 flex flex-wrap">
-                                <DefaultColumn>
-                                    <DefaultInput name='name' label='Nombre' />
-                                    <DefaultInput type="date" name='titulation_date' label='Fecha de titulacion' />
-                                </DefaultColumn>
-
-
-                                <DefaultColumn>
-                                    <label htmlFor="institution_id" className='mb-[10px] block text-base font-medium text-dark dark:text-white'>Institucion</label>
-                                    <Field as="select" name="institution_id" className="w-full bg-transparent rounded-md border border-stroke dark:border-dark-3 py-[10px] px-5 text-dark-6 outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-gray-2 disabled:border-gray-2">
-                                        {institutions.map((item) => (
-                                            <option key={item.id} value={item.id}>
-                                                {item.name}
-                                            </option>
-                                        ))}
-                                    </Field>
-                                    <ErrorMessage name="institution_id" component="div" className="text-red-500" />
-
-
-                                    <label htmlFor="user_id" className='mb-[10px] block text-base font-medium text-dark dark:text-white'>Usuario</label>
-                                    <Field as="select" name="user_id" className="w-full bg-transparent rounded-md border border-stroke dark:border-dark-3 py-[10px] px-5 text-dark-6 outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-gray-2 disabled:border-gray-2">
-                                        {users.map((item) => (
-                                            <option key={item.id} value={item.id}>
-                                                {item.name}
-                                            </option>
-                                        ))}
-                                    </Field>
-                                    <ErrorMessage name="user_id" component="div" className="text-red-500" />
-
-
-                                </DefaultColumn>
-
-                            </div>
-                        </div>
-
-
-                    </section>
-                    <div>
-                        <button type="submit" disabled={isSubmitting}>
-                            {isEditMode ? 'Editar' : 'Guardar '}
-                        </button>
-                    </div>
-                </Form>
-            )}
-        </Formik>
-    </div>
-    );
+    return 
+    
 };

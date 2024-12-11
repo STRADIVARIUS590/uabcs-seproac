@@ -177,6 +177,7 @@ export const AddEditForm = () => {
                   )}
                 </div>
               </div>
+              
 
               <div className="w-full px-4 md:w-1/2 lg:w-1/3">
                 <div className="mb-12">
@@ -212,6 +213,37 @@ export const AddEditForm = () => {
                         </span>
                       </label>
                     ))}
+
+                  <div>
+                    {cover && (
+                      <div className="mt-4 text-center">
+                        <img
+                          src={cover}
+                          alt="Avatar Preview"  
+                          className="w-32 h-32 object-cover rounded-full"
+                        />
+                      </div>
+                      )}
+                      <label
+                        className="block text-base font-medium text-[#180c5c] mb-2 text-left"
+                        htmlFor="file"
+                        >
+                        Portada
+                      </label>
+                    <input
+                      onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                        const fileList = e.target.files;
+                        if (fileList && fileList.length > 0) {
+                          const file = fileList[0];
+                          setValue('cover', file);
+                          setCover(URL.createObjectURL(file));
+                        }
+                      }}
+                      type="file"
+                      id="file"
+                      className="w-full bg-[#f9fafb] dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-md focus:ring-blue-500 focus:border-blue-500"
+                      />
+                  </div>
                   </div>
                 </div>
               </div>
@@ -219,40 +251,11 @@ export const AddEditForm = () => {
             <div className="mt-6 text-right">
               <button
                 type="submit"
-                className="px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg shadow-lg hover:bg-blue-700 focus:ring-2 focus:ring-blue-500"
-              >
-              {isEditMode ? "Actualizar" : "Guardar"}
+                className="px-6 py-3 bg-[#180c5c] text-white font-semibold rounded-lg shadow-lg hover:bg-blue-700 focus:ring-2 focus:ring-blue-500">
+                {isEditMode ? "Actualizar" : "Guardar"}
             </button>
           </div>
           </div>
-
-        <div>
-          <label htmlFor="cover">Archivo</label>
-          <input
-            onChange={(e: ChangeEvent<HTMLInputElement>) => {
-              const fileList = e.target.files;
-              if (fileList && fileList.length > 0) {
-                const file = fileList[0];
-                setValue('cover', file);
-                setCover(URL.createObjectURL(file));
-              }
-            }}
-            type="file"
-            id="file"
-          />
-        </div>
-
-        {cover && (
-          <div className="mt-4">
-            <img
-              src={cover}
-              alt="Avatar Preview"
-              className="w-32 h-32 object-cover rounded-full"
-            />
-          </div>
-        )}
-
-         
         </div>
       </section>
     </form>

@@ -98,6 +98,19 @@ export const AddEditForm = () => {
                   </div>
                 </div>
 
+                {/*previsualizacion*/}
+                  {avatarPreview && (
+                  
+                    <div className="mt-4 ml-12">
+                      <label className="block text-base font-medium text-[#180c5c] mb-2 text-left"  >Foto de Perfil</label>
+                      <img 
+                        src={avatarPreview} 
+                        alt="Previsualización" 
+                        className="w-40 h-40 object-cover rounded-full" 
+                      />
+                    </div>
+                  )}
+
               <div className="w-full px-4 mb-6">
                 <label className="block text-base font-medium text-[#180c5c] mb-2 text-left">Rol</label>
                 <Controller
@@ -162,7 +175,7 @@ export const AddEditForm = () => {
                   className="block text-base font-medium text-[#180c5c] mb-2 text-left"
                   htmlFor="file"
                 >
-                  Adjuntar archivo
+                  Avatar
                 </label>
                 <input
                   type="file"
@@ -177,17 +190,6 @@ export const AddEditForm = () => {
                   }}
                   className="w-full bg-[#f9fafb] dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-md focus:ring-blue-500 focus:border-blue-500"
                 />
-                
-                  {/*previsualizacion*/}
-                  {avatarPreview && (
-                    <div className="mt-4">
-                      <img 
-                        src={avatarPreview} 
-                        alt="Previsualización" 
-                        className="w-40 h-40 object-cover rounded-full" 
-                      />
-                    </div>
-                  )}
                 </div>
 
 
