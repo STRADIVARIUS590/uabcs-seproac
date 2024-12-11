@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { AcademicGradeItem } from "./useAcademicGradesColumns";
 
-const useAcademicGrades = (getEndpoint: string) => {
+const useAcademicGrades = ({getEndpoint, id} : { getEndpoint : string, id? : number | string | null | undefined}) => {
     const { token, user } = useSelector((state: RootState) => state.auth);
     const navigate = useNavigate();
     const user_permissions: string[] = user?.all_permissions || [];
@@ -64,7 +64,7 @@ const useAcademicGrades = (getEndpoint: string) => {
         fetchData();
     }
 
-    useEffect(() => { fetchData(); }, [])
+    useEffect(() => { if(!id) fetchData(); }, [])
     return { data, user, deleteFn, loading, error, canDelete, canEdit }
 }
 export default useAcademicGrades

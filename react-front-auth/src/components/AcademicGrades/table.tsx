@@ -4,7 +4,8 @@ import useAcademicGrades from "@/hooks/academic_grades/useAcademicGradesData";
 import useAcademicGradesTableColumns from "@/hooks/academic_grades/useAcademicGradesColumns";
 
 export const AcademicGrades = ({ getEndpoint = "/academic-grades?include=institution,user" }: { getEndpoint?: string }) => {
-    const { data, deleteFn, loading, error, user, canDelete, canEdit } = useAcademicGrades(getEndpoint)
+    const { data, deleteFn, loading, error, user, canDelete, canEdit } = useAcademicGrades({ getEndpoint })
+
     const { userColumns } = useAcademicGradesTableColumns({ deleteFn, user, canDelete, canEdit });
 
     if (error) {
