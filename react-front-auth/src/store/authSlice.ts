@@ -5,7 +5,8 @@ export interface IUser {
     id: number
     name: string
     email: string
-    all_permissions: []
+    all_permissions: [],
+    contratation_type : string | null | undefined
     role: {
         id: number | string ,
         name: string

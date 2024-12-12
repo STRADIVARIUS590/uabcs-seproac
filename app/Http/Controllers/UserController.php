@@ -70,7 +70,9 @@ class UserController extends Controller
             'sex' => 'nullable|in:M,F', // sex can be null, but if present, must be either 'M' or 'F'
             'password' => 'required|string|min:6', // Password is required, must be a string, and have at least 6 characters
             'role_id' => 'nullable|integer|exists:roles,id', // role_id can be null, but if present, must be a valid integer and exist in the roles table            
+            'contratation_type' => 'nullable|string'
         ]);
+
 
         if($validator->fails()) return response()->json([
             'data' => $validator->errors()
@@ -122,7 +124,8 @@ class UserController extends Controller
             'role_id' => 'nullable|exists:roles,id',
             'email' => 'required|string|email|max:255|unique:users,email,'.$request->id,
             'name' => 'required|string|max:255|unique:users,name,'.$request->id,
-            'avatar' => 'sometimes|nullable|image'
+            'avatar' => 'sometimes|nullable|image',
+            'contratation_type' => 'nullable|string'
         ]);
 
         if($validator->fails()) 

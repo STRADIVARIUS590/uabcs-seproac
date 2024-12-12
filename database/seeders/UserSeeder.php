@@ -25,6 +25,7 @@ class UserSeeder extends Seeder
             'role_id' => 1,
             'birth_date' => Carbon::parse('28-11-1999'),
             'date_ingreso' => Carbon::parse('28-11-1999'),
+            'contratation_type' => 'Titular C'
             
         ],
         [
@@ -34,6 +35,8 @@ class UserSeeder extends Seeder
             'birth_date' => Carbon::parse('28-11-1999'),
             'date_ingreso' => Carbon::parse('28-11-1999'),
             'role_id' => 2,
+            'contratation_type' => 'Titular C'
+            
         ],
         [
             'name' => 'Marcos',
@@ -42,6 +45,7 @@ class UserSeeder extends Seeder
             'birth_date' => Carbon::parse('07-09-2003'),
             'date_ingreso' => Carbon::parse('28-11-1999'),
             'role_id' => 3,
+            'contratation_type' => 'Titular C'
         ],
         [
             'name' => 'Hazael',
@@ -50,6 +54,7 @@ class UserSeeder extends Seeder
             'birth_date' => Carbon::parse('07-09-2003'),
             'date_ingreso' => Carbon::parse('28-11-1999'),
             'role_id' => 4,
+            'contratation_type' => 'Titular C'
         ],
         
         ];

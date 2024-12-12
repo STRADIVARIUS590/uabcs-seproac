@@ -131,7 +131,7 @@ export const AddEditForm = () => {
                     
                   )}
                 />
-                  {errors.role_id && <p className="text-red-500">{errors.role_id.message}</p>}
+              {errors.role_id && <p className="text-red-500">{errors.role_id.message}</p>}
               </div>
               <div className="w-full px-4 mb-6">
                 <label className="block text-base font-medium text-[#180c5c] mb-2 text-left">Genero</label>
@@ -145,9 +145,9 @@ export const AddEditForm = () => {
                       className="w-full bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-md shadow-sm focus:border-gray-300"
                     >
                     <option value="" disabled selected>Selecciona una opcion</option>
-                      {[{id: 1, name: 'M'}, { id: 2, name: 'F' }].map((role) => (
-                        <option key={role.id} value={role.name}>
-                          {role.name}
+                      {[{id: 1, name: 'M'}, { id: 2, name: 'F' }].map((item) => (
+                        <option key={item.id} value={item.name}>
+                          {item.name}
                         </option>
                       ))}
                     </select>
@@ -156,6 +156,30 @@ export const AddEditForm = () => {
                 />
                   {errors.sex && <p className="text-red-500">{errors.sex.message}</p>}
               </div>  
+
+               <div className="w-full px-4 mb-6">
+                <label className="block text-base font-medium text-[#180c5c] mb-2 text-left">Tipo de contratacion</label>
+                <Controller
+                  name="contratation_type"
+                  control={control}
+                  render={({ field }) => (
+                    <select
+                     
+                    {...field}
+                      className="w-full bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-md shadow-sm focus:border-gray-300"
+                    >
+                    <option value="" disabled selected>Selecciona una opcion</option>
+                      {[{id: 1, name: 'Titular C'}, { id: 2, name: 'Base' }].map((item) => (
+                        <option key={item.id} value={item.name}>
+                          {item.name}
+                        </option>
+                      ))}
+                    </select>
+                    
+                  )}
+                />
+                  {errors.contratation_type && <p className="text-red-500">{errors.contratation_type.message}</p>}
+              </div>
 
               {/* <p>{JSON.stringify(watch(), null, 2)}</p> */}
 

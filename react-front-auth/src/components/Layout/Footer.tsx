@@ -1,4 +1,9 @@
+import { RootState } from "@/store";
+import { useSelector } from "react-redux";
+
 export const Footer = () => {
+    const  { user } = useSelector((state: RootState ) => state.auth);
+
     return (
         <div style={{ display: "flex", alignItems: "center", justifyContent: "center", backgroundColor: "#f2f2f2", padding: "20px" }}>
             <div
@@ -41,7 +46,7 @@ export const Footer = () => {
                     }}
                 >
                     <p><strong>Profesor:</strong> tiempo completo definitivo</p>
-                    <p><strong>Tipo de contratación:</strong></p>
+                    <p><strong>Tipo de contratación:</strong> {user?.contratation_type} </p>
                     <p><strong>Categoría:</strong> Titular “C”</p>
                 </div>
             </div>

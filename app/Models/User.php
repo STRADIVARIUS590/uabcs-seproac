@@ -35,6 +35,7 @@ class User extends Authenticatable implements HasMedia
         'birth_date',
         'sex',
         'role_id',
+        'contratation_type'
     ];
 
     public function avatar()
