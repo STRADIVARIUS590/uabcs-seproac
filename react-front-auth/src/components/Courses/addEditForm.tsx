@@ -171,18 +171,23 @@ export const AddEditForm = () => {
     if (error) { return <div className="mt-12"> <MessageToast message='Ha ocurrido un error' type="error" /></div> }
     if (loading) { return <div className="mt-12"> <MessageToast message='Cargando...' type="loading" /></div> }
 
-    return (<div> <h1>{isEditMode ? 'Editar Curso' : 'Agregar curso'}</h1>
+    return (
+        <div>
+          <h1 className="text-2xl font-bold text-[#180c5c] mt-12">
+            {isEditMode ? 'Editar Curso' : 'Agregar Curso'}
+          </h1>
         <Formik
             initialValues={initialValues}
             validationSchema={validationSchema}
             onSubmit={handleSubmit}
         >
             {({ /* isSubmitting */ }) => (
+
                 <Form>
                     <input type="hidden" name='id' />
-                    <section className="py-12 dark:bg-dark">
-                        <div className="container">
-                            <div className="-mx-4 flex flex-wrap">
+                    <section className="py-12">
+                        <div className="container mx-auto max-w-4xl pl-6 pr-6 pb-6 bg-white dark:bg-gray-900 rounded-lg shadow-md">
+                            <div className="flex flex-wrap -mx-4">
                                 <DefaultColumn>
                                     <DefaultInput name='name' label='Nombre' />
                                     <DefaultInput name='total_hours' type='number' label='Horas' />
@@ -201,8 +206,8 @@ export const AddEditForm = () => {
                                 <DefaultColumn>
                                     <DefaultInput name='period' label='Periodo' />
                                     <div>
-                                        <label htmlFor="institution_id" className="mb-[10px] block text-base font-medium text-dark dark:text-white">Institucion</label>
-                                        <Field as="select" name="institution_id" className="w-full bg-transparent rounded-md border border-stroke dark:border-dark-3 py-[10px] px-5 text-dark-6 outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-gray-2 disabled:border-gray-2">
+                                        <label htmlFor="institution_id" className="block text-base font-medium text-[#180c5c] mb-2 text-left mt-4">Institucion</label>
+                                        <Field as="select" name="institution_id" className="w-full bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-md shadow-sm focus:border-gray-300">
                                             {institutions.map((item) => (
                                                 <option key={item.id} value={item.id}>
                                                     {item.name}
@@ -216,8 +221,8 @@ export const AddEditForm = () => {
 
                                 <DefaultColumn>
                                     <div>
-                                        <label htmlFor="user_id" className="mb-[10px] block text-base font-medium text-dark dark:text-white">Usuario</label>
-                                        <Field as="select" name="user_id" className="w-full bg-transparent rounded-md border border-stroke dark:border-dark-3 py-[10px] px-5 text-dark-6 outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-gray-2 disabled:border-gray-2">
+                                        <label htmlFor="user_id" className="block text-base font-medium text-[#180c5c] mb-2 text-left mt-4">Usuario</label>
+                                        <Field as="select" name="user_id" className="w-full bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-md shadow-sm focus:border-gray-300">
                                             {users.map((user) => (
                                                 <option key={user.id} value={user.id}>
                                                     {user.name}
@@ -229,53 +234,59 @@ export const AddEditForm = () => {
 
                                     <FieldArray
                                         name="tags"
-                                        render={arrayHelpers => (
-                                            <div>
+                                        render={(arrayHelpers) => (
+                                            <div className="">
+                                            <h3 className="block text-base font-medium text-[#180c5c] mb-2 mt-6 text-left">
+                                                Etiquetas
+                                            </h3>
+                                            <div className="flex flex-wrap gap-4">
                                                 {tags.map((item, index) => (
-                                                    <div key={index}>
-                                                        <label>
-                                                            <Field
-                                                                type="checkbox"
-                                                                name="tags"
-                                                                value={item.id}
-                                                                checked={
-                                                                    arrayHelpers.form.values.tags.some(
-                                                                        (tag: string) => tag === item.id
-                                                                    )
-                                                                }
-                                                                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                                                                    if (e.target.checked) {
-                                                                        arrayHelpers.push(item.id);
-                                                                    } else {
-                                                                        const idx = arrayHelpers.form.values.tags.indexOf(item.id);
-                                                                        if (idx !== -1) arrayHelpers.remove(idx);
-                                                                    }
-                                                                }}
-                                                            />
-                                                            {item.name}
-                                                        </label>
-                                                    </div>
+                                                <label key={index} className="flex items-center space-x-2">
+                                                    <Field
+                                                    type="checkbox"
+                                                    name="tags"
+                                                    value={item.id}
+                                                    checked={arrayHelpers.form.values.tags.some(
+                                                        (tag: string) => tag === item.id
+                                                    )}
+                                                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                                                        if (e.target.checked) {
+                                                        arrayHelpers.push(item.id);
+                                                        } else {
+                                                        const idx = arrayHelpers.form.values.tags.indexOf(item.id);
+                                                        if (idx !== -1) arrayHelpers.remove(idx);
+                                                        }
+                                                    }}
+                                                    className="peer w-4 h-4 text-[#180c5c] border-gray-300 dark:border-gray-700 rounded focus:ring-[#180c5c]"
+                                                    />
+                                                    <span className="text-sm text-gray-700 dark:text-white">
+                                                    {item.name}
+                                                    </span>
+                                                </label>
                                                 ))}
                                             </div>
+                                            </div>
                                         )}
-                                    />
+                                        />
+
+
                                 </DefaultColumn>
 
-
                             </div>
+
+                            <div className="mt-6 text-right">
+                                <button
+                                    type="submit"
+                                    className="px-6 py-3 bg-[#180c5c] text-white font-semibold rounded-lg shadow-lg hover:bg-[#180c3c] focus:ring-2 focus:ring-blue-500"
+                                    >
+                                    {isEditMode ? "Actualizar" : "Guardar"}
+                                </button>
+                            </div>
+
                         </div>
 
-
-
                     </section>
-                    <div className="mt-6 text-right">
-                        <button
-                                type="submit"
-                                className="px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg shadow-lg hover:bg-blue-700 focus:ring-2 focus:ring-blue-500"
-                            >
-                            {isEditMode ? "Actualizar" : "Guardar"}
-                        </button>
-                    </div>
+                    
                     {/* <div>
                         <button type="submit" disabled={isSubmitting}>
                             {isEditMode ? 'Editar' : 'Guardar '}

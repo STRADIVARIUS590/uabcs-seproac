@@ -198,7 +198,7 @@ export const AddEditForm = () => {
              <div className="mt-6 text-right">
                 <button
                   type="submit"
-                  className="px-6 py-3 bg-[#180c5c] text-white font-semibold rounded-lg shadow-lg hover:bg-blue-700 focus:ring-2 focus:ring-blue-500">
+                  className="px-6 py-3 bg-[#180c5c] text-white font-semibold rounded-lg shadow-lg hover:bg-[#180c3c] focus:ring-2 focus:ring-blue-500">
                   {isEditMode ? "Actualizar" : "Guardar"}
                 </button>
               </div>
