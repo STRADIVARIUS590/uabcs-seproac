@@ -16,7 +16,7 @@ export const Footer = () => {
             
                 <div
                     style={{
-                        backgroundColor: "#2a2d77",
+                        backgroundColor: "#180c5c",
                         color: "white",
                         fontWeight: "bold",
                         padding: "28px 20px",
@@ -34,7 +34,7 @@ export const Footer = () => {
                 <div
                     style={{
                         backgroundColor: "#ffffff",
-                        color: "#2a2d77",
+                        color: "#180c5c",
                         padding: "10px 20px",
                         flexBasis: "70%",
                         fontSize: "16px",
@@ -47,7 +47,7 @@ export const Footer = () => {
             </div>
 
             <div style={{ marginLeft: "20px" }}>
-                <img src="dasclogo.png" alt="Logo" style={{ height: "60px" }} />
+                <img src="/dasclogo.png" alt="Logo" style={{ height: "60px" }} />
             </div>
         </div>
     );
