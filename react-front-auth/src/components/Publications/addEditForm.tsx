@@ -41,11 +41,11 @@ export const AddEditForm = () => {
             <div className="flex flex-wrap -mx-4">
               <div className="w-full px-4 md:w-1/2 lg:w-1/3">
                 <div className="mb-12">
-                  <label className="mb-[10px] block text-base font-medium text-dark dark:text-white">
+                  <label className="block text-base font-medium text-[#180c5c] mb-2 text-left">
                     Titulo
                   </label>
                   <input
-                    className="w-full bg-transparent rounded-md border border-stroke dark:border-dark-3 py-[10px] px-5 text-dark-6 outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-gray-2 disabled:border-gray-2"
+                    className="w-full bg-transparent rounded-md border border-gray-300 dark:border-gray-700 py-[10px] px-5 text-dark-6 outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-gray-2 disabled:border-gray-2"
                     type="text"
                     {...register("title")}
                   />
@@ -53,11 +53,11 @@ export const AddEditForm = () => {
                     <p className="text-red-500">{errors.title.message}</p>
                   )}
 
-                  <label className="mb-[10px] block text-base font-medium text-dark dark:text-white">
+                  <label className="block text-base font-medium text-[#180c5c] mb-2 mt-6 text-left">
                     DOI
                   </label>
                   <input
-                    className="w-full bg-transparent rounded-md border border-stroke dark:border-dark-3 py-[10px] px-5 text-dark-6 outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-gray-2 disabled:border-gray-2"
+                    className="w-full bg-transparent rounded-md border border-gray-300 dark:border-gray-700 py-[10px] px-5 text-dark-6 outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-gray-2 disabled:border-gray-2"
                     type="text"
                     {...register("doi")}
                     
@@ -66,11 +66,11 @@ export const AddEditForm = () => {
                     <p className="text-red-500">{errors.doi.message}</p>
                   )}
 
-                  <label className="mb-[10px] block text-base font-medium text-dark dark:text-white">
+                  <label className="block text-base font-medium text-[#180c5c] mb-2 mt-6 text-left">
                     Tipo
                   </label>
                   <input
-                    className="w-full bg-transparent rounded-md border border-stroke dark:border-dark-3 py-[10px] px-5 text-dark-6 outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-gray-2 disabled:border-gray-2"
+                    className="w-full bg-transparent rounded-md border border-gray-300 dark:border-gray-700 py-[10px] px-5 text-dark-6 outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-gray-2 disabled:border-gray-2"
                     type="text"
                     {...register("type")}
                   />
@@ -78,11 +78,11 @@ export const AddEditForm = () => {
                     <p className="text-red-500">{errors.type.message}</p>
                   )}
 
-                  <label className="mb-[10px] block text-base font-medium text-dark dark:text-white">
+                  <label className="block text-base font-medium text-[#180c5c] mb-2 mt-6 text-left">
                     ISSN / ISBN
                   </label>
                   <input
-                    className="w-full bg-transparent rounded-md border border-stroke dark:border-dark-3 py-[10px] px-5 text-dark-6 outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-gray-2 disabled:border-gray-2"
+                    className="w-full bg-transparent rounded-md border border-gray-300 dark:border-gray-700 py-[10px] px-5 text-dark-6 outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-gray-2 disabled:border-gray-2"
                     type="text"
                     {...register("issn_isbn")}
                   />
@@ -90,11 +90,11 @@ export const AddEditForm = () => {
                     <p className="text-red-500">{errors.issn_isbn.message}</p>
                   )}
 
-                  <label className="mb-[10px] block text-base font-medium text-dark dark:text-white">
+                  <label className="block text-base font-medium text-[#180c5c] mb-2 mt-6 text-left">
                     Revista
                   </label>
                   <input
-                    className="w-full bg-transparent rounded-md border border-stroke dark:border-dark-3 py-[10px] px-5 text-dark-6 outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-gray-2 disabled:border-gray-2"
+                    className="w-full bg-transparent rounded-md border border-gray-300 dark:border-gray-700 py-[10px] px-5 text-dark-6 outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-gray-2 disabled:border-gray-2"
                     type="text"
                     {...register("magazine_name")}
                   />
@@ -106,11 +106,11 @@ export const AddEditForm = () => {
 
               <div className="w-full px-4 md:w-1/2 lg:w-1/3">
                 <div className="mb-12">
-                  <label className="mb-[10px] block text-base font-medium text-dark dark:text-white">
+                  <label className="block text-base font-medium text-[#180c5c] mb-2 text-left">
                     Autores
                   </label>
                   <input
-                    className="w-full bg-transparent rounded-md border border-stroke dark:border-dark-3 py-[10px] px-5 text-dark-6 outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-gray-2 disabled:border-gray-2"
+                    className="w-full bg-transparent rounded-md border border-gray-300 dark:border-gray-700 py-[10px] px-5 text-dark-6 outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-gray-2 disabled:border-gray-2"
                     type="text"
                     {...register("authors")}
                   />
@@ -118,11 +118,11 @@ export const AddEditForm = () => {
                     <p className="text-red-500">{errors.authors.message}</p>
                   )}
 
-                  <label className="mb-[10px] block text-base font-medium text-dark dark:text-white">
+                  <label className="block text-base font-medium text-[#180c5c] mb-2 mt-6 text-left">
                     Fecha de publicación
                   </label>
                   <input
-                    className="w-full bg-transparent rounded-md border border-stroke dark:border-dark-3 py-[10px] px-5 text-dark-6 outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-gray-2 disabled:border-gray-2"
+                    className="w-full bg-transparent rounded-md border border-gray-300 dark:border-gray-700 py-[10px] px-5 text-dark-6 outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-gray-2 disabled:border-gray-2"
                     type="date"
                     {...register("publication_date")}
                   />
@@ -132,11 +132,11 @@ export const AddEditForm = () => {
                     </p>
                   )}
 
-                  <label className="mb-[10px] block text-base font-medium text-dark dark:text-white">
+                  <label className="block text-base font-medium text-[#180c5c] mb-2 mt-6 text-left">
                     Period
                   </label>
                   <input
-                    className="w-full bg-transparent rounded-md border border-stroke dark:border-dark-3 py-[10px] px-5 text-dark-6 outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-gray-2 disabled:border-gray-2"
+                    className="w-full bg-transparent rounded-md border border-gray-300 dark:border-gray-700 py-[10px] px-5 text-dark-6 outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-gray-2 disabled:border-gray-2"
                     type="text"
                     {...register("period")}
                   />
@@ -147,7 +147,7 @@ export const AddEditForm = () => {
                   <div className="mb-4">
                     <label
                       htmlFor="user_id"
-                      className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
+                      className="block text-base font-medium text-[#180c5c] mb-2 mt-6 text-left"
                     >
                       Usuario
                     </label>
@@ -181,7 +181,7 @@ export const AddEditForm = () => {
 
               <div className="w-full px-4 md:w-1/2 lg:w-1/3">
                 <div className="mb-12">
-                  <h3 className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                  <h3 className="block text-base font-medium text-[#180c5c] mb-2 text-left">
                     Etiquetas
                   </h3>
                   <div>
@@ -203,7 +203,7 @@ export const AddEditForm = () => {
                                     : [...(value || []), item.id];
                                   onChange(newValue);
                                 }}
-                                className="w-4 h-4 text-primary border-gray-300 dark:border-gray-600 rounded focus:ring-2 focus:ring-primary"
+                                className="peer w-4 h-4 text-[#180c5c] border-gray-300 dark:border-gray-700 rounded focus:ring-[#180c5c]"
                               />
                             );
                           }}
@@ -215,17 +215,9 @@ export const AddEditForm = () => {
                     ))}
 
                   <div>
-                    {cover && (
-                      <div className="mt-4 text-center">
-                        <img
-                          src={cover}
-                          alt="Avatar Preview"  
-                          className="w-32 h-32 object-cover rounded-full"
-                        />
-                      </div>
-                      )}
+                    
                       <label
-                        className="block text-base font-medium text-[#180c5c] mb-2 text-left"
+                        className="block text-base font-medium text-[#180c5c] mb-2 mt-12 text-left"
                         htmlFor="file"
                         >
                         Portada
@@ -243,6 +235,17 @@ export const AddEditForm = () => {
                       id="file"
                       className="w-full bg-[#f9fafb] dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-md focus:ring-blue-500 focus:border-blue-500"
                       />
+
+                      {cover && (
+                        <div className="mt-4 align-center">
+                          <img
+                            src={cover}
+                            alt="Avatar Preview"  
+                            className="w-32 h-32 object-cover rounded-full"
+                          />
+                        </div>
+                      )}
+
                   </div>
                   </div>
                 </div>
