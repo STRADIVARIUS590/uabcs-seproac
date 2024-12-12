@@ -169,7 +169,7 @@ export const AddEditForm = () => {
                       className="w-full bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-md shadow-sm focus:border-gray-300"
                     >
                     <option value="" disabled selected>Selecciona una opcion</option>
-                      {[{id: 1, name: 'Titular C'}, { id: 2, name: 'Base' }].map((item) => (
+                      {[{id: 1, name: 'Base C'}, { id: 2, name: 'Base' }].map((item) => (
                         <option key={item.id} value={item.name}>
                           {item.name}
                         </option>
@@ -179,6 +179,31 @@ export const AddEditForm = () => {
                   )}
                 />
                   {errors.contratation_type && <p className="text-red-500">{errors.contratation_type.message}</p>}
+              </div>
+
+
+                <div className="w-full px-4 mb-6">
+                <label className="block text-base font-medium text-[#180c5c] mb-2 text-left">Categoria</label>
+                <Controller
+                  name="category"
+                  control={control}
+                  render={({ field }) => (
+                    <select
+                     
+                    {...field}
+                      className="w-full bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-md shadow-sm focus:border-gray-300"
+                    >
+                    <option value="" disabled selected>Selecciona una opcion</option>
+                      {[{id: 1, name: 'Titular C'}, { id: 2, name: 'Titular A' }].map((item) => (
+                        <option key={item.id} value={item.name}>
+                          {item.name}
+                        </option>
+                      ))}
+                    </select>
+                    
+                  )}
+                />
+                  {errors.category && <p className="text-red-500">{errors.category.message}</p>}
               </div>
 
               {/* <p>{JSON.stringify(watch(), null, 2)}</p> */}

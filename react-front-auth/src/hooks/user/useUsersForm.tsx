@@ -17,32 +17,51 @@ interface FormValues {
     date_ingreso: string;
     birth_date: string;
     avatar?: File | null;
-    password: string;
-    password_confirmation: string;
+    password? : string | null; 
+    password_confirmation? : string | null;
     role_id: string;
     tags?: any[];
     sex: string;
     contratation_type : string;
+    category : string;
 }
 
-// import { validationSchema } from './validationSchema'; // Assuming validationSchema is exported separately
-const validationSchema = Yup.object({
-    name: Yup.string().required('El nombre es requerido'),
-    email: Yup.string().email('Direccion de correo inválida').required('El correo es requerido'),
-    password: Yup.string()
-        .min(5, 'La contraseña debe tener mínimo 5 caracteres')
-        .required('La contraseña es requerida'),
-    password_confirmation: Yup.string()
-        .oneOf([Yup.ref('password')], 'Las contraseñas no coinciden')
-        .required('La confirmación de contraseña es requerida'),
-    date_ingreso: Yup.string().required('La fecha de inicio es requerida'),
-    birth_date: Yup.string().required('La fecha de inicio es requerida'),
-    role_id: Yup.string().required('El rol es requerida'),
+// Function to get the schema conditionally based on `isCreating`
+const getValidationSchema = (isCreating: boolean) => {
+  // Common base schema
+  const baseSchema = Yup.object({
+    name: Yup.string().required("El nombre es requerido"),
+    email: Yup.string().email("Dirección de correo inválida").required("El correo es requerido"),
+    date_ingreso: Yup.string().required("La fecha de inicio es requerida"),
+    birth_date: Yup.string().required("La fecha de nacimiento es requerida"),
+    role_id: Yup.string().required("El rol es requerido"),
     tags: Yup.array().optional(),
-    sex: Yup.string().required('EL genero es requerido'),
-    contratation_type : Yup.string().required('El tipo de contratacion es requerido'),
-    // avatar: Yup.mixed().optional()
-});
+    sex: Yup.string().required("El género es requerido"),
+    contratation_type: Yup.string().required("El tipo de contratación es requerido"),
+    category: Yup.string().required("Selecciona al menos una categoría"),
+  });
+
+  console.log(isCreating);
+  
+  // Conditionally add `password` and `password_confirmation` fields if `isCreating` is true
+  if (isCreating) {
+    return baseSchema.shape({
+      password: Yup.string()
+        .min(5, "La contraseña debe tener mínimo 5 caracteres")
+        .required("La contraseña es requerida"),
+      password_confirmation: Yup.string()
+        .oneOf([Yup.ref("password")], "Las contraseñas no coinciden")
+        .required("La confirmación de contraseña es requerida"),
+    });
+  }
+
+  // Return the base schema if `isCreating` is false (update scenario)
+  return baseSchema.shape({
+    password: Yup.string().notRequired(),
+    password_confirmation: Yup.string().notRequired(),
+  });
+};
+
 
 // interface Props {
 //     reset? : (values?: FieldValues) => void;
@@ -69,7 +88,7 @@ export const useUsersForm = ({ id }: { id?: number | string | null | undefined }
     const { reset, setError, watch, control, setValue, register, handleSubmit, formState: { errors } } = useForm<FormValues>({
 
         mode: 'onChange',
-        resolver: yupResolver(validationSchema),
+        resolver: yupResolver(getValidationSchema(!!!id)),
     });
 
     const loadData = async () => {
@@ -107,13 +126,20 @@ export const useUsersForm = ({ id }: { id?: number | string | null | undefined }
         
         formData.append('name', data.name);
         formData.append('email', data.email);
-        formData.append('password', data.password);
-        formData.append('password_confirmation', data.password_confirmation);
+        
+        if(data.password){
+            formData.append('password', data.password);
+        }
+        if(data.password_confirmation){
+            formData.append('password_confirmation', data.password_confirmation);
+        }
+        
         formData.append('role_id', data.role_id);
         formData.append('birth_date', data.birth_date);
         formData.append('date_ingreso', data.date_ingreso);
         formData.append('sex', data.sex);
         formData.append('contratation_type', data.contratation_type);
+        formData.append('category', data.category);
 
         // Attach tags as individual entries
         if (data.tags && data.tags.length > 0) {

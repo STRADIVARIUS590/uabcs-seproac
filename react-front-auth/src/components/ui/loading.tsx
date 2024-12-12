@@ -27,7 +27,8 @@ const LoadingComponent = () => {
                             animation: 'spin 1s linear infinite'
                         }}
                     ></div>
-                    <p style={{ fontSize: '20px', marginTop: '10px' }}>Loading, please wait...</p>
+                    <p style={{ fontSize: '20px', marginTop: '10px' }}>Cargando...</p>
+                
                 </div>
             ) : (
                 <p style={{ fontSize: '20px' }}>Data loaded!</p>

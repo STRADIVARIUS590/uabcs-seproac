@@ -120,7 +120,7 @@ class UserController extends Controller
             'date_ingreso' => 'nullable|date',
             'birth_date' => 'nullable|date',
             'sex' => 'nullable|in:M,F',
-            // 'password' => 'required|string|min:6',
+            'password' => 'sometimes|nullable|confirmed',
             'role_id' => 'nullable|exists:roles,id',
             'email' => 'required|string|email|max:255|unique:users,email,'.$request->id,
             'name' => 'required|string|max:255|unique:users,name,'.$request->id,

@@ -47,7 +47,7 @@ export const Footer = () => {
                 >
                     <p><strong>Profesor:</strong> tiempo completo definitivo</p>
                     <p><strong>Tipo de contratación:</strong> {user?.contratation_type} </p>
-                    <p><strong>Categoría:</strong> Titular “C”</p>
+                    <p><strong>Categoría:</strong> {user?.category}</p>
                 </div>
             </div>
 

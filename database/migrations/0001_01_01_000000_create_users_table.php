@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('password');
             $table->integer('role_id')->nullable();
             $table->string('contratation_type')->nullable();
+            $table->string('category')->nullable();
             $table->rememberToken();
             $table->timestamps();
             $table->softDeletes();
