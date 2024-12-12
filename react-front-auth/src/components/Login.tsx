@@ -29,13 +29,12 @@ const Login = () => {
 
 
 
-    const onSubmit = (values: typeof initialValues) => {
+    const onSubmit = (values: typeof initialValues,  { setErrors }: any) => {
         dispatch(loginUser(values)).then((response) => {
             if (response.type == 'auth/loginUser/fulfilled' && response.payload.id) {
                 navigate('/dashboard');
             } else {
-                navigate('/login');
-
+                setErrors({ email: "Credenciales Incorrectas" });
             }
         })
     }
@@ -79,7 +78,7 @@ const Login = () => {
                                 ¿Olvidaste tu contraseña? Ni modo.
                             </Link>
 
-                            <Button value="Entrar" type="submit" className="rounded-full bg-vi-50 text-vi-900 font-bold py-2 px-4 hover:bg-vi-100 hover:text-vi-800 w-full md:w-1/2 mx-auto" />
+                            <Button value="Entrar" type="submit" className="rounded-full bg-vi-50 text-vi-900 font-bold py-2 px-4 hover:bg-vi-400 hover:text-white w-full md:w-1/2 mx-auto" />
 
                         </form>
                     )}

@@ -21,6 +21,7 @@ interface FormValues {
     password_confirmation: string;
     role_id: string;
     tags?: any[];
+    sex: string;
 }
 
 // import { validationSchema } from './validationSchema'; // Assuming validationSchema is exported separately
@@ -37,6 +38,7 @@ const validationSchema = Yup.object({
     birth_date: Yup.string().required('La fecha de inicio es requerida'),
     role_id: Yup.string().required('El rol es requerida'),
     tags: Yup.array().optional(),
+    sex: Yup.string().required('EL genero es requerido'),
     // avatar: Yup.mixed().optional()
 });
 
@@ -108,6 +110,7 @@ export const useUsersForm = ({ id }: { id?: number | string | null | undefined }
         formData.append('role_id', data.role_id);
         formData.append('birth_date', data.birth_date);
         formData.append('date_ingreso', data.date_ingreso);
+        formData.append('sex', data.sex);
 
         // Attach tags as individual entries
         if (data.tags && data.tags.length > 0) {

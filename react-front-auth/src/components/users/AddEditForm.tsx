@@ -15,7 +15,7 @@ export interface TagItem {
 
 export const AddEditForm = () => {
     const { id } = useParams<{ id?: string }>();
-    const {avatarPreview, setAvatarPreview, handleSubmit, loadData, roles, tags, onSubmit, loading, register,errors, control , setValue} = useUsersForm({id})
+    const {avatarPreview, setAvatarPreview, handleSubmit, loadData, roles, watch, tags, onSubmit, loading, register,errors, control , setValue} = useUsersForm({id})
     const isEditMode = !!id
 
     useEffect(() => {
@@ -121,6 +121,7 @@ export const AddEditForm = () => {
                       {...field}
                       className="w-full bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-md shadow-sm focus:border-gray-300"
                     >
+                      <option value="" disabled selected>Selecciona una opcion</option>
                       {roles && roles.map((role) => (
                         <option key={role.id} value={role.id}>
                           {role.name}
@@ -132,6 +133,31 @@ export const AddEditForm = () => {
                 />
                   {errors.role_id && <p className="text-red-500">{errors.role_id.message}</p>}
               </div>
+              <div className="w-full px-4 mb-6">
+                <label className="block text-base font-medium text-[#180c5c] mb-2 text-left">Genero</label>
+                <Controller
+                  name="sex"
+                  control={control}
+                  render={({ field }) => (
+                    <select
+                     
+                    {...field}
+                      className="w-full bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-md shadow-sm focus:border-gray-300"
+                    >
+                    <option value="" disabled selected>Selecciona una opcion</option>
+                      {[{id: 1, name: 'M'}, { id: 2, name: 'F' }].map((role) => (
+                        <option key={role.id} value={role.name}>
+                          {role.name}
+                        </option>
+                      ))}
+                    </select>
+                    
+                  )}
+                />
+                  {errors.sex && <p className="text-red-500">{errors.sex.message}</p>}
+              </div>  
+
+              {/* <p>{JSON.stringify(watch(), null, 2)}</p> */}
 
             </div>
 
@@ -198,7 +224,7 @@ export const AddEditForm = () => {
              <div className="mt-6 text-right">
                 <button
                   type="submit"
-                  className="px-6 py-3 bg-[#180c5c] text-white font-semibold rounded-lg shadow-lg hover:bg-[#180c3c] focus:ring-2 focus:ring-blue-500">
+                  className="px-6 py-3 bg-[#180c5c] text-white font-semibold rounded-lg shadow-lg hover:bg-blue-700 focus:ring-2 focus:ring-blue-500">
                   {isEditMode ? "Actualizar" : "Guardar"}
                 </button>
               </div>
