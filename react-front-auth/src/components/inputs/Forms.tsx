@@ -76,7 +76,7 @@ type Props = {
 export const DefaultInput = ({ label, name, placeholder, id, type = "text", as }: Props) => {
   return (
     <div>
-      <label className="mb-[10px] block text-base font-medium text-dark dark:text-white" htmlFor={id}>
+      <label className="block text-base font-medium text-[#180c5c] mb-2 text-left mt-4" htmlFor={id}>
         {label}
       </label>
       <Field
@@ -85,7 +85,7 @@ export const DefaultInput = ({ label, name, placeholder, id, type = "text", as }
         name={name}
         placeholder={placeholder}
         type={type}
-        className="w-full bg-transparent rounded-md border border-stroke dark:border-dark-3 py-[10px] px-5 text-dark-6 outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-gray-2 disabled:border-gray-2"
+        className="w-full bg-transparent rounded-md border border-gray-300 dark:border-gray-700 py-[10px] px-5 text-dark-6 outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-gray-2 disabled:border-gray-2"
       />
       <ErrorMessage name={name} component="div" className="text-red-500" />
     </div>

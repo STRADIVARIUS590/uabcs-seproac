@@ -152,8 +152,9 @@ export const AddEditForm = () => {
 
 
                                 <DefaultColumn>
-                                    <label htmlFor="user_id" className='mb-[10px] block text-base font-medium text-dark dark:text-white'>Usuario</label>
-                                    <Field as="select" name="user_id" className="w-full bg-transparent rounded-md border border-stroke dark:border-dark-3 py-[10px] px-5 text-dark-6 outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-gray-2 disabled:border-gray-2">
+                                <label htmlFor="user_id" className="block text-base font-medium text-[#180c5c] mb-2 text-left mt-4">Usuario</label>
+                                    <Field as="select" name="user_id" className="w-full bg-[#f9fafb] dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-md focus:ring-blue-500 focus:border-blue-500">
+
                                         {users.map((user) => (
                                             <option key={user.id} value={user.id}>
                                                 {user.name}
@@ -164,37 +165,41 @@ export const AddEditForm = () => {
                                 {/* </DefaultColumn> */}
 
                                 {/* <DefaultColumn> */}
-                                    <FieldArray
-                                        name="tags"
-                                        render={arrayHelpers => (
-                                            <div className="flex flex-wrap">
-                                                {tags.map((item, index) => (
-                                                    <div key={index} className="flex items-center mb-2 mr-4">
-                                                        <Field
-                                                            type="checkbox"
-                                                            name="tags"
-                                                            value={item.id}
-                                                            checked={
-                                                                arrayHelpers.form.values.tags.some(
-                                                                    (tag: string) => tag === item.id
-                                                                )
-                                                            }
-                                                            onChange={(e: React.ChangeEvent<HTMLInputElement>)=> {
-                                                                if (e.target.checked) {
-                                                                    arrayHelpers.push(item.id);
-                                                                } else {
-                                                                    const idx = arrayHelpers.form.values.tags.indexOf(item.id);
-                                                                    if (idx !== -1) arrayHelpers.remove(idx);
-                                                                }
-                                                            }}
-                                                        />
-                                                        <label className="ml-2 text-sm font-medium text-gray-700 dark:text-gray-200">
-                                                            {item.name}
-                                                        </label>
-                                                    </div>
-                                                ))}
-                                            </div>
-                                        )}
+                                <FieldArray
+                                    name="tags"
+                                    render={(arrayHelpers) => (
+                                        <div className="w-full"> {/* no pude desplazarlo abajo xd ayuda */}
+                                        <h3 className="block text-base font-medium text-[#180c5c] mb-2 mt-6 text-left">
+                                            Etiquetas
+                                        </h3>
+                                        <div className="flex flex-wrap gap-4">
+                                            {tags.map((item, index) => (
+                                            <label key={index} className="flex items-center space-x-2">
+                                                <Field
+                                                type="checkbox"
+                                                name="tags"
+                                                value={item.id}
+                                                checked={arrayHelpers.form.values.tags.some(
+                                                    (tag: string) => tag === item.id
+                                                )}
+                                                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                                                    if (e.target.checked) {
+                                                    arrayHelpers.push(item.id);
+                                                    } else {
+                                                    const idx = arrayHelpers.form.values.tags.indexOf(item.id);
+                                                    if (idx !== -1) arrayHelpers.remove(idx);
+                                                    }
+                                                }}
+                                                className="peer w-4 h-4 text-[#180c5c] border-gray-300 dark:border-gray-700 rounded focus:ring-[#180c5c]"
+                                                />
+                                                <span className="text-sm text-gray-700 dark:text-white">
+                                                {item.name}
+                                                </span>
+                                            </label>
+                                            ))}
+                                        </div>
+                                        </div>
+                                    )}
                                     />
                                 </DefaultColumn>
                             </div>
