@@ -173,7 +173,7 @@ export const AddEditForm = () => {
 
     return (
         <div>
-          <h1 className="text-2xl font-bold text-[#180c5c] mt-12">
+          <h1 className="text-3xl font-bold text-[#180c5c] mt-12">
             {isEditMode ? 'Editar Curso' : 'Agregar Curso'}
           </h1>
         <Formik

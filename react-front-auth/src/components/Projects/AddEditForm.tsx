@@ -153,7 +153,6 @@ export const AddEditForm = () => {
     if (loading) { return <div className="mt-12"> <MessageToast message='Cargando...' type="loading" /></div> }
 
     return (<div>
-        <h1>{isEditMode ? 'Editar Proyecto' : 'Agregar Proyecto'}</h1>
         <Formik
             initialValues={initialValues}
             validationSchema={validationSchema}
@@ -165,7 +164,7 @@ export const AddEditForm = () => {
 
                     <section className="py-12 bg-gray-100 dark:bg-gray-800">
                         <div className="container mx-auto">
-                            <h1 className="text-3xl font-semibold text-gray-800 dark:text-gray-100 mb-8 text-center">
+                            <h1 className="text-3xl font-bold text-[#180c5c] dark:text-gray-100 mb-8 text-center">
                                 {isEditMode ? 'Editar Proyecto' : 'Agregar Proyecto'}
                             </h1>
                             <div
@@ -230,7 +229,7 @@ export const AddEditForm = () => {
                                             <DefaultColumn>
                                                 <label
                                                     htmlFor="user_id"
-                                                    className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
+                                                    className="block text-base font-medium text-[#180c5c] mb-2  mt-4 text-left"
                                                 >
                                                     Usuario
                                                 </label>
@@ -271,38 +270,42 @@ export const AddEditForm = () => {
 
                                             {/* Tags */}
                                             <DefaultColumn>
+
                                                 <FieldArray
                                                     name="tags"
                                                     render={(arrayHelpers) => (
                                                         <div>
-                                                            <h3 className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                                                                Etiquetas
-                                                            </h3>
+                                                        <h3 className="block text-base font-medium text-[#180c5c] mb-2 mt-4 text-left">
+                                                            Etiquetas
+                                                        </h3>
+                                                        <div className="flex flex-wrap gap-4">
                                                             {tags?.map((tag, index) => (
-                                                                <div key={index} className="flex items-center mb-2">
-                                                                    <Field
-                                                                        type="checkbox"
-                                                                        name="tags"
-                                                                        value={tag.id}
-                                                                        className="w-4 h-4 text-primary border-gray-300 dark:border-gray-600 rounded focus:ring-2 focus:ring-primary"
-                                                                        checked={arrayHelpers.form.values.tags.includes(tag.id)}
-                                                                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                                                                            if (e.target.checked) {
-                                                                                arrayHelpers.push(tag.id);
-                                                                            } else {
-                                                                                const idx = arrayHelpers.form.values.tags.indexOf(tag.id);
-                                                                                if (idx !== -1) arrayHelpers.remove(idx);
-                                                                            }
-                                                                        }}
-                                                                    />
-                                                                    <label className="ml-2 text-sm text-gray-700 dark:text-gray-300">
-                                                                        {tag.name}
-                                                                    </label>
-                                                                </div>
+                                                            <label key={index} className="flex items-center space-x-2">
+                                                                <Field
+                                                                type="checkbox"
+                                                                name="tags"
+                                                                value={tag.id}
+                                                                className="peer w-4 h-4 text-[#180c5c] border-gray-300 dark:border-gray-700 rounded focus:ring-[#180c5c]"
+                                                                checked={arrayHelpers.form.values.tags.includes(tag.id)}
+                                                                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                                                                    if (e.target.checked) {
+                                                                    arrayHelpers.push(tag.id);
+                                                                    } else {
+                                                                    const idx = arrayHelpers.form.values.tags.indexOf(tag.id);
+                                                                    if (idx !== -1) arrayHelpers.remove(idx);
+                                                                    }
+                                                                }}
+                                                                />
+                                                                <span className="text-sm text-gray-700 dark:text-white">
+                                                                {tag.name}
+                                                                </span>
+                                                            </label>
                                                             ))}
                                                         </div>
+                                                        </div>
                                                     )}
-                                                />
+                                                    />
+
                                             </DefaultColumn>
                                         </div>
 
@@ -311,8 +314,9 @@ export const AddEditForm = () => {
                                             <button
                                                 type="submit"
                                                 // disabled={}isSubmitting}
-                                                className="px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg shadow-lg hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-200"
-                                            >
+                                                className="px-6 py-3 bg-[#180c5c] text-white font-semibold rounded-lg shadow-lg hover:bg-[#180c3c] focus:ring-2 focus:ring-blue-500"
+                                                >
+                                            
                                                 {isEditMode ? 'Actualizar' : 'Agregar'}
                                             </button>
                                         </div>
