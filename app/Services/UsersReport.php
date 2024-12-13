@@ -64,8 +64,9 @@ class UsersReport {
 
         $report = new ExportsUsersReport($info, $this->mapping());
 
-        if($this->request->format == 'xlsx'){
+        if($this->request->format == 'xlsx' || $this->request->format == 'pdf'){
 
+            error_log($this->request->format);
             return Excel::download($report, $this->file_name());
 
         }else if($this->request->format == 'txt'){

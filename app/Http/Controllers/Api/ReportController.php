@@ -15,13 +15,15 @@ class ReportController extends Controller
     /**
      * Display a listing of the resource.
      */
+    
     public function index(Request $request)
     {
-
-        error_log(json_encode($request->all()));
-        $r = ((new UsersReport($request))->make());
+        $r = null;
+        if($request['type'] = 'users'){
+            $r = ((new UsersReport($request))->make());
+            error_log($r);
+        }
         
-        error_log($r);
         return $r ;
     }
 
