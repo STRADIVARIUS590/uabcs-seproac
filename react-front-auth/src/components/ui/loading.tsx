@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import { useState } from 'react';
 
 const LoadingComponent = () => {
-    const [loading, setLoading] = useState(true); // State to track loading
+    const [loading ] = useState(true); // State to track loading
 
     // useEffect(() => {
     //     // Simulate a data fetch
@@ -11,7 +11,7 @@ const LoadingComponent = () => {
 
     //     return () => clearTimeout(timer); // Cleanup the timer
     // }, []);
-
+    
     return (
         <div style={{ textAlign: 'center', marginTop: '20px' }}>
             {loading ? (

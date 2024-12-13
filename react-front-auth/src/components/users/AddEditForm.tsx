@@ -15,7 +15,7 @@ export interface TagItem {
 
 export const AddEditForm = () => {
     const { id } = useParams<{ id?: string }>();
-    const {avatarPreview, setAvatarPreview, handleSubmit, loadData, roles, watch, tags, onSubmit, loading, register,errors, control , setValue} = useUsersForm({id})
+    const {avatarPreview, setAvatarPreview, handleSubmit, loadData, roles,/*  watch, */ tags, onSubmit, loading, register,errors, control , setValue} = useUsersForm({id})
     const isEditMode = !!id
 
     useEffect(() => {
@@ -23,6 +23,7 @@ export const AddEditForm = () => {
     }, [id]);
 
  
+
     if (loading) return <MessageToast message="Cargando..." type="loading" />;
 
       return (

@@ -2,8 +2,6 @@ import { useUser } from "@/hooks/user/useUserData";
 import { useUserTableColumns } from "@/hooks/user/useUserColumns";
 import { DataTable } from "@/components/ui/data-table";
 import { ButtonFilters } from "./ReportFilters";
-import { text } from "stream/consumers";
-import { useSelector } from "react-redux";
 
 
 
@@ -23,11 +21,12 @@ export const Users = () => {
     
     const { userColumns } = useUserTableColumns({ deleteUser, user, canDelete, canEdit });
     return (
+        // className="bg-vi-200 hover:bg-vi-400 active:bg-vi-400  text-vi-900 hover:text-vi-50 active:text-vi-50 rounded-md h-fit px-4 py-1"
         <div className="container mx-auto py-10">
             <DataTable reports={ canGetUserReport && 
                 <div> 
                     <details style={{ transition: "all 0.9s ease-in-out"}}>
-                        <summary className="bg-blue-900" >Reports</summary>
+                        <summary className="bg-vi-200 hover:bg-vi-400 active:bg-vi-400  text-vi-900 hover:text-vi-50 active:text-vi-50 rounded-md h-fit px-4 py-1" >Reportes</summary>
                         <ButtonFilters/>
                     </details>
                 </div>
