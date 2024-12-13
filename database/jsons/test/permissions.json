@@ -16,6 +16,10 @@
         "roles": ["Sistemas"]
     },
     {
+        "name": "users.report.get",
+        "roles": ["Sistemas", "Admin", "Coordinador"]
+    },
+    {
         "name": "tags.add",
         "roles": ["Sistemas", "Admin"]
     },

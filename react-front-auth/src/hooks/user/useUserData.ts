@@ -15,6 +15,7 @@ export const useUser = ({id}: {id ?  : number | string | null | undefined }  = {
     const [data, setData] = useState<UserItem_T[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
     const [canEdit, setCanEdit] = useState<boolean>(true);
+    const [canGetUserReport, setCanGetUsersReport] = useState<boolean>(false);
     const [canDelete, setCanDelete] = useState<boolean>(true);
     const fetchData = async () => {
         
@@ -46,6 +47,9 @@ export const useUser = ({id}: {id ?  : number | string | null | undefined }  = {
 
         if (user && user_permissions.indexOf("users.edit") > -1) {
             setCanEdit(true)
+        }
+        if(user && user_permissions.indexOf("users.report.get") > -1 ){
+            setCanGetUsersReport(true);
         }
     }, [user, user_permissions, navigate]);
 
@@ -91,5 +95,5 @@ export const useUser = ({id}: {id ?  : number | string | null | undefined }  = {
 
     useEffect(() => { if(!id) fetchData(); },[])
  
-    return { data, user, fetchData, getById, post , deleteUser, loading, error, canDelete, canEdit }
+    return { data, user, fetchData, getById, post , deleteUser, loading, error, canDelete, canEdit, canGetUserReport }
 }

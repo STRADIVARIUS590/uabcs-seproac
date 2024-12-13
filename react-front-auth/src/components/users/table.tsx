@@ -1,9 +1,14 @@
 import { useUser } from "@/hooks/user/useUserData";
 import { useUserTableColumns } from "@/hooks/user/useUserColumns";
 import { DataTable } from "@/components/ui/data-table";
+import { ButtonFilters } from "./ReportFilters";
+import { text } from "stream/consumers";
+import { useSelector } from "react-redux";
+
+
 
 export const Users = () => {
-    const { data, deleteUser, loading, error, user, canDelete, canEdit } = useUser();
+    const { data, deleteUser, loading, error, user, canDelete, canEdit, canGetUserReport } = useUser();
     // const [ data, setData] = useState<UserItem_T[]>([]);
 
     // const loadData = async () => { 
@@ -15,10 +20,19 @@ export const Users = () => {
     //     loadData(); 
     // }, []);
 
+    
     const { userColumns } = useUserTableColumns({ deleteUser, user, canDelete, canEdit });
     return (
         <div className="container mx-auto py-10">
-            <DataTable pathName="users" filterField={"email"} filterPlaceholder={"correo@uabcs.mx"} columns={userColumns} data={data} error={error} loading={loading} />
+            <DataTable reports={ canGetUserReport && 
+                <div> 
+                    <details style={{ transition: "all 0.9s ease-in-out"}}>
+                        <summary className="bg-blue-900" >Reports</summary>
+                        <ButtonFilters/>
+                    </details>
+                </div>
+                
+                } pathName="users" filterField={"email"} filterPlaceholder={"correo@uabcs.mx"} columns={userColumns} data={data} error={error} loading={loading} />
         </div>
     )
 }

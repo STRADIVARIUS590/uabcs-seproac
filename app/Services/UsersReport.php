@@ -26,7 +26,7 @@ class UsersReport {
     {
         // traemos la info de la bd (aplicando filtros y eso)
         return User::query()->select(['id', ...(new User())->getFillable()])
-        ->with('role')->when(isset($this->request->end_date, $this->request->start_date), function($q){})
+            ->with('role:id,name')->when(isset($this->request->end_date, $this->request->start_date), function($q){})
         ->get();
     }
 
@@ -36,7 +36,7 @@ class UsersReport {
         // proceso de hacer el reporte (calculos, etc)
         // return User::query()->get();
         foreach ($collection as $key => $value){
-            $collection[$key]['A_PENDED'] = $value['id'] * 3;
+            // $collection[$key]['A_PENDED'] = $value['id'] * 3;
         }
 
         
@@ -92,14 +92,30 @@ class UsersReport {
                 // $xmlFriendlyData['user'][] = $user->toArray(); 
             $xmlFriendlyData['user'][] = array_combine($report->headings(), $report->map($row));
             }
+
+            $name = storage_path($this->file_name());
+           
+            $str = (new XmlWriter())->write('users', $xmlFriendlyData);
+          
+            file_put_contents($name , $str);
+
+            return response()->download($name)->deleteFileAfterSend();
         
-            return (new XmlWriter())->write('users', $xmlFriendlyData);
         }
-        
-        
+
         
         else if($this->request->format == 'json') {
-            return json_encode($info);
+           
+
+            $name = storage_path($this->file_name());
+          
+            $str = (json_encode($info, JSON_PRETTY_PRINT));
+          
+            file_put_contents($name , $str);
+
+            return response()->download($name)->deleteFileAfterSend();
+
+            
         }
 
 

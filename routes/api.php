@@ -34,13 +34,12 @@ Route::get('/caca', function (Request $request) {
 Route::post('/password/send-token', [UserController::class, 'sendResetToken']);
 Route::post('/password/reset', [UserController::class, 'resetPassword']);
 
-Route::get('/create', [ReportController::class, 'index']);
 Route::post('/prueba', function (Request $request) {
-
+    
     $request->validate([
         'images.*' => 'file',
     ]);
-
+    
     foreach ($request->images as $key => $file) {
         // error_log(json_encode($image));
         $name = uniqid() . '.png';
@@ -57,7 +56,9 @@ Route::post('/prueba', function (Request $request) {
 Route::post('/users/login', [UserController::class, 'login']);
 Route::post('/users', [UserController::class, 'store']);
 Route::middleware(['auth:sanctum'])->group(function () {
-
+    
+    Route::get('/reports', [ReportController::class, 'index']);
+   
     Route::prefix('/users')->group(function () {
         Route::get('/',  [UserController::class, 'index'])->middleware([\Illuminate\Auth\Middleware\Authorize::using('users.get')]);
         Route::post('/update',  [UserController::class, 'update'])->middleware([\Illuminate\Auth\Middleware\Authorize::using('users.edit')]);

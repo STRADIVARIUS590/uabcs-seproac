@@ -8,6 +8,8 @@ use App\Services\UsersReport;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
+use function Laravel\Prompts\error;
+
 class ReportController extends Controller
 {
     /**
@@ -15,9 +17,12 @@ class ReportController extends Controller
      */
     public function index(Request $request)
     {
-        // $request['format'] = 'xml';
 
-        return (new UsersReport($request))->make();
+        error_log(json_encode($request->all()));
+        $r = ((new UsersReport($request))->make());
+        
+        error_log($r);
+        return $r ;
     }
 
     /**
