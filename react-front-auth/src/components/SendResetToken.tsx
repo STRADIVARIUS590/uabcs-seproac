@@ -12,9 +12,11 @@ const SendResetToken = () => {
         email: "",
     };
 
+    const resetPasswordUrl = `${import.meta.env.VITE_API_URL}/password/send-token`;
+
     const onSubmit = (values: typeof initialValues) => {
         axios
-            .post("http://localhost:8000/api/password/send-token", { email: values.email })
+            .post(resetPasswordUrl, { email: values.email })
             .then(() => {
                 console.log("Correo de restablecimiento enviado");
                 setIsTokenSent(true);

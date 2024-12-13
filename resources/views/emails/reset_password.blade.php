@@ -79,8 +79,11 @@
             <!-- <div class="token">
                 {{ $token }}
             </div> -->
-            <a href="http://localhost:5173/reset-password/{{ $token }}" class="token">
+            <!-- <a href="http://localhost:5173/reset-password/{{ $token }}" class="token">
                 Restablecer
+            </a> -->
+            <a href="{{ $resetUrl }}" class="token">
+                Restablecer Contraseña
             </a>
             <p>Este código solo es válido por 30 minutos.</p>
             <p>Gracias,</p>

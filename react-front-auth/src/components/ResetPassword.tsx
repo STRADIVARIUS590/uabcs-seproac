@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useParams } from "react-router-dom"; // Importa useParams
+import { useParams } from "react-router-dom";
 import { Formik } from "formik";
 import * as Yup from "yup";
 import InputLabel from "./inputs/InputLabel";
@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 
 const ResetPassword = () => {
-    const { token } = useParams(); // Obtén el token desde la URL.
+    const { token } = useParams();
     const [isPasswordReset, setIsPasswordReset] = useState(false);
 
     const initialValues = {
@@ -22,10 +22,12 @@ const ResetPassword = () => {
             return;
         }
 
+        const resetPasswordUrl = `${import.meta.env.VITE_API_URL}/password/reset`;
+
         axios
-            .post("http://localhost:8000/api/password/reset", {
+            .post(resetPasswordUrl, {
                 password: values.password,
-                token, // Usa el token obtenido desde la URL.
+                token, 
             })
             .then(() => {
                 console.log("Contraseña cambiada correctamente");
