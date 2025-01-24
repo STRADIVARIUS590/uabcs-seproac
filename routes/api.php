@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\BaseController;
+use App\Http\Controllers\Api\CourseController;
 use App\Http\Controllers\Api\ReportController;
 use App\Http\Controllers\Api\RoleController;
 use App\Http\Controllers\ProjectController;
@@ -129,7 +130,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::controller(BaseController::class)->prefix('courses')->group(function () {
         Route::get('/', 'index');
         Route::post('/', 'store');
-        Route::put('/', 'update');
+        Route::post('/update','update');
         Route::get('/get/{id}', 'get');
         Route::delete('/{id}', 'destroy');
     });

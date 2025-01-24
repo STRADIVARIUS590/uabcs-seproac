@@ -12,6 +12,7 @@ use App\Models\User;
 use App\Reports\UserReport;
 use App\Traits\Validates;
 use Exception;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controllers\HasMiddleware;
@@ -91,7 +92,7 @@ class BaseController extends Controller
         $fields = (new $this->model)->getFillable();   
         $data = QueryBuilder::for($this->model)
         ->allowedFilters(['id',...$fields])
-        ->allowedIncludes(['user', 'tags', 'institution', 'cover'])
+        ->allowedIncludes(['user', 'tags', 'institution', 'cover', 'file'])
         ->allowedSorts(['id',...$fields, 'created_at', 'updated_at', 'created_at'])   
         ->select('id',...$fields)
 
@@ -134,7 +135,7 @@ class BaseController extends Controller
       
         $data = QueryBuilder::for($this->model)
         ->allowedFilters(['id',...$fields])
-        ->allowedIncludes(['user', 'tags', 'institution', 'cover'])
+        ->allowedIncludes(['user', 'tags', 'institution', 'cover', 'file'])
         ->select('id',...$fields)
         ->where('id', $id)
         ->firstOrFail();
@@ -145,8 +146,9 @@ class BaseController extends Controller
     }
 
     public function update(Request $request)
-    {  
-        error_log(json_encode($request->all()));
+    { 
+       error_log(json_encode($request->all())); 
+        
         try {
         
             $validator = (new Validates($this->model, $request))->validator();
@@ -158,6 +160,9 @@ class BaseController extends Controller
             if(isset($request->tags)){
                 $model->tags()->sync($request->tags);
             }
+
+            if($request->files)$this->store_files($request, $model);
+
             $model->update( $request->only( (new $model)->getFillable() ) );
                         
             $model_specific_metod = $this->method(__METHOD__);
@@ -188,6 +193,15 @@ class BaseController extends Controller
         }
 
         return $this->jsonResponse('Registro eliminado correctamente', $model, Response::HTTP_OK);
+    }
+
+    public function store_files(Request $request, Model $model)
+    {
+        if ($request->hasFile('files')) {
+            foreach ($request->file('files') as $file) {
+            $model->addMedia($file)->toMediaCollection('files');
+            }
+        }
     }
 
 }
