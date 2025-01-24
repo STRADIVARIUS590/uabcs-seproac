@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Api\BaseController;
 use App\Models\Publication;
 use App\Services\FileService;
 use App\Traits\Validates;
@@ -36,19 +37,17 @@ class PublicationController extends Controller
     public function store(Request $request)
     {
         $validator = (new Validates(Publication::class, $request))->creating()->validator();
+
         if($validator->fails()) return $this->jsonResponse('Ha ocurrido un error', $validator->errors(), Response::HTTP_BAD_REQUEST);
-        
 
         $publication = Publication::create($request->all());
-
           
-        if($request->hasFile('cover')){
-            $publication->addMedia($request->cover)->toMediaCollection('cover');
-        }
+        if($request->hasFile('cover')) $publication->addMedia($request->cover)->toMediaCollection('cover');
 
-        if($request->has('tags')){
-            $publication->tags()->sync($request->tags);
-        }
+        if($request->files)(new BaseController)->store_files($request, $publication);
+
+        if($request->has('tags')) $publication->tags()->sync($request->tags);
+
         // $request['fileable_type'] = Publication::class;
         // $request['fileable_id'] = $publication->id;
 
@@ -81,17 +80,16 @@ class PublicationController extends Controller
     public function update(Request $request)
     {
         $validator= (new Validates(Publication::class, $request))->validator();
+      
         if($validator->fails()) return $this->jsonResponse('Ha ocurrido un error', $validator->errors(), Response::HTTP_BAD_REQUEST);
         
         $publication = Publication::findOrFail($request->id);
         
-        if($request->hasFile('cover')){
-            $publication->addMedia($request->cover)->toMediaCollection('cover');
-        }
+        if($request->hasFile('cover')) $publication->addMedia($request->cover)->toMediaCollection('cover');
 
-        if($request->has('tags')){
-            $publication->tags()->sync($request->tags);
-        }
+        if($request->files)(new BaseController)->store_files($request, $publication);
+
+        if($request->has('tags')) $publication->tags()->sync($request->tags);
 
         $publication->update($request->all());
 

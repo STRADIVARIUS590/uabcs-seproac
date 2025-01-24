@@ -120,6 +120,8 @@ class BaseController extends Controller
 
         $model = $this->model::create($request->only((new $this->model)->getFillable()));
 
+        if($request->files)$this->store_files($request, $model);
+
         $model_specific_metod = $this->method(__FUNCTION__);
 
         $this->log(__FUNCTION__, $this->model, '', auth()->id(), request()->url(), $model->id);
@@ -197,6 +199,7 @@ class BaseController extends Controller
 
     public function store_files(Request $request, Model $model)
     {
+        
         if ($request->hasFile('files')) {
             foreach ($request->file('files') as $file) {
             $model->addMedia($file)->toMediaCollection('files');

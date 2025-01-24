@@ -29,20 +29,39 @@ class Publication extends Model implements HasMedia {
 
     public function cover()
     {
-        return $this->morphOne(Media::class, 'model')->latestOfMany();
+        return $this->morphOne(Media::class, 'model')
+        ->whereIn('mime_type', [
+            'image/jpeg',
+            'image/png',
+            'image/jpg',
+        ])
+        ->latest();
     }
 
-    public function registerMediaConversions(?Media $media = null): void    
-    {
-        $this->addMediaConversion('preview')
-        ->fit(Fit::Contain, 300, 300)
-        ->nonQueued();
-    }
+        public function registerMediaConversions(?Media $media = null): void    
+        {
+            $this->addMediaConversion('preview')
+            ->fit(Fit::Contain, 300, 300)
+            ->nonQueued();
+
+            // TODO : : genrat portada a partir del pdf
+            // $this->addMediaConversion('thumb')
+            // ->width(368)
+            // ->height(232)
+            // ->pdfPageNumber(1);
+        }
 
     public function user()
     {
         return $this->belongsTo(User::class);
     } 
+
+    public function file()
+    {
+        return $this->morphOne(Media::class, 'model')->whereIn('mime_type', [
+            'application/pdf',
+        ])->latest();
+    }
 
     public function files()
     {
