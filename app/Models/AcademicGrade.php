@@ -5,10 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
-class AcademicGrade extends Model
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
+class AcademicGrade extends Model implements HasMedia
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory, SoftDeletes, InteractsWithMedia;
 
     protected $fillable = [
         'user_id',
@@ -21,6 +24,14 @@ class AcademicGrade extends Model
     {
         return $this->belongsTo(Institution::class);
     }
+
+    public function file()
+    {
+        return $this->morphOne(Media::class, 'model')->whereIn('mime_type', [
+            'application/pdf',
+        ])->latest();
+    }
+
 
     public function user()
     {
