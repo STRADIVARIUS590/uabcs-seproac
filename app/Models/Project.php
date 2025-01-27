@@ -35,11 +35,18 @@ class Project extends Model implements HasMedia
         ->nonQueued();
     }
 
-
-    public function files()
+    public function file()
     {
-        return $this->morphMany(File::class, 'fileable');    
+        return $this->morphOne(Media::class, 'model')->whereIn('mime_type', [
+            'application/pdf',
+        ])->latest();
     }
+
+
+    // public function files()
+    // {
+    //     return $this->morphMany(File::class, 'fileable');    
+    // }
 
     public function user()
     {
