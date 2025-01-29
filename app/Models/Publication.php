@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -27,6 +28,23 @@ class Publication extends Model implements HasMedia {
         'period'
     ];
 
+    protected $appends = [
+        'authors_count',
+    ];
+    // protected $casts = [
+    //     'authors' => 'array',
+    // ]; 
+
+    public function authorsCount(): Attribute
+    {
+        return Attribute::make(
+            get: fn() => collect(json_decode($this->authors, true)) // Decoding as an associative array
+            ->filter(function($item) {
+                return !empty($item['name']); // Filters out empty names or invalid entries
+            })
+            ->count()
+        );
+    }
     public function cover()
     {
         return $this->morphOne(Media::class, 'model')

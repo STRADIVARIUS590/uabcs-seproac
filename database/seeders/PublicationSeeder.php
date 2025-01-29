@@ -19,6 +19,7 @@ class PublicationSeeder extends Seeder
 
         foreach(User::all() as $user)
         {
+            $user_name = $user->name;
             $p = Publication::create([
                 'user_id' => $user->id,
                 'title' => 'PUBLICATION '.uniqid(),
@@ -26,7 +27,14 @@ class PublicationSeeder extends Seeder
                 'issn_isbn' => Str::random(10),
                 'doi' => Str::random(10),
                 'magazine_name' => fake()->randomElement(['Nature Today', 'Science']) ,
-                'authors' => fake()->name(),
+                'authors' => json_encode(array_map(
+                    fn($name) => ['name' => $name], // Convert each name to ['name' => $name]
+                    array_merge(
+                        [$user_name], // Start with the given user name
+                        [fake()->name], // Add one randomly generated name
+                        array_map(fn() => fake()->name, range(1, random_int(0, 4))) // Generate unique names
+                    )
+                )),
                 'publication_date' => fake()->dateTimeInInterval(),
                 'period' => 'Period'
             ]);

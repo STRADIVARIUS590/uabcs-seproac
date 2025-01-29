@@ -34,7 +34,7 @@ class Validates
             'issn-isbn' => 'nullable|string|max:255',             
             'doi' => 'nullable|string|max:255',                  
             'magazine_name' => 'nullable|string|max:255',        
-            'authors' => 'nullable|string|max:255',              
+            'authors' => 'nullable|string',        
             'publication_date' => 'nullable|date',                
             'period' => 'nullable|string|max:255',                
 

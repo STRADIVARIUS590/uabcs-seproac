@@ -18,9 +18,11 @@ class PublicationController extends Controller
      */
     public function index()
     {
-        $publications = Publication::get();
+        // $publications = Publication::get()->append('authors_count');
 
-        return $this->jsonResponse('Registro consultado correctamente', get_defined_vars(), Response::HTTP_OK);
+        // error_log(json_encode($publications));
+   
+        // return $this->jsonResponse('Registro consultado correctamente', get_defined_vars(), Response::HTTP_OK);
     }
 
     /**
@@ -79,6 +81,7 @@ class PublicationController extends Controller
      */
     public function update(Request $request)
     {
+
         $validator= (new Validates(Publication::class, $request))->validator();
       
         if($validator->fails()) return $this->jsonResponse('Ha ocurrido un error', $validator->errors(), Response::HTTP_BAD_REQUEST);
